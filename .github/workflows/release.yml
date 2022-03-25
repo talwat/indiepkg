@@ -1,0 +1,25 @@
+name: publish-release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.event.commits[0].message, 'Release ') }}
+    steps:
+      - uses: actions/setup-go@v2
+      - uses: actions/checkout@v2
+      - name: "Package Indiepkg"
+        run: make all
+      - name: Create Release
+        uses: marvinpinto/action-automatic-releases@latest
+      
+        with:
+          title: ${{ env.VERSION }}
+          prerelease: false
+          automatic_release_tag: "${{ env.VERSION }}"
+          repo_token: ${{ secrets.RELEASE_TOKEN }}
+          files: |
+              output/*
