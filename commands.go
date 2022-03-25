@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func runCommand(workDir string, command string, args ...string) (string, error, int) {
+func runCommand(workDir string, command string, args ...string) (string, int) {
 	var cmd *exec.Cmd
 
 	cmd = exec.Command(command, args...)
@@ -16,5 +16,5 @@ func runCommand(workDir string, command string, args ...string) (string, error, 
 	if err != nil {
 		errCode, _ = strconv.Atoi(err.Error()[12:])
 	}
-	return strings.TrimSuffix(string(data), "\n"), err, errCode
+	return strings.TrimSuffix(string(data), "\n"), errCode
 }

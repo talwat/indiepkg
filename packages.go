@@ -23,10 +23,10 @@ var environmentVariables = map[string]string{
 	"PATH": home + "/.local",
 }
 
-func loadPackage(packageFile string) (Package, error) {
+func loadPackage(packageFile string, pkgName string) (Package, error) {
 	var pkg Package
-	//packageFile, _ := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/" + pkgName + ".json")
 
+	log(1, "Loading package info...")
 	keySlice := make([]string, 0)
 	for key := range environmentVariables {
 		keySlice = append(keySlice, key)
@@ -36,6 +36,9 @@ func loadPackage(packageFile string) (Package, error) {
 		packageFile = strings.Replace(packageFile, ":("+key+"):", environmentVariables[key], -1)
 	}
 	err := json.Unmarshal([]byte(packageFile), &pkg)
+	if err != nil {
+		errorLog(err, 4, "An error occurred while loading package %s.", pkgName)
+	}
 	return pkg, err
 }
 
@@ -47,8 +50,8 @@ func installPackage(pkgName string) {
 	var err error
 
 	log(1, "Making required directories...")
-	err = newDir(pkgSrcPath)
-	err = newDir(installedPkgsPath)
+	newDir(pkgSrcPath)        //nolint:errcheck
+	newDir(installedPkgsPath) //nolint:errcheck
 
 	log(1, "Downloading package info...")
 	log(1, "URL: %s", url)
@@ -59,9 +62,7 @@ func installPackage(pkgName string) {
 	pkgFile, err := readFile(pkgInfoPath)
 	errorLog(err, 4, "An error occurred while reading package information for %s.", pkgName)
 
-	log(1, "Loading package...")
-	pkg, err := loadPackage(pkgFile)
-	errorLog(err, 4, "An error occurred while loading package %s.", pkgName)
+	pkg, _ := loadPackage(pkgFile, pkgName)
 
 	log(1, "Cloning source code...")
 	runCommand(pkgSrcPath, "git", "clone", pkg.Url)
@@ -83,9 +84,7 @@ func uninstallPackage(pkgName string) {
 	rawPkgInfo, err := readFile(pkgInfoPath)
 	errorLog(err, 4, "An error occurred while reading package %s.", pkgName)
 
-	log(1, "Loading package...")
-	pkg, err := loadPackage(rawPkgInfo)
-	errorLog(err, 4, "An error occurred while loading package %s.", pkgName)
+	pkg, _ := loadPackage(rawPkgInfo, pkgName)
 
 	log(1, "Running uninstall commands...")
 	for _, command := range pkg.Uninstall {
@@ -106,8 +105,7 @@ func uninstallPackage(pkgName string) {
 func infoPackage(pkgName string) {
 	packageFile, err := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/" + pkgName + ".json")
 	errorLog(err, 4, "An error occurred while getting package info for %s.", pkgName)
-	pkgInfo, err := loadPackage(packageFile)
-	errorLog(err, 4, "An error occurred while loading package %s.", pkgName)
+	pkgInfo, _ := loadPackage(packageFile, pkgName)
 	log(1, "Name: %s", pkgInfo.Name)
 	log(1, "Author: %s", pkgInfo.Author)
 	log(1, "Description: %s", pkgInfo.Description)
