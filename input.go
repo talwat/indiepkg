@@ -18,5 +18,5 @@ func parseInput() {
 			}
 		}
 	}
-	log(0, "release test 2")
+	log(0, "release test 3")
 }
