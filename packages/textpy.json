@@ -1,5 +1,6 @@
 {
     "name": "textpy",
+    "author": "Talwat",
     "description": "Convert Images into ASCII art.",
     "url": "https://github.com/talwat/textpy.git",
     "install": [
