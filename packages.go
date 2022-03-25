@@ -42,14 +42,17 @@ func loadPackage(packageFile string) (Package, error) {
 func installPackage(pkgName string) {
 	pkgSrcPath := home + "/.local/share/indiepkg/package_src"
 	pkgInfoPath := home + "/.local/share/indiepkg/installed_packages/" + pkgName + ".json"
+	installedPkgsPath := home + "/.local/share/indiepkg/installed_packages/"
+	url := "https://raw.githubusercontent.com/talwat/indiepkg/main/packages/" + pkgName + ".json"
 	var err error
 
 	log(1, "Making required directories...")
 	err = newDir(pkgSrcPath)
-	err = newDir(home + "/.local/share/indiepkg/installed_packages/")
+	err = newDir(installedPkgsPath)
 
 	log(1, "Downloading package info...")
-	err = downloadFile(pkgInfoPath, "https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json")
+	log(1, "URL: %s", url)
+	err = downloadFile(pkgInfoPath, url)
 	errorLog(err, 4, "An error occurred while getting package information for %s.", pkgName)
 
 	log(1, "Reading package info...")
@@ -67,11 +70,14 @@ func installPackage(pkgName string) {
 	for _, command := range pkg.Install {
 		runCommand(pkgSrcPath+"/"+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 	}
+
+	log(0, "Installed %s successfully!", pkgName)
 }
 
 func uninstallPackage(pkgName string) {
-	pkgSrcPath := home + "/.local/share/indiepkg/package_src"
+	pkgSrcPath := home + "/.local/share/indiepkg/package_src/"
 	pkgInfoPath := home + "/.local/share/indiepkg/installed_packages/" + pkgName + ".json"
+	var err error
 
 	log(1, "Reading package...")
 	rawPkgInfo, err := readFile(pkgInfoPath)
@@ -80,13 +86,21 @@ func uninstallPackage(pkgName string) {
 	log(1, "Loading package...")
 	pkg, err := loadPackage(rawPkgInfo)
 	errorLog(err, 4, "An error occurred while loading package %s.", pkgName)
+
 	log(1, "Running uninstall commands...")
 	for _, command := range pkg.Uninstall {
 		runCommand(pkgSrcPath+"/"+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 	}
-	log(1, "Deleting source files...")
-	delDir(home + "/.local/share/indiepkg/package_src/" + pkgName)
-	log(0, "Successfully uninstalled ")
+
+	log(1, "Deleting source files for %s...", pkgName)
+	err = delDir(pkgSrcPath + pkgName)
+	errorLog(err, 4, "An error occurred while deleting source files for %s.", pkgName)
+
+	log(1, "Deleting info file for %s...", pkgName)
+	err = delFile(pkgInfoPath)
+	errorLog(err, 4, "An error occurred while deleting info file for package %s.", pkgName)
+
+	log(0, "Successfully uninstalled %s.", pkgName)
 }
 
 func infoPackage(pkgName string) {
