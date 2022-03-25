@@ -1,0 +1,21 @@
+{
+    "name": "my package name",
+    "description": "this is my awesome package description",
+    "url": "https://github.com/username/repo.git",
+    "install": [
+        "./configure",
+        "make",
+        "make install PATH=':(PATH):'"
+    ],
+    "uninstall": [
+        "rm :(PATH):/bin/my_file"
+    ],
+    "update": [
+        "rm :(PATH):/bin/my_file",
+        "make",
+        "make install PATH=:(PATH):"
+    ],
+    "config_paths": [
+        ".config/my_pkg"
+    ]
+}
