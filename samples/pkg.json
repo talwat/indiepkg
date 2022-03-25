@@ -1,5 +1,6 @@
 {
-    "name": "my package name",
+    "name": "my_package_name",
+    "author": "my username or name",
     "description": "this is my awesome package description",
     "url": "https://github.com/username/repo.git",
     "install": [

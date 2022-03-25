@@ -1,0 +1,16 @@
+{
+    "name": "textpy",
+    "description": "Convert Images into ASCII art.",
+    "url": "https://github.com/talwat/textpy.git",
+    "install": [
+        "cp main.py :(PATH):/bin/text.py"
+    ],
+    "uninstall": [
+        "rm -v :(PATH):/bin/text.py"
+    ],
+    "update": [
+        "rm -v :(PATH):/bin/text.py",
+        "cp main.py $(PATH)/bin/text.py"
+    ],
+    "config_paths": []
+}

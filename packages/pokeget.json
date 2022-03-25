@@ -1,0 +1,19 @@
+{
+    "name": "pokeget",
+    "author": "Talwat",
+    "description": "Display cool sprites of pokemon in your terminal.",
+    "url": "https://github.com/talwat/pokeget.git",
+    "install": [
+        "make install PREFIX=:(PATH):"
+    ],
+    "uninstall": [
+        "rm -v :(PATH):/bin/pokeget"
+    ],
+    "update": [
+        "rm -v :(PATH):/bin/pokeget",
+        "make install PREFIX=:(PATH):"
+    ],
+    "config_paths": [
+        ".config/pokeget"
+    ]
+}

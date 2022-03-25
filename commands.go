@@ -6,14 +6,15 @@ import (
 	"strings"
 )
 
-func runCommand(command string) (string, error, int) {
-	splitCommand := strings.Split(command, " ")
-	args := strings.Join(splitCommand[1:], " ")
-	cmd := exec.Command(splitCommand[0], args)
+func runCommand(workDir string, command string, args ...string) (string, error, int) {
+	var cmd *exec.Cmd
+
+	cmd = exec.Command(command, args...)
+	cmd.Dir = workDir
 	data, err := cmd.CombinedOutput()
 	errCode := 0
 	if err != nil {
 		errCode, _ = strconv.Atoi(err.Error()[12:])
 	}
-	return string(data), err, errCode
+	return strings.TrimSuffix(string(data), "\n"), err, errCode
 }
