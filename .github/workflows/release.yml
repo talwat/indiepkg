@@ -13,6 +13,11 @@ jobs:
         with:
           go-version: 1.18
       - uses: actions/checkout@v2
+      - name: "Set Environment Variables"
+        run: |
+          commitName="${{ github.event.commits[0].message }}"
+          export VERSION=${commitName#*Release }
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: "Package Indiepkg"
         run: make all
       - name: Create Release

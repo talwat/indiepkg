@@ -9,14 +9,18 @@ func parseInput() {
 	args := os.Args[1:]
 
 	for _, arg := range args {
-		// Flags
-		if strings.HasPrefix(arg, "-") {
+		if strings.HasPrefix(arg, "-") { // Flags
 			switch arg {
 			case "-purge":
 				log(0, "purging")
 				return
 			}
+		} else { // Commands
+			switch arg {
+			case "install":
+
+			}
 		}
 	}
-	log(0, "release test 3")
+	log(0, "Indiepkg Version 0.1.3")
 }
