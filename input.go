@@ -40,6 +40,8 @@ func parseInput() {
 				}
 			case "info":
 				infoPackage(args[i+1])
+			case "repair":
+				repair()
 			case "version":
 				log(1, "Indiepkg Version 0.1.3")
 			case "help":

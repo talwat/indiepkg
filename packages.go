@@ -1,13 +1,14 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"os"
 	"strings"
 )
 
 var home string = os.Getenv("HOME")
+
+var srcPath string = home + "/.local/share/indiepkg/package_src/"
+var installedPath string = home + "/.local/share/indiepkg/installed_packages/"
 
 type Package struct {
 	Name         string
@@ -24,31 +25,14 @@ var environmentVariables = map[string]string{
 	"PATH": home + "/.local",
 }
 
-func loadPackage(packageFile string) (Package, error) {
-	var pkg Package
-
-	keySlice := make([]string, 0)
-	for key := range environmentVariables {
-		keySlice = append(keySlice, key)
-	}
-
-	for _, key := range keySlice {
-		packageFile = strings.Replace(packageFile, ":("+key+"):", environmentVariables[key], -1)
-	}
-	err := json.Unmarshal([]byte(packageFile), &pkg)
-	return pkg, err
-}
-
 func installPackage(pkgName string) {
-	pkgSrcPath := home + "/.local/share/indiepkg/package_src"
-	pkgInfoPath := home + "/.local/share/indiepkg/installed_packages/" + pkgName + ".json"
-	installedPkgsPath := home + "/.local/share/indiepkg/installed_packages/"
+	pkgInfoPath := installedPath + pkgName + ".json"
 	url := "https://raw.githubusercontent.com/talwat/indiepkg/main/packages/" + pkgName + ".json"
 	var err error
 
 	log(1, "Making required directories...")
-	newDir(pkgSrcPath)        //nolint:errcheck
-	newDir(installedPkgsPath) //nolint:errcheck
+	newDir(srcPath)       //nolint:errcheck
+	newDir(installedPath) //nolint:errcheck
 
 	log(1, "Downloading package info...")
 	log(1, "URL: %s", url)
@@ -64,19 +48,18 @@ func installPackage(pkgName string) {
 	errorLog(err, 4, "An error occurred while loading package information for %s.", pkgName)
 
 	log(1, "Cloning source code...")
-	runCommand(pkgSrcPath, "git", "clone", pkg.Url)
+	runCommand(srcPath, "git", "clone", pkg.Url)
 
 	log(1, "Running install commands...")
 	for _, command := range pkg.Install {
-		runCommand(pkgSrcPath+"/"+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+		runCommand(srcPath+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 	}
 
 	log(0, "Installed %s successfully!", pkgName)
 }
 
 func uninstallPackage(pkgName string) {
-	pkgSrcPath := home + "/.local/share/indiepkg/package_src/"
-	pkgInfoPath := home + "/.local/share/indiepkg/installed_packages/" + pkgName + ".json"
+	pkgInfoPath := installedPath + pkgName + ".json"
 	var err error
 
 	installed, err := pathExists(pkgInfoPath)
@@ -96,11 +79,11 @@ func uninstallPackage(pkgName string) {
 
 	log(1, "Running uninstall commands...")
 	for _, command := range pkg.Uninstall {
-		runCommand(pkgSrcPath+"/"+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+		runCommand(srcPath+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 	}
 
 	log(1, "Deleting source files for %s...", pkgName)
-	err = delDir(pkgSrcPath + pkgName)
+	err = delDir(srcPath + pkgName)
 	errorLog(err, 4, "An error occurred while deleting source files for %s.", pkgName)
 
 	log(1, "Deleting info file for %s...", pkgName)
@@ -121,16 +104,4 @@ func infoPackage(pkgName string) {
 	log(1, "Author: %s", pkgInfo.Author)
 	log(1, "Description: %s", pkgInfo.Description)
 	log(1, "Git URL: %s", pkgInfo.Url)
-}
-
-func listPackages() {
-	var err error
-	var installedPackages []string
-	files, err := dirContents(home + "/.local/share/indiepkg/installed_packages/")
-	errorLog(err, 4, "An error occurred while getting list of installed packages.")
-
-	for _, file := range files {
-		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))
-	}
-	fmt.Println(strings.Join(installedPackages, "\n"))
 }
