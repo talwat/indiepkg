@@ -17,6 +17,8 @@ func parseInput() {
 			case "-purge":
 				purge = true
 				log(0, "purging")
+			default:
+				log(1, "Flag %s not found.", arg)
 			}
 		} else if !commandSelected { // Commands
 			switch arg {
@@ -24,6 +26,12 @@ func parseInput() {
 				installPackage(args[i+1])
 			case "uninstall":
 				uninstallPackage(args[i+1])
+			case "upgrade":
+				if len(args) <= i+1 {
+					upgradeAllPackages()
+				} else {
+					upgradePackage(args[i+1])
+				}
 			case "update":
 				if len(args) <= i+1 {
 					updateAllPackages()
@@ -36,8 +44,10 @@ func parseInput() {
 				log(1, "Indiepkg Version 0.1.3")
 			case "help":
 				log(1, "Help menu not done yet.")
+			case "list":
+				listPackages()
 			default:
-				log(1, "no")
+				log(1, "Command %s not found.", arg)
 			}
 			commandSelected = true
 		}
