@@ -29,12 +29,6 @@ func viewFile(url string) (string, error) {
 }
 
 func downloadFile(filepath string, url string) (err error) {
-	out, err := os.Create(filepath)
-	if err != nil {
-		return err
-	}
-	defer out.Close()
-
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
@@ -44,6 +38,12 @@ func downloadFile(filepath string, url string) (err error) {
 	if resp.StatusCode != http.StatusOK {
 		return errors.New("http error")
 	}
+
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
 
 	_, err = io.Copy(out, resp.Body)
 	if err != nil {

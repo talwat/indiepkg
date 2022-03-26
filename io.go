@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"io/fs"
 	"io/ioutil"
 	"os"
 )
@@ -36,4 +37,12 @@ func pathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+func dirContents(dir string) ([]fs.FileInfo, error) {
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return nil, err
+	}
+	return files, nil
 }
