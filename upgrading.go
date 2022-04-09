@@ -7,23 +7,13 @@ import (
 
 func upgradePackage(pkgName string) {
 	pkgSrcPath := home + "/.local/share/indiepkg/package_src"
-	pkgInfoPath := home + "/.local/share/indiepkg/installed_packages/" + pkgName + ".json"
-	var err error
 
-	installed, err := pathExists(pkgInfoPath)
-	errorLog(err, 4, "An error occurred while checking if package %s exists.", pkgName)
-	if !installed {
+	if !packageExists(pkgName) {
 		log(4, "%s is not installed, so it can't be upgraded.", pkgName)
 		os.Exit(1)
 	}
 
-	log(1, "Reading package info...")
-	pkgFile, err := readFile(pkgInfoPath)
-	errorLog(err, 4, "An error occurred while reading package information for %s.", pkgName)
-
-	log(1, "Loading package info...")
-	pkg, err := loadPackage(pkgFile)
-	errorLog(err, 4, "An error occurred while loading package information for %s.", pkgName)
+	pkg := readAndLoad(pkgName)
 
 	log(1, "Updating source code...")
 	runCommand(pkgSrcPath+"/"+pkgName, "git", "pull")
@@ -54,10 +44,9 @@ func upgradeAllPackages() {
 			continue
 		}
 		log(1, "Updating %s", installedPackage)
-		errorLog(err, 4, "An error occurred while getting package information for %s.", installedPackage)
-		pkgFile, err := readFile(infoPath + installedPackage)
-		errorLog(err, 4, "An error occurred while reading package information for %s.", installedPackage)
-		pkg, _ := loadPackage(pkgFile)
+
+		pkg := readAndLoad(installedPackage)
+
 		for _, command := range pkg.upgrade {
 			runCommand(srcPath+installedPackage+"/"+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 		}

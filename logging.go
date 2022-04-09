@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 var logType = map[int]string{
@@ -32,4 +33,10 @@ func input(message string, params ...interface{}) string {
 	fmt.Printf(textCol["CYAN"]+"[!]"+RESETCOL+(" %s")+": ", fmt.Sprintf(message, params...))
 	input, _ := reader.ReadString('\n')
 	return input
+}
+
+func confirm(message string) {
+	if strings.Contains(input(message), "n") {
+		os.Exit(1)
+	}
 }

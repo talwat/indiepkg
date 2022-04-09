@@ -23,9 +23,9 @@ func parseInput() {
 		} else if !commandSelected { // Commands
 			switch arg {
 			case "install":
-				installPackage(args[i+1])
+				installPackages(args[i+1:])
 			case "uninstall":
-				uninstallPackage(args[i+1])
+				uninstallPackages(args[i+1:])
 			case "upgrade":
 				if len(args) <= i+1 {
 					upgradeAllPackages()
