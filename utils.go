@@ -8,5 +8,6 @@ import (
 func clear() {
 	cmd := exec.Command("clear")
 	cmd.Stdout = os.Stdout
-	cmd.Run()
+	err := cmd.Run()
+	errorLog(err, 4, "An error occurred while clearing screen.")
 }
