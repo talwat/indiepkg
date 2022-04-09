@@ -21,7 +21,7 @@ func log(logTypeInput int, message string, params ...interface{}) {
 
 func errorLog(err error, logTypeInput int, message string, params ...interface{}) {
 	if err != nil {
-		fmt.Printf(logType[logTypeInput]+(" %s Error: %s\n"), fmt.Sprintf(message, params...), err.Error())
+		fmt.Printf(logType[logTypeInput]+(" %s. Error: %s\n"), fmt.Sprintf(message, params...), err.Error())
 		if logTypeInput == 4 {
 			os.Exit(1)
 		}

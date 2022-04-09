@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func readAndLoad(packageName string) Package {
 	log(1, "Reading package info for %s...", packageName)
@@ -24,5 +27,12 @@ func packageExists(pkgName string) bool {
 	} else {
 		log(4, "Package info or source for %s exists, but not both. Please run %sindiepkg repair%s", pkgName, textFx["BOLD"], RESETCOL)
 		return false
+	}
+}
+
+func runCommands(commands []string, pkg Package) {
+	for _, command := range commands {
+		log(1, "Running command %s%s%s...", textFx["BOLD"], command, RESETCOL)
+		runCommand(srcPath+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 	}
 }

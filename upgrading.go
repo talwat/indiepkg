@@ -1,29 +1,28 @@
 package main
 
 import (
-	"os"
 	"strings"
 )
 
-func upgradePackage(pkgName string) {
-	pkgSrcPath := home + "/.local/share/indiepkg/package_src"
+func upgradePackage(pkgNames []string) {
+	for _, pkgName := range pkgNames {
+		pkgSrcPath := home + "/.local/share/indiepkg/package_src"
 
-	if !packageExists(pkgName) {
-		log(4, "%s is not installed, so it can't be upgraded.", pkgName)
-		os.Exit(1)
+		if !packageExists(pkgName) {
+			log(3, "%s is not installed, so it can't be upgraded.", pkgName)
+			continue
+		}
+
+		pkg := readAndLoad(pkgName)
+
+		log(1, "Updating source code...")
+		runCommand(pkgSrcPath+"/"+pkgName, "git", "pull")
+
+		log(1, "Running upgrade commands...")
+		runCommands(pkg.Update, pkg)
+
+		log(0, "Successfully upgraded %s!\n", pkgName)
 	}
-
-	pkg := readAndLoad(pkgName)
-
-	log(1, "Updating source code...")
-	runCommand(pkgSrcPath+"/"+pkgName, "git", "pull")
-
-	log(1, "Running upgrade commands...")
-	for _, command := range pkg.upgrade {
-		runCommand(pkgSrcPath+"/"+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
-	}
-
-	log(0, "Successfully upgraded %s!", pkgName)
 }
 
 func upgradeAllPackages() {
@@ -45,9 +44,7 @@ func upgradeAllPackages() {
 
 		pkg := readAndLoad(installedPackage)
 
-		for _, command := range pkg.upgrade {
-			runCommand(srcPath+installedPackage+"/"+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
-		}
+		runCommands(pkg.Update, pkg)
 	}
 
 	log(0, "Upgraded all packages!")

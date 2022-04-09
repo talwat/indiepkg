@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 var home string = os.Getenv("HOME")
@@ -24,7 +23,7 @@ type Package struct {
 	Url          string
 	Install      []string
 	Uninstall    []string
-	upgrade      []string
+	Update       []string
 	Config_paths []string
 	Deps         Deps
 }
@@ -58,7 +57,7 @@ func installPackages(pkgNames []string) {
 		newDirSilent(srcPath)
 		newDirSilent(installedPath)
 
-		log(1, "Writing package info for... %s", pkgName)
+		log(1, "Writing package info for %s...", pkgName)
 		newFile(pkgInfoPath, pkgInfo, "An error occurred while writing package information for %s", pkgName)
 
 		pkg := readAndLoad(pkgName)
@@ -67,9 +66,7 @@ func installPackages(pkgNames []string) {
 		runCommand(srcPath, "git", "clone", pkg.Url)
 
 		log(1, "Running install commands for %s...", pkgName)
-		for _, command := range pkg.Install {
-			runCommand(srcPath+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
-		}
+		runCommands(pkg.Install, pkg)
 
 		log(0, "Installed %s successfully!\n", pkgName)
 	}
@@ -95,9 +92,7 @@ func uninstallPackages(pkgNames []string) {
 		pkg := readAndLoad(pkgName)
 
 		log(1, "Running uninstall commands for %s...", pkgName)
-		for _, command := range pkg.Uninstall {
-			runCommand(srcPath+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
-		}
+		runCommands(pkg.Uninstall, pkg)
 
 		log(1, "Deleting source files for %s...", pkgName)
 		delDir(srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
@@ -111,7 +106,6 @@ func uninstallPackages(pkgNames []string) {
 
 func infoPackage(pkgName string) {
 	packageFile := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
-
 	pkgInfo := loadPackage(packageFile, pkgName)
 
 	log(1, "Name: %s", pkgInfo.Name)

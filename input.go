@@ -32,13 +32,13 @@ func parseInput() {
 				if len(args) <= i+1 {
 					upgradeAllPackages()
 				} else {
-					upgradePackage(args[i+1])
+					upgradePackage(args[i+1:])
 				}
 			case "update":
 				if len(args) <= i+1 {
 					updateAllPackages()
 				} else {
-					updatePackage(args[i+1])
+					updatePackage(args[i+1:])
 				}
 			case "info":
 				infoPackage(args[i+1])
