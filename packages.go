@@ -11,6 +11,12 @@ var home string = os.Getenv("HOME")
 var srcPath string = home + "/.local/share/indiepkg/package_src/"
 var installedPath string = home + "/.local/share/indiepkg/installed_packages/"
 
+type Deps struct {
+	All     []string
+	Linux   []string
+	Darwin  []string
+	Freebsd []string
+}
 type Package struct {
 	Name         string
 	Author       string
@@ -20,6 +26,7 @@ type Package struct {
 	Uninstall    []string
 	upgrade      []string
 	Config_paths []string
+	Deps         Deps
 }
 
 var environmentVariables = map[string]string{
@@ -37,19 +44,22 @@ func installPackages(pkgNames []string) {
 	for _, pkgName := range pkgNames {
 		pkgInfoPath := installedPath + pkgName + ".json"
 		url := "https://raw.githubusercontent.com/talwat/indiepkg/main/packages/" + pkgName + ".json"
-		var err error
+
+		if packageExists(pkgName) {
+			log(3, "%s is already installed, can't install %s.", pkgName, pkgName)
+			continue
+		}
+
 		log(1, "Getting package info for %s...", pkgName)
 		log(1, "URL: %s", url)
-		pkgInfo, err := viewFile(url)
-		errorLog(err, 4, "An error occurred while getting package information for %s.", pkgName)
+		pkgInfo := viewFile(url, "An error occurred while getting package information for %s", pkgName)
 
 		log(1, "Making required directories for %s...", pkgName)
-		newDir(srcPath)       //nolint:errcheck
-		newDir(installedPath) //nolint:errcheck
+		newDirSilent(srcPath)
+		newDirSilent(installedPath)
 
 		log(1, "Writing package info for... %s", pkgName)
-		err = newFile(pkgInfoPath, pkgInfo)
-		errorLog(err, 4, "An error occurred while writing package information for %s.", pkgName)
+		newFile(pkgInfoPath, pkgInfo, "An error occurred while writing package information for %s", pkgName)
 
 		pkg := readAndLoad(pkgName)
 
@@ -75,40 +85,34 @@ func uninstallPackages(pkgNames []string) {
 
 	for _, pkgName := range pkgNames {
 		pkgInfoPath := installedPath + pkgName + ".json"
-		var err error
 
-		installed, err := pathExists(pkgInfoPath)
-		errorLog(err, 4, "An error occurred while checking if package %s exists.", pkgName)
+		installed := pathExists(pkgInfoPath, "An error occurred while checking if package %s exists", pkgName)
 		if !installed {
-			log(4, "%s is not installed, so it can't be uninstalled.", pkgName)
-			os.Exit(1)
+			log(3, "%s is not installed, so it can't be uninstalled", pkgName)
+			continue
 		}
 
 		pkg := readAndLoad(pkgName)
 
-		log(1, "Running uninstall commands...")
+		log(1, "Running uninstall commands for %s...", pkgName)
 		for _, command := range pkg.Uninstall {
 			runCommand(srcPath+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 		}
 
 		log(1, "Deleting source files for %s...", pkgName)
-		err = delDir(srcPath + pkgName)
-		errorLog(err, 4, "An error occurred while deleting source files for %s.", pkgName)
+		delDir(srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
 
 		log(1, "Deleting info file for %s...", pkgName)
-		err = delFile(pkgInfoPath)
-		errorLog(err, 4, "An error occurred while deleting info file for package %s.", pkgName)
+		delFile(pkgInfoPath, "An error occurred while deleting info file for package %s", pkgName)
 
-		log(0, "Successfully uninstalled %s.", pkgName)
+		log(0, "Successfully uninstalled %s.\n", pkgName)
 	}
 }
 
 func infoPackage(pkgName string) {
-	packageFile, err := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/" + pkgName + ".json")
-	errorLog(err, 4, "An error occurred while getting package info for %s.", pkgName)
+	packageFile := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
 
-	pkgInfo, err := loadPackage(packageFile)
-	errorLog(err, 4, "An error occurred while loading package information for %s.", pkgName)
+	pkgInfo := loadPackage(packageFile, pkgName)
 
 	log(1, "Name: %s", pkgInfo.Name)
 	log(1, "Author: %s", pkgInfo.Author)

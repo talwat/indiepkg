@@ -5,18 +5,20 @@ import (
 	"strings"
 )
 
-var commandSelected bool = false
 var purge bool = false
+var debug bool = false
 
 func parseInput() {
 	args := os.Args[1:]
+	var commandSelected bool = false
 
 	for i, arg := range args {
 		if strings.HasPrefix(arg, "-") { // Flags
 			switch arg {
-			case "-purge":
+			case "-p", "--purge":
 				purge = true
-				log(0, "purging")
+			case "-d", "--debug":
+				debug = true
 			default:
 				log(1, "Flag %s not found.", arg)
 			}

@@ -18,5 +18,21 @@
     ],
     "config_paths": [
         ".config/my_pkg"
-    ]
+    ],
+    "deps": {
+        "all": [
+            "hello-world"
+        ],
+        "linux": [
+            "my-dep",
+            "wow"
+        ],
+        "darwin": [
+            "my-other-dep",
+            "coreutils"
+        ],
+        "freebsd": [
+            "my-third-dep"
+        ]
+    }
 }

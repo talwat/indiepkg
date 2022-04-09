@@ -29,10 +29,8 @@ func upgradePackage(pkgName string) {
 func upgradeAllPackages() {
 	srcPath := home + "/.local/share/indiepkg/package_src/"
 	infoPath := home + "/.local/share/indiepkg/installed_packages/"
-	var err error
 	var installedPackages []string
-	files, err := dirContents(infoPath)
-	errorLog(err, 4, "An error occurred while getting list of installed packages.")
+	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
 	for _, file := range files {
 		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))

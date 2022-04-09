@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
+        "coreutils",
         "deadcode",
+        "Deps",
         "golangci",
         "Indiepkg",
         "nolint",

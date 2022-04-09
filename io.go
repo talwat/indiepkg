@@ -2,47 +2,56 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io/fs"
 	"io/ioutil"
 	"os"
 )
 
-func newFile(file string, text string) error {
-	return ioutil.WriteFile(file, []byte(text), 0770)
+func newFile(file string, text string, errMsg string, params ...interface{}) {
+	err := ioutil.WriteFile(file, []byte(text), 0770)
+	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
 }
 
-func newDir(name string) error {
-	return os.MkdirAll(name, 0770)
+func newDir(name string, errMsg string, params ...interface{}) {
+	err := os.MkdirAll(name, 0770)
+	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
 }
 
-func readFile(file string) (string, error) {
+func newDirSilent(name string) {
+	os.MkdirAll(name, 0770) //nolint:errcheck
+}
+
+func readFile(file string, errMsg string, params ...interface{}) string {
 	data, err := ioutil.ReadFile(file)
-	return string(data), err
+	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
+	return string(data)
 }
 
-func delFile(file string) error {
-	return os.Remove(file)
+func delFile(file string, errMsg string, params ...interface{}) {
+	err := os.Remove(file)
+	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
 }
 
-func delDir(dir string) error {
-	return os.RemoveAll(dir)
+func delDir(dir string, errMsg string, params ...interface{}) {
+	err := os.RemoveAll(dir)
+	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
 }
 
-func pathExists(path string) (bool, error) {
+func pathExists(path string, errMsg string, params ...interface{}) bool {
 	_, err := os.Stat(path)
 	if err == nil {
-		return true, nil
+		return true
 	}
 	if errors.Is(err, os.ErrNotExist) {
-		return false, nil
+		return false
 	}
-	return false, err
+	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
+	return false
 }
 
-func dirContents(dir string) ([]fs.FileInfo, error) {
+func dirContents(dir string, errMsg string, params ...interface{}) []fs.FileInfo {
 	files, err := ioutil.ReadDir(dir)
-	if err != nil {
-		return nil, err
-	}
-	return files, nil
+	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
+	return files
 }

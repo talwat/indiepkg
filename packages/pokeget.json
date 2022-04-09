@@ -15,5 +15,11 @@
     ],
     "config_paths": [
         ".config/pokeget"
-    ]
+    ],
+    "deps": {
+        "all": [
+            "bash",
+            "curl"
+        ]
+    }
 }
