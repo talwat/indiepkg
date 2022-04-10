@@ -1,31 +1,20 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 )
 
-func loadPackage(packageFile string, pkgName string) Package {
-	var pkg Package
-
-	keySlice := make([]string, 0)
-	for key := range environmentVariables {
-		keySlice = append(keySlice, key)
-	}
-
-	for _, key := range keySlice {
-		packageFile = strings.Replace(packageFile, ":("+key+"):", environmentVariables[key], -1)
-	}
-	err := json.Unmarshal([]byte(packageFile), &pkg)
-	errorLog(err, 4, "An error occurred while loading package info for %s", pkgName)
-	return pkg
-}
-
 func listPackages() {
 	var installedPackages []string
-	files := dirContents(home+"/.local/share/indiepkg/installed_packages/", "An error occurred while getting list of installed packages")
+	files := dirContents(installedPath, "An error occurred while getting list of installed packages")
+
+	if len(files) == 0 {
+		log(1, "No packages installed.")
+		os.Exit(0)
+	}
 
 	for _, file := range files {
 		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))

@@ -8,8 +8,8 @@ import (
 
 var home string = os.Getenv("HOME") + "/"
 
-var srcPath string = home + ".local/share/indiepkg/package_src/"
-var installedPath string = home + ".local/share/indiepkg/installed_packages/"
+var srcPath string = home + ".indiepkg/data/package_src/"
+var installedPath string = home + ".indiepkg/data/installed_packages/"
 
 type Deps struct {
 	All     []string

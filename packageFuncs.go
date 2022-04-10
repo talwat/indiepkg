@@ -1,11 +1,28 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"runtime"
 	"strings"
 )
+
+func loadPackage(packageFile string, pkgName string) Package {
+	var pkg Package
+
+	keySlice := make([]string, 0)
+	for key := range environmentVariables {
+		keySlice = append(keySlice, key)
+	}
+
+	for _, key := range keySlice {
+		packageFile = strings.Replace(packageFile, ":("+key+"):", environmentVariables[key], -1)
+	}
+	err := json.Unmarshal([]byte(packageFile), &pkg)
+	errorLog(err, 4, "An error occurred while loading package info for %s", pkgName)
+	return pkg
+}
 
 func readAndLoad(packageName string) Package {
 	log(1, "Reading package info for %s...", packageName)
@@ -76,7 +93,7 @@ func cloneRepo(pkg Package) {
 func getPkgFromNet(pkgName string) (Package, string) {
 	packageFile, err := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
 
-	if strings.Contains(err.Error(), "404") {
+	if errIs404(err) {
 		log(4, "Package %s not found.", pkgName)
 		os.Exit(1)
 	}
@@ -86,4 +103,8 @@ func getPkgFromNet(pkgName string) (Package, string) {
 	pkg := loadPackage(packageFile, pkgName)
 
 	return pkg, packageFile
+}
+
+func errIs404(err error) bool {
+	return err != nil && strings.Contains(err.Error(), "404")
 }
