@@ -11,7 +11,7 @@ import (
 
 func viewFile(url string, errMsg string, params ...interface{}) (string, error) {
 	resp, err := http.Get(url)
-	errMsgAdded := fmt.Sprintf(errMsg, params...) + "\n    URL: " + url + "\n   "
+	errMsgAdded := fmt.Sprintf(errMsg, params...)
 	errorLog(err, 4, errMsgAdded)
 
 	defer resp.Body.Close()
