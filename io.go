@@ -50,6 +50,7 @@ func readFile(file string, errMsg string, params ...interface{}) string {
 
 func delPath(logLevel int, path string, errMsg string, params ...interface{}) {
 	err := os.RemoveAll(path)
+	debugLog("Deleting %s", path)
 	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
 }
 

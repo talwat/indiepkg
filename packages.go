@@ -96,8 +96,6 @@ func uninstallPackages(pkgNames []string) {
 	confirm("y", "(y/n)")
 
 	for _, pkgName := range pkgNames {
-		pkgInfoPath := installedPath + pkgName + ".json"
-
 		if !packageExists(pkgName) {
 			log(3, "%s is not installed, so it can't be uninstalled", pkgName)
 			continue
@@ -113,14 +111,14 @@ func uninstallPackages(pkgNames []string) {
 			}
 		}
 
+		log(1, "Running uninstall commands for %s...", pkgName)
+		runCommands(pkg.Uninstall, pkg)
+
 		log(1, "Deleting source files for %s...", pkgName)
 		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
 
 		log(1, "Deleting info file for %s...", pkgName)
-		delPath(3, pkgInfoPath, "An error occurred while deleting info file for package %s", pkgName)
-
-		log(1, "Running uninstall commands for %s...", pkgName)
-		runCommands(pkg.Uninstall, pkg)
+		delPath(3, installedPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
 
 		log(0, "Successfully uninstalled %s.\n", pkgName)
 	}

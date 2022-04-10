@@ -107,12 +107,6 @@ Examples:
 		optionToOther = true
 	}
 
-	debugLog("Args: %s\nFlags: %s\nOthers %s",
-		strings.Join(args, ", "),
-		strings.Join(flags, ", "),
-		strings.Join(others, ", "),
-	)
-
 	if len(others) < 1 {
 		log(1, "Indiepkg Version 0.5, run %sindiepkg help%s for usage.", textFx["BOLD"], RESETCOL)
 	}

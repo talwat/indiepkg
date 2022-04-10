@@ -83,9 +83,11 @@ func getDeps(pkg Package) []string {
 func cloneRepo(pkg Package) {
 	log(1, "Cloning source code for %s...", pkg.Name)
 	if pkg.Branch == "" {
+		debugLog("Cloning to %s", srcPath+pkg.Name)
 		runCommand(srcPath, "git", "clone", pkg.Url)
 	} else {
 		log(1, "Getting branch %s%s%s...", textFx["BOLD"], pkg.Branch, RESETCOL)
+		debugLog("Cloning to %s on branch %s", srcPath+pkg.Name, pkg.Branch)
 		runCommand(srcPath, "git", "clone", "-b", pkg.Branch, pkg.Url)
 	}
 }
