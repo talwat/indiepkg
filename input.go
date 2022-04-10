@@ -94,7 +94,7 @@ Examples:
   indiepkg install my-pkg
   indiepkg uninstall other-pkg
   indiepkg upgrade third-pkg
-    `)
+`)
 
 			case "list":
 				listPackages()
