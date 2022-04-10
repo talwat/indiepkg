@@ -34,9 +34,7 @@ func listPackages() {
 }
 
 func repair() {
-	log(1, "Making required directories...")
-	newDirSilent(installedPath)
-	newDirSilent(srcPath)
+	initDirs("Making required directories...")
 
 	dirs := dirContents(srcPath, "An error occurred while getting list of source files")
 

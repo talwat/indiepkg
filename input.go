@@ -1,62 +1,105 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strings"
 )
 
-var purge bool = false
-var debug bool = false
+var purge, debug, assumeYes bool = false, false, false
+
+var optionToOthers, optionToOther bool = false, false
 
 func parseInput() {
 	args := os.Args[1:]
-	var commandSelected bool = false
+	var flags []string
+	var others []string
 
-	for i, arg := range args {
-		if strings.HasPrefix(arg, "-") { // Flags
-			switch arg {
-			case "-p", "--purge":
-				purge = true
-			case "-d", "--debug":
-				debug = true
-			default:
-				log(1, "Flag %s not found.", arg)
-			}
-		} else if !commandSelected { // Commands
-			switch arg {
+	for _, arg := range args {
+		if strings.HasPrefix(arg, "-") {
+			flags = append(flags, arg)
+		} else {
+			others = append(others, arg)
+		}
+	}
+
+	for _, flag := range flags {
+		switch flag {
+		case "-p", "--purge":
+			purge = true
+		case "-d", "--debug":
+			debug = true
+		case "-y", "--assumeYes":
+			assumeYes = true
+		default:
+			log(1, "Flag %s not found.", flag)
+		}
+	}
+
+	for i, other := range others {
+		if !optionToOthers && !optionToOther {
+			switch other {
 			case "install":
-				installPackages(args[i+1:])
+				optionToOthers = true
+				installPackages(others[i+1:])
+
 			case "uninstall":
-				uninstallPackages(args[i+1:])
+				optionToOthers = true
+				uninstallPackages(others[i+1:])
+
 			case "upgrade":
-				if len(args) <= i+1 {
+				if len(others) <= i+1 {
 					upgradeAllPackages()
 				} else {
-					upgradePackage(args[i+1:])
+					optionToOthers = true
+					upgradePackage(others[i+1:])
 				}
+
 			case "update":
 				if len(args) <= i+1 {
 					updateAllPackages()
 				} else {
-					updatePackage(args[i+1:])
+					optionToOthers = true
+					updatePackage(others[i+1:])
 				}
+
 			case "info":
-				infoPackage(args[i+1])
+				optionToOther = true
+				infoPackage(others[i+1])
+
 			case "repair":
 				repair()
+
 			case "version":
 				log(1, "Indiepkg Version 0.1.3")
+
 			case "help":
-				log(1, "Help menu not done yet.")
+				fmt.Printf(`Usage: indiepkg [<option>...] <command>
+
+Commands:
+  install <packages>...
+  uninstall <packages>...
+  update <packages>...
+  upgrade <packages>...`)
+
 			case "list":
 				listPackages()
+
 			default:
-				log(1, "Command %s not found.", arg)
+				log(1, "Command %s not found.", other)
 			}
-			commandSelected = true
 		}
+
+		optionToOther = true
 	}
-	if len(args) < 1 {
-		log(1, "Indiepkg Version 0.1.3, run %sindiepkg help%s for usage.", textFx["BOLD"], RESETCOL)
+
+	debugLog("Args: %s\nFlags: %s\nOthers %s",
+		strings.Join(args, ", "),
+		strings.Join(flags, ", "),
+		strings.Join(others, ", "),
+	)
+
+	if len(others) < 1 {
+		log(1, "Indiepkg Version 0.4, run %sindiepkg help%s for usage.", textFx["BOLD"], RESETCOL)
 	}
 }

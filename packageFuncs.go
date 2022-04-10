@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"runtime"
 	"strings"
 )
 
@@ -35,4 +37,53 @@ func runCommands(commands []string, pkg Package) {
 		log(1, "Running command %s%s%s...", textFx["BOLD"], command, RESETCOL)
 		runCommand(srcPath+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 	}
+}
+
+func initDirs(msg string, params ...interface{}) {
+	log(1, fmt.Sprintf(msg, params...))
+	newDirSilent(srcPath)
+	newDirSilent(installedPath)
+}
+
+func getDeps(pkg Package) []string {
+	if pkg.Deps != nil {
+		fullDepsList := pkg.Deps.All
+		switch runtime.GOOS {
+		case "darwin":
+			fullDepsList = append(fullDepsList, pkg.Deps.Darwin...)
+		case "freebsd":
+			fullDepsList = append(fullDepsList, pkg.Deps.Freebsd...)
+		case "linux":
+			fullDepsList = append(fullDepsList, pkg.Deps.Linux...)
+		default:
+			log(3, "Unknown OS: %s", runtime.GOOS)
+		}
+		return fullDepsList
+	}
+	return nil
+}
+
+func cloneRepo(pkg Package) {
+	log(1, "Cloning source code for %s...", pkg.Name)
+	if pkg.Branch == "" {
+		runCommand(srcPath, "git", "clone", pkg.Url)
+	} else {
+		log(1, "Getting branch %s%s%s...", textFx["BOLD"], pkg.Branch, RESETCOL)
+		runCommand(srcPath, "git", "clone", "-b", pkg.Branch, pkg.Url)
+	}
+}
+
+func getPkgFromNet(pkgName string) (Package, string) {
+	packageFile, err := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
+
+	if strings.Contains(err.Error(), "404") {
+		log(4, "Package %s not found.", pkgName)
+		os.Exit(1)
+	}
+
+	errorLog(err, 4, "An error occurred while getting package information for %s", pkgName)
+
+	pkg := loadPackage(packageFile, pkgName)
+
+	return pkg, packageFile
 }

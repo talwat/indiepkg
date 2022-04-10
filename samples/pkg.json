@@ -3,6 +3,7 @@
     "author": "my username or name",
     "description": "this is my awesome package description",
     "url": "https://github.com/username/repo.git",
+    "branch": "my branch",
     "install": [
         "./configure",
         "make",

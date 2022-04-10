@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
-var home string = os.Getenv("HOME")
+var home string = os.Getenv("HOME") + "/"
 
-var srcPath string = home + "/.local/share/indiepkg/package_src/"
-var installedPath string = home + "/.local/share/indiepkg/installed_packages/"
+var srcPath string = home + ".local/share/indiepkg/package_src/"
+var installedPath string = home + ".local/share/indiepkg/installed_packages/"
 
 type Deps struct {
 	All     []string
@@ -21,15 +22,17 @@ type Package struct {
 	Author       string
 	Description  string
 	Url          string
+	Branch       string
 	Install      []string
 	Uninstall    []string
 	Update       []string
 	Config_paths []string
-	Deps         Deps
+	Deps         *Deps
 }
 
 var environmentVariables = map[string]string{
-	"PATH": home + "/.local",
+	"PATH": home + ".local",
+	"BIN":  home + ".local/bin",
 }
 
 func installPackages(pkgNames []string) {
@@ -38,32 +41,44 @@ func installPackages(pkgNames []string) {
 		fmt.Println("        " + packageToInstall)
 	}
 
-	confirm("(y/n)")
+	confirm("y", "(y/n)")
 
 	for _, pkgName := range pkgNames {
 		pkgInfoPath := installedPath + pkgName + ".json"
 		url := "https://raw.githubusercontent.com/talwat/indiepkg/main/packages/" + pkgName + ".json"
 
 		if packageExists(pkgName) {
-			log(3, "%s is already installed, can't install %s.", pkgName, pkgName)
-			continue
+			log(4, "%s is already installed, can't install %s.", pkgName, pkgName)
+			os.Exit(1)
 		}
 
 		log(1, "Getting package info for %s...", pkgName)
 		log(1, "URL: %s", url)
-		pkgInfo := viewFile(url, "An error occurred while getting package information for %s", pkgName)
 
-		log(1, "Making required directories for %s...", pkgName)
-		newDirSilent(srcPath)
-		newDirSilent(installedPath)
+		pkg, pkgFile := getPkgFromNet(pkgName)
+
+		log(1, "Checking dependencies for %s...", pkgName)
+		deps := getDeps(pkg)
+		if deps != nil {
+			log(1, "Dependencies: %s", strings.Join(deps, ", "))
+			for _, dep := range deps {
+				if checkIfCommandExists(dep) {
+					log(0, "%s found!", dep)
+				} else {
+					log(4, "%s is either not installed or not in PATH. Please install it with your operating system's package manager.", dep)
+					os.Exit(1)
+				}
+			}
+		} else {
+			log(1, "No dependencies found.")
+		}
+
+		initDirs("Making required directories for %s...", pkgName)
 
 		log(1, "Writing package info for %s...", pkgName)
-		newFile(pkgInfoPath, pkgInfo, "An error occurred while writing package information for %s", pkgName)
+		newFile(pkgInfoPath, pkgFile, "An error occurred while writing package information for %s", pkgName)
 
-		pkg := readAndLoad(pkgName)
-
-		log(1, "Cloning source code for %s...", pkgName)
-		runCommand(srcPath, "git", "clone", pkg.Url)
+		cloneRepo(pkg)
 
 		log(1, "Running install commands for %s...", pkgName)
 		runCommands(pkg.Install, pkg)
@@ -78,38 +93,48 @@ func uninstallPackages(pkgNames []string) {
 		fmt.Println("        " + packageToUninstall)
 	}
 
-	confirm("(y/n)")
+	confirm("y", "(y/n)")
 
 	for _, pkgName := range pkgNames {
 		pkgInfoPath := installedPath + pkgName + ".json"
 
-		installed := pathExists(pkgInfoPath, "An error occurred while checking if package %s exists", pkgName)
-		if !installed {
+		if !packageExists(pkgName) {
 			log(3, "%s is not installed, so it can't be uninstalled", pkgName)
 			continue
 		}
 
 		pkg := readAndLoad(pkgName)
 
-		log(1, "Running uninstall commands for %s...", pkgName)
-		runCommands(pkg.Uninstall, pkg)
+		if purge {
+			log(1, "Deleting configuration files for %s...", pkgName)
+			for _, path := range pkg.Config_paths {
+				log(1, "Deleting configuration path %s%s%s", textFx["BOLD"], path, RESETCOL)
+				delPath(3, home+path, "An error occurred while deleting configuration files for %s", pkgName)
+			}
+		}
 
 		log(1, "Deleting source files for %s...", pkgName)
-		delDir(srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
+		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
 
 		log(1, "Deleting info file for %s...", pkgName)
-		delFile(pkgInfoPath, "An error occurred while deleting info file for package %s", pkgName)
+		delPath(3, pkgInfoPath, "An error occurred while deleting info file for package %s", pkgName)
+
+		log(1, "Running uninstall commands for %s...", pkgName)
+		runCommands(pkg.Uninstall, pkg)
 
 		log(0, "Successfully uninstalled %s.\n", pkgName)
 	}
 }
 
 func infoPackage(pkgName string) {
-	packageFile := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
-	pkgInfo := loadPackage(packageFile, pkgName)
+	pkg, _ := getPkgFromNet(pkgName)
+	log(1, "Name: %s", pkg.Name)
+	log(1, "Author: %s", pkg.Author)
+	log(1, "Description: %s", pkg.Description)
+	log(1, "Git URL: %s", pkg.Url)
 
-	log(1, "Name: %s", pkgInfo.Name)
-	log(1, "Author: %s", pkgInfo.Author)
-	log(1, "Description: %s", pkgInfo.Description)
-	log(1, "Git URL: %s", pkgInfo.Url)
+	deps := getDeps(pkg)
+	if deps != nil {
+		log(1, "Dependencies: %s", strings.Join(deps, ", "))
+	}
 }

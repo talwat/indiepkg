@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func viewFile(url string, errMsg string, params ...interface{}) string {
+func viewFile(url string, errMsg string, params ...interface{}) (string, error) {
 	resp, err := http.Get(url)
 	errMsgAdded := fmt.Sprintf(errMsg, params...) + "\n    URL: " + url + "\n   "
 	errorLog(err, 4, errMsgAdded)
@@ -17,15 +17,12 @@ func viewFile(url string, errMsg string, params ...interface{}) string {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		err := errors.New("HTTP Error. Code: " + fmt.Sprint(resp.StatusCode))
-		errorLog(err, 4, errMsgAdded)
+		return "", errors.New("HTTP Error. Code: " + fmt.Sprint(resp.StatusCode))
 	}
 
 	final, err := ioutil.ReadAll(resp.Body)
 
-	errorLog(err, 4, errMsgAdded)
-
-	return string(final)
+	return string(final), err
 }
 
 func downloadFile(filepath string, url string, errMsg string, params ...interface{}) {

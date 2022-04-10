@@ -28,13 +28,8 @@ func readFile(file string, errMsg string, params ...interface{}) string {
 	return string(data)
 }
 
-func delFile(file string, errMsg string, params ...interface{}) {
-	err := os.Remove(file)
-	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
-}
-
-func delDir(dir string, errMsg string, params ...interface{}) {
-	err := os.RemoveAll(dir)
+func delPath(logLevel int, path string, errMsg string, params ...interface{}) {
+	err := os.RemoveAll(path)
 	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
 }
 

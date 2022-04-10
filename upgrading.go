@@ -38,6 +38,7 @@ func upgradeAllPackages() {
 	for _, installedPackage := range installedPackages {
 		pullOutput, _ := runCommand(srcPath+installedPackage, "git", "pull")
 		if strings.Contains(pullOutput, "Already up to date") {
+			log(0, "%s already up to date.", installedPackage)
 			continue
 		}
 		log(1, "Updating %s", installedPackage)

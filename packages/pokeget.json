@@ -3,6 +3,7 @@
     "author": "Talwat",
     "description": "Display cool sprites of pokemon in your terminal.",
     "url": "https://github.com/talwat/pokeget.git",
+    "branch": "testing",
     "install": [
         "make install PREFIX=:(PATH):"
     ],
