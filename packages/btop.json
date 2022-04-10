@@ -8,10 +8,10 @@
         "gmake install PREFIX=:(PATH):"
     ],
     "uninstall": [
-        "gmake uninstall"
+        "gmake uninstall PREFIX=:(PATH):"
     ],
     "update": [
-        "gmake uninstall",
+        "gmake uninstall PREFIX=:(PATH):",
         "gmake clean distclean",
         "gmake",
         "gmake install PREFIX=:(PATH):"
