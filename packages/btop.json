@@ -1,0 +1,26 @@
+{
+    "name": "btop",
+    "author": "aristocratos",
+    "description": "A monitor of resources.",
+    "url": "https://github.com/aristocratos/btop.git",
+    "install": [
+        "gmake",
+        "gmake install PREFIX=:(PATH):"
+    ],
+    "uninstall": [
+        "gmake uninstall"
+    ],
+    "update": [
+        "gmake uninstall",
+        "gmake clean distclean",
+        "gmake",
+        "gmake install PREFIX=:(PATH):"
+    ],
+    "deps": {
+        "all": [
+            "gcc",
+            "g++",
+            "make"
+        ]
+    }
+}

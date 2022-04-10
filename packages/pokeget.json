@@ -20,7 +20,8 @@
     "deps": {
         "all": [
             "bash",
-            "curl"
+            "curl",
+            "make"
         ]
     }
 }

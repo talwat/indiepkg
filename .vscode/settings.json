@@ -1,8 +1,12 @@
 {
     "cSpell.words": [
+        "aristocratos",
+        "btop",
         "coreutils",
         "deadcode",
         "Deps",
+        "distclean",
+        "gmake",
         "golangci",
         "Indiepkg",
         "nolint",
