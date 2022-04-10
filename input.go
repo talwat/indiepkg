@@ -80,7 +80,21 @@ Commands:
   install <packages>...
   uninstall <packages>...
   update <packages>...
-  upgrade <packages>...`)
+  upgrade <packages>...
+  info <package>
+  repair
+  version
+
+Options:
+  -p, --purge
+  -d, --debug
+  -y, --assumeYes
+
+Examples:
+  indiepkg install my-pkg
+  indiepkg uninstall other-pkg
+  indiepkg upgrade third-pkg
+    `)
 
 			case "list":
 				listPackages()
@@ -100,6 +114,6 @@ Commands:
 	)
 
 	if len(others) < 1 {
-		log(1, "Indiepkg Version 0.4, run %sindiepkg help%s for usage.", textFx["BOLD"], RESETCOL)
+		log(1, "Indiepkg Version 0.5, run %sindiepkg help%s for usage.", textFx["BOLD"], RESETCOL)
 	}
 }
