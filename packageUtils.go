@@ -100,12 +100,14 @@ func removeData(pkgNames []string) {
 	confirm("y", "(y/n)")
 
 	for _, pkgName := range pkgNames {
-		log(1, "Deleting source files for %s...", pkgName)
-		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
+		pkgDisplayName := bolden(pkgName)
 
-		log(1, "Deleting info file for %s...", pkgName)
-		delPath(3, installedPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
+		log(1, "Deleting source files for %s...", pkgDisplayName)
+		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgDisplayName)
 
-		log(0, "Successfully deleted the data for %s.\n", pkgName)
+		log(1, "Deleting info file for %s...", pkgDisplayName)
+		delPath(3, installedPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgDisplayName)
+
+		log(0, "Successfully deleted the data for %s.\n", pkgDisplayName)
 	}
 }

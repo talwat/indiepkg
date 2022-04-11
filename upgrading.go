@@ -6,17 +6,19 @@ import (
 
 func upgradePackage(pkgNames []string) {
 	for _, pkgName := range pkgNames {
+		pkgDisplayName := bolden(pkgName)
+
 		if !packageExists(pkgName) {
-			log(3, "%s is not installed, so it can't be upgraded.", pkgName)
+			log(3, "%s is not installed, so it can't be upgraded.", pkgDisplayName)
 			continue
 		}
 
 		pkg := readAndLoad(pkgName)
 
-		log(1, "Updating source code...")
+		log(1, "Updating source code for %s...", pkgDisplayName)
 		runCommand(srcPath+pkgName, "git", "pull")
 
-		log(1, "Running upgrade commands...")
+		log(1, "Running upgrade commands for %s...", pkgDisplayName)
 		runCommands(getUpdCmd(pkg), pkg, srcPath+pkg.Name)
 
 		log(0, "Successfully upgraded %s!\n", pkgName)
@@ -30,14 +32,18 @@ func upgradeAllPackages() {
 	for _, file := range files {
 		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))
 	}
-	log(1, "Updating all packages...")
+
+	log(1, "Upgrading all packages...")
 	for _, installedPackage := range installedPackages {
+		installedPackageDisplay := bolden(installedPackage)
 		pullOutput, _ := runCommand(srcPath+installedPackage, "git", "pull")
+
 		if strings.Contains(pullOutput, "Already up to date") {
-			log(0, "%s already up to date.", installedPackage)
+			log(0, "%s already up to date.", installedPackageDisplay)
 			continue
 		}
-		log(1, "Updating %s", installedPackage)
+
+		log(1, "Upgrading %s", installedPackageDisplay)
 
 		pkg := readAndLoad(installedPackage)
 

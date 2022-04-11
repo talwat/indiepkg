@@ -50,7 +50,7 @@ func readFile(file string, errMsg string, params ...interface{}) string {
 
 func delPath(logLevel int, path string, errMsg string, params ...interface{}) {
 	err := os.RemoveAll(path)
-	debugLog("Deleting %s", path)
+	debugLog("Deleting %s", bolden(path))
 	errorLog(err, logLevel, fmt.Sprintf(errMsg, params...))
 }
 
@@ -74,5 +74,5 @@ func dirContents(dir string, errMsg string, params ...interface{}) []fs.FileInfo
 
 func changePerms(file string, perms fs.FileMode) {
 	err := os.Chmod(file, perms)
-	errorLog(err, 4, "An error occurred while changing permissions for the file %s", file)
+	errorLog(err, 4, "An error occurred while changing permissions for the file %s", bolden(file))
 }

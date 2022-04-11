@@ -5,21 +5,19 @@ import "runtime"
 func getInstCmd(pkg Package) []string {
 	var cmds []string
 
-	if pkg.Commands.All.Install != nil {
-		cmds = pkg.Commands.All.Install
-	} else {
-		cmds = []string{}
+	if pkg.Commands == nil || pkg.Commands.All == nil || pkg.Commands.All.Install == nil {
+		return []string{}
 	}
 
 	switch runtime.GOOS {
 	case "darwin":
 		if pkg.Commands.Darwin.Install != nil {
-			debugLog("Getting install commands for Darwin. Package: %s", pkg.Name)
+			debugLog("Getting install commands for Darwin. Package: %s", bolden(pkg.Name))
 			cmds = pkg.Commands.Darwin.Install
 		}
 	case "linux":
 		if pkg.Commands.Linux.Install != nil {
-			debugLog("Getting install commands for Linux. Package: %s", pkg.Name)
+			debugLog("Getting install commands for Linux. Package: %s", bolden(pkg.Name))
 			cmds = pkg.Commands.Linux.Install
 		}
 	default:
@@ -31,21 +29,19 @@ func getInstCmd(pkg Package) []string {
 func getUninstCmd(pkg Package) []string {
 	var cmds []string
 
-	if pkg.Commands.All.Update != nil {
-		cmds = pkg.Commands.All.Uninstall
-	} else {
-		cmds = []string{}
+	if pkg.Commands == nil || pkg.Commands.All == nil || pkg.Commands.All.Uninstall == nil {
+		return []string{}
 	}
 
 	switch runtime.GOOS {
 	case "darwin":
 		if pkg.Commands.Darwin.Uninstall != nil {
-			debugLog("Getting uninstall commands for Darwin. Package: %s", pkg.Name)
+			debugLog("Getting uninstall commands for Darwin. Package: %s", bolden(pkg.Name))
 			cmds = pkg.Commands.Darwin.Uninstall
 		}
 	case "linux":
 		if pkg.Commands.Linux.Uninstall != nil {
-			debugLog("Getting uninstall commands for Linux. Package: %s", pkg.Name)
+			debugLog("Getting uninstall commands for Linux. Package: %s", bolden(pkg.Name))
 			cmds = pkg.Commands.Linux.Uninstall
 		}
 	default:
@@ -57,21 +53,19 @@ func getUninstCmd(pkg Package) []string {
 func getUpdCmd(pkg Package) []string {
 	var cmds []string
 
-	if pkg.Commands.All.Update != nil {
-		cmds = pkg.Commands.All.Uninstall
-	} else {
-		cmds = []string{}
+	if pkg.Commands == nil || pkg.Commands.All == nil || pkg.Commands.All.Update == nil {
+		return []string{}
 	}
 
 	switch runtime.GOOS {
 	case "darwin":
 		if pkg.Commands.Darwin.Update != nil {
-			debugLog("Getting update commands for Darwin. Package: %s", pkg.Name)
+			debugLog("Getting update commands for Darwin. Package: %s", bolden(pkg.Name))
 			cmds = pkg.Commands.Darwin.Update
 		}
 	case "linux":
 		if pkg.Commands.Linux.Update != nil {
-			debugLog("Getting update commands for Linux. Package: %s", pkg.Name)
+			debugLog("Getting update commands for Linux. Package: %s", bolden(pkg.Name))
 			cmds = pkg.Commands.Linux.Update
 		}
 	default:
