@@ -6,16 +6,21 @@ import (
 	"os"
 	"runtime"
 	"strings"
+
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
 )
 
 func loadPackage(packageFile string, pkgName string) Package {
 	var pkg Package
 
+	log(1, "Finding environment variables...")
 	keySlice := make([]string, 0)
 	for key := range environmentVariables {
 		keySlice = append(keySlice, key)
 	}
 
+	log(1, "Replacing environment variables...")
 	for _, key := range keySlice {
 		packageFile = strings.Replace(packageFile, ":("+key+"):", environmentVariables[key], -1)
 	}
@@ -67,8 +72,10 @@ func getDeps(pkg Package) []string {
 		fullDepsList := pkg.Deps.All
 		switch runtime.GOOS {
 		case "darwin":
+			debugLog("Getting dependencies specifically for darwin...")
 			fullDepsList = append(fullDepsList, pkg.Deps.Darwin...)
 		case "linux":
+			debugLog("Getting dependencies specifically for linux...")
 			fullDepsList = append(fullDepsList, pkg.Deps.Linux...)
 		default:
 			log(3, "Unknown OS: %s", runtime.GOOS)
@@ -82,11 +89,24 @@ func cloneRepo(pkg Package) {
 	log(1, "Cloning source code for %s...", pkg.Name)
 	if pkg.Branch == "" {
 		debugLog("Cloning to %s", srcPath+pkg.Name)
-		runCommand(srcPath, "git", "clone", pkg.Url)
+
+		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
+			URL:      pkg.Url,
+			Progress: os.Stdout,
+		})
+
+		errorLog(err, 4, "An error occurred while cloning repository for %s", pkg.Name)
 	} else {
 		log(1, "Getting branch %s%s%s...", textFx["BOLD"], pkg.Branch, RESETCOL)
 		debugLog("Cloning to %s on branch %s", srcPath+pkg.Name, pkg.Branch)
-		runCommand(srcPath, "git", "clone", "-b", pkg.Branch, pkg.Url)
+		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
+			URL:           pkg.Url,
+			Progress:      os.Stdout,
+			ReferenceName: plumbing.ReferenceName(pkg.Branch),
+			SingleBranch:  true,
+		})
+
+		errorLog(err, 4, "An error occurred while cloning repository for %s", pkg.Name)
 	}
 }
 

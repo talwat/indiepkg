@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+const version = "0.6"
+
 var purge, debug, assumeYes bool = false, false, false
 
 var optionToOthers, optionToOther bool = false, false
@@ -71,7 +73,7 @@ func parseInput() {
 				repair()
 
 			case "version":
-				log(1, "Indiepkg Version 0.1.3")
+				log(1, "Indiepkg Version %s", version)
 
 			case "help":
 				fmt.Printf(`Usage: indiepkg [<option>...] <command>
@@ -108,6 +110,6 @@ Examples:
 	}
 
 	if len(others) < 1 {
-		log(1, "Indiepkg Version 0.5, run %sindiepkg help%s for usage.", textFx["BOLD"], RESETCOL)
+		log(1, "Indiepkg Version %s, run %sindiepkg help%s for usage.", version, textFx["BOLD"], RESETCOL)
 	}
 }
