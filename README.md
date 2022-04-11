@@ -1,6 +1,6 @@
 # IndiePKG
 
-A simple package manager written in go for small CLI programs.
+A simple package manager written in go for small CLI programs. It is available on GNU/Linux and macOS.
 
 ## Notice
 
