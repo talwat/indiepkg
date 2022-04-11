@@ -6,7 +6,31 @@ import (
 	"strings"
 )
 
-const version = "0.6"
+const helpMsg = `Usage: indiepkg [<options>...] <command>
+
+Commands:
+  help                       Show this help message.
+  install <packages...>      Installs packages.
+  uninstall <packages...>    Removes packages.
+  update [packages...]       Re-downloads the a package's info & install instructions. If no packages are specified, all packages are updated.
+  upgrade [packages...]      Pulls git repository & recompile's a package. If no package is specified, all packages are upgraded.
+  info <package>             Displays information about a specific package.
+  remove-data <packages...>  Removes package data from .indiepkg. Use this only if a package installation has failed and the uninstall command won't work.
+  sync                       Sync package info & package source.
+  version                    Show version.
+
+Options:
+  -p, --purge                Removes a package's configuration files as well as the package itself.
+  -d, --debug                Displays variable & debugging information.
+  -y, --assumeyes            Assumes yes to all prompts. (Use with caution!)
+
+Examples:
+  indiepkg install my-pkg
+  indiepkg uninstall other-pkg
+  indiepkg upgrade third-pkg
+`
+
+const version = "0.9.1"
 
 var purge, debug, assumeYes bool = false, false, false
 
@@ -43,15 +67,15 @@ func parseInput() {
 			switch other {
 			case "install":
 				optionToOthers = true
-				installPackages(others[i+1:])
+				installPkgs(others[i+1:])
 
 			case "uninstall":
 				optionToOthers = true
-				uninstallPackages(others[i+1:])
+				uninstallPkgs(others[i+1:])
 
 			case "remove-data":
 				optionToOthers = true
-				removeData(others[i+1:])
+				rmData(others[i+1:])
 
 			case "upgrade":
 				if len(others) <= i+1 {
@@ -71,39 +95,19 @@ func parseInput() {
 
 			case "info":
 				optionToOther = true
-				infoPackage(others[i+1])
+				infoPkg(others[i+1])
 
-			case "repair":
-				repair()
+			case "sync":
+				sync()
 
 			case "version":
 				log(1, "Indiepkg Version %s", bolden(version))
 
 			case "help":
-				fmt.Printf(`Usage: indiepkg [<option>...] <command>
-
-Commands:
-  install <packages>...
-  uninstall <packages>...
-  update <packages>...
-  upgrade <packages>...
-  info <package>
-  repair
-  version
-
-Options:
-  -p, --purge
-  -d, --debug
-  -y, --assumeYes
-
-Examples:
-  indiepkg install my-pkg
-  indiepkg uninstall other-pkg
-  indiepkg upgrade third-pkg
-`)
+				fmt.Printf(helpMsg)
 
 			case "list":
-				listPackages()
+				listPkgs()
 
 			default:
 				log(1, "Command %s not found.", bolden(other))

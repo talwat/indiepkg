@@ -8,7 +8,7 @@ func upgradePackage(pkgNames []string) {
 	for _, pkgName := range pkgNames {
 		pkgDisplayName := bolden(pkgName)
 
-		if !packageExists(pkgName) {
+		if !pkgExists(pkgName) {
 			log(3, "%s is not installed, so it can't be upgraded.", pkgDisplayName)
 			continue
 		}
@@ -21,13 +21,13 @@ func upgradePackage(pkgNames []string) {
 			continue
 		}
 
-		pkg := readAndLoad(pkgName)
+		pkg := readLoad(pkgName)
 
 		cmds := getUpdCmd(pkg)
 
 		if len(cmds) > 0 {
 			log(1, "Running upgrade commands for %s...", pkgDisplayName)
-			runCommands(cmds, pkg, srcPath+pkg.Name)
+			runCmds(cmds, pkg, srcPath+pkg.Name)
 		}
 
 		if len(pkg.Bin.In_source) > 0 {
@@ -66,12 +66,12 @@ func upgradeAllPackages() {
 
 		log(1, "Upgrading %s", installedPackageDisplay)
 
-		pkg := readAndLoad(installedPackage)
+		pkg := readLoad(installedPackage)
 
 		cmds := getUpdCmd(pkg)
 
 		if len(cmds) > 0 {
-			runCommands(cmds, pkg, srcPath+pkg.Name)
+			runCmds(cmds, pkg, srcPath+pkg.Name)
 		}
 
 		if len(pkg.Bin.In_source) > 0 {
@@ -83,7 +83,7 @@ func upgradeAllPackages() {
 			}
 		}
 
-		runCommands(getUpdCmd(pkg), pkg, srcPath+pkg.Name)
+		runCmds(getUpdCmd(pkg), pkg, srcPath+pkg.Name)
 	}
 
 	log(0, "Upgraded all packages!")

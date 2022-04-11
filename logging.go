@@ -20,9 +20,22 @@ func log(logTypeInput int, message string, params ...interface{}) {
 	fmt.Printf(logType[logTypeInput]+(" %s\n"), fmt.Sprintf(message, params...))
 }
 
+func logNoNewline(logTypeInput int, message string, params ...interface{}) {
+	fmt.Printf(logType[logTypeInput]+(" %s"), fmt.Sprintf(message, params...))
+}
+
 func errorLog(err error, logTypeInput int, message string, params ...interface{}) {
 	if err != nil {
 		fmt.Printf(logType[logTypeInput]+(" %s. Error: %s\n"), fmt.Sprintf(message, params...), err.Error())
+		if logTypeInput == 4 {
+			os.Exit(1)
+		}
+	}
+}
+
+func errorLogNewlineBefore(err error, logTypeInput int, message string, params ...interface{}) {
+	if err != nil {
+		fmt.Printf("\n"+logType[logTypeInput]+(" %s. Error: %s\n"), fmt.Sprintf(message, params...), err.Error())
 		if logTypeInput == 4 {
 			os.Exit(1)
 		}

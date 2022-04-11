@@ -11,7 +11,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 )
 
-func loadPackage(packageFile string, pkgName string) Package {
+func loadPkg(packageFile string, pkgName string) Package {
 	var pkg Package
 
 	log(1, "Finding environment variables...")
@@ -29,19 +29,19 @@ func loadPackage(packageFile string, pkgName string) Package {
 	return pkg
 }
 
-func readAndLoad(pkgName string) Package {
+func readLoad(pkgName string) Package {
 	packageDisplayName := bolden(pkgName)
 
 	log(1, "Reading package info for %s...", packageDisplayName)
 	pkgFile := readFile(installedPath+pkgName+".json", "An error occurred while reading package %s", packageDisplayName)
 
 	log(1, "Loading package info for %s...", packageDisplayName)
-	pkg := loadPackage(pkgFile, fmt.Sprintf("An error occurred while loading package information for %s", packageDisplayName))
+	pkg := loadPkg(pkgFile, fmt.Sprintf("An error occurred while loading package information for %s", packageDisplayName))
 
 	return pkg
 }
 
-func packageExists(pkgName string) bool {
+func pkgExists(pkgName string) bool {
 	packageDisplayName := bolden(pkgName)
 
 	infoInstalled := pathExists(installedPath+pkgName+".json", "An error occurred while checking if package info for %s exists", packageDisplayName)
@@ -52,15 +52,15 @@ func packageExists(pkgName string) bool {
 	} else if !infoInstalled && !srcInstalled {
 		return false
 	} else {
-		log(4, "Package info or source for %s exists, but not both. Please run %sindiepkg repair%s", packageDisplayName, textFx["BOLD"], RESETCOL)
+		log(4, "Package info or source for %s exists, but not both. Please run %sindiepkg sync%s.", packageDisplayName, textFx["BOLD"], RESETCOL)
 		return false
 	}
 }
 
-func runCommands(commands []string, pkg Package, path string) {
+func runCmds(commands []string, pkg Package, path string) {
 	for _, command := range commands {
-		log(1, "Running command %s%s%s...", textFx["BOLD"], command, RESETCOL)
-		runCommand(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+		logNoNewline(1, "Running command %s", bolden(command))
+		runCommandRealTime(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 	}
 }
 
@@ -123,7 +123,7 @@ func getPkgFromNet(pkgName string) (Package, string) {
 
 	errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
 
-	pkg := loadPackage(packageFile, pkgName)
+	pkg := loadPkg(packageFile, pkgName)
 
 	return pkg, packageFile
 }

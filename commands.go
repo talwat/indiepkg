@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"os"
 	"os/exec"
 	"strconv"
@@ -20,6 +22,26 @@ func runCommand(workDir string, cmd string, args ...string) (string, int) {
 		os.Exit(1)
 	}
 	return strings.TrimSuffix(string(data), "\n"), errCode
+}
+
+func runCommandRealTime(workDir string, cmd string, args ...string) {
+	cmdObj := exec.Command(cmd, args...)
+	cmdObj.Dir = workDir
+
+	stdout, err := cmdObj.StdoutPipe()
+	errorLogNewlineBefore(err, 4, "An error occurred while creating stdout pipe")
+
+	err = cmdObj.Start()
+	errorLogNewlineBefore(err, 4, "An error occurred while starting command")
+
+	scanner := bufio.NewScanner(stdout)
+	for scanner.Scan() {
+		fmt.Printf(textCol["VIOLET"] + "." + RESETCOL)
+	}
+
+	err = cmdObj.Wait()
+	errorLog(err, 4, "An error occurred while waiting for command to finish")
+	fmt.Printf("\n")
 }
 
 func checkIfCommandExists(cmd string) bool {
