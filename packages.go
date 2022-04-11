@@ -8,9 +8,15 @@ import (
 
 var home string = os.Getenv("HOME") + "/"
 
-var srcPath string = home + ".indiepkg/data/package_src/"
-var installedPath string = home + ".indiepkg/data/installed_packages/"
+var mainPath string = home + ".indiepkg/"
+var srcPath string = mainPath + "data/package_src/"
+var installedPath string = mainPath + "data/installed_packages/"
+var bin string = home + ".local/bin/"
 
+type Bin struct {
+	Installed []string
+	In_source []string
+}
 type Commands struct {
 	Install   []string
 	Uninstall []string
@@ -32,8 +38,9 @@ type Package struct {
 	Description  string
 	Url          string
 	Branch       string
+	Bin          *Bin
 	Deps         *Deps
-	Commands     OSCommands
+	Commands     *OSCommands
 	Config_paths []string
 }
 
@@ -87,8 +94,24 @@ func installPackages(pkgNames []string) {
 
 		cloneRepo(pkg)
 
-		log(1, "Running install commands for %s...", pkgName)
-		runCommands(getInstCmd(pkg), pkg, srcPath+pkg.Name)
+		if len(pkg.Bin.In_source) > 0 {
+			log(1, "Copying binary files...")
+			for i := range pkg.Bin.In_source {
+				srcDir := srcPath + pkgName + "/" + pkg.Bin.In_source[i]
+				destDir := bin + pkg.Bin.Installed[i]
+				log(1, "Copying %s to %s...", srcDir, destDir)
+				copyFile(srcDir, destDir)
+				log(1, "Making %s executable...", destDir)
+				changePerms(destDir, 0770)
+			}
+		}
+
+		cmds := getInstCmd(pkg)
+
+		if len(cmds) > 0 {
+			log(1, "Running install commands for %s...", pkgName)
+			runCommands(cmds, pkg, srcPath+pkg.Name)
+		}
 
 		log(0, "Installed %s successfully!\n", pkgName)
 	}
@@ -118,8 +141,18 @@ func uninstallPackages(pkgNames []string) {
 			}
 		}
 
-		log(1, "Running uninstall commands for %s...", pkgName)
-		runCommands(getUninstCmd(pkg), pkg, srcPath+pkg.Name)
+		log(1, "Removing binary files...")
+		for _, path := range pkg.Bin.Installed {
+			log(1, "Removing %s%s%s", textFx["BOLD"], path, RESETCOL)
+			delPath(4, bin+path, "An error occurred while removing binary files for %s", pkgName)
+		}
+
+		cmds := getUninstCmd(pkg)
+
+		if len(cmds) > 0 {
+			log(1, "Running uninstall commands for %s...", pkgName)
+			runCommands(cmds, pkg, srcPath+pkg.Name)
+		}
 
 		log(1, "Deleting source files for %s...", pkgName)
 		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)

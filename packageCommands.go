@@ -3,16 +3,23 @@ package main
 import "runtime"
 
 func getInstCmd(pkg Package) []string {
-	cmds := pkg.Commands.All.Install
+	var cmds []string
+
+	if pkg.Commands.All.Install != nil {
+		cmds = pkg.Commands.All.Install
+	} else {
+		cmds = []string{}
+	}
+
 	switch runtime.GOOS {
 	case "darwin":
-		debugLog("Getting install commands for Darwin. Package: %s", pkg.Name)
-		if pkg.Commands.Darwin != nil {
+		if pkg.Commands.Darwin.Install != nil {
+			debugLog("Getting install commands for Darwin. Package: %s", pkg.Name)
 			cmds = pkg.Commands.Darwin.Install
 		}
 	case "linux":
-		debugLog("Getting install commands for Linux. Package: %s", pkg.Name)
-		if pkg.Commands.Linux != nil {
+		if pkg.Commands.Linux.Install != nil {
+			debugLog("Getting install commands for Linux. Package: %s", pkg.Name)
 			cmds = pkg.Commands.Linux.Install
 		}
 	default:
@@ -22,15 +29,22 @@ func getInstCmd(pkg Package) []string {
 }
 
 func getUninstCmd(pkg Package) []string {
-	cmds := pkg.Commands.All.Uninstall
+	var cmds []string
+
+	if pkg.Commands.All.Update != nil {
+		cmds = pkg.Commands.All.Uninstall
+	} else {
+		cmds = []string{}
+	}
+
 	switch runtime.GOOS {
 	case "darwin":
-		if pkg.Commands.Darwin != nil {
+		if pkg.Commands.Darwin.Uninstall != nil {
 			debugLog("Getting uninstall commands for Darwin. Package: %s", pkg.Name)
 			cmds = pkg.Commands.Darwin.Uninstall
 		}
 	case "linux":
-		if pkg.Commands.Linux != nil {
+		if pkg.Commands.Linux.Uninstall != nil {
 			debugLog("Getting uninstall commands for Linux. Package: %s", pkg.Name)
 			cmds = pkg.Commands.Linux.Uninstall
 		}
@@ -41,16 +55,22 @@ func getUninstCmd(pkg Package) []string {
 }
 
 func getUpdCmd(pkg Package) []string {
-	cmds := pkg.Commands.All.Update
+	var cmds []string
+
+	if pkg.Commands.All.Update != nil {
+		cmds = pkg.Commands.All.Uninstall
+	} else {
+		cmds = []string{}
+	}
 
 	switch runtime.GOOS {
 	case "darwin":
-		if pkg.Commands.Darwin != nil {
+		if pkg.Commands.Darwin.Update != nil {
 			debugLog("Getting update commands for Darwin. Package: %s", pkg.Name)
 			cmds = pkg.Commands.Darwin.Update
 		}
 	case "linux":
-		if pkg.Commands.Linux != nil {
+		if pkg.Commands.Linux.Update != nil {
 			debugLog("Getting update commands for Linux. Package: %s", pkg.Name)
 			cmds = pkg.Commands.Linux.Update
 		}

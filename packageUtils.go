@@ -88,3 +88,24 @@ func infoPackage(pkgName string) {
 		log(1, "Dependencies: %s", strings.Join(deps, ", "))
 	}
 }
+
+func removeData(pkgNames []string) {
+	log(3, "Warning: This will remove the data for the selected packages stored in %s", mainPath)
+	log(3, "This will %snot%s run the uninstall commands.", textFx["BOLD"], RESETCOL)
+	log(1, "Are you sure you would like to remove the data for the following packages:")
+	for _, packageToRemove := range pkgNames {
+		fmt.Println("        " + packageToRemove)
+	}
+
+	confirm("y", "(y/n)")
+
+	for _, pkgName := range pkgNames {
+		log(1, "Deleting source files for %s...", pkgName)
+		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
+
+		log(1, "Deleting info file for %s...", pkgName)
+		delPath(3, installedPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
+
+		log(0, "Successfully deleted the data for %s.\n", pkgName)
+	}
+}

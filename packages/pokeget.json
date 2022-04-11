@@ -4,25 +4,18 @@
     "description": "Display cool sprites of pokemon in your terminal.",
     "url": "https://github.com/talwat/pokeget.git",
     "branch": "testing",
-    "commands": {
-        "all": {
-            "install": [
-                "make install PREFIX=:(PATH):"
-            ],
-            "uninstall": [
-                "rm -v :(PATH):/bin/pokeget"
-            ],
-            "update": [
-                "rm -v :(PATH):/bin/pokeget",
-                "make install PREFIX=:(PATH):"
-            ]
-        }
+    "bin": {
+        "in_source": [
+            "pokeget"
+        ],
+        "installed": [
+            "pokeget"
+        ]
     },
     "deps": {
         "all": [
             "bash",
-            "curl",
-            "make"
+            "curl"
         ]
     },
     "config_paths": [

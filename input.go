@@ -49,6 +49,10 @@ func parseInput() {
 				optionToOthers = true
 				uninstallPackages(others[i+1:])
 
+			case "remove-data":
+				optionToOthers = true
+				removeData(others[i+1:])
+
 			case "upgrade":
 				if len(others) <= i+1 {
 					upgradeAllPackages()

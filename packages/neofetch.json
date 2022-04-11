@@ -3,19 +3,13 @@
     "author": "dylanaraps",
     "description": "A command-line system information tool written in bash 3.2+",
     "url": "https://github.com/dylanaraps/neofetch.git",
-    "commands": {
-        "all": {
-            "install": [
-                "make install PREFIX=:(PATH):"
-            ],
-            "uninstall": [
-                "make uninstall PREFIX=:(PATH):"
-            ],
-            "update": [
-                "make uninstall PREFIX=:(PATH):",
-                "make install PREFIX=:(PATH):"
-            ]   
-        }
+    "bin": {
+        "in_source": [
+            "neofetch"
+        ],
+        "installed": [
+            "neofetch"
+        ]
     },
     "deps": {
         "all": [
