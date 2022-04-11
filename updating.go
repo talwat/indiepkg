@@ -35,6 +35,7 @@ func updateAllPackages() {
 
 	log(1, "Updating all packages...")
 	for _, installedPackage := range installedPackages {
+		log(1, "Downloading package info for %s...", bolden(installedPackage))
 		downloadFile(installedPath+installedPackage+".json", url+installedPackage+".json", "An error occurred while getting package information for %s", bolden(installedPackage))
 	}
 
