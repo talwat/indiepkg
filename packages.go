@@ -118,14 +118,14 @@ func uninstallPackages(pkgNames []string) {
 			}
 		}
 
+		log(1, "Running uninstall commands for %s...", pkgName)
+		runCommands(getUninstCmd(pkg), pkg, srcPath+pkg.Name)
+
 		log(1, "Deleting source files for %s...", pkgName)
 		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
 
 		log(1, "Deleting info file for %s...", pkgName)
 		delPath(3, installedPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
-
-		log(1, "Running uninstall commands for %s...", pkgName)
-		runCommands(getUninstCmd(pkg), pkg, ".")
 
 		log(0, "Successfully uninstalled %s.\n", pkgName)
 	}
