@@ -1,9 +1,13 @@
+---
 name: golangci-lint
+
 on:
   push:
   pull_request:
+
 permissions:
   contents: read
+
 jobs:
   golangci:
     name: lint
