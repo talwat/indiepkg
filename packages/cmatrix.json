@@ -40,7 +40,6 @@
     "deps": {
         "all": [
             "gcc",
-            "g++",
             "autoconf",
             "autoreconf",
             "automake"
