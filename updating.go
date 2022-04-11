@@ -10,7 +10,7 @@ func updatePackage(pkgNames []string) {
 
 		url := "https://raw.githubusercontent.com/talwat/indiepkg/main/packages/" + pkgName + ".json"
 
-		if !packageExists(pkgName) {
+		if !pkgExists(pkgName) {
 			log(3, "%s is not installed, so it can't be updated.", pkgDisplayName)
 			continue
 		}
