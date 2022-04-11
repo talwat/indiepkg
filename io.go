@@ -50,8 +50,8 @@ func readFile(file string, errMsg string, params ...interface{}) string {
 
 func delPath(logLevel int, path string, errMsg string, params ...interface{}) {
 	err := os.RemoveAll(path)
-	debugLog("Deleting %s", path)
-	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
+	debugLog("Deleting %s", bolden(path))
+	errorLog(err, logLevel, fmt.Sprintf(errMsg, params...))
 }
 
 func pathExists(path string, errMsg string, params ...interface{}) bool {
@@ -70,4 +70,9 @@ func dirContents(dir string, errMsg string, params ...interface{}) []fs.FileInfo
 	files, err := ioutil.ReadDir(dir)
 	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
 	return files
+}
+
+func changePerms(file string, perms fs.FileMode) {
+	err := os.Chmod(file, perms)
+	errorLog(err, 4, "An error occurred while changing permissions for the file %s", bolden(file))
 }

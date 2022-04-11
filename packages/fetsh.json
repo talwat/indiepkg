@@ -1,0 +1,19 @@
+{
+    "name": "fetsh",
+    "author": "6gk",
+    "description": "A fetch written in posix shell without any external commands.",
+    "url": "https://github.com/6gk/fet.sh.git",
+    "bin": {
+        "in_source": [
+            "fet.sh"
+        ],
+        "installed": [
+            "fet.sh"
+        ]
+    },
+    "deps": {
+        "all": [
+            "sh"
+        ]
+    }
+}

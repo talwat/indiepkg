@@ -1,0 +1,31 @@
+{
+    "name": "tty-clock",
+    "author": "xorg62",
+    "description": "Clock using lib ncurses",
+    "url": "https://github.com/xorg62/tty-clock.git",
+    "bin": {
+        "in_source": [
+            "tty-clock"
+        ],
+        "installed": [
+            "tty-clock"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "gcc -Wall -Werror -Wextra -std=c99 -pedantic -Wno-unused-parameter -lncurses -o tty-clock ttyclock.c"
+            ],
+            "update": [
+                "make clean",
+                "gcc -Wall -Werror -Wextra -std=c99 -pedantic -Wno-unused-parameter -lncurses -o tty-clock ttyclock.c"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "make"
+        ]
+    }
+}

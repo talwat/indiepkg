@@ -11,7 +11,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 )
 
-func loadPackage(packageFile string, pkgName string) Package {
+func loadPkg(packageFile string, pkgName string) Package {
 	var pkg Package
 
 	log(1, "Finding environment variables...")
@@ -29,35 +29,38 @@ func loadPackage(packageFile string, pkgName string) Package {
 	return pkg
 }
 
-func readAndLoad(packageName string) Package {
-	log(1, "Reading package info for %s...", packageName)
-	pkgFile := readFile(installedPath+packageName+".json", "An error occurred while reading package %s", packageName)
+func readLoad(pkgName string) Package {
+	packageDisplayName := bolden(pkgName)
 
-	log(1, "Loading package info for %s...", packageName)
-	pkg := loadPackage(pkgFile, fmt.Sprintf("An error occurred while loading package information for %s", packageName))
+	log(1, "Reading package info for %s...", packageDisplayName)
+	pkgFile := readFile(installedPath+pkgName+".json", "An error occurred while reading package %s", packageDisplayName)
+
+	log(1, "Loading package info for %s...", packageDisplayName)
+	pkg := loadPkg(pkgFile, fmt.Sprintf("An error occurred while loading package information for %s", packageDisplayName))
 
 	return pkg
 }
 
-func packageExists(pkgName string) bool {
-	infoInstalled := pathExists(installedPath+pkgName+".json", "An error occurred while checking if package info for %s exists", pkgName)
+func pkgExists(pkgName string) bool {
+	packageDisplayName := bolden(pkgName)
 
-	srcInstalled := pathExists(srcPath+pkgName, "An error occurred while checking if package source for %s exists", pkgName)
+	infoInstalled := pathExists(installedPath+pkgName+".json", "An error occurred while checking if package info for %s exists", packageDisplayName)
+	srcInstalled := pathExists(srcPath+pkgName, "An error occurred while checking if package source for %s exists", packageDisplayName)
 
 	if infoInstalled && srcInstalled {
 		return true
 	} else if !infoInstalled && !srcInstalled {
 		return false
 	} else {
-		log(4, "Package info or source for %s exists, but not both. Please run %sindiepkg repair%s", pkgName, textFx["BOLD"], RESETCOL)
+		log(4, "Package info or source for %s exists, but not both. Please run %sindiepkg sync%s.", packageDisplayName, textFx["BOLD"], RESETCOL)
 		return false
 	}
 }
 
-func runCommands(commands []string, pkg Package) {
+func runCmds(commands []string, pkg Package, path string) {
 	for _, command := range commands {
-		log(1, "Running command %s%s%s...", textFx["BOLD"], command, RESETCOL)
-		runCommand(srcPath+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+		logNoNewline(1, "Running command %s", bolden(command))
+		runCommandRealTime(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 	}
 }
 
@@ -86,16 +89,16 @@ func getDeps(pkg Package) []string {
 }
 
 func cloneRepo(pkg Package) {
-	log(1, "Cloning source code for %s...", pkg.Name)
+	log(1, "Cloning source code for %s...", bolden(pkg.Name))
 	if pkg.Branch == "" {
-		debugLog("Cloning to %s", srcPath+pkg.Name)
+		debugLog("Cloning to %s", bolden(srcPath+pkg.Name))
 
 		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
 			URL:      pkg.Url,
 			Progress: os.Stdout,
 		})
 
-		errorLog(err, 4, "An error occurred while cloning repository for %s", pkg.Name)
+		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
 	} else {
 		log(1, "Getting branch %s%s%s...", textFx["BOLD"], pkg.Branch, RESETCOL)
 		debugLog("Cloning to %s on branch %s", srcPath+pkg.Name, pkg.Branch)
@@ -106,7 +109,7 @@ func cloneRepo(pkg Package) {
 			SingleBranch:  true,
 		})
 
-		errorLog(err, 4, "An error occurred while cloning repository for %s", pkg.Name)
+		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
 	}
 }
 
@@ -114,13 +117,13 @@ func getPkgFromNet(pkgName string) (Package, string) {
 	packageFile, err := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
 
 	if errIs404(err) {
-		log(4, "Package %s not found.", pkgName)
+		log(4, "Package %s not found.", bolden(pkgName))
 		os.Exit(1)
 	}
 
-	errorLog(err, 4, "An error occurred while getting package information for %s", pkgName)
+	errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
 
-	pkg := loadPackage(packageFile, pkgName)
+	pkg := loadPkg(packageFile, pkgName)
 
 	return pkg, packageFile
 }

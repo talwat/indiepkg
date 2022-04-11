@@ -1,0 +1,33 @@
+{
+    "name": "bashtop",
+    "author": "aristocratos",
+    "description": "A monitor of resources.",
+    "url": "https://github.com/aristocratos/bashtop.git",
+    "bin": {
+        "installed": [
+            "bashtop"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make",
+                "make install PREFIX=:(PATH):"
+            ],
+            "uninstall": [
+                "make uninstall PREFIX=:(PATH):"
+            ],
+            "update": [
+                "make uninstall PREFIX=:(PATH):",
+                "make install PREFIX=:(PATH):"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "bash",
+            "make",
+            "python3"
+        ]
+    }
+}
