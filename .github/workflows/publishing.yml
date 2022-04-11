@@ -15,10 +15,12 @@ jobs:
         with:
           ref: ${{ github.ref }}
           running-workflow-name: "wait"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.RELEASE_TOKEN }}
           wait-interval: 10
 
   release:
+    env:
+      COMMIT_MESSAGE: github.event.commits[0].message
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.event.commits[0].message, 'Release ') }}
     needs: [wait]
@@ -31,11 +33,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: "Set Environment Variables"
         run: |
-          commitName="${{ github.event.commits[0].message }}"
-          export VERSION=${commitName#*Release }
+          export VERSION=${COMMIT_MESSAGE#*Release }
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: "Package Indiepkg"
+      - name: "Build Indiepkg"
         run: make all
 
       - name: Create Release
