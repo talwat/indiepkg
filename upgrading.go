@@ -16,7 +16,7 @@ func upgradePackage(pkgNames []string) {
 		log(1, "Updating source code for %s...", pkgDisplayName)
 		pullOutput, _ := runCommand(srcPath+pkgName, "git", "pull")
 
-		if !strings.Contains(pullOutput, "Already up to date") {
+		if strings.Contains(pullOutput, "Already up to date") {
 			log(0, "%s already up to date.", pkgDisplayName)
 			continue
 		}
