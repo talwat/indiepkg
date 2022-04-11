@@ -29,27 +29,30 @@ func loadPackage(packageFile string, pkgName string) Package {
 	return pkg
 }
 
-func readAndLoad(packageName string) Package {
-	log(1, "Reading package info for %s...", packageName)
-	pkgFile := readFile(installedPath+packageName+".json", "An error occurred while reading package %s", packageName)
+func readAndLoad(pkgName string) Package {
+	packageDisplayName := bolden(pkgName)
 
-	log(1, "Loading package info for %s...", packageName)
-	pkg := loadPackage(pkgFile, fmt.Sprintf("An error occurred while loading package information for %s", packageName))
+	log(1, "Reading package info for %s...", packageDisplayName)
+	pkgFile := readFile(installedPath+pkgName+".json", "An error occurred while reading package %s", packageDisplayName)
+
+	log(1, "Loading package info for %s...", packageDisplayName)
+	pkg := loadPackage(pkgFile, fmt.Sprintf("An error occurred while loading package information for %s", packageDisplayName))
 
 	return pkg
 }
 
 func packageExists(pkgName string) bool {
-	infoInstalled := pathExists(installedPath+pkgName+".json", "An error occurred while checking if package info for %s exists", pkgName)
+	packageDisplayName := bolden(pkgName)
 
-	srcInstalled := pathExists(srcPath+pkgName, "An error occurred while checking if package source for %s exists", pkgName)
+	infoInstalled := pathExists(installedPath+pkgName+".json", "An error occurred while checking if package info for %s exists", packageDisplayName)
+	srcInstalled := pathExists(srcPath+pkgName, "An error occurred while checking if package source for %s exists", packageDisplayName)
 
 	if infoInstalled && srcInstalled {
 		return true
 	} else if !infoInstalled && !srcInstalled {
 		return false
 	} else {
-		log(4, "Package info or source for %s exists, but not both. Please run %sindiepkg repair%s", pkgName, textFx["BOLD"], RESETCOL)
+		log(4, "Package info or source for %s exists, but not both. Please run %sindiepkg repair%s", packageDisplayName, textFx["BOLD"], RESETCOL)
 		return false
 	}
 }
