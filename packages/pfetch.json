@@ -6,14 +6,16 @@
     "commands": {
         "all": {
             "install": [
-                "make install PREFIX=:(PATH):"
+                "cp pfetch :(BIN):",
+                "chmod +x :(BIN):/pfetch"
             ],
             "uninstall": [
-                "make uninstall PREFIX=:(PATH):"
+                "rm :(BIN):/pfetch"
             ],
             "update": [
-                "make uninstall PREFIX=:(PATH):",
-                "make install PREFIX=:(PATH):"
+                "rm :(BIN):/pfetch",
+                "cp pfetch :(BIN):",
+                "chmod +x :(BIN):/pfetch"
             ]   
         }
     },
