@@ -3,6 +3,11 @@
     "author": "aristocratos",
     "description": "A monitor of resources.",
     "url": "https://github.com/aristocratos/btop.git",
+    "bin": {
+        "installed": [
+            "btop"
+        ]
+    },
     "commands": {
         "all": {
             "install": [

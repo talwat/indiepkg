@@ -3,21 +3,13 @@
     "author": "6gk",
     "description": "A fetch written in posix shell without any external commands.",
     "url": "https://github.com/6gk/fet.sh.git",
-    "commands": {
-        "all": {
-            "install": [
-                "cp fet.sh :(BIN):",
-                "chmod +x :(BIN):/fet.sh"
-            ],
-            "uninstall": [
-                "rm :(BIN):/fet.sh"
-            ],
-            "update": [
-                "rm :(BIN):/fet.sh",
-                "cp fet.sh :(BIN):",
-                "chmod +x :(BIN):/fet.sh"
-            ]   
-        }
+    "bin": {
+        "in_source": [
+            "fet.sh"
+        ],
+        "installed": [
+            "fet.sh"
+        ]
     },
     "deps": {
         "all": [

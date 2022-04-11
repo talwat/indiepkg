@@ -4,6 +4,14 @@
     "description": "this is my awesome package description",
     "url": "https://github.com/username/repo.git",
     "branch": "my branch",
+    "bin": {
+        "in_source": [
+            "bin/my_file"
+        ],
+        "installed": [
+            "my_file"
+        ]
+    },
     "commands": {
         "all": {
             "install": [
