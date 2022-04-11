@@ -39,7 +39,8 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 		fmt.Printf(textCol["VIOLET"] + "." + RESETCOL)
 	}
 
-	cmdObj.Wait()
+	err = cmdObj.Wait()
+	errorLog(err, 4, "An error occurred while waiting for command to finish")
 	fmt.Printf("\n")
 }
 

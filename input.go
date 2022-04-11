@@ -30,7 +30,7 @@ Examples:
   indiepkg upgrade third-pkg
 `
 
-const version = "0.9"
+const version = "0.9.1"
 
 var purge, debug, assumeYes bool = false, false, false
 
