@@ -1,0 +1,25 @@
+{
+    "name": "pfetch",
+    "author": "dylanaraps",
+    "description": "A pretty system information tool written in POSIX sh.",
+    "url": "https://github.com/dylanaraps/pfetch.git",
+    "commands": {
+        "all": {
+            "install": [
+                "make install PATH=:(PATH):"
+            ],
+            "uninstall": [
+                "make uninstall PATH=:(PATH):"
+            ],
+            "update": [
+                "make uninstall PATH=:(PATH):",
+                "make install PATH=:(PATH):"
+            ]   
+        }
+    },
+    "deps": {
+        "all": [
+            "sh"
+        ]
+    }
+}
