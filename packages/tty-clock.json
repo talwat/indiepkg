@@ -2,7 +2,7 @@
     "name": "tty-clock",
     "author": "xorg62",
     "description": "Clock using lib ncurses",
-    "url": "https://github.com/aristocratos/btop.git",
+    "url": "https://github.com/xorg62/tty-clock.git",
     "bin": {
         "in_source": [
             "tty-clock"
