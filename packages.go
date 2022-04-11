@@ -11,11 +11,20 @@ var home string = os.Getenv("HOME") + "/"
 var srcPath string = home + ".indiepkg/data/package_src/"
 var installedPath string = home + ".indiepkg/data/installed_packages/"
 
+type Commands struct {
+	Install   []string
+	Uninstall []string
+	Update    []string
+}
+type OSCommands struct {
+	All    Commands
+	Linux  *Commands
+	Darwin *Commands
+}
 type Deps struct {
-	All     []string
-	Linux   []string
-	Darwin  []string
-	Freebsd []string
+	All    []string
+	Linux  []string
+	Darwin []string
 }
 type Package struct {
 	Name         string
@@ -23,11 +32,9 @@ type Package struct {
 	Description  string
 	Url          string
 	Branch       string
-	Install      []string
-	Uninstall    []string
-	Update       []string
-	Config_paths []string
 	Deps         *Deps
+	Commands     OSCommands
+	Config_paths []string
 }
 
 var environmentVariables = map[string]string{
@@ -81,7 +88,7 @@ func installPackages(pkgNames []string) {
 		cloneRepo(pkg)
 
 		log(1, "Running install commands for %s...", pkgName)
-		runCommands(pkg.Install, pkg)
+		runCommands(getInstCmd(pkg), pkg)
 
 		log(0, "Installed %s successfully!\n", pkgName)
 	}
@@ -112,7 +119,7 @@ func uninstallPackages(pkgNames []string) {
 		}
 
 		log(1, "Running uninstall commands for %s...", pkgName)
-		runCommands(pkg.Uninstall, pkg)
+		runCommands(getUninstCmd(pkg), pkg)
 
 		log(1, "Deleting source files for %s...", pkgName)
 		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
@@ -121,18 +128,5 @@ func uninstallPackages(pkgNames []string) {
 		delPath(3, installedPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
 
 		log(0, "Successfully uninstalled %s.\n", pkgName)
-	}
-}
-
-func infoPackage(pkgName string) {
-	pkg, _ := getPkgFromNet(pkgName)
-	log(1, "Name: %s", pkg.Name)
-	log(1, "Author: %s", pkg.Author)
-	log(1, "Description: %s", pkg.Description)
-	log(1, "Git URL: %s", pkg.Url)
-
-	deps := getDeps(pkg)
-	if deps != nil {
-		log(1, "Dependencies: %s", strings.Join(deps, ", "))
 	}
 }

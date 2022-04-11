@@ -4,22 +4,53 @@
     "description": "this is my awesome package description",
     "url": "https://github.com/username/repo.git",
     "branch": "my branch",
-    "install": [
-        "./configure",
-        "make",
-        "make install PATH=':(PATH):'"
-    ],
-    "uninstall": [
-        "rm :(PATH):/bin/my_file"
-    ],
-    "update": [
-        "rm :(PATH):/bin/my_file",
-        "make",
-        "make install PATH=:(PATH):"
-    ],
-    "config_paths": [
-        ".config/my_pkg"
-    ],
+    "commands": {
+        "all": {
+            "install": [
+                "./configure",
+                "make",
+                "make install PATH=':(PATH):'"
+            ],
+            "uninstall": [
+                "rm :(PATH):/bin/my_file"
+            ],
+            "update": [
+                "rm :(PATH):/bin/my_file",
+                "make",
+                "make install PATH=:(PATH):"
+            ]   
+        },
+        "linux": {
+            "install": [
+                "./configure",
+                "make",
+                "make install PATH=:(PATH):"
+            ],
+            "uninstall": [
+                "rm :(PATH):/bin/my_file"
+            ],
+            "update": [
+                "rm :(PATH):/bin/my_file",
+                "make",
+                "make install PATH=:(PATH):"
+            ]   
+        },
+        "darwin": {
+            "install": [
+                "./configure",
+                "gmake",
+                "gmake install PATH=':(PATH):'"
+            ],
+            "uninstall": [
+                "rm :(PATH):/bin/my_file"
+            ],
+            "update": [
+                "rm :(PATH):/bin/my_file",
+                "gmake",
+                "gmake install PATH=:(PATH):"
+            ]   
+        }
+    },
     "deps": {
         "all": [
             "hello-world"
@@ -31,9 +62,9 @@
         "darwin": [
             "my-other-dep",
             "coreutils"
-        ],
-        "freebsd": [
-            "my-third-dep"
         ]
-    }
+    },
+    "config_paths": [
+        ".config/my_pkg"
+    ]
 }

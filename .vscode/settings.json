@@ -2,6 +2,7 @@
     "cSpell.words": [
         "aristocratos",
         "btop",
+        "cmds",
         "coreutils",
         "deadcode",
         "Deps",
@@ -14,6 +15,7 @@
         "pokeget",
         "staticcheck",
         "Talwat",
-        "textpy"
+        "textpy",
+        "Uninst"
     ]
 }

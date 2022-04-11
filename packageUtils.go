@@ -75,3 +75,16 @@ func repair() {
 		log(1, "Nothing repaired.")
 	}
 }
+
+func infoPackage(pkgName string) {
+	pkg, _ := getPkgFromNet(pkgName)
+	log(1, "Name: %s", pkg.Name)
+	log(1, "Author: %s", pkg.Author)
+	log(1, "Description: %s", pkg.Description)
+	log(1, "Git URL: %s", pkg.Url)
+
+	deps := getDeps(pkg)
+	if deps != nil {
+		log(1, "Dependencies: %s", strings.Join(deps, ", "))
+	}
+}

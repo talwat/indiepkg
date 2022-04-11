@@ -68,8 +68,6 @@ func getDeps(pkg Package) []string {
 		switch runtime.GOOS {
 		case "darwin":
 			fullDepsList = append(fullDepsList, pkg.Deps.Darwin...)
-		case "freebsd":
-			fullDepsList = append(fullDepsList, pkg.Deps.Freebsd...)
 		case "linux":
 			fullDepsList = append(fullDepsList, pkg.Deps.Linux...)
 		default:
