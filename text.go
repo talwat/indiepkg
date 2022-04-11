@@ -58,3 +58,7 @@ var lightTextBgCol = map[string]string{
 	"BEIGE":  "\x1B[106m",
 	"WHITE":  "\x1B[107m",
 }
+
+func bolden(text string) string {
+	return textFx["BOLD"] + text + RESETCOL
+}

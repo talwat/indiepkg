@@ -34,7 +34,7 @@ func parseInput() {
 		case "-y", "--assumeYes":
 			assumeYes = true
 		default:
-			log(1, "Flag %s not found.", flag)
+			log(1, "Flag %s not found.", bolden(flag))
 		}
 	}
 
@@ -77,7 +77,7 @@ func parseInput() {
 				repair()
 
 			case "version":
-				log(1, "Indiepkg Version %s", version)
+				log(1, "Indiepkg Version %s", bolden(version))
 
 			case "help":
 				fmt.Printf(`Usage: indiepkg [<option>...] <command>
@@ -106,7 +106,7 @@ Examples:
 				listPackages()
 
 			default:
-				log(1, "Command %s not found.", other)
+				log(1, "Command %s not found.", bolden(other))
 			}
 		}
 
@@ -114,6 +114,6 @@ Examples:
 	}
 
 	if len(others) < 1 {
-		log(1, "Indiepkg Version %s, run %sindiepkg help%s for usage.", version, textFx["BOLD"], RESETCOL)
+		log(1, "Indiepkg Version %s, run %sindiepkg help%s for usage.", bolden(version), textFx["BOLD"], RESETCOL)
 	}
 }

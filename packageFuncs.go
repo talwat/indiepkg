@@ -86,16 +86,16 @@ func getDeps(pkg Package) []string {
 }
 
 func cloneRepo(pkg Package) {
-	log(1, "Cloning source code for %s...", pkg.Name)
+	log(1, "Cloning source code for %s...", bolden(pkg.Name))
 	if pkg.Branch == "" {
-		debugLog("Cloning to %s", srcPath+pkg.Name)
+		debugLog("Cloning to %s", bolden(srcPath+pkg.Name))
 
 		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
 			URL:      pkg.Url,
 			Progress: os.Stdout,
 		})
 
-		errorLog(err, 4, "An error occurred while cloning repository for %s", pkg.Name)
+		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
 	} else {
 		log(1, "Getting branch %s%s%s...", textFx["BOLD"], pkg.Branch, RESETCOL)
 		debugLog("Cloning to %s on branch %s", srcPath+pkg.Name, pkg.Branch)
@@ -106,7 +106,7 @@ func cloneRepo(pkg Package) {
 			SingleBranch:  true,
 		})
 
-		errorLog(err, 4, "An error occurred while cloning repository for %s", pkg.Name)
+		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
 	}
 }
 
@@ -114,11 +114,11 @@ func getPkgFromNet(pkgName string) (Package, string) {
 	packageFile, err := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
 
 	if errIs404(err) {
-		log(4, "Package %s not found.", pkgName)
+		log(4, "Package %s not found.", bolden(pkgName))
 		os.Exit(1)
 	}
 
-	errorLog(err, 4, "An error occurred while getting package information for %s", pkgName)
+	errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
 
 	pkg := loadPackage(packageFile, pkgName)
 
