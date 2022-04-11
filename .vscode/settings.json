@@ -16,6 +16,7 @@
         "nolint",
         "Pkgs",
         "pokeget",
+        "shellcheck",
         "staticcheck",
         "Talwat",
         "textpy",
