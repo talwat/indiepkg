@@ -24,11 +24,11 @@ func getUninstCmd(pkg Package) []string {
 	switch runtime.GOOS {
 	case "darwin":
 		if pkg.Commands.Darwin != nil {
-			cmds = append(cmds, pkg.Commands.Darwin.Uninstall...)
+			cmds = pkg.Commands.Darwin.Uninstall
 		}
 	case "linux":
 		if pkg.Commands.Linux != nil {
-			cmds = append(cmds, pkg.Commands.Linux.Uninstall...)
+			cmds = pkg.Commands.Linux.Uninstall
 		}
 	default:
 		log(3, "Unknown OS: %s", runtime.GOOS)
@@ -38,14 +38,15 @@ func getUninstCmd(pkg Package) []string {
 
 func getUpdCmd(pkg Package) []string {
 	cmds := pkg.Commands.All.Update
+
 	switch runtime.GOOS {
 	case "darwin":
 		if pkg.Commands.Darwin != nil {
-			cmds = append(cmds, pkg.Commands.Darwin.Update...)
+			cmds = pkg.Commands.Darwin.Update
 		}
 	case "linux":
 		if pkg.Commands.Linux != nil {
-			cmds = append(cmds, pkg.Commands.Linux.Update...)
+			cmds = pkg.Commands.Linux.Update
 		}
 	default:
 		log(3, "Unknown OS: %s", runtime.GOOS)
