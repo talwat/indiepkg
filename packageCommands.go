@@ -39,8 +39,8 @@ func getUninstCmd(pkg Package) []string {
 		return []string{}
 	}
 
-	if pkg.Commands.All != nil && pkg.Commands.All.Install != nil {
-		cmds = pkg.Commands.All.Install
+	if pkg.Commands.All != nil && pkg.Commands.All.Uninstall != nil {
+		cmds = pkg.Commands.All.Uninstall
 	}
 
 	switch runtime.GOOS {
@@ -67,8 +67,8 @@ func getUpdCmd(pkg Package) []string {
 		return []string{}
 	}
 
-	if pkg.Commands.All != nil && pkg.Commands.All.Install != nil {
-		cmds = pkg.Commands.All.Install
+	if pkg.Commands.All != nil && pkg.Commands.All.Update != nil {
+		cmds = pkg.Commands.All.Update
 	}
 
 	switch runtime.GOOS {
