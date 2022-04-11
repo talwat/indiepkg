@@ -20,7 +20,7 @@ jobs:
 
   release:
     env:
-      COMMIT_MESSAGE: github.event.commits[0].message
+      COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.event.commits[0].message, 'Release ') }}
     needs: [wait]
