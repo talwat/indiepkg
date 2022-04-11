@@ -96,6 +96,13 @@ func installPackages(pkgNames []string) {
 
 		cloneRepo(pkg)
 
+		cmds := getInstCmd(pkg)
+
+		if len(cmds) > 0 {
+			log(1, "Running install commands for %s...", pkgDisplayName)
+			runCommands(cmds, pkg, srcPath+pkg.Name)
+		}
+
 		if len(pkg.Bin.In_source) > 0 {
 			log(1, "Copying binary files for %s...", pkgDisplayName)
 			for i := range pkg.Bin.In_source {
@@ -106,13 +113,6 @@ func installPackages(pkgNames []string) {
 				log(1, "Making %s executable...", bolden(destDir))
 				changePerms(destDir, 0770)
 			}
-		}
-
-		cmds := getInstCmd(pkg)
-
-		if len(cmds) > 0 {
-			log(1, "Running install commands for %s...", pkgDisplayName)
-			runCommands(cmds, pkg, srcPath+pkg.Name)
 		}
 
 		log(0, "Installed %s successfully!\n", pkgDisplayName)

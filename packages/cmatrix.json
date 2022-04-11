@@ -1,0 +1,55 @@
+{
+    "name": "cmatrix",
+    "author": "abishekvashok",
+    "description": "Terminal based \"The Matrix\" like implementation.",
+    "url": "https://github.com/abishekvashok/cmatrix.git",
+    "bin": {
+        "in_source": [
+            "cmatrix"
+        ],
+        "installed": [
+            "cmatrix"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "autoreconf -i",
+                "./configure",
+                "make"
+            ],
+            "update": [
+                "autoreconf -i",
+                "./configure",
+                "make"
+            ]
+        },
+        "darwin": {
+            "install": [
+                "autoreconf -i",
+                "./configure",
+                "gmake"
+            ],
+            "update": [
+                "autoreconf -i",
+                "./configure",
+                "gmake"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "g++",
+            "autoconf",
+            "autoreconf",
+            "automake"
+        ],
+        "linux": [
+            "make"
+        ],
+        "darwin": [
+            "gmake"
+        ]
+    }
+}
