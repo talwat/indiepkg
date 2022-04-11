@@ -6,6 +6,7 @@
         "automake",
         "autoreconf",
         "avto",
+        "bashtop",
         "btop",
         "cmatrix",
         "cmds",
@@ -20,6 +21,7 @@
         "golangci",
         "Indiepkg",
         "lewagon",
+        "lncurses",
         "neofetch",
         "nolint",
         "pfetch",
@@ -29,7 +31,11 @@
         "staticcheck",
         "Talwat",
         "textpy",
+        "ttyclock",
         "Uninst",
-        "vtop"
+        "vtop",
+        "Werror",
+        "Wextra",
+        "xorg"
     ]
 }
