@@ -4,7 +4,7 @@ import "runtime"
 
 func getInstCmd(pkg Package) []string {
 	cmds := pkg.Commands.All.Install
-	switch "darwin" {
+	switch runtime.GOOS {
 	case "darwin":
 		if pkg.Commands.Darwin != nil {
 			cmds = pkg.Commands.Darwin.Install
