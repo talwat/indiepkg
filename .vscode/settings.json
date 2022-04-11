@@ -10,17 +10,22 @@
         "Deps",
         "devmasx",
         "distclean",
+        "dylanaraps",
+        "fetsh",
         "gmake",
         "golangci",
         "Indiepkg",
         "lewagon",
+        "neofetch",
         "nolint",
+        "pfetch",
         "Pkgs",
         "pokeget",
         "shellcheck",
         "staticcheck",
         "Talwat",
         "textpy",
-        "Uninst"
+        "Uninst",
+        "vtop"
     ]
 }
