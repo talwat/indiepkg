@@ -18,10 +18,3 @@ all:
 	@mv indiepkg output/indiepkg-linux_amd64
 	@env GOOS=linux GOARCH=386 go build
 	@mv indiepkg output/indiepkg-linux_i386
-
-	@env GOOS=freebsd GOARCH=386 go build
-	@mv indiepkg output/indiepkg-freebsd_i386
-	@env GOOS=freebsd GOARCH=amd64 go build
-	@mv indiepkg output/indiepkg-freebsd_amd64
-	@env GOOS=freebsd GOARCH=arm go build
-	@mv indiepkg output/indiepkg-freebsd_arm
