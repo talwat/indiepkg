@@ -38,8 +38,13 @@
     "deps": {
         "all": [
             "gcc",
-            "g++",
+            "g++"
+        ],
+        "linux": [
             "make"
+        ],
+        "darwin": [
+            "gmake"
         ]
     }
 }
