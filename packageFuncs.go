@@ -102,7 +102,7 @@ func cloneRepo(pkg Package) {
 		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
 			URL:           pkg.Url,
 			Progress:      os.Stdout,
-			ReferenceName: plumbing.ReferenceName(pkg.Branch),
+			ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", pkg.Branch)),
 			SingleBranch:  true,
 		})
 
