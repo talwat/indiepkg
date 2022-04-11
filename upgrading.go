@@ -17,7 +17,7 @@ func upgradePackage(pkgNames []string) {
 		runCommand(srcPath+pkgName, "git", "pull")
 
 		log(1, "Running upgrade commands...")
-		runCommands(getUpdCmd(pkg), pkg)
+		runCommands(getUpdCmd(pkg), pkg, srcPath+pkg.Name)
 
 		log(0, "Successfully upgraded %s!\n", pkgName)
 	}
@@ -41,7 +41,7 @@ func upgradeAllPackages() {
 
 		pkg := readAndLoad(installedPackage)
 
-		runCommands(getUpdCmd(pkg), pkg)
+		runCommands(getUpdCmd(pkg), pkg, srcPath+pkg.Name)
 	}
 
 	log(0, "Upgraded all packages!")

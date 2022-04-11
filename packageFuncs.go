@@ -54,10 +54,10 @@ func packageExists(pkgName string) bool {
 	}
 }
 
-func runCommands(commands []string, pkg Package) {
+func runCommands(commands []string, pkg Package, path string) {
 	for _, command := range commands {
 		log(1, "Running command %s%s%s...", textFx["BOLD"], command, RESETCOL)
-		runCommand(srcPath+pkg.Name, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+		runCommand(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 	}
 }
 
