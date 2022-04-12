@@ -63,9 +63,11 @@ func installPkgs(pkgNames []string) {
 	for _, pkgName := range pkgNames {
 		pkgDispName := bolden(pkgName)
 
-		if pkgExists(pkgName) {
+		if pkgExists(pkgName) && !force {
 			log(4, "%s is already installed, can't install %s.", pkgDispName, pkgDispName)
 			os.Exit(1)
+		} else if force {
+			log(3, "%s is already installed, but force is on, so continuing.", pkgDispName)
 		}
 
 		pkg := downloadPkg(pkgName, true)
@@ -77,6 +79,8 @@ func installPkgs(pkgNames []string) {
 			for _, dep := range deps {
 				if checkIfCommandExists(dep) {
 					log(0, "%s found!", bolden(dep))
+				} else if force {
+					log(3, "%s not found, but force is set, so continuing.", bolden(dep))
 				} else {
 					log(4, "%s is either not installed or not in PATH. Please install it with your operating system's package manager.", bolden(dep))
 					os.Exit(1)
@@ -92,17 +96,7 @@ func installPkgs(pkgNames []string) {
 
 		runCmds(cmds, pkg, srcPath+pkg.Name, "install")
 
-		if len(pkg.Bin.In_source) > 0 {
-			log(1, "Copying binary files for %s...", pkgDispName)
-			for i := range pkg.Bin.In_source {
-				srcDir := srcPath + pkgName + "/" + pkg.Bin.In_source[i]
-				destDir := bin + pkg.Bin.Installed[i]
-				log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
-				copyFile(srcDir, destDir)
-				log(1, "Making %s executable...", bolden(destDir))
-				changePerms(destDir, 0770)
-			}
-		}
+		copyBins(pkg)
 
 		log(0, "Installed %s successfully!\n", pkgDispName)
 	}
@@ -119,9 +113,11 @@ func uninstallPkgs(pkgNames []string) {
 	for _, pkgName := range pkgNames {
 		pkgDispName := bolden(pkgName)
 
-		if !pkgExists(pkgName) {
+		if !pkgExists(pkgName) && !force {
 			log(3, "%s is not installed, so it can't be uninstalled", pkgDispName)
-			continue
+			os.Exit(1)
+		} else if force {
+			log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
 		}
 
 		pkg := readLoad(pkgName)

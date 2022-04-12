@@ -19,6 +19,7 @@ Options:
   -p, --purge                Removes a package's configuration files as well as the package itself.
   -d, --debug                Displays variable & debugging information.
   -y, --assumeyes            Assumes yes to all prompts. (Use with caution!)
+  -f, --force                Bypasses all checks before preforming an action. Use will almost certainly lead to an error.
 
 Examples:
   indiepkg install my-pkg
