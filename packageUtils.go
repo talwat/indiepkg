@@ -22,7 +22,7 @@ func listPkgs() {
 }
 
 func sync() {
-	initDirs(false, "Making required directories...")
+	initDirs(false)
 
 	dirs := dirContents(srcPath, "An error occurred while getting list of source files")
 

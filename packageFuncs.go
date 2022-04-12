@@ -44,8 +44,8 @@ func readLoad(pkgName string) Package {
 func pkgExists(pkgName string) bool {
 	packageDisplayName := bolden(pkgName)
 
-	infoInstalled := pathExists(installedPath+pkgName+".json", "An error occurred while checking if package info for %s exists", packageDisplayName)
-	srcInstalled := pathExists(srcPath+pkgName, "An error occurred while checking if package source for %s exists", packageDisplayName)
+	infoInstalled := pathExists(installedPath+pkgName+".json", "package info for %s", packageDisplayName)
+	srcInstalled := pathExists(srcPath+pkgName, "package source for %s", packageDisplayName)
 
 	if infoInstalled && srcInstalled {
 		return true
@@ -67,18 +67,18 @@ func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 	}
 }
 
-func initDirs(reset bool, msg string, params ...interface{}) {
-	log(1, fmt.Sprintf(msg, params...))
+func initDirs(reset bool) {
+	log(1, "Making required directories & files...")
 	newDir(srcPath, "An error occurred while creating sources directory")
 	newDir(installedPath, "An error occurred while creating info directory")
 	newDir(config, "An error occurred while creating config directory")
 
-	if !pathExists(config+"config.json", "An error occurred while checking if config file exists") || reset {
+	if !pathExists(config+"config.json", "config file") || reset {
 		log(1, "Creating config file...")
 		newFile(config+"config.json", defaultConf, "An error occurred while creating config file")
 	}
 
-	if !pathExists(config+"sources.txt", "An error occurred while checking if sources file exists") || reset {
+	if !pathExists(config+"sources.txt", "sources file") || reset {
 		log(1, "Creating sources file...")
 		newFile(config+"sources.txt", defaultSources, "An error occurred while creating sources file")
 	}
