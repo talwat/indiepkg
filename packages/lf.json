@@ -1,0 +1,29 @@
+{
+    "name": "lf",
+    "author": "gokcehan",
+    "description": "Terminal file manager",
+    "url": "https://github.com/gokcehan/lf.git",
+    "bin": {
+        "in_source": [
+            "lf"
+        ],
+        "installed": [
+            "lf"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build ."
+            ],
+            "update": [
+                "go build ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}
