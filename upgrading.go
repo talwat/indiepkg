@@ -22,11 +22,9 @@ func upgradePackage(pkgNames []string) {
 		}
 
 		pkg := readLoad(pkgName)
-
 		cmds := getUpdCmd(pkg)
 
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
-
 		copyBins(pkg)
 
 		log(0, "Successfully upgraded %s!\n", pkgName)
@@ -54,14 +52,10 @@ func upgradeAllPackages() {
 		log(1, "Upgrading %s...", installedPackageDisplay)
 
 		pkg := readLoad(installedPackage)
-
 		cmds := getUpdCmd(pkg)
 
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
-
 		copyBins(pkg)
-
-		runCmds(getUpdCmd(pkg), pkg, srcPath+pkg.Name, "upgrade")
 	}
 
 	log(0, "Upgraded all packages!")

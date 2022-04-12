@@ -98,6 +98,9 @@ func parseInput() {
 			case "list":
 				listPkgs()
 
+			case "init":
+				initDirs(true)
+
 			default:
 				log(1, "Command %s not found.", bolden(other))
 			}
