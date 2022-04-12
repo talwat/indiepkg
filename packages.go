@@ -12,6 +12,7 @@ var mainPath string = home + ".indiepkg/"
 var srcPath string = mainPath + "data/package_src/"
 var installedPath string = mainPath + "data/installed_packages/"
 var bin string = home + ".local/bin/"
+var config string = mainPath + "config/"
 
 type Bin struct {
 	Installed []string
@@ -60,18 +61,12 @@ func installPkgs(pkgNames []string) {
 	for _, pkgName := range pkgNames {
 		pkgDispName := bolden(pkgName)
 
-		pkgInfoPath := installedPath + pkgName + ".json"
-		url := "https://raw.githubusercontent.com/talwat/indiepkg/main/packages/" + pkgName + ".json"
-
 		if pkgExists(pkgName) {
 			log(4, "%s is already installed, can't install %s.", pkgDispName, pkgDispName)
 			os.Exit(1)
 		}
 
-		log(1, "Getting package info for %s...", pkgDispName)
-		log(1, "URL: %s", url)
-
-		pkg, pkgFile := getPkgFromNet(pkgName)
+		pkg := downloadPkg(pkgName, true)
 
 		log(1, "Checking dependencies for %s...", pkgDispName)
 		deps := getDeps(pkg)
@@ -89,19 +84,13 @@ func installPkgs(pkgNames []string) {
 			log(1, "No dependencies found.")
 		}
 
-		initDirs("Making required directories for %s...", pkgDispName)
-
-		log(1, "Writing package info for %s...", pkgDispName)
-		newFile(pkgInfoPath, pkgFile, "An error occurred while writing package information for %s", pkgName)
+		initDirs(false, "Making required directories for %s...", pkgDispName)
 
 		cloneRepo(pkg)
 
 		cmds := getInstCmd(pkg)
 
-		if len(cmds) > 0 {
-			log(1, "Running install commands for %s...", pkgDispName)
-			runCmds(cmds, pkg, srcPath+pkg.Name)
-		}
+		runCmds(cmds, pkg, srcPath+pkg.Name, "install")
 
 		if len(pkg.Bin.In_source) > 0 {
 			log(1, "Copying binary files for %s...", pkgDispName)
@@ -155,10 +144,7 @@ func uninstallPkgs(pkgNames []string) {
 
 		cmds := getUninstCmd(pkg)
 
-		if len(cmds) > 0 {
-			log(1, "Running uninstall commands for %s...", pkgDispName)
-			runCmds(cmds, pkg, srcPath+pkg.Name)
-		}
+		runCmds(cmds, pkg, srcPath+pkg.Name, "uninstall")
 
 		log(1, "Deleting source files for %s...", pkgDispName)
 		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)

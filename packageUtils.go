@@ -22,7 +22,7 @@ func listPkgs() {
 }
 
 func sync() {
-	initDirs("Making required directories...")
+	initDirs(false, "Making required directories...")
 
 	dirs := dirContents(srcPath, "An error occurred while getting list of source files")
 
@@ -36,7 +36,7 @@ func sync() {
 	}
 
 	for _, pkgToSync := range pkgInfoToSync {
-		downloadFile(installedPath+pkgToSync+".json", "https://raw.githubusercontent.com/talwat/indiepkg/main/pkgs/"+pkgToSync+".json", "An error occurred while downloading pkg information for %s", pkgToSync)
+		downloadPkg(pkgToSync, false)
 	}
 
 	infoFiles := dirContents(installedPath, "An error occurred while getting list of info files")
@@ -50,12 +50,8 @@ func sync() {
 		}
 	}
 
-	for _, pkgToSync := range pkgInfoToSync {
-		log(1, "Downloading package info for %s...", pkgToSync)
-		downloadFile(installedPath+pkgToSync+".json", "https://raw.githubusercontent.com/talwat/indiepkg/main/pkgs/"+pkgToSync+".json", "An error occurred while downloading pkg information for %s", pkgToSync)
-	}
-
 	for _, pkgToSync := range pkgSrcToSync {
+		log(1, "Cloning package source for %s...", pkgToSync)
 		cloneRepo(readLoad(pkgToSync))
 	}
 
