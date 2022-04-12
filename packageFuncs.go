@@ -14,13 +14,13 @@ import (
 func loadPkg(packageFile string, pkgName string) Package {
 	var pkg Package
 
-	log(1, "Finding environment variables...")
+	debugLog("Finding environment variables...")
 	keySlice := make([]string, 0)
 	for key := range environmentVariables {
 		keySlice = append(keySlice, key)
 	}
 
-	log(1, "Replacing environment variables...")
+	debugLog("Replacing environment variables...")
 	for _, key := range keySlice {
 		packageFile = strings.Replace(packageFile, ":("+key+"):", environmentVariables[key], -1)
 	}
@@ -142,4 +142,19 @@ func parseSources() []string {
 	}
 
 	return finalList
+}
+
+func copyBins(pkg Package) {
+	pkgDispName := bolden(pkg.Name)
+	if len(pkg.Bin.In_source) > 0 {
+		log(1, "Copying binary files for %s...", pkgDispName)
+		for i := range pkg.Bin.In_source {
+			srcDir := srcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
+			destDir := bin + pkg.Bin.Installed[i]
+			log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
+			copyFile(srcDir, destDir)
+			log(1, "Making %s executable...", bolden(destDir))
+			changePerms(destDir, 0770)
+		}
+	}
 }

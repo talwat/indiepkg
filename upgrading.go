@@ -8,7 +8,7 @@ func upgradePackage(pkgNames []string) {
 	for _, pkgName := range pkgNames {
 		pkgDisplayName := bolden(pkgName)
 
-		if !pkgExists(pkgName) {
+		if pkgExists(pkgName) {
 			log(3, "%s is not installed, so it can't be upgraded.", pkgDisplayName)
 			continue
 		}
@@ -27,17 +27,7 @@ func upgradePackage(pkgNames []string) {
 
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
 
-		if len(pkg.Bin.In_source) > 0 {
-			log(1, "Copying binary files for %s...", pkgDisplayName)
-			for i := range pkg.Bin.In_source {
-				srcDir := srcPath + pkgName + "/" + pkg.Bin.In_source[i]
-				destDir := bin + pkg.Bin.Installed[i]
-				log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
-				copyFile(srcDir, destDir)
-				log(1, "Making %s executable...", bolden(destDir))
-				changePerms(destDir, 0770)
-			}
-		}
+		copyBins(pkg)
 
 		log(0, "Successfully upgraded %s!\n", pkgName)
 	}
@@ -61,7 +51,7 @@ func upgradeAllPackages() {
 			continue
 		}
 
-		log(1, "Upgrading %s", installedPackageDisplay)
+		log(1, "Upgrading %s...", installedPackageDisplay)
 
 		pkg := readLoad(installedPackage)
 
@@ -69,14 +59,7 @@ func upgradeAllPackages() {
 
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
 
-		if len(pkg.Bin.In_source) > 0 {
-			for i := range pkg.Bin.In_source {
-				srcDir := srcPath + installedPackage + "/" + pkg.Bin.In_source[i]
-				destDir := bin + pkg.Bin.Installed[i]
-				copyFile(srcDir, destDir)
-				changePerms(destDir, 0770)
-			}
-		}
+		copyBins(pkg)
 
 		runCmds(getUpdCmd(pkg), pkg, srcPath+pkg.Name, "upgrade")
 	}

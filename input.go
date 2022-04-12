@@ -6,9 +6,9 @@ import (
 	"strings"
 )
 
-const version = "0.10-beta"
+const version = "0.10"
 
-var purge, debug, assumeYes bool = false, false, false
+var purge, debug, assumeYes, force bool = false, false, false, false
 
 var optionToOthers, optionToOther bool = false, false
 
@@ -33,23 +33,35 @@ func parseInput() {
 			debug = true
 		case "-y", "--assumeYes":
 			assumeYes = true
+		case "-f", "--force":
+			force = true
 		default:
 			log(1, "Flag %s not found.", bolden(flag))
 		}
 	}
 
 	for i, other := range others {
+		checkForOptions := func(errSpecify string) {
+			if len(others[i+1:]) < 1 {
+				log(4, "No %s specified.", errSpecify)
+				os.Exit(1)
+			}
+		}
+
 		if !optionToOthers && !optionToOther {
 			switch other {
 			case "install":
+				checkForOptions("package names")
 				optionToOthers = true
 				installPkgs(others[i+1:])
 
 			case "uninstall":
+				checkForOptions("package names")
 				optionToOthers = true
 				uninstallPkgs(others[i+1:])
 
 			case "remove-data":
+				checkForOptions("package names")
 				optionToOthers = true
 				rmData(others[i+1:])
 
@@ -70,6 +82,7 @@ func parseInput() {
 				}
 
 			case "info":
+				checkForOptions("package name")
 				optionToOther = true
 				infoPkg(others[i+1])
 
