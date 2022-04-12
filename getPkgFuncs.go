@@ -29,10 +29,12 @@ func findPkg(pkgName string) string {
 	urlsLen := len(urls)
 
 	if urlsLen <= 0 {
-		log(4, "You don't have any sources defined in %s.", bolden(config+"sources.txt"))
+		log(4, "You don't have any sources defined in %s.", bolden(configPath+"sources.txt"))
+		os.Exit(1)
 	} else if urlsLen == 1 {
+		debugLog("Only one source defined in %s. Using that source.", bolden(configPath+"sources.txt"))
 		log(1, "Getting package info for %s...", bolden(pkgName))
-		pkgFile, err := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
+		pkgFile, err := viewFile(urls[1], "An error occurred while getting package information for %s", pkgName)
 
 		if errIs404(err) {
 			log(4, "Package %s not found.", bolden(pkgName))
@@ -74,7 +76,7 @@ func findPkg(pkgName string) string {
 			log(1, "%d) %s", i, bolden(url+pkgName))
 		}
 
-		choice := strings.TrimSpace(input("0", "Number between 0 and %d or q to quit", lenValidInfos-1))
+		choice := input("0", "Number between 0 and %d or q to quit", lenValidInfos-1)
 
 		if strings.Contains(choice, "q") {
 			os.Exit(1)
