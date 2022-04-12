@@ -68,6 +68,10 @@ func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 }
 
 func initDirs(reset bool) {
+	if reset {
+		confirm("y", "Are you sure you want to reset the directories? This will reset your custom configuration & sources file. (y/n)")
+	}
+
 	log(1, "Making required directories & files...")
 	newDir(srcPath, "An error occurred while creating sources directory")
 	newDir(installedPath, "An error occurred while creating info directory")
@@ -147,7 +151,7 @@ func parseSources() []string {
 func copyBins(pkg Package) {
 	pkgDispName := bolden(pkg.Name)
 	if len(pkg.Bin.In_source) > 0 {
-		log(1, "Copying binary files for %s...", pkgDispName)
+		log(1, "Copying files for %s...", pkgDispName)
 		for i := range pkg.Bin.In_source {
 			srcDir := srcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
 			destDir := bin + pkg.Bin.Installed[i]
