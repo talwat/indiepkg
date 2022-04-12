@@ -41,8 +41,8 @@ func parseInput() {
 	}
 
 	for i, other := range others {
-		checkForOptions := func(errSpecify string) {
-			if len(others[i+1:]) < 1 {
+		checkForOptions := func(errSpecify string, commandPartsCount int) {
+			if len(others[i+commandPartsCount:]) < 1 {
 				log(4, "No %s specified.", errSpecify)
 				os.Exit(1)
 			}
@@ -51,17 +51,17 @@ func parseInput() {
 		if !optionToOthers && !optionToOther {
 			switch other {
 			case "install":
-				checkForOptions("package names")
+				checkForOptions("package names", 1)
 				optionToOthers = true
 				installPkgs(others[i+1:])
 
 			case "uninstall":
-				checkForOptions("package names")
+				checkForOptions("package names", 1)
 				optionToOthers = true
 				uninstallPkgs(others[i+1:])
 
 			case "remove-data":
-				checkForOptions("package names")
+				checkForOptions("package names", 1)
 				optionToOthers = true
 				rmData(others[i+1:])
 
@@ -82,7 +82,7 @@ func parseInput() {
 				}
 
 			case "info":
-				checkForOptions("package name")
+				checkForOptions("package name", 1)
 				optionToOther = true
 				infoPkg(others[i+1])
 
@@ -101,8 +101,23 @@ func parseInput() {
 			case "init":
 				initDirs(true)
 
+			case "repo":
+				checkForOptions("sub-command", 1)
+				switch others[i+1] {
+				case "add":
+					checkForOptions("url", 2)
+					addRepo(others[i+2])
+				case "remove":
+					checkForOptions("url", 2)
+					rmRepo(others[i+2])
+				default:
+					log(4, "Sub-command %s not found.", bolden(others[i+1]))
+					os.Exit(1)
+				}
+
 			default:
-				log(1, "Command %s not found.", bolden(other))
+				log(4, "Command %s not found.", bolden(other))
+				os.Exit(1)
 			}
 		}
 

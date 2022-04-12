@@ -75,16 +75,16 @@ func initDirs(reset bool) {
 	log(1, "Making required directories & files...")
 	newDir(srcPath, "An error occurred while creating sources directory")
 	newDir(installedPath, "An error occurred while creating info directory")
-	newDir(config, "An error occurred while creating config directory")
+	newDir(configPath, "An error occurred while creating config directory")
 
-	if !pathExists(config+"config.json", "config file") || reset {
+	if !pathExists(configPath+"config.json", "config file") || reset {
 		log(1, "Creating config file...")
-		newFile(config+"config.json", defaultConf, "An error occurred while creating config file")
+		newFile(configPath+"config.json", defaultConf, "An error occurred while creating config file")
 	}
 
-	if !pathExists(config+"sources.txt", "sources file") || reset {
+	if !pathExists(configPath+"sources.txt", "sources file") || reset {
 		log(1, "Creating sources file...")
-		newFile(config+"sources.txt", defaultSources, "An error occurred while creating sources file")
+		newFile(configPath+"sources.txt", defaultSources, "An error occurred while creating sources file")
 	}
 }
 
@@ -133,8 +133,13 @@ func cloneRepo(pkg Package) {
 
 func parseSources() []string {
 	log(1, "Reading sources file...")
-	sourcesFile := readFile(config+"sources.txt", "An error occurred while reading sources file")
+	sourcesFile := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
 
+	if sourcesFile == defaultSources {
+		debugLog("Default sources file detected.")
+		return []string{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"}
+	}
+	log(1, "Parsing sources file...")
 	var finalList []string
 
 	for _, line := range strings.Split(sourcesFile, "\n") {
@@ -154,7 +159,7 @@ func copyBins(pkg Package) {
 		log(1, "Copying files for %s...", pkgDispName)
 		for i := range pkg.Bin.In_source {
 			srcDir := srcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
-			destDir := bin + pkg.Bin.Installed[i]
+			destDir := binPath + pkg.Bin.Installed[i]
 			log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
 			copyFile(srcDir, destDir)
 			log(1, "Making %s executable...", bolden(destDir))
