@@ -51,6 +51,8 @@ var environmentVariables = map[string]string{
 }
 
 func installPkgs(pkgNames []string) {
+	initDirs(false)
+
 	log(1, "Are you sure you would like to install the following packages:")
 	for _, pkgToInstall := range pkgNames {
 		fmt.Println("        " + pkgToInstall)
@@ -83,8 +85,6 @@ func installPkgs(pkgNames []string) {
 		} else {
 			log(1, "No dependencies found.")
 		}
-
-		initDirs(false, "Making required directories for %s...", pkgDispName)
 
 		cloneRepo(pkg)
 
