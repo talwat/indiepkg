@@ -38,10 +38,6 @@ func copyFile(src string, dst string) {
 	errorLog(err, 4, "An error occurred while copying file %s to %s", dst, src)
 }
 
-func newDirSilent(name string) {
-	os.MkdirAll(name, 0770) //nolint:errcheck
-}
-
 func readFile(file string, errMsg string, params ...interface{}) string {
 	data, err := ioutil.ReadFile(file)
 	errorLog(err, 4, fmt.Sprintf(errMsg, params...))

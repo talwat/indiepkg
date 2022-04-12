@@ -57,17 +57,31 @@ func pkgExists(pkgName string) bool {
 	}
 }
 
-func runCmds(commands []string, pkg Package, path string) {
-	for _, command := range commands {
-		logNoNewline(1, "Running command %s", bolden(command))
-		runCommandRealTime(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
+	if len(cmds) > 0 {
+		log(1, "Running %s commands for %s...", cmdsLabel, pkg.Name)
+		for _, command := range cmds {
+			logNoNewline(1, "Running command %s", bolden(command))
+			runCommandRealTime(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+		}
 	}
 }
 
-func initDirs(msg string, params ...interface{}) {
+func initDirs(reset bool, msg string, params ...interface{}) {
 	log(1, fmt.Sprintf(msg, params...))
-	newDirSilent(srcPath)
-	newDirSilent(installedPath)
+	newDir(srcPath, "An error occurred while creating sources directory")
+	newDir(installedPath, "An error occurred while creating info directory")
+	newDir(config, "An error occurred while creating config directory")
+
+	if !pathExists(config+"config.json", "An error occurred while checking if config file exists") || reset {
+		log(1, "Creating config file...")
+		newFile(config+"config.json", defaultConf, "An error occurred while creating config file")
+	}
+
+	if !pathExists(config+"sources.txt", "An error occurred while checking if sources file exists") || reset {
+		log(1, "Creating sources file...")
+		newFile(config+"sources.txt", defaultSources, "An error occurred while creating sources file")
+	}
 }
 
 func getDeps(pkg Package) []string {
@@ -113,21 +127,19 @@ func cloneRepo(pkg Package) {
 	}
 }
 
-func getPkgFromNet(pkgName string) (Package, string) {
-	packageFile, err := viewFile("https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
+func parseSources() []string {
+	log(1, "Reading sources file...")
+	sourcesFile := readFile(config+"sources.txt", "An error occurred while reading sources file")
 
-	if errIs404(err) {
-		log(4, "Package %s not found.", bolden(pkgName))
-		os.Exit(1)
+	var finalList []string
+
+	for _, line := range strings.Split(sourcesFile, "\n") {
+		if strings.HasPrefix(line, "#") || strings.TrimSpace(line) == "" {
+			continue
+		}
+
+		finalList = append(finalList, line)
 	}
 
-	errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
-
-	pkg := loadPkg(packageFile, pkgName)
-
-	return pkg, packageFile
-}
-
-func errIs404(err error) bool {
-	return err != nil && strings.Contains(err.Error(), "404")
+	return finalList
 }

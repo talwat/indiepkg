@@ -6,31 +6,7 @@ import (
 	"strings"
 )
 
-const helpMsg = `Usage: indiepkg [<options>...] <command>
-
-Commands:
-  help                       Show this help message.
-  install <packages...>      Installs packages.
-  uninstall <packages...>    Removes packages.
-  update [packages...]       Re-downloads the a package's info & install instructions. If no packages are specified, all packages are updated.
-  upgrade [packages...]      Pulls git repository & recompile's a package. If no package is specified, all packages are upgraded.
-  info <package>             Displays information about a specific package.
-  remove-data <packages...>  Removes package data from .indiepkg. Use this only if a package installation has failed and the uninstall command won't work.
-  sync                       Sync package info & package source.
-  version                    Show version.
-
-Options:
-  -p, --purge                Removes a package's configuration files as well as the package itself.
-  -d, --debug                Displays variable & debugging information.
-  -y, --assumeyes            Assumes yes to all prompts. (Use with caution!)
-
-Examples:
-  indiepkg install my-pkg
-  indiepkg uninstall other-pkg
-  indiepkg upgrade third-pkg
-`
-
-const version = "0.9.1"
+const version = "0.10-beta"
 
 var purge, debug, assumeYes bool = false, false, false
 

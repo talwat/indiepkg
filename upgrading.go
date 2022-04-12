@@ -25,10 +25,7 @@ func upgradePackage(pkgNames []string) {
 
 		cmds := getUpdCmd(pkg)
 
-		if len(cmds) > 0 {
-			log(1, "Running upgrade commands for %s...", pkgDisplayName)
-			runCmds(cmds, pkg, srcPath+pkg.Name)
-		}
+		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
 
 		if len(pkg.Bin.In_source) > 0 {
 			log(1, "Copying binary files for %s...", pkgDisplayName)
@@ -70,9 +67,7 @@ func upgradeAllPackages() {
 
 		cmds := getUpdCmd(pkg)
 
-		if len(cmds) > 0 {
-			runCmds(cmds, pkg, srcPath+pkg.Name)
-		}
+		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
 
 		if len(pkg.Bin.In_source) > 0 {
 			for i := range pkg.Bin.In_source {
@@ -83,7 +78,7 @@ func upgradeAllPackages() {
 			}
 		}
 
-		runCmds(getUpdCmd(pkg), pkg, srcPath+pkg.Name)
+		runCmds(getUpdCmd(pkg), pkg, srcPath+pkg.Name, "upgrade")
 	}
 
 	log(0, "Upgraded all packages!")
