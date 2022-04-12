@@ -54,7 +54,7 @@ func input(defVal string, message string, params ...interface{}) string {
 }
 
 func confirm(defVal, message string) {
-	if strings.Contains(input(defVal, message), "n") {
+	if !strings.Contains(input(defVal, message), "y") {
 		os.Exit(1)
 	}
 }
