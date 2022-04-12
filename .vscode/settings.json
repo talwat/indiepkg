@@ -27,6 +27,7 @@
         "pfetch",
         "Pkgs",
         "pokeget",
+        "rustc",
         "shellcheck",
         "staticcheck",
         "Talwat",

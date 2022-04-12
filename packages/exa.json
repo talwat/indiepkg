@@ -23,7 +23,7 @@
     },
     "deps": {
         "all": [
-            "rust",
+            "rustc",
             "cargo"
         ]
     }
