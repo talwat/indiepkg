@@ -38,4 +38,5 @@ const defaultSources = `# Please only add sources you trust.
 # This file contains the links to the pkg.json files. If you mess up, you can simply run 'indiepkg init' to reset it.
 # You can also edit this file with 'indiepkg repo'.
 
-https://raw.githubusercontent.com/talwat/indiepkg/main/packages/`
+https://raw.githubusercontent.com/talwat/indiepkg/main/packages/
+# https://raw.githubusercontent.com/talwat/indiepkg/main/packages/waiting`
