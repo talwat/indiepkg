@@ -3,6 +3,7 @@
     "author": "ogham",
     "description": "A modern replacement for 'ls'.",
     "url": "https://github.com/ogham/exa.git",
+    "license": "MIT",
     "bin": {
         "in_source": [
             "target/release/exa"
