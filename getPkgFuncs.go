@@ -48,8 +48,13 @@ func findPkg(pkgName string) string {
 	}
 
 	for _, url := range urls {
+		if !strings.HasSuffix(url, "/") {
+			url += "/"
+		}
+
 		pkgUrl := url + pkgName + ".json"
 		log(1, "Checking %s for package info...", bolden(url))
+		debugLog("URL: %s", pkgUrl)
 		infoFile, err := viewFile(pkgUrl, "An error occurred while getting package information for %s", pkgName)
 
 		if errIs404(err) {

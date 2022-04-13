@@ -42,6 +42,14 @@ func addRepo(repoLink string) {
 func rmRepo(repoLink string) {
 	sourcesFile := readSources()
 	log(1, "Removing %s from sources file...", bolden(repoLink))
-	sourcesFile = strings.ReplaceAll(sourcesFile, "\n"+repoLink, "")
+	repos := strings.Split(sourcesFile, "\n")
+	for i, repo := range repos {
+		if repo == repoLink {
+			repos[i] = ""
+			debugLog("Match found at index %d.", i)
+		}
+	}
+
+	sourcesFile = strings.Join(repos, "\n")
 	saveChanges(sourcesFile)
 }
