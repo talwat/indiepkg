@@ -1,15 +1,15 @@
 {
-    "name": "koksha",
+    "name": "koshka",
     "author": "astrogewgaw",
     "description": "A TUI for searching through catalogs of radio transients: pulsars, FRBs, & RRATs.",
     "url": "https://github.com/astrogewgaw/koshka.git",
     "license": "MIT",
     "bin": {
         "in_source": [
-            "koksha"
+            "koshka"
         ],
         "installed": [
-            "koksha"
+            "koshka"
         ]
     },
     "commands": {
