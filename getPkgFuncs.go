@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
@@ -101,4 +102,37 @@ func downloadPkg(pkgName string, load bool) Package {
 	log(1, "Downloading package info for %s...", bolden(pkgName))
 
 	return writeLoadPkg(pkgName, findPkg(pkgName), load)
+}
+
+type GH_File struct {
+	Name         string
+	Path         string
+	Url          string
+	Html_url     string //blob
+	Download_url string //raw
+}
+
+func getPkgFromGh(query string) []GH_File {
+	// TODO: Add support for multiple repos
+	url := "https://api.github.com/repos/talwat/indiepkg/contents/packages"
+
+	r, _ := viewFile(url, "An error occurred while getting package list")
+	var files []GH_File
+	err := json.Unmarshal([]byte(r), &files)
+	errorLog(err, 4, "An error occurred while parsing package list")
+
+	var matches []GH_File
+	for _, file := range files {
+		file.Name = strings.TrimSuffix(file.Name, ".json")
+		if strings.Contains(file.Name, query) {
+			matches = append(matches, file)
+		}
+	}
+
+	if len(matches) == 0 {
+		log(4, "No matches found.")
+		os.Exit(1)
+	}
+
+	return matches
 }

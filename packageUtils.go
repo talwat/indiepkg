@@ -100,3 +100,12 @@ func rmData(pkgNames []string) {
 		log(0, "Successfully deleted the data for %s.\n", pkgDisplayName)
 	}
 }
+
+func search(query string) {
+	pkgs := getPkgFromGh(query)
+
+	log(1, "Found %d packages:", len(pkgs))
+	for _, pkg := range pkgs {
+		fmt.Println("        " + pkg.Name)
+	}
+}
