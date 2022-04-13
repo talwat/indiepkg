@@ -1,0 +1,23 @@
+{
+    "name": "katfetch",
+    "author": "The-Repo-Club",
+    "description": "A simple, modular and hackable fetch script in Bash.",
+    "url": "https://github.com/egor4ka/katfetch.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "katfetch"
+        ],
+        "installed": [
+            "katfetch"
+        ]
+    },
+    "deps": {
+        "all": [
+            "bash"
+        ]
+    },
+    "config_paths": [
+        ".config/katfetch"
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "name": "shellfetch",
+    "author": "The-Repo-Club",
+    "description": "Shell system information fetcher.",
+    "url": "https://github.com/The-Repo-Club/shellfetch.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "shellfetch"
+        ],
+        "installed": [
+            "shellfetch"
+        ]
+    },
+    "deps": {
+        "all": [
+            "bash"
+        ]
+    },
+    "config_paths": [
+        ".config/shellfetch"
+    ]
+}

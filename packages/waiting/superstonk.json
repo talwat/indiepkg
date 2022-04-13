@@ -1,0 +1,30 @@
+{
+    "name": "superstonk",
+    "author": "bjarneo",
+    "description": "Follow your favourite stock right in the terminal window.",
+    "url": "https://github.com/bjarneo/superstonk.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "superstonk"
+        ],
+        "installed": [
+            "superstonk"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build ."
+            ],
+            "update": [
+                "go build ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}

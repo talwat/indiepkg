@@ -1,0 +1,30 @@
+{
+    "name": "name",
+    "author": "author",
+    "description": "description",
+    "url": "git url",
+    "license": "license",
+    "bin": {
+        "in_source": [
+            "name"
+        ],
+        "installed": [
+            "name"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build ."
+            ],
+            "update": [
+                "go build ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}
