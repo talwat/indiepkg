@@ -8,16 +8,15 @@ func upgradePackage(pkgNames []string) {
 	for _, pkgName := range pkgNames {
 		pkgDisplayName := bolden(pkgName)
 
-		if pkgExists(pkgName) {
+		if !pkgExists(pkgName) {
 			log(3, "%s is not installed, so it can't be upgraded.", pkgDisplayName)
 			continue
 		}
 
 		log(1, "Updating source code for %s...", pkgDisplayName)
-		pullOutput, _ := runCommand(srcPath+pkgName, "git", "pull")
+		err := pullRepo(pkgName)
 
-		if strings.Contains(pullOutput, "Already up to date") {
-			log(0, "%s already up to date.", pkgDisplayName)
+		if err.Error() == "already up-to-date" {
 			continue
 		}
 
@@ -42,10 +41,9 @@ func upgradeAllPackages() {
 	log(1, "Upgrading all packages...")
 	for _, installedPackage := range installedPackages {
 		installedPackageDisplay := bolden(installedPackage)
-		pullOutput, _ := runCommand(srcPath+installedPackage, "git", "pull")
+		err := pullRepo(installedPackage)
 
-		if strings.Contains(pullOutput, "Already up to date") {
-			log(0, "%s already up to date.", installedPackageDisplay)
+		if err.Error() == "already up-to-date" {
 			continue
 		}
 

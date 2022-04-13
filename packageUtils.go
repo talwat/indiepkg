@@ -64,9 +64,11 @@ func sync() {
 
 func infoPkg(pkgName string) {
 	pkg, _ := getPkgFromNet(pkgName)
+	fmt.Printf("\n")
 	log(1, "Name: %s", pkg.Name)
 	log(1, "Author: %s", pkg.Author)
 	log(1, "Description: %s", pkg.Description)
+	log(1, "License: %s", pkg.License)
 	log(1, "Git URL: %s", pkg.Url)
 
 	deps := getDeps(pkg)

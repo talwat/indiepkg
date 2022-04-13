@@ -3,6 +3,7 @@
     "author": "gokcehan",
     "description": "Terminal file manager",
     "url": "https://github.com/gokcehan/lf.git",
+    "license": "MIT",
     "bin": {
         "in_source": [
             "lf"

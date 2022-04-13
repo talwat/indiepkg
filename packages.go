@@ -38,6 +38,7 @@ type Package struct {
 	Author       string
 	Description  string
 	Url          string
+	License      string
 	Branch       string
 	Bin          *Bin
 	Deps         *Deps

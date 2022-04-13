@@ -3,6 +3,7 @@
     "author": "6gk",
     "description": "A fetch written in posix shell without any external commands.",
     "url": "https://github.com/6gk/fet.sh.git",
+    "license": "ISC",
     "bin": {
         "in_source": [
             "fet.sh"

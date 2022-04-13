@@ -131,6 +131,25 @@ func cloneRepo(pkg Package) {
 	}
 }
 
+func pullRepo(pkgName string) error {
+	var err error
+	r, err := git.PlainOpen(srcPath + pkgName)
+	errorLog(err, 4, "An error occurred while opening repository for %s", bolden(pkgName))
+
+	w, err := r.Worktree()
+	errorLog(err, 4, "An error occurred while getting worktree for %s", bolden(pkgName))
+
+	debugLog("Pulling %s", bolden(srcPath+pkgName))
+	err = w.Pull(&git.PullOptions{RemoteName: "origin"})
+
+	if err.Error() == "already up-to-date" {
+		log(0, "%s already up to date.", bolden(pkgName))
+	} else {
+		errorLog(err, 4, "An error occurred while pulling repository for %s", bolden(pkgName))
+	}
+	return err
+}
+
 func parseSources() []string {
 	log(1, "Reading sources file...")
 	sourcesFile := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
