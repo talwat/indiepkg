@@ -1,0 +1,20 @@
+{
+    "name": "sorty-py",
+    "author": "Tempest20",
+    "description": "A CLI tool that sorts the current folder you're in.",
+    "url": "https://github.com/Tempest20/sorti-py.git",
+    "license": "GPL-3.0",
+    "bin": {
+        "in_source": [
+            "sortypy"
+        ],
+        "installed": [
+            "sorty-py"
+        ]
+    },
+    "deps": {
+        "all": [
+            "python3"
+        ]
+    }
+}
