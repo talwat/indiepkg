@@ -6,33 +6,9 @@ import (
 	"strings"
 )
 
-const helpMsg = `Usage: indiepkg [<options>...] <command>
+const version = "0.12.1"
 
-Commands:
-  help                       Show this help message.
-  install <packages...>      Installs packages.
-  uninstall <packages...>    Removes packages.
-  update [packages...]       Re-downloads the a package's info & install instructions. If no packages are specified, all packages are updated.
-  upgrade [packages...]      Pulls git repository & recompile's a package. If no package is specified, all packages are upgraded.
-  info <package>             Displays information about a specific package.
-  remove-data <packages...>  Removes package data from .indiepkg. Use this only if a package installation has failed and the uninstall command won't work.
-  sync                       Sync package info & package source.
-  version                    Show version.
-
-Options:
-  -p, --purge                Removes a package's configuration files as well as the package itself.
-  -d, --debug                Displays variable & debugging information.
-  -y, --assumeyes            Assumes yes to all prompts. (Use with caution!)
-
-Examples:
-  indiepkg install my-pkg
-  indiepkg uninstall other-pkg
-  indiepkg upgrade third-pkg
-`
-
-const version = "0.9.1"
-
-var purge, debug, assumeYes bool = false, false, false
+var purge, debug, assumeYes, force bool = false, false, false, false
 
 var optionToOthers, optionToOther bool = false, false
 
@@ -57,23 +33,35 @@ func parseInput() {
 			debug = true
 		case "-y", "--assumeYes":
 			assumeYes = true
+		case "-f", "--force":
+			force = true
 		default:
 			log(1, "Flag %s not found.", bolden(flag))
 		}
 	}
 
 	for i, other := range others {
+		checkForOptions := func(errSpecify string, commandPartsCount int) {
+			if len(others[i+commandPartsCount:]) < 1 {
+				log(4, "No %s specified.", errSpecify)
+				os.Exit(1)
+			}
+		}
+
 		if !optionToOthers && !optionToOther {
 			switch other {
 			case "install":
+				checkForOptions("package names", 1)
 				optionToOthers = true
 				installPkgs(others[i+1:])
 
 			case "uninstall":
+				checkForOptions("package names", 1)
 				optionToOthers = true
 				uninstallPkgs(others[i+1:])
 
 			case "remove-data":
+				checkForOptions("package names", 1)
 				optionToOthers = true
 				rmData(others[i+1:])
 
@@ -94,6 +82,7 @@ func parseInput() {
 				}
 
 			case "info":
+				checkForOptions("package name", 1)
 				optionToOther = true
 				infoPkg(others[i+1])
 
@@ -109,8 +98,31 @@ func parseInput() {
 			case "list":
 				listPkgs()
 
+			case "init":
+				initDirs(true)
+
+			case "repo":
+				checkForOptions("sub-command", 1)
+				switch others[i+1] {
+				case "add":
+					checkForOptions("url", 2)
+					addRepo(others[i+2])
+				case "remove":
+					checkForOptions("url", 2)
+					rmRepo(others[i+2])
+				default:
+					log(4, "Sub-command %s not found.", bolden(others[i+1]))
+					os.Exit(1)
+				}
+
+			case "search":
+				checkForOptions("query", 1)
+				optionToOther = true
+				search(others[i+1])
+
 			default:
-				log(1, "Command %s not found.", bolden(other))
+				log(4, "Command %s not found.", bolden(other))
+				os.Exit(1)
 			}
 		}
 

@@ -22,7 +22,7 @@ func listPkgs() {
 }
 
 func sync() {
-	initDirs("Making required directories...")
+	initDirs(false)
 
 	dirs := dirContents(srcPath, "An error occurred while getting list of source files")
 
@@ -36,7 +36,7 @@ func sync() {
 	}
 
 	for _, pkgToSync := range pkgInfoToSync {
-		downloadFile(installedPath+pkgToSync+".json", "https://raw.githubusercontent.com/talwat/indiepkg/main/pkgs/"+pkgToSync+".json", "An error occurred while downloading pkg information for %s", pkgToSync)
+		downloadPkg(pkgToSync, false)
 	}
 
 	infoFiles := dirContents(installedPath, "An error occurred while getting list of info files")
@@ -50,12 +50,8 @@ func sync() {
 		}
 	}
 
-	for _, pkgToSync := range pkgInfoToSync {
-		log(1, "Downloading package info for %s...", pkgToSync)
-		downloadFile(installedPath+pkgToSync+".json", "https://raw.githubusercontent.com/talwat/indiepkg/main/pkgs/"+pkgToSync+".json", "An error occurred while downloading pkg information for %s", pkgToSync)
-	}
-
 	for _, pkgToSync := range pkgSrcToSync {
+		log(1, "Cloning package source for %s...", pkgToSync)
 		cloneRepo(readLoad(pkgToSync))
 	}
 
@@ -68,9 +64,11 @@ func sync() {
 
 func infoPkg(pkgName string) {
 	pkg, _ := getPkgFromNet(pkgName)
+	fmt.Printf("\n")
 	log(1, "Name: %s", pkg.Name)
 	log(1, "Author: %s", pkg.Author)
 	log(1, "Description: %s", pkg.Description)
+	log(1, "License: %s", pkg.License)
 	log(1, "Git URL: %s", pkg.Url)
 
 	deps := getDeps(pkg)
@@ -100,5 +98,14 @@ func rmData(pkgNames []string) {
 		delPath(3, installedPath+pkgName+".json", "An error occurred while deleting info file for %s", pkgDisplayName)
 
 		log(0, "Successfully deleted the data for %s.\n", pkgDisplayName)
+	}
+}
+
+func search(query string) {
+	pkgs := getPkgFromGh(query)
+
+	log(1, "Found %d packages:", len(pkgs))
+	for _, pkg := range pkgs {
+		fmt.Println("        " + pkg.Name + " - " + pkg.Repo)
 	}
 }

@@ -49,12 +49,12 @@ func input(defVal string, message string, params ...interface{}) string {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Printf(textCol["CYAN"]+"[!]"+RESETCOL+(" %s")+": ", fmt.Sprintf(message, params...))
 		input, _ := reader.ReadString('\n')
-		return input
+		return strings.TrimSpace(input)
 	}
 }
 
 func confirm(defVal, message string) {
-	if strings.Contains(input(defVal, message), "n") {
+	if !strings.Contains(input(defVal, message), "y") {
 		os.Exit(1)
 	}
 }

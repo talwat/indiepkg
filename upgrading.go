@@ -14,33 +14,17 @@ func upgradePackage(pkgNames []string) {
 		}
 
 		log(1, "Updating source code for %s...", pkgDisplayName)
-		pullOutput, _ := runCommand(srcPath+pkgName, "git", "pull")
+		err := pullRepo(pkgName)
 
-		if strings.Contains(pullOutput, "Already up to date") {
-			log(0, "%s already up to date.", pkgDisplayName)
+		if err.Error() == "already up-to-date" {
 			continue
 		}
 
 		pkg := readLoad(pkgName)
-
 		cmds := getUpdCmd(pkg)
 
-		if len(cmds) > 0 {
-			log(1, "Running upgrade commands for %s...", pkgDisplayName)
-			runCmds(cmds, pkg, srcPath+pkg.Name)
-		}
-
-		if len(pkg.Bin.In_source) > 0 {
-			log(1, "Copying binary files for %s...", pkgDisplayName)
-			for i := range pkg.Bin.In_source {
-				srcDir := srcPath + pkgName + "/" + pkg.Bin.In_source[i]
-				destDir := bin + pkg.Bin.Installed[i]
-				log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
-				copyFile(srcDir, destDir)
-				log(1, "Making %s executable...", bolden(destDir))
-				changePerms(destDir, 0770)
-			}
-		}
+		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
+		copyBins(pkg)
 
 		log(0, "Successfully upgraded %s!\n", pkgName)
 	}
@@ -57,33 +41,19 @@ func upgradeAllPackages() {
 	log(1, "Upgrading all packages...")
 	for _, installedPackage := range installedPackages {
 		installedPackageDisplay := bolden(installedPackage)
-		pullOutput, _ := runCommand(srcPath+installedPackage, "git", "pull")
+		err := pullRepo(installedPackage)
 
-		if strings.Contains(pullOutput, "Already up to date") {
-			log(0, "%s already up to date.", installedPackageDisplay)
+		if err.Error() == "already up-to-date" {
 			continue
 		}
 
-		log(1, "Upgrading %s", installedPackageDisplay)
+		log(1, "Upgrading %s...", installedPackageDisplay)
 
 		pkg := readLoad(installedPackage)
-
 		cmds := getUpdCmd(pkg)
 
-		if len(cmds) > 0 {
-			runCmds(cmds, pkg, srcPath+pkg.Name)
-		}
-
-		if len(pkg.Bin.In_source) > 0 {
-			for i := range pkg.Bin.In_source {
-				srcDir := srcPath + installedPackage + "/" + pkg.Bin.In_source[i]
-				destDir := bin + pkg.Bin.Installed[i]
-				copyFile(srcDir, destDir)
-				changePerms(destDir, 0770)
-			}
-		}
-
-		runCmds(getUpdCmd(pkg), pkg, srcPath+pkg.Name)
+		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
+		copyBins(pkg)
 	}
 
 	log(0, "Upgraded all packages!")

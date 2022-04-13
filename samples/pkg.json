@@ -1,9 +1,10 @@
 {
-    "name": "my_package_name",
+    "name": "my-package-name",
     "author": "my username or name",
     "description": "this is my awesome package description",
     "url": "https://github.com/username/repo.git",
     "branch": "my branch",
+    "license": "license name",
     "bin": {
         "in_source": [
             "bin/my_file"

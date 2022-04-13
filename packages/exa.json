@@ -1,0 +1,31 @@
+{
+    "name": "exa",
+    "author": "ogham",
+    "description": "A modern replacement for 'ls'.",
+    "url": "https://github.com/ogham/exa.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "target/release/exa"
+        ],
+        "installed": [
+            "exa"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build --release"
+            ],
+            "update": [
+                "cargo build --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

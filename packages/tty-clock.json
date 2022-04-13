@@ -3,6 +3,7 @@
     "author": "xorg62",
     "description": "Clock using lib ncurses",
     "url": "https://github.com/xorg62/tty-clock.git",
+    "license": "BSD-3-Clause",
     "bin": {
         "in_source": [
             "tty-clock"
