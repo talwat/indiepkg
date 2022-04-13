@@ -1,0 +1,31 @@
+{
+    "name": "utd-rs",
+    "author": "kawaki-san",
+    "description": "A rust port of Ugly-ToDo.",
+    "url": "https://github.com/kawaki-san/utd-rs.git",
+    "license": "license",
+    "bin": {
+        "in_source": [
+            "target/release/utd"
+        ],
+        "installed": [
+            "utd"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build --release"
+            ],
+            "update": [
+                "cargo build --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
