@@ -24,6 +24,7 @@ func loadPkg(packageFile string, pkgName string) Package {
 	for _, key := range keySlice {
 		packageFile = strings.Replace(packageFile, ":("+key+"):", environmentVariables[key], -1)
 	}
+
 	err := json.Unmarshal([]byte(packageFile), &pkg)
 	errorLog(err, 4, "An error occurred while loading package info for %s", pkgName)
 	return pkg

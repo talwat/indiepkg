@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const version = "0.11"
+const version = "0.12-beta"
 
 var purge, debug, assumeYes, force bool = false, false, false, false
 
@@ -114,6 +114,11 @@ func parseInput() {
 					log(4, "Sub-command %s not found.", bolden(others[i+1]))
 					os.Exit(1)
 				}
+
+			case "search":
+				checkForOptions("query", 1)
+				optionToOther = true
+				search(others[i+1])
 
 			default:
 				log(4, "Command %s not found.", bolden(other))
