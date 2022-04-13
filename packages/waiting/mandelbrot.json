@@ -1,15 +1,15 @@
 {
-    "name": "wiki",
-    "author": "BetaPictoris",
-    "description": "View Wikipedia articles through the CLI.",
-    "url": "https://github.com/BetaPictoris/wiki.git",
-    "license": "MIT",
+    "name": "ascii_mandelbrot",
+    "author": "sinandredemption",
+    "description": "Navigate through Mandelbrot set right in the terminal.",
+    "url": "https://github.com/sinandredemption/ascii_mandelbrot.git",
+    "license": "GPL-3.0",
     "bin": {
         "in_source": [
-            "wiki"
+            "mandelbrot"
         ],
         "installed": [
-            "wiki"
+            "mandelbrot"
         ]
     },
     "commands": {
@@ -24,7 +24,8 @@
     },
     "deps": {
         "all": [
-            "go",
+            "g++",
+            "gcc",
             "make"
         ]
     }
