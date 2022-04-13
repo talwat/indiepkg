@@ -32,6 +32,10 @@ make
 make install
 ```
 
+## Making & submitting packages
+
+If you want to make a package, you should look at [PACKAGES.md](PACKAGES.md)
+
 ## Basic usage
 
 You can run `indiepkg install <packages>` to install a package.

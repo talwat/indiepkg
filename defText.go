@@ -15,6 +15,7 @@ Commands:
   sync                         Sync package info & package source.
   version                      Shows version.
   init                         Re-generates all the default config files needed for indiepkg to function properly. This is ran automatically.
+  search <query>               Searches for packages. NOTE: Only searches repo's that are on Github.
   repo                         Manages the package sources file.
     repo add <url>             Adds a repository to the package sources file.
     repo remove <url>          Removes a repository to the package sources file.
