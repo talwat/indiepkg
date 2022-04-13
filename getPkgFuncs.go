@@ -110,25 +110,49 @@ type GH_File struct {
 	Url          string
 	Html_url     string //blob
 	Download_url string //raw
+	Repo         string
 }
 
 func getPkgFromGh(query string) []GH_File {
-	// TODO: Add support for multiple repos
-	url := "https://api.github.com/repos/talwat/indiepkg/contents/packages"
-
-	r, _ := viewFile(url, "An error occurred while getting package list")
-	var files []GH_File
-	err := json.Unmarshal([]byte(r), &files)
-	errorLog(err, 4, "An error occurred while parsing package list")
-
+	urls := parseSources()
 	var matches []GH_File
-	for _, file := range files {
-		file.Name = strings.TrimSuffix(file.Name, ".json")
-		if strings.Contains(file.Name, query) {
-			matches = append(matches, file)
-		}
+
+	convertUrl := func(url string) string {
+		apiLink := strings.ReplaceAll(url, "raw.githubusercontent.com", "api.github.com/repos")
+		split := strings.Split(apiLink, "/")
+		index := 6
+		inserted := append(split[:index], split[index:]...)
+		inserted[index] = "contents"
+		return strings.Join(inserted, "/")
 	}
 
+	for _, url := range urls {
+		if !strings.HasPrefix(url, "https://raw.githubusercontent.com") {
+			log(3, "Non-github repositories can't be queried. Repo: %s", url)
+			continue
+		}
+
+		convUrl := convertUrl(url)
+		debugLog("URL: %s", convUrl)
+		r, _ := viewFile(convUrl, "An error occurred while getting package list")
+		var files []GH_File
+		err := json.Unmarshal([]byte(r), &files)
+		errorLog(err, 4, "An error occurred while parsing package list")
+
+		for _, file := range files {
+			file.Name = strings.TrimSuffix(file.Name, ".json")
+			if strings.Contains(file.Name, query) {
+				if strings.HasPrefix(url, "https://raw.githubusercontent.com/talwat/indiepkg/") {
+					file.Repo = textCol["CYAN"] + "(official repo)" + RESETCOL
+				} else {
+					file.Repo = textCol["YELLOW"] + "(3rd party repo: " + url + ")" + RESETCOL
+				}
+
+				matches = append(matches, file)
+			}
+		}
+
+	}
 	if len(matches) == 0 {
 		log(4, "No matches found.")
 		os.Exit(1)

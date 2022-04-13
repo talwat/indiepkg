@@ -106,6 +106,6 @@ func search(query string) {
 
 	log(1, "Found %d packages:", len(pkgs))
 	for _, pkg := range pkgs {
-		fmt.Println("        " + pkg.Name)
+		fmt.Println("        " + pkg.Name + " - " + pkg.Repo)
 	}
 }
