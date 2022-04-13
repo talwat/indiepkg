@@ -1,0 +1,30 @@
+{
+    "name": "wiki",
+    "author": "BetaPictoris",
+    "description": "View Wikipedia articles through the CLI.",
+    "url": "https://github.com/BetaPictoris/wiki.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "wiki"
+        ],
+        "installed": [
+            "wiki"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make"
+            ],
+            "update": [
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}
