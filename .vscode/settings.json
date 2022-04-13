@@ -19,6 +19,7 @@
         "dylanaraps",
         "fetsh",
         "gmake",
+        "GOARCH",
         "gokcehan",
         "golangci",
         "Indiepkg",
@@ -41,5 +42,6 @@
         "Werror",
         "Wextra",
         "xorg"
-    ]
+    ],
+    "python.formatting.provider": "black"
 }
