@@ -15,10 +15,10 @@
     "commands": {
         "all": {
             "install": [
-                "go build ."
+                "./build.sh"
             ],
             "update": [
-                "go build ."
+                "./build.sh"
             ]
         }
     },
