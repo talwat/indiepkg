@@ -39,4 +39,4 @@ const defaultSources = `# Please only add sources you trust.
 # You can also edit this file with 'indiepkg repo'.
 
 https://raw.githubusercontent.com/talwat/indiepkg/main/packages/
-# https://raw.githubusercontent.com/talwat/indiepkg/main/packages/waiting`
+# https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/`
