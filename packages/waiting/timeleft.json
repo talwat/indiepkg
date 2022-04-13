@@ -1,0 +1,30 @@
+{
+    "name": "timeleft",
+    "author": "timeleft",
+    "description": "BetaPictoris",
+    "url": "https://github.com/BetaPictoris/timeleft.git",
+    "license": "license",
+    "bin": {
+        "in_source": [
+            "timeleft"
+        ],
+        "installed": [
+            "timeleft"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build ."
+            ],
+            "update": [
+                "go build ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}
