@@ -16,5 +16,9 @@
         "all": [
             "bash"
         ]
-    }
+    },
+    "notes": [
+        "You need bash 4.0+ to run pipes.sh properly.",
+        "Please run 'brew install bash'"
+    ]
 }

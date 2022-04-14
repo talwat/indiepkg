@@ -75,6 +75,13 @@ func infoPkg(pkgName string) {
 	if deps != nil {
 		log(1, "Dependencies: %s", strings.Join(deps, ", "))
 	}
+
+	if len(pkg.Notes) > 0 {
+		log(1, bolden("Important note!"))
+		for _, note := range pkg.Notes {
+			fmt.Println("        " + note)
+		}
+	}
 }
 
 func rmData(pkgNames []string) {
