@@ -7,8 +7,6 @@ import (
 )
 
 var mainPath string = home + ".indiepkg/"
-var binPath string = home + ".local/bin/"
-var prefixPath string = home + ".local/"
 var srcPath string = mainPath + "data/package_src/"
 var infoPath string = mainPath + "data/installed_packages/"
 var configPath string = mainPath + "config/"
