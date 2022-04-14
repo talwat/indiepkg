@@ -32,7 +32,21 @@ Examples:
   indiepkg upgrade third-pkg
 `
 
-const defaultConf = `{}`
+const defaultConf = `# IndiePKG config file
+
+# Locations for files
+# The home directory is prepended automatically for each value, do not include it.
+[paths]
+
+# Default: .local/bin
+bin = ".local/bin"
+
+# Default: .local
+prefix = ".local"
+
+# Default: .indiepkg
+data = ".indiepkg"
+`
 
 const defaultSources = `# Please only add sources you trust.
 # This file contains the links to the pkg.json files. If you mess up, you can simply run 'indiepkg init' to reset it.

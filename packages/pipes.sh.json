@@ -19,6 +19,6 @@
     },
     "notes": [
         "You need bash 4.0+ to run pipes.sh properly.",
-        "Please run 'brew install bash'"
+        "If you are on macOS, please run 'brew install bash'"
     ]
 }

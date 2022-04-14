@@ -6,62 +6,16 @@ import (
 	"strings"
 )
 
-var home string = os.Getenv("HOME") + "/"
-
-var mainPath string = home + ".indiepkg/"
-var srcPath string = mainPath + "data/package_src/"
-var installedPath string = mainPath + "data/installed_packages/"
-var binPath string = home + ".local/bin/"
-var configPath string = mainPath + "config/"
-
-type Bin struct {
-	Installed []string
-	In_source []string
-}
-type Commands struct {
-	Install   []string
-	Uninstall []string
-	Update    []string
-}
-type OSCommands struct {
-	All    *Commands
-	Linux  *Commands
-	Darwin *Commands
-}
-type Deps struct {
-	All    []string
-	Linux  []string
-	Darwin []string
-}
-type Package struct {
-	Name         string
-	Author       string
-	Description  string
-	Url          string
-	License      string
-	Branch       string
-	Bin          *Bin
-	Deps         *Deps
-	Commands     *OSCommands
-	Config_paths []string
-	Notes        []string
-}
-
-var environmentVariables = map[string]string{
-	"PREFIX": home + ".local",
-	"BIN":    home + ".local/bin",
-	"HOME":   strings.TrimSuffix(home, "/"),
-}
-
 func installPkgs(pkgNames []string) {
-	initDirs(false)
-
 	log(1, "Are you sure you would like to install the following packages:")
 	for _, pkgToInstall := range pkgNames {
 		fmt.Println("        " + pkgToInstall)
 	}
 
 	confirm("y", "(y/n)")
+
+	initDirs(false)
+	loadConfig()
 
 	for _, pkgName := range pkgNames {
 		pkgDispName := bolden(pkgName)
@@ -108,12 +62,7 @@ func installPkgs(pkgNames []string) {
 		copyBins(pkg)
 
 		log(0, "Installed %s successfully!\n", pkgDispName)
-		if len(pkg.Notes) > 0 {
-			log(1, bolden("Important note!"))
-			for _, note := range pkg.Notes {
-				fmt.Println("        " + note)
-			}
-		}
+		getNotes(pkg)
 	}
 }
 
@@ -150,8 +99,8 @@ func uninstallPkgs(pkgNames []string) {
 		if len(pkg.Bin.Installed) > 0 {
 			log(1, "Removing binary files for %s...", pkgDispName)
 			for _, path := range pkg.Bin.Installed {
-				log(1, "Removing %s", bolden(binPath+path))
-				delPath(4, binPath+path, "An error occurred while removing binary files for %s", pkgDispName)
+				log(1, "Removing %s", bolden(config.Paths.Bin+path))
+				delPath(4, config.Paths.Bin+path, "An error occurred while removing binary files for %s", pkgDispName)
 			}
 		}
 
@@ -163,7 +112,7 @@ func uninstallPkgs(pkgNames []string) {
 		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
 
 		log(1, "Deleting info file for %s...", pkgDispName)
-		delPath(3, installedPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
+		delPath(3, infoPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
 
 		log(0, "Successfully uninstalled %s.\n", pkgDispName)
 	}
