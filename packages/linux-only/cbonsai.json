@@ -1,0 +1,31 @@
+{
+    "name": "cbonsai",
+    "author": "jallbrit",
+    "description": "Grow bonsai trees in your terminal.",
+    "url": "https://gitlab.com/jallbrit/cbonsai.git",
+    "license": "GPL-3.0",
+    "bin": {
+        "in_source": [
+            "cbonsai"
+        ],
+        "installed": [
+            "cbonsai"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make"
+            ],
+            "update": [
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "make"
+        ]
+    }
+}
