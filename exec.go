@@ -28,19 +28,25 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 	cmdObj := exec.Command(cmd, args...)
 	cmdObj.Dir = workDir
 
-	stdout, err := cmdObj.StdoutPipe()
+	cmdReader, err := cmdObj.StdoutPipe()
+	cmdObj.Stderr = cmdObj.Stdout
+
 	errorLogNewlineBefore(err, 4, "An error occurred while creating stdout pipe")
 
 	err = cmdObj.Start()
 	errorLogNewlineBefore(err, 4, "An error occurred while starting command")
 
-	scanner := bufio.NewScanner(stdout)
+	scanner := bufio.NewScanner(cmdReader)
 	for scanner.Scan() {
-		fmt.Printf(textCol["VIOLET"] + "." + RESETCOL)
+		if debug {
+			fmt.Printf(logType[5]+(" %s\n"), fmt.Sprintf(scanner.Text()))
+		} else {
+			fmt.Printf(textCol["VIOLET"] + "." + RESETCOL)
+		}
 	}
 
 	err = cmdObj.Wait()
-	errorLog(err, 4, "An error occurred while waiting for command to finish")
+	errorLogNewlineBefore(err, 4, "An error occurred while waiting for command to finish")
 	fmt.Printf("\n")
 }
 
