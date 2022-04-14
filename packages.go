@@ -44,6 +44,7 @@ type Package struct {
 	Deps         *Deps
 	Commands     *OSCommands
 	Config_paths []string
+	Notes        []string
 }
 
 var environmentVariables = map[string]string{
@@ -107,6 +108,12 @@ func installPkgs(pkgNames []string) {
 		copyBins(pkg)
 
 		log(0, "Installed %s successfully!\n", pkgDispName)
+		if len(pkg.Notes) > 0 {
+			log(1, bolden("Important note!"))
+			for _, note := range pkg.Notes {
+				fmt.Println("        " + note)
+			}
+		}
 	}
 }
 
