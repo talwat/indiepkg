@@ -1,0 +1,31 @@
+{
+    "name": "dict",
+    "author": "BetaPictoris",
+    "description": "View the dictionary through the CLI.",
+    "url": "https://github.com/BetaPictoris/dict.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "dict"
+        ],
+        "installed": [
+            "dict"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make"
+            ],
+            "update": [
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go",
+            "make"
+        ]
+    }
+}
