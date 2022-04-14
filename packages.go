@@ -47,8 +47,9 @@ type Package struct {
 }
 
 var environmentVariables = map[string]string{
-	"PATH": home + ".local",
-	"BIN":  home + ".local/bin",
+	"PREFIX": home + ".local",
+	"BIN":    home + ".local/bin",
+	"HOME":   strings.TrimSuffix(home, "/"),
 }
 
 func installPkgs(pkgNames []string) {
