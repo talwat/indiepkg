@@ -8,7 +8,7 @@ import (
 
 const version = "0.12.2"
 
-var purge, debug, assumeYes, force bool = false, false, false, false
+var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
 var optionToOthers, optionToOther bool = false, false
 
@@ -31,12 +31,15 @@ func parseInput() {
 			purge = true
 		case "-d", "--debug":
 			debug = true
-		case "-y", "--assumeYes":
+		case "-y", "--assumeyes":
 			assumeYes = true
 		case "-f", "--force":
 			force = true
+		case "-n", "--nodeps":
+			noDeps = true
 		default:
-			log(1, "Flag %s not found.", bolden(flag))
+			log(4, "Flag %s not found.", bolden(flag))
+			os.Exit(1)
 		}
 	}
 

@@ -18,20 +18,24 @@ func saveChanges(sourcesFile string) {
 
 func addRepo(repoLink string) {
 	_, err := url.ParseRequestURI(repoLink)
-	if err != nil && !force {
-		log(4, "Invalid url: %s.", bolden(repoLink))
-		os.Exit(1)
-	} else if force {
-		log(3, "Invalid url, but continuing because force is set to true.")
+	if err != nil {
+		if force {
+			log(3, "Invalid url, but continuing because force is set to true.")
+		} else {
+			log(4, "Invalid url: %s.", bolden(repoLink))
+			os.Exit(1)
+		}
 	}
 
 	sourcesFile := readSources()
 
-	if strings.Contains(sourcesFile, "\n"+repoLink) && !force {
-		log(4, "Repo %s already exists in sources file.", bolden(repoLink))
-		os.Exit(1)
-	} else if force {
-		log(3, "Repo %s already exists in sources file, but continuing because force is set to true.", bolden(repoLink))
+	if strings.Contains(sourcesFile, "\n"+repoLink) {
+		if force {
+			log(3, "Repo %s already exists in sources file, but continuing because force is set to true.", bolden(repoLink))
+		} else {
+			log(4, "Repo %s already exists in sources file.", bolden(repoLink))
+			os.Exit(1)
+		}
 	}
 
 	log(1, "Appending %s to sources file...", bolden(repoLink))

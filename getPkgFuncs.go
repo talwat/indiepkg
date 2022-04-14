@@ -132,6 +132,20 @@ func getPkgFromGh(query string) []GH_File {
 	}
 
 	for _, url := range urls {
+		replaceRepo := func(repo string) string {
+			var m map[string]string = map[string]string{
+				"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/": textCol["BLUE"] + "(Linux only)" + RESETCOL,
+				"https://raw.githubusercontent.com/talwat/indiepkg/":                          textCol["CYAN"] + "(Official repo)" + RESETCOL,
+			}
+
+			for k, v := range m {
+				if strings.HasPrefix(repo, k) {
+					return v
+				}
+			}
+			return textCol["YELLOW"] + "(Third party repo: " + repo + ")" + RESETCOL
+		}
+
 		if !strings.HasPrefix(url, "https://raw.githubusercontent.com") {
 			log(3, "Non-github repositories can't be queried. Repo: %s", url)
 			continue
@@ -140,6 +154,12 @@ func getPkgFromGh(query string) []GH_File {
 		convUrl := convertUrl(url)
 		debugLog("URL: %s", convUrl)
 		r, _ := viewFile(convUrl, "An error occurred while getting package list")
+
+		if r == "" {
+			log(4, "The Github API returned an empty response. This may be because you are getting rate limited. URL: %s", convUrl)
+			os.Exit(1)
+		}
+
 		var files []GH_File
 		err := json.Unmarshal([]byte(r), &files)
 		errorLog(err, 4, "An error occurred while parsing package list")
@@ -147,12 +167,7 @@ func getPkgFromGh(query string) []GH_File {
 		for _, file := range files {
 			file.Name = strings.TrimSuffix(file.Name, ".json")
 			if strings.Contains(file.Name, query) {
-				if strings.HasPrefix(url, "https://raw.githubusercontent.com/talwat/indiepkg/") {
-					file.Repo = textCol["CYAN"] + "(official repo)" + RESETCOL
-				} else {
-					file.Repo = textCol["YELLOW"] + "(3rd party repo: " + url + ")" + RESETCOL
-				}
-
+				file.Repo = replaceRepo(url)
 				matches = append(matches, file)
 			}
 		}
