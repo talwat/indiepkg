@@ -1,0 +1,20 @@
+{
+    "name": "pipes.sh",
+    "author": "pipeseroni",
+    "description": "Animated pipes terminal screensaver",
+    "url": "https://github.com/pipeseroni/pipes.sh.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "pipes.sh"
+        ],
+        "installed": [
+            "pipes.sh"
+        ]
+    },
+    "deps": {
+        "all": [
+            "bash"
+        ]
+    }
+}
