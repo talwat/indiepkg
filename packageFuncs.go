@@ -1,51 +1,15 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
 	"runtime"
 	"strings"
-
-	"github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/plumbing"
 )
-
-func loadPkg(packageFile string, pkgName string) Package {
-	var pkg Package
-
-	debugLog("Finding environment variables...")
-	keySlice := make([]string, 0)
-	for key := range environmentVariables {
-		keySlice = append(keySlice, key)
-	}
-
-	debugLog("Replacing environment variables...")
-	for _, key := range keySlice {
-		packageFile = strings.Replace(packageFile, ":("+key+"):", environmentVariables[key], -1)
-	}
-
-	err := json.Unmarshal([]byte(packageFile), &pkg)
-	errorLog(err, 4, "An error occurred while loading package info for %s", pkgName)
-	return pkg
-}
-
-func readLoad(pkgName string) Package {
-	packageDisplayName := bolden(pkgName)
-
-	log(1, "Reading package info for %s...", packageDisplayName)
-	pkgFile := readFile(installedPath+pkgName+".json", "An error occurred while reading package %s", packageDisplayName)
-
-	log(1, "Loading package info for %s...", packageDisplayName)
-	pkg := loadPkg(pkgFile, fmt.Sprintf("An error occurred while loading package information for %s", packageDisplayName))
-
-	return pkg
-}
 
 func pkgExists(pkgName string) bool {
 	packageDisplayName := bolden(pkgName)
 
-	infoInstalled := pathExists(installedPath+pkgName+".json", "package info for %s", packageDisplayName)
+	infoInstalled := pathExists(infoPath+pkgName+".json", "package info for %s", packageDisplayName)
 	srcInstalled := pathExists(srcPath+pkgName, "package source for %s", packageDisplayName)
 
 	if infoInstalled && srcInstalled {
@@ -75,12 +39,12 @@ func initDirs(reset bool) {
 
 	log(1, "Making required directories & files...")
 	newDir(srcPath, "An error occurred while creating sources directory")
-	newDir(installedPath, "An error occurred while creating info directory")
+	newDir(infoPath, "An error occurred while creating info directory")
 	newDir(configPath, "An error occurred while creating config directory")
 
 	if !pathExists(configPath+"config.json", "config file") || reset {
 		log(1, "Creating config file...")
-		newFile(configPath+"config.json", defaultConf, "An error occurred while creating config file")
+		newFile(configPath+"config.toml", defaultConf, "An error occurred while creating config file")
 	}
 
 	if !pathExists(configPath+"sources.txt", "sources file") || reset {
@@ -105,50 +69,6 @@ func getDeps(pkg Package) []string {
 		return fullDepsList
 	}
 	return nil
-}
-
-func cloneRepo(pkg Package) {
-	log(1, "Cloning source code for %s...", bolden(pkg.Name))
-	if pkg.Branch == "" {
-		debugLog("Cloning to %s", bolden(srcPath+pkg.Name))
-
-		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
-			URL:      pkg.Url,
-			Progress: os.Stdout,
-		})
-
-		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
-	} else {
-		log(1, "Getting branch %s%s%s...", textFx["BOLD"], pkg.Branch, RESETCOL)
-		debugLog("Cloning to %s on branch %s", srcPath+pkg.Name, pkg.Branch)
-		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
-			URL:           pkg.Url,
-			Progress:      os.Stdout,
-			ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", pkg.Branch)),
-			SingleBranch:  true,
-		})
-
-		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
-	}
-}
-
-func pullRepo(pkgName string) error {
-	var err error
-	r, err := git.PlainOpen(srcPath + pkgName)
-	errorLog(err, 4, "An error occurred while opening repository for %s", bolden(pkgName))
-
-	w, err := r.Worktree()
-	errorLog(err, 4, "An error occurred while getting worktree for %s", bolden(pkgName))
-
-	debugLog("Pulling %s", bolden(srcPath+pkgName))
-	err = w.Pull(&git.PullOptions{RemoteName: "origin"})
-
-	if err.Error() == "already up-to-date" {
-		log(0, "%s already up to date.", bolden(pkgName))
-	} else {
-		errorLog(err, 4, "An error occurred while pulling repository for %s", bolden(pkgName))
-	}
-	return err
 }
 
 func parseSources() []string {
@@ -179,11 +99,20 @@ func copyBins(pkg Package) {
 		log(1, "Copying files for %s...", pkgDispName)
 		for i := range pkg.Bin.In_source {
 			srcDir := srcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
-			destDir := binPath + pkg.Bin.Installed[i]
+			destDir := config.Paths.Bin + pkg.Bin.Installed[i]
 			log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
 			copyFile(srcDir, destDir)
 			log(1, "Making %s executable...", bolden(destDir))
 			changePerms(destDir, 0770)
+		}
+	}
+}
+
+func getNotes(pkg Package) {
+	if len(pkg.Notes) > 0 {
+		log(1, bolden("Important note!"))
+		for _, note := range pkg.Notes {
+			fmt.Println("        " + note)
 		}
 	}
 }

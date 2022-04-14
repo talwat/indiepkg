@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+var home string = os.Getenv("HOME") + "/"
+
 func clear() {
 	cmd := exec.Command("clear")
 	cmd.Stdout = os.Stdout
