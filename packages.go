@@ -65,31 +65,37 @@ func installPkgs(pkgNames []string) {
 	for _, pkgName := range pkgNames {
 		pkgDispName := bolden(pkgName)
 
-		if pkgExists(pkgName) && !force {
-			log(4, "%s is already installed, can't install %s.", pkgDispName, pkgDispName)
-			os.Exit(1)
-		} else if force {
-			log(3, "%s is already installed, but force is on, so continuing.", pkgDispName)
+		if pkgExists(pkgName) {
+			if force {
+				log(3, "%s is already installed, but force is on, so continuing.", pkgDispName)
+			} else {
+				log(4, "%s is already installed, can't install %s.", pkgDispName, pkgDispName)
+				os.Exit(1)
+			}
 		}
 
 		pkg := downloadPkg(pkgName, true)
 
-		log(1, "Checking dependencies for %s...", pkgDispName)
-		deps := getDeps(pkg)
-		if deps != nil {
-			log(1, "Dependencies: %s", strings.Join(deps, ", "))
-			for _, dep := range deps {
-				if checkIfCommandExists(dep) {
-					log(0, "%s found!", bolden(dep))
-				} else if force {
-					log(3, "%s not found, but force is set, so continuing.", bolden(dep))
-				} else {
-					log(4, "%s is either not installed or not in PATH. Please install it with your operating system's package manager.", bolden(dep))
-					os.Exit(1)
+		if !noDeps {
+			log(1, "Checking dependencies for %s...", pkgDispName)
+			deps := getDeps(pkg)
+			if deps != nil {
+				log(1, "Dependencies: %s", strings.Join(deps, ", "))
+				for _, dep := range deps {
+					if checkIfCommandExists(dep) {
+						log(0, "%s found!", bolden(dep))
+					} else if force {
+						log(3, "%s not found, but force is set, so continuing.", bolden(dep))
+					} else {
+						log(4, "%s is either not installed or not in PATH. Please install it with your operating system's package manager.", bolden(dep))
+						os.Exit(1)
+					}
 				}
+			} else {
+				log(1, "No dependencies found.")
 			}
 		} else {
-			log(1, "No dependencies found.")
+			log(3, "Skipping dependency check because nodeps is set to true.")
 		}
 
 		cloneRepo(pkg)
@@ -115,11 +121,13 @@ func uninstallPkgs(pkgNames []string) {
 	for _, pkgName := range pkgNames {
 		pkgDispName := bolden(pkgName)
 
-		if !pkgExists(pkgName) && !force {
-			log(3, "%s is not installed, so it can't be uninstalled", pkgDispName)
-			os.Exit(1)
-		} else if force {
-			log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
+		if !pkgExists(pkgName) {
+			if force {
+				log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
+			} else {
+				log(3, "%s is not installed, so it can't be uninstalled", pkgDispName)
+				os.Exit(1)
+			}
 		}
 
 		pkg := readLoad(pkgName)

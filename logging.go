@@ -28,6 +28,10 @@ func errorLog(err error, logTypeInput int, message string, params ...interface{}
 	if err != nil {
 		fmt.Printf(logType[logTypeInput]+(" %s. Error: %s\n"), fmt.Sprintf(message, params...), err.Error())
 		if logTypeInput == 4 {
+			if force {
+				log(3, "Continuing despite error because force is enabled...")
+				return
+			}
 			os.Exit(1)
 		}
 	}
@@ -37,6 +41,10 @@ func errorLogNewlineBefore(err error, logTypeInput int, message string, params .
 	if err != nil {
 		fmt.Printf("\n"+logType[logTypeInput]+(" %s. Error: %s\n"), fmt.Sprintf(message, params...), err.Error())
 		if logTypeInput == 4 {
+			if force {
+				log(3, "Continuing despite error because force is enabled...")
+				return
+			}
 			os.Exit(1)
 		}
 	}
