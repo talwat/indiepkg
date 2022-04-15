@@ -15,12 +15,12 @@
     "commands": {
         "all": {
             "install": [
-                "go build src/main.go",
+                "go build src/main.go -v",
                 "mv main timeleft"
             ],
             "update": [
                 "rm timeleft",
-                "go build src/main.go",
+                "go build src/main.go -v",
                 "mv main timeleft"
             ]
         }

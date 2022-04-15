@@ -15,11 +15,10 @@ func cloneRepo(pkg Package) {
 		debugLog("Cloning to %s", bolden(srcPath+pkg.Name))
 
 		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
-			URL:          pkg.Url,
-			Progress:     os.Stdout,
-			SingleBranch: true,
-			Depth:        1,
-			Tags:         git.NoTags,
+			URL:      pkg.Url,
+			Progress: os.Stdout,
+			Depth:    1,
+			Tags:     git.NoTags,
 		})
 
 		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
