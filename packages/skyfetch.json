@@ -1,0 +1,31 @@
+{
+    "name": "skyfetch",
+    "author": "justleoo",
+    "description": "A aesthetic system information fetch written in rust",
+    "url": "https://github.com/justleoo/skyfetch.git",
+    "license": "GPL-3.0",
+    "bin": {
+        "in_source": [
+            "target/release/skyfetch"
+        ],
+        "installed": [
+            "skyfetch"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo install --path ."
+            ],
+            "update": [
+                "cargo install --path ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
