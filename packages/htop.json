@@ -21,8 +21,6 @@
                 "make"
             ],
             "update": [
-                "./autogen.sh",
-                "./configure",
                 "make"
             ]
         }

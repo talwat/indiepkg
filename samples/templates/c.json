@@ -15,16 +15,19 @@
     "commands": {
         "all": {
             "install": [
-                "go build ."
+                "./configure",
+                "make"
             ],
             "update": [
-                "go build ."
+                "make"
             ]
         }
     },
     "deps": {
         "all": [
-            "go"
+            "gcc",
+            "autoconf",
+            "make"
         ]
     }
 }

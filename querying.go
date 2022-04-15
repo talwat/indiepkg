@@ -24,8 +24,10 @@ func getPkgFromGh(query string) []GH_File {
 		split := strings.Split(apiLink, "/")
 		index := 6
 		inserted := append(split[:index], split[index:]...)
+		branch := split[index]
 		inserted[index] = "contents"
-		return strings.Join(inserted, "/")
+		trimmed := strings.TrimSuffix(strings.Join(inserted, "/"), "/")
+		return trimmed + "?ref=" + branch
 	}
 
 	for _, url := range urls {
@@ -68,7 +70,6 @@ func getPkgFromGh(query string) []GH_File {
 				matches = append(matches, file)
 			}
 		}
-
 	}
 	if len(matches) == 0 {
 		log(4, "No matches found.")
