@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const version = "0.13-alpha"
+const version = "0.13"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -96,7 +96,7 @@ func parseInput() {
 				log(1, "Indiepkg Version %s", bolden(version))
 
 			case "help":
-				fmt.Printf(helpMsg)
+				fmt.Print(helpMsg)
 
 			case "list":
 				listPkgs()

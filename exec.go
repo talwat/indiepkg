@@ -10,9 +10,8 @@ import (
 )
 
 func runCommand(workDir string, cmd string, args ...string) (string, int) {
-	var cmdObj *exec.Cmd
+	var cmdObj *exec.Cmd = exec.Command(cmd, args...)
 
-	cmdObj = exec.Command(cmd, args...)
 	cmdObj.Dir = workDir
 	data, err := cmdObj.CombinedOutput()
 	errCode := 0
@@ -39,7 +38,7 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 	scanner := bufio.NewScanner(cmdReader)
 	for scanner.Scan() {
 		if debug {
-			fmt.Printf(logType[5]+(" %s\n"), fmt.Sprintf(scanner.Text()))
+			fmt.Printf(logType[5]+(" %s\n"), scanner.Text())
 		} else {
 			fmt.Printf(textCol["VIOLET"] + "." + RESETCOL)
 		}
