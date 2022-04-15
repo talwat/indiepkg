@@ -5,6 +5,8 @@ package main
 import "runtime"
 
 func getInstCmd(pkg Package) []string {
+	log(1, "Getting install commands...")
+
 	var cmds []string
 
 	if pkg.Commands == nil {
@@ -33,6 +35,8 @@ func getInstCmd(pkg Package) []string {
 }
 
 func getUninstCmd(pkg Package) []string {
+	log(1, "Getting uninstall commands...")
+
 	var cmds []string
 
 	if pkg.Commands == nil {
@@ -61,6 +65,8 @@ func getUninstCmd(pkg Package) []string {
 }
 
 func getUpdCmd(pkg Package) []string {
+	log(1, "Getting upgrade commands...")
+
 	var cmds []string
 
 	if pkg.Commands == nil {

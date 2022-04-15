@@ -13,7 +13,7 @@ var logType = map[int]string{
 	2: textCol["BLUE"] + "[!]" + RESETCOL,
 	3: textCol["YELLOW"] + "[!]" + RESETCOL,
 	4: textCol["RED"] + "[!]" + RESETCOL,
-	5: textCol["VIOLET"] + "[DEBUG]" + RESETCOL,
+	5: textCol["VIOLET"] + "[+]" + RESETCOL,
 }
 
 func log(logTypeInput int, message string, params ...interface{}) {

@@ -11,7 +11,7 @@ func listPkgs() {
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
 	if len(files) == 0 {
-		log(1, "No pkgs installed.")
+		log(1, "No packages installed.")
 		os.Exit(0)
 	}
 
