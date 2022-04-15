@@ -55,7 +55,7 @@ func input(defVal string, message string, params ...interface{}) string {
 		return defVal
 	} else {
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Printf(textCol["CYAN"]+"[!]"+RESETCOL+(" %s")+": ", fmt.Sprintf(message, params...))
+		fmt.Printf(textCol["CYAN"]+"[?]"+RESETCOL+(" %s")+": ", fmt.Sprintf(message, params...))
 		input, _ := reader.ReadString('\n')
 		return strings.TrimSpace(input)
 	}

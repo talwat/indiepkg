@@ -51,8 +51,4 @@ If everything worked fine, your ready to move on to the final step.
 
 Finally, go to your Github repo and make a pull request.
 
-Select the 'New package' template.
-
-Fill out all the necessary information, add the tags you think fit with the PR, and make it!
-
 I will then test the package myself, and if everything works, I will merge it into the main repository.
