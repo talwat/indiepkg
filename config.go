@@ -10,10 +10,10 @@ var mainPath string = home + ".indiepkg/"
 var srcPath string = mainPath + "data/package_src/"
 var infoPath string = mainPath + "data/installed_packages/"
 var configPath string = mainPath + "config/"
+var binPath string
 
 type Config struct {
 	Paths struct {
-		Bin    string
 		Prefix string
 	}
 }
@@ -27,15 +27,11 @@ func loadConfig() {
 	err := toml.Unmarshal([]byte(raw), &config)
 	errorLog(err, 4, "An error occurred while loading config file")
 
-	config.Paths.Bin = home + config.Paths.Bin
-	if !strings.HasSuffix(config.Paths.Bin, "/") {
-		config.Paths.Bin += "/"
-	}
-	newDir(config.Paths.Bin, "An error occurred while creating binary directory")
-
 	config.Paths.Prefix = home + config.Paths.Prefix
 	if !strings.HasSuffix(config.Paths.Prefix, "/") {
 		config.Paths.Prefix += "/"
 	}
-	newDir(config.Paths.Bin, "An error occurred while creating prefix directory")
+	newDir(config.Paths.Prefix, "An error occurred while creating prefix directory")
+
+	binPath = config.Paths.Prefix + "bin/"
 }

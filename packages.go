@@ -99,8 +99,8 @@ func uninstallPkgs(pkgNames []string) {
 		if len(pkg.Bin.Installed) > 0 {
 			log(1, "Removing binary files for %s...", pkgDispName)
 			for _, path := range pkg.Bin.Installed {
-				log(1, "Removing %s", bolden(config.Paths.Bin+path))
-				delPath(4, config.Paths.Bin+path, "An error occurred while removing binary files for %s", pkgDispName)
+				log(1, "Removing %s", bolden(binPath+path))
+				delPath(4, binPath+path, "An error occurred while removing binary files for %s", pkgDispName)
 			}
 		}
 

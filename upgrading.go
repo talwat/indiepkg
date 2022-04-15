@@ -5,12 +5,18 @@ import (
 )
 
 func upgradePackage(pkgNames []string) {
+	loadConfig()
+
 	for _, pkgName := range pkgNames {
 		pkgDisplayName := bolden(pkgName)
 
 		if !pkgExists(pkgName) {
-			log(3, "%s is not installed, so it can't be upgraded.", pkgDisplayName)
-			continue
+			if force {
+				log(3, "%s is not installed, but force is on, so continuing.", pkgDisplayName)
+			} else {
+				log(3, "%s is not installed, so it can't be upgraded.", pkgDisplayName)
+				continue
+			}
 		}
 
 		log(1, "Updating source code for %s...", pkgDisplayName)
@@ -31,6 +37,8 @@ func upgradePackage(pkgNames []string) {
 }
 
 func upgradeAllPackages() {
+	loadConfig()
+
 	var installedPackages []string
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
