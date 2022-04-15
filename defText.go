@@ -38,14 +38,8 @@ const defaultConf = `# IndiePKG config file
 # The home directory is prepended automatically for each value, do not include it.
 [paths]
 
-# Default: .local/bin
-bin = ".local/bin"
-
 # Default: .local
 prefix = ".local"
-
-# Default: .indiepkg
-data = ".indiepkg"
 `
 
 const defaultSources = `# Please only add sources you trust.

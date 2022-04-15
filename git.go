@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -14,8 +15,11 @@ func cloneRepo(pkg Package) {
 		debugLog("Cloning to %s", bolden(srcPath+pkg.Name))
 
 		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
-			URL:      pkg.Url,
-			Progress: os.Stdout,
+			URL:          pkg.Url,
+			Progress:     os.Stdout,
+			SingleBranch: true,
+			Depth:        1,
+			Tags:         git.NoTags,
 		})
 
 		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
@@ -27,6 +31,8 @@ func cloneRepo(pkg Package) {
 			Progress:      os.Stdout,
 			ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", pkg.Branch)),
 			SingleBranch:  true,
+			Depth:         1,
+			Tags:          git.NoTags,
 		})
 
 		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
@@ -42,9 +48,16 @@ func pullRepo(pkgName string) error {
 	errorLog(err, 4, "An error occurred while getting worktree for %s", bolden(pkgName))
 
 	debugLog("Pulling %s", bolden(srcPath+pkgName))
-	err = w.Pull(&git.PullOptions{RemoteName: "origin"})
+	err = w.Pull(&git.PullOptions{
+		RemoteName: "origin",
+		Progress:   os.Stdout,
+	})
 
 	if err.Error() == "already up-to-date" {
+		if force {
+			log(3, "%s is already up to date, but force is on, so continuing.", bolden(pkgName))
+			return errors.New("continuing because force is on")
+		}
 		log(0, "%s already up to date.", bolden(pkgName))
 	} else {
 		errorLog(err, 4, "An error occurred while pulling repository for %s", bolden(pkgName))

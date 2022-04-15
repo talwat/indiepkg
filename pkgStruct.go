@@ -41,6 +41,6 @@ type Package struct {
 
 var environmentVariables = map[string]string{
 	"PREFIX": config.Paths.Prefix,
-	"BIN":    config.Paths.Bin,
+	"BIN":    binPath,
 	"HOME":   strings.TrimSuffix(home, "/"),
 }

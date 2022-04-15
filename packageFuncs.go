@@ -99,7 +99,7 @@ func copyBins(pkg Package) {
 		log(1, "Copying files for %s...", pkgDispName)
 		for i := range pkg.Bin.In_source {
 			srcDir := srcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
-			destDir := config.Paths.Bin + pkg.Bin.Installed[i]
+			destDir := binPath + pkg.Bin.Installed[i]
 			log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
 			copyFile(srcDir, destDir)
 			log(1, "Making %s executable...", bolden(destDir))
