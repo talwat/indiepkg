@@ -15,6 +15,7 @@
         "nolint",
         "pfetch",
         "Pkgs",
+        "staticcheck",
         "Uninst"
     ],
     "python.formatting.provider": "black",

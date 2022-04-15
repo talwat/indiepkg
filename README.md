@@ -22,7 +22,7 @@ While IndiePKG doesn't have an install script yet, you can still try it out by c
 You will need:
 
 - Git
-- Go 1.18 *Older versions might work too*
+- Go 1.17+
 - Make
 
 ```bash
