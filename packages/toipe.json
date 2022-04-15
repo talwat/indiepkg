@@ -1,0 +1,31 @@
+{
+    "name": "toipe",
+    "author": "Samyak2",
+    "description": "Yet another typing test, but crab flavoured.",
+    "url": "https://github.com/Samyak2/toipe.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "target/release/toipe"
+        ],
+        "installed": [
+            "toipe"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build --release"
+            ],
+            "update": [
+                "cargo build --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "name": "yaf",
+    "author": "deepjyoti30",
+    "description": "Yet another system fetch that is minimal and customizable",
+    "url": "https://github.com/deepjyoti30/yaf.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "yaf"
+        ],
+        "installed": [
+            "yaf"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build ."
+            ],
+            "update": [
+                "go build ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}

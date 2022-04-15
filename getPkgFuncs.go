@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
@@ -9,7 +8,7 @@ import (
 )
 
 func writeLoadPkg(pkgName string, pkgFile string, load bool) Package {
-	newFile(installedPath+pkgName+".json", pkgFile, "An error occurred while writing package information for %s", pkgName)
+	newFile(infoPath+pkgName+".json", pkgFile, "An error occurred while writing package information for %s", pkgName)
 
 	if load {
 		var pkg Package
@@ -48,8 +47,13 @@ func findPkg(pkgName string) string {
 	}
 
 	for _, url := range urls {
+		if !strings.HasSuffix(url, "/") {
+			url += "/"
+		}
+
 		pkgUrl := url + pkgName + ".json"
 		log(1, "Checking %s for package info...", bolden(url))
+		debugLog("URL: %s", pkgUrl)
 		infoFile, err := viewFile(pkgUrl, "An error occurred while getting package information for %s", pkgName)
 
 		if errIs404(err) {
@@ -102,61 +106,4 @@ func downloadPkg(pkgName string, load bool) Package {
 	log(1, "Downloading package info for %s...", bolden(pkgName))
 
 	return writeLoadPkg(pkgName, findPkg(pkgName), load)
-}
-
-type GH_File struct {
-	Name         string
-	Path         string
-	Url          string
-	Html_url     string //blob
-	Download_url string //raw
-	Repo         string
-}
-
-func getPkgFromGh(query string) []GH_File {
-	urls := parseSources()
-	var matches []GH_File
-
-	convertUrl := func(url string) string {
-		apiLink := strings.ReplaceAll(url, "raw.githubusercontent.com", "api.github.com/repos")
-		split := strings.Split(apiLink, "/")
-		index := 6
-		inserted := append(split[:index], split[index:]...)
-		inserted[index] = "contents"
-		return strings.Join(inserted, "/")
-	}
-
-	for _, url := range urls {
-		if !strings.HasPrefix(url, "https://raw.githubusercontent.com") {
-			log(3, "Non-github repositories can't be queried. Repo: %s", url)
-			continue
-		}
-
-		convUrl := convertUrl(url)
-		debugLog("URL: %s", convUrl)
-		r, _ := viewFile(convUrl, "An error occurred while getting package list")
-		var files []GH_File
-		err := json.Unmarshal([]byte(r), &files)
-		errorLog(err, 4, "An error occurred while parsing package list")
-
-		for _, file := range files {
-			file.Name = strings.TrimSuffix(file.Name, ".json")
-			if strings.Contains(file.Name, query) {
-				if strings.HasPrefix(url, "https://raw.githubusercontent.com/talwat/indiepkg/") {
-					file.Repo = textCol["CYAN"] + "(official repo)" + RESETCOL
-				} else {
-					file.Repo = textCol["YELLOW"] + "(3rd party repo: " + url + ")" + RESETCOL
-				}
-
-				matches = append(matches, file)
-			}
-		}
-
-	}
-	if len(matches) == 0 {
-		log(4, "No matches found.")
-		os.Exit(1)
-	}
-
-	return matches
 }

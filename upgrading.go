@@ -32,7 +32,7 @@ func upgradePackage(pkgNames []string) {
 
 func upgradeAllPackages() {
 	var installedPackages []string
-	files := dirContents(installedPath, "An error occurred while getting list of installed packages")
+	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
 	for _, file := range files {
 		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))

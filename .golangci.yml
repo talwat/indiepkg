@@ -1,3 +1,5 @@
 linters:
   disable:
     - deadcode
+    - unused
+    - staticcheck

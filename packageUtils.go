@@ -8,10 +8,10 @@ import (
 
 func listPkgs() {
 	var installedPkgs []string
-	files := dirContents(installedPath, "An error occurred while getting list of installed packages")
+	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
 	if len(files) == 0 {
-		log(1, "No pkgs installed.")
+		log(1, "No packages installed.")
 		os.Exit(0)
 	}
 
@@ -29,7 +29,7 @@ func sync() {
 	var pkgInfoToSync []string
 	for _, dir := range dirs {
 		pkgName := strings.ReplaceAll(dir.Name(), ".json", "")
-		infoExists := pathExists(installedPath+pkgName+".json", "An error occurred while checking if %s is properly installed", pkgName)
+		infoExists := pathExists(infoPath+pkgName+".json", "An error occurred while checking if %s is properly installed", pkgName)
 		if !infoExists && dir.IsDir() {
 			pkgInfoToSync = append(pkgInfoToSync, pkgName)
 		}
@@ -39,7 +39,7 @@ func sync() {
 		downloadPkg(pkgToSync, false)
 	}
 
-	infoFiles := dirContents(installedPath, "An error occurred while getting list of info files")
+	infoFiles := dirContents(infoPath, "An error occurred while getting list of info files")
 
 	var pkgSrcToSync []string
 	for _, infoFile := range infoFiles {
@@ -75,6 +75,8 @@ func infoPkg(pkgName string) {
 	if deps != nil {
 		log(1, "Dependencies: %s", strings.Join(deps, ", "))
 	}
+
+	getNotes(pkg)
 }
 
 func rmData(pkgNames []string) {
@@ -95,7 +97,7 @@ func rmData(pkgNames []string) {
 		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgDisplayName)
 
 		log(1, "Deleting info file for %s...", pkgDisplayName)
-		delPath(3, installedPath+pkgName+".json", "An error occurred while deleting info file for %s", pkgDisplayName)
+		delPath(3, infoPath+pkgName+".json", "An error occurred while deleting info file for %s", pkgDisplayName)
 
 		log(0, "Successfully deleted the data for %s.\n", pkgDisplayName)
 	}

@@ -1,0 +1,32 @@
+{
+    "name": "kabmat",
+    "author": "PlankCipher",
+    "description": "TUI program for managing kanban boards with vim-like keybindings.",
+    "url": "https://github.com/PlankCipher/kabmat.git",
+    "license": "GPL-3.0",
+    "bin": {
+        "in_source": [
+            "kabmat"
+        ],
+        "installed": [
+            "kabmat"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make"
+            ],
+            "update": [
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "g++",
+            "make"
+        ]
+    }
+}

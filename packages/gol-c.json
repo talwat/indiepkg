@@ -1,0 +1,31 @@
+{
+    "name": "gol-c",
+    "author": "FlynnOwen",
+    "description": "A terminal application of Conways Game of Life, implemented in C.",
+    "url": "https://github.com/FlynnOwen/GOL-C.git",
+    "license": "none",
+    "bin": {
+        "in_source": [
+            "GOL"
+        ],
+        "installed": [
+            "GOL"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make"
+            ],
+            "update": [
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "make"
+        ]
+    }
+}

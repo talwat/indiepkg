@@ -1,0 +1,38 @@
+{
+    "name": "htop",
+    "author": "htop-dev",
+    "description": "An interactive process viewer",
+    "url": "https://github.com/htop-dev/htop.git",
+    "license": "GPL-2.0",
+    "bin": {
+        "in_source": [
+            "htop"
+        ],
+        "installed": [
+            "htop"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "mkdir :(HOME):/.config/htop || true",
+                "./autogen.sh",
+                "./configure",
+                "make"
+            ],
+            "update": [
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "autoconf",
+            "gcc",
+            "make"
+        ]
+    },
+    "config_paths": [
+        ".config/htop"
+    ]
+}

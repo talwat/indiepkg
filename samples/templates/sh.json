@@ -1,0 +1,20 @@
+{
+    "name": "nameofpkg",
+    "author": "author",
+    "description": "description",
+    "url": "git url",
+    "license": "license",
+    "bin": {
+        "in_source": [
+            "nameofpkg"
+        ],
+        "installed": [
+            "nameofpkg"
+        ]
+    },
+    "deps": {
+        "all": [
+            "sh"
+        ]
+    }
+}

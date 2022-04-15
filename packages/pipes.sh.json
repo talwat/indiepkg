@@ -1,0 +1,24 @@
+{
+    "name": "pipes.sh",
+    "author": "pipeseroni",
+    "description": "Animated pipes terminal screensaver",
+    "url": "https://github.com/pipeseroni/pipes.sh.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "pipes.sh"
+        ],
+        "installed": [
+            "pipes.sh"
+        ]
+    },
+    "deps": {
+        "all": [
+            "bash"
+        ]
+    },
+    "notes": [
+        "You need bash 4.0+ to run pipes.sh properly.",
+        "If you are on macOS, please run 'brew install bash'"
+    ]
+}

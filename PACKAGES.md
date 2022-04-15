@@ -21,6 +21,10 @@
       - [Install](#install)
       - [Update](#update)
       - [Uninstall](#uninstall)
+    - [Others](#others)
+    - [Deps](#deps)
+      - [Config paths](#config-paths)
+      - [Notes](#notes)
 
 ## Introduction
 
@@ -69,6 +73,8 @@ These are super simple pieces of information to fill out.
 #### Name
 
 This is the name of the package. You are **not** allowed to use spaces in the name.
+
+Your package.json file should also be named the same as the `name` argument in the package file.
 
 #### Author
 
@@ -184,3 +190,46 @@ Going back to our C example:
 Usually, this isn't required, but if your program needs a specific set of instructions to be **fully** uninstalled then you would specify them here.
 
 IndiePKG will automatically delete the binary files specified [here](#installed).
+
+### Others
+
+### Deps
+
+This is where you put the dependencies of your program. As of now you can't put paths or version numbers, only commands.
+
+You should also put your **build** dependencies here.
+
+You can also as usual specify the operating system. Keep in mind that OS specific dependencies will be **appended** to the list of all dependencies.
+
+Again, to our C example:
+
+```json
+{
+    ...
+    "deps": {
+        "all": [
+            "gcc",
+            "g++",
+            "autoconf"
+        ],
+        "linux": [
+            "make"
+        ],
+        "darwin": [
+            "gmake"
+        ]
+    }
+}
+```
+
+#### Config paths
+
+This tells IndiePKG where your configuration files are located so it can remove them if needed.
+
+**Note: The home directory is *automatically* pre-pended, so you shouldn't put an absolute path.**
+
+#### Notes
+
+This is where you can put any additional information about using the program with IndiePKG.
+
+For example, if there's a command you need to run or a symlink you need to create, you can put that information here.

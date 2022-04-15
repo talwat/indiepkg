@@ -1,0 +1,22 @@
+{
+    "name": "yttrim",
+    "author": "chanceboudreaux",
+    "description": "Trim portions from online videos with ease.",
+    "url": "https://gitlab.com/chanceboudreaux/yttrim.git",
+    "license": "GPL-3.0",
+    "bin": {
+        "in_source": [
+            "yttrim"
+        ],
+        "installed": [
+            "yttrim"
+        ]
+    },
+    "deps": {
+        "all": [
+            "bash",
+            "ffmpeg",
+            "yt-dlp"
+        ]
+    }
+}

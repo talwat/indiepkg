@@ -1,0 +1,31 @@
+{
+    "name": "nameofpkg",
+    "author": "author",
+    "description": "description",
+    "url": "git url",
+    "license": "license",
+    "bin": {
+        "in_source": [
+            "nameofpkg"
+        ],
+        "installed": [
+            "nameofpkg"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build --release"
+            ],
+            "update": [
+                "cargo build --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
