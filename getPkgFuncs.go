@@ -28,6 +28,7 @@ func findPkg(pkgName string) string {
 	var validInfos, validUrls []string
 	urlsLen := len(urls)
 
+	log(1, "Checking urls length...")
 	if urlsLen <= 0 {
 		log(4, "You don't have any sources defined in %s.", bolden(configPath+"sources.txt"))
 		os.Exit(1)
@@ -47,11 +48,12 @@ func findPkg(pkgName string) string {
 	}
 
 	for _, url := range urls {
+		log(1, "Parsing URL...")
 		if !strings.HasSuffix(url, "/") {
 			url += "/"
 		}
-
 		pkgUrl := url + pkgName + ".json"
+
 		log(1, "Checking %s for package info...", bolden(url))
 		debugLog("URL: %s", pkgUrl)
 		infoFile, err := viewFile(pkgUrl, "An error occurred while getting package information for %s", pkgName)
@@ -67,6 +69,7 @@ func findPkg(pkgName string) string {
 		validUrls = append(validUrls, url)
 	}
 
+	log(1, "Checking valid info length...")
 	lenValidInfos := len(validInfos)
 
 	if lenValidInfos < 1 {

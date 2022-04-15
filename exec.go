@@ -32,6 +32,10 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 
 	errorLogNewlineBefore(err, 4, "An error occurred while creating stdout pipe")
 
+	if debug {
+		fmt.Print("\n")
+	}
+
 	err = cmdObj.Start()
 	errorLogNewlineBefore(err, 4, "An error occurred while starting command")
 

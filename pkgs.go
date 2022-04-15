@@ -14,11 +14,21 @@ func installPkgs(pkgNames []string) {
 
 	confirm("y", "(y/n)")
 
+	chapLog("=>", "VIOLET", "Initializing")
 	initDirs(false)
 	loadConfig()
 
 	for _, pkgName := range pkgNames {
+		chapLog("=>", "VIOLET", "Installing %s", pkgName)
+		chapLog("==>", "BLUE", "Getting package info")
+		log(1, "Reading package info for %s...", bolden(pkgName))
+		pkgFile := findPkg(pkgName)
+		pkg := loadPkg(pkgFile, pkgName)
+		cmds := getInstCmd(pkg)
 		pkgDispName := bolden(pkgName)
+
+		chapLog("==>", "BLUE", "Running checks")
+		log(1, "Checking if %s is already installed...", pkgDispName)
 
 		if pkgExists(pkgName) {
 			if force {
@@ -28,8 +38,6 @@ func installPkgs(pkgNames []string) {
 				os.Exit(1)
 			}
 		}
-
-		pkg := downloadPkg(pkgName, true)
 
 		if !noDeps {
 			log(1, "Checking dependencies for %s...", pkgDispName)
@@ -53,15 +61,20 @@ func installPkgs(pkgNames []string) {
 			log(3, "Skipping dependency check because nodeps is set to true.")
 		}
 
+		chapLog("==>", "BLUE", "Cloning source code")
 		cloneRepo(pkg)
 
-		cmds := getInstCmd(pkg)
+		if len(cmds) > 0 {
+			chapLog("==>", "BLUE", "Compiling")
+			runCmds(cmds, pkg, srcPath+pkg.Name, "install")
+		}
 
-		runCmds(cmds, pkg, srcPath+pkg.Name, "install")
-
+		chapLog("==>", "BLUE", "Installing")
 		copyBins(pkg)
+		writeLoadPkg(pkgName, pkgFile, false)
 
-		log(0, "Installed %s successfully!\n", pkgDispName)
+		chapLog("=>", "GREEN", "Success")
+		log(0, "Installed %s successfully!", pkgDispName)
 		getNotes(pkg)
 	}
 }
@@ -75,8 +88,10 @@ func uninstallPkgs(pkgNames []string) {
 	confirm("y", "(y/n)")
 
 	for _, pkgName := range pkgNames {
+		chapLog("=>", "VIOLET", "Uninstalling %s", pkgName)
 		pkgDispName := bolden(pkgName)
 
+		chapLog("==>", "BLUE", "Running checks & getting info")
 		if !pkgExists(pkgName) {
 			if force {
 				log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
@@ -88,6 +103,7 @@ func uninstallPkgs(pkgNames []string) {
 
 		pkg := readLoad(pkgName)
 
+		chapLog("==>", "BLUE", "Deleting binary & configuration files")
 		if purge {
 			log(1, "Deleting configuration files for %s...", pkgDispName)
 			for _, path := range pkg.Config_paths {
@@ -97,23 +113,25 @@ func uninstallPkgs(pkgNames []string) {
 		}
 
 		if len(pkg.Bin.Installed) > 0 {
-			log(1, "Removing binary files for %s...", pkgDispName)
+			log(1, "Deleting binary files for %s...", pkgDispName)
 			for _, path := range pkg.Bin.Installed {
-				log(1, "Removing %s", bolden(binPath+path))
-				delPath(4, binPath+path, "An error occurred while removing binary files for %s", pkgDispName)
+				log(1, "Deleting %s", bolden(binPath+path))
+				delPath(4, binPath+path, "An error occurred while deleting binary files for %s", pkgDispName)
 			}
 		}
 
+		chapLog("==>", "BLUE", "Running uninstall commands")
 		cmds := getUninstCmd(pkg)
-
 		runCmds(cmds, pkg, srcPath+pkg.Name, "uninstall")
 
+		chapLog("==>", "BLUE", "Deleting info & source")
 		log(1, "Deleting source files for %s...", pkgDispName)
 		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
 
 		log(1, "Deleting info file for %s...", pkgDispName)
 		delPath(3, infoPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
 
-		log(0, "Successfully uninstalled %s.\n", pkgDispName)
+		chapLog("=>", "GREEN", "Success")
+		log(0, "Successfully uninstalled %s.", pkgDispName)
 	}
 }
