@@ -13,14 +13,14 @@
         "all": {
             "install": [
                 "make",
-                "make install PREFIX=:(PATH):"
+                "make install PREFIX=:(PREFIX):"
             ],
             "uninstall": [
-                "make uninstall PREFIX=:(PATH):"
+                "make uninstall PREFIX=:(PREFIX):"
             ],
             "update": [
-                "make uninstall PREFIX=:(PATH):",
-                "make install PREFIX=:(PATH):"
+                "make uninstall PREFIX=:(PREFIX):",
+                "make install PREFIX=:(PREFIX):"
             ]
         }
     },

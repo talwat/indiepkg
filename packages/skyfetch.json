@@ -15,10 +15,10 @@
     "commands": {
         "all": {
             "install": [
-                "cargo install --path -v ."
+                "cargo install -v --path ."
             ],
             "update": [
-                "cargo install --path -v ."
+                "cargo install -v --path ."
             ]
         }
     },
