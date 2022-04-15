@@ -6,6 +6,7 @@ import (
 
 func updatePackage(pkgNames []string) {
 	for _, pkgName := range pkgNames {
+		chapLog("=>", "VIOLET", "Updating %s", pkgName)
 		pkgDisplayName := bolden(pkgName)
 
 		if !pkgExists(pkgName) {
@@ -15,11 +16,16 @@ func updatePackage(pkgNames []string) {
 
 		downloadPkg(pkgName, false)
 
-		log(0, "Successfully updated package info for %s!\n", pkgDisplayName)
+		chapLog("=>", "GREEN", "Success")
+		log(0, "Successfully updated package info for %s!", pkgDisplayName)
 	}
 }
 
 func updateAllPackages() {
+	chapLog("=>", "VIOLET", "Initializing")
+	loadConfig()
+
+	chapLog("==>", "BLUE", "Getting installed packages")
 	var installedPackages []string
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
@@ -27,10 +33,12 @@ func updateAllPackages() {
 		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))
 	}
 
-	log(1, "Updating all packages...")
+	chapLog("=>", "VIOLET", "Starting upgrades")
 	for _, installedPackage := range installedPackages {
+		chapLog("==>", "BLUE", "Upgrading %s", installedPackage)
 		downloadPkg(installedPackage, false)
 	}
 
+	chapLog("=>", "GREEN", "Success")
 	log(0, "Successfully updated info for all packages!")
 }

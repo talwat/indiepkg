@@ -46,10 +46,15 @@ func pullRepo(pkgName string) error {
 	w, err := r.Worktree()
 	errorLog(err, 4, "An error occurred while getting worktree for %s", bolden(pkgName))
 
-	debugLog("Pulling %s", bolden(srcPath+pkgName))
+	b, err := r.Head()
+	ref := b.Name().String()
+	errorLog(err, 4, "An error occurred while getting head for %s", bolden(pkgName))
+
+	debugLog("Pulling %s with ref %s", bolden(srcPath+pkgName), bolden(b.Name().String()))
 	err = w.Pull(&git.PullOptions{
-		RemoteName: "origin",
-		Progress:   os.Stdout,
+		RemoteName:    "origin",
+		Progress:      os.Stdout,
+		ReferenceName: plumbing.ReferenceName(ref),
 	})
 
 	if err.Error() == "already up-to-date" {

@@ -8,12 +8,17 @@ import (
 )
 
 var logType = map[int]string{
-	0: textCol["GREEN"] + "[!]" + RESETCOL,
-	1: textCol["CYAN"] + "[!]" + RESETCOL,
-	2: textCol["BLUE"] + "[!]" + RESETCOL,
-	3: textCol["YELLOW"] + "[!]" + RESETCOL,
-	4: textCol["RED"] + "[!]" + RESETCOL,
-	5: textCol["VIOLET"] + "[+]" + RESETCOL,
+	0: RESETCOL + textCol["GREEN"] + "[^]" + RESETCOL,
+	1: RESETCOL + textCol["CYAN"] + "[!]" + RESETCOL,
+	2: RESETCOL + textCol["BLUE"] + "[!]" + RESETCOL,
+	3: RESETCOL + textCol["YELLOW"] + "[!]" + RESETCOL,
+	4: RESETCOL + textCol["RED"] + "[!]" + RESETCOL,
+	5: RESETCOL + textCol["VIOLET"] + "[+]" + RESETCOL,
+	6: RESETCOL + textCol["CYAN"] + "[?]" + RESETCOL,
+}
+
+func chapLog(prefix string, color string, message string, params ...interface{}) {
+	fmt.Printf("\n"+RESETCOL+textCol[color]+textFx["BOLD"]+prefix+textCol["WHITE"]+(" %s\n")+RESETCOL, fmt.Sprintf(message, params...))
 }
 
 func log(logTypeInput int, message string, params ...interface{}) {
@@ -55,7 +60,7 @@ func input(defVal string, message string, params ...interface{}) string {
 		return defVal
 	} else {
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Printf(textCol["CYAN"]+"[?]"+RESETCOL+(" %s")+": ", fmt.Sprintf(message, params...))
+		fmt.Printf(logType[6]+(" %s")+": ", fmt.Sprintf(message, params...))
 		input, _ := reader.ReadString('\n')
 		return strings.TrimSpace(input)
 	}

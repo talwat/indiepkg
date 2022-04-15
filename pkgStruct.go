@@ -1,7 +1,5 @@
 package main
 
-import "strings"
-
 type Bin struct {
 	Installed []string
 	In_source []string
@@ -37,10 +35,4 @@ type Package struct {
 	Commands     *OSCommands
 	Config_paths []string
 	Notes        []string
-}
-
-var environmentVariables = map[string]string{
-	"PREFIX": config.Paths.Prefix,
-	"BIN":    binPath,
-	"HOME":   strings.TrimSuffix(home, "/"),
 }
