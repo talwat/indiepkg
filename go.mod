@@ -1,4 +1,4 @@
-module indiepkg
+module github.com/talwat/indiepkg
 
 go 1.18
 
