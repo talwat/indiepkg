@@ -33,7 +33,7 @@ jobs:
         run: ./indiepkg help
 
       - name: Install a few packages
-        run: ./indiepkg install treefetch pfetch timeleft btop -y
+        run: ./indiepkg install treefetch pfetch timeleft btop -y -d
       
       - name: Test installed packages
         run: |
@@ -44,8 +44,8 @@ jobs:
       
       - name: Force upgrade packages
         run: |
-          ./indiepkg upgrade -f
-          ./indiepkg upgrade treefetch pfetch timeleft btop -f
+          ./indiepkg upgrade -f -d
+          ./indiepkg upgrade treefetch pfetch timeleft btop -f -d
       
       - name: Add repo
         run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
@@ -57,15 +57,15 @@ jobs:
         run: ./indiepkg search fetch
       
       - name: Try installing package from linux-only
-        run: ./indiepkg install katfetch -y
+        run: ./indiepkg install katfetch -y -d
       
       - name: Uninstall packages
-        run: ./indiepkg uninstall treefetch pfetch timeleft btop -y
+        run: ./indiepkg uninstall treefetch pfetch timeleft btop -y -d
       
       - name: Try other commands
         run: |
           ./indiepkg sync
           ./indiepkg info btop
-          ./indiepkg remove-data btop -y
+          ./indiepkg remove-data btop -y -d
           ./indiepkg version
 
