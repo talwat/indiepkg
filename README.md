@@ -19,6 +19,22 @@ IndiePKG is **NOT** ready for use yet. It's still early software.
 
 However, if you would like to submit issues or PR's, you are **more** than welcome to.
 
+## Table of contents
+
+- [IndiePKG](#indiepkg)
+  - [Notice](#notice)
+  - [Table of contents](#table-of-contents)
+  - [What is IndiePKG?](#what-is-indiepkg)
+    - [Pros](#pros)
+    - [Cons](#cons)
+  - [Installation](#installation)
+  - [Making & submitting packages](#making--submitting-packages)
+  - [Basic usage](#basic-usage)
+  - [Supported operating systems](#supported-operating-systems)
+  - [Branches](#branches)
+  - [FAQ](#faq)
+    - [So it's like the AUR?](#so-its-like-the-aur)
+
 ## What is IndiePKG?
 
 IndiePKG is mainly for small simple CLI and TUI programs. Most of them are just for fun, such as **cmatrix**, while others have a bit more utility such as **btop**.
@@ -88,3 +104,11 @@ The **testing** branch is a good balance of new and stable, and is updated whene
 The **stable** branch is only updated whenever a release is made, and is not recommended for use *yet* because it will sometimes not work due to changes in the package files.
 
 The **main** branch is the default git branch, and contains the **newest** code. This is not recommended for use because it has a higher chance of being broken.
+
+## FAQ
+
+### So it's like the AUR?
+
+Kind of. For one packages are checked, and there is also an official package manager unlike the AUR which is commonly paired with an AUR helper.
+
+It also obviously works on other operating systems besides just Arch Linux.
