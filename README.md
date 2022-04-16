@@ -27,6 +27,20 @@ IndiePKG uses **git** to install packages, and everything is compiled **from sou
 
 It's also much simpler than your standard package manager, and if a package installation goes wrong you don't have to worry about all your packages failing, because you can super easily remove it.
 
+### Pros
+
+- Easy to use with simple commands.
+- Explains what it's doing at every step.
+- Simple compared to other package managers, and easy to repair if something goes wrong.
+- Clones directly from the package's git repository, giving you the latest version with no manual intervention by a maintainer.
+- Easy to submit to, with no notability requirements.
+- Installs **everything** locally, not interfering with any system components and not requiring root privileges.
+
+### Cons
+
+- Doesn't install & manage dependencies.
+- Slower than other package managers due to needing to compile source code.
+
 ## Installation
 
 While IndiePKG doesn't have an install script yet, you can still try it out by cloning the repository and building it from source.
