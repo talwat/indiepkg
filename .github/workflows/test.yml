@@ -33,21 +33,21 @@ jobs:
         run: ./indiepkg help
 
       - name: Install a few packages
-        run: ./indiepkg install treefetch pfetch timeleft skyfetch ne -y -d
+        run: ./indiepkg install treefetch pfetch yaf skyfetch ne -y -d
       
       - name: Test installed packages
         continue-on-error: true
         run: |
-          $HOME/.local/bin/pfetch || true
-          $HOME/.local/bin/treefetch || true
-          $HOME/.local/bin/timeleft || true
+          $HOME/.local/bin/pfetch
+          $HOME/.local/bin/treefetch
+          $HOME/.local/bin/yaf
           $HOME/.local/bin/skyfetch
           $HOME/.local/bin/ne --help
       
       - name: Force upgrade packages
         run: |
           ./indiepkg upgrade -f -d
-          ./indiepkg upgrade treefetch pfetch timeleft skyfetch ne -f -d
+          ./indiepkg upgrade treefetch pfetch yaf skyfetch ne -f -d
       
       - name: Add repo
         run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
@@ -62,7 +62,7 @@ jobs:
         run: ./indiepkg install katfetch -y -d
       
       - name: Uninstall packages
-        run: ./indiepkg uninstall treefetch pfetch timeleft btop -y -d
+        run: ./indiepkg uninstall treefetch pfetch yaf -y -d
       
       - name: Try other commands
         run: |
