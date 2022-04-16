@@ -1,0 +1,30 @@
+{
+    "name": "duf",
+    "author": "muesli",
+    "description": "Disk Usage/Free Utility - a better 'df' alternative.",
+    "url": "https://github.com/muesli/duf.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "duf"
+        ],
+        "installed": [
+            "duf"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build ."
+            ],
+            "update": [
+                "go build ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}

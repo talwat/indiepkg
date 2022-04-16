@@ -1,0 +1,31 @@
+{
+    "name": "sd",
+    "author": "chmln",
+    "description": "Intuitive find & replace CLI (sed alternative).",
+    "url": "https://github.com/chmln/sd.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "target/release/sd"
+        ],
+        "installed": [
+            "sd"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
