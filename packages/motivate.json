@@ -1,0 +1,38 @@
+{
+    "name": "motivate",
+    "author": "AlfredEVOL",
+    "description": "Prints a motivational quote to your terminal.",
+    "url": "https://github.com/AlfredEVOL/motivate.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "build/motivate"
+        ],
+        "installed": [
+            "motivate"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make",
+                "make install PREFIX=:(PREFIX):"
+            ],
+            "update": [
+                "make clean",
+                "make",
+                "make install PREFIX=:(PREFIX):"
+            ],
+            "uninstall": [
+                "make uninstall PREFIX=:(PREFIX):"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "g++",
+            "make"
+        ]
+    }
+}
