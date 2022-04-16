@@ -1,0 +1,71 @@
+---
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        go: ["1.17", "1.18"]
+    steps:
+      - name: Setup go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Make build for testing
+        run: make
+
+      - name: Run with empty args
+        run: ./indiepkg
+
+      - name: Run help command
+        run: ./indiepkg help
+
+      - name: Install a few packages
+        run: ./indiepkg install treefetch pfetch timeleft btop -y
+      
+      - name: Test installed packages
+        run: |
+          $HOME/.local/bin/pfetch
+          $HOME/.local/bin/treefetch
+          $HOME/.local/bin/timeleft
+          $HOME/.local/bin/btop --help
+      
+      - name: Force upgrade packages
+        run: |
+          ./indiepkg upgrade -f
+          ./indiepkg upgrade treefetch pfetch timeleft btop -f
+      
+      - name: Add repo
+        run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
+      
+      - name: List repos
+        run: ./indiepkg repo list
+      
+      - name: Test querying
+        run: ./indiepkg search fetch
+      
+      - name: Try installing package from linux-only
+        run: ./indiepkg install katfetch -y
+      
+      - name: Uninstall packages
+        run: ./indiepkg uninstall treefetch pfetch timeleft btop -y
+      
+      - name: Try other commands
+        run: |
+          ./indiepkg sync
+          ./indiepkg info btop
+          ./indiepkg remove-data btop
+          ./indiepkg version
+
