@@ -1,22 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"strings"
 )
 
 func installPkgs(pkgNames []string) {
-	log(1, "Are you sure you would like to install the following packages:")
-	for _, pkgToInstall := range pkgNames {
-		fmt.Println("        " + pkgToInstall)
-	}
+	displayPkgs(pkgNames, "install")
 
-	confirm("y", "(y/n)")
-
-	chapLog("=>", "VIOLET", "Initializing")
-	initDirs(false)
-	loadConfig()
+	fullInit()
 
 	for _, pkgName := range pkgNames {
 		chapLog("=>", "VIOLET", "Installing %s", pkgName)
@@ -62,15 +54,18 @@ func installPkgs(pkgNames []string) {
 		}
 
 		chapLog("==>", "BLUE", "Cloning source code")
-		cloneRepo(pkg)
+		log(1, "Making sure %s is not already cloned...", pkgDispName)
+		delPath(3, tmpSrcPath+pkg.Name, "An error occurred while deleting temporary source files for %s", pkgName)
+		cloneRepo(pkg, tmpSrcPath)
 
 		if len(cmds) > 0 {
 			chapLog("==>", "BLUE", "Compiling")
-			runCmds(cmds, pkg, srcPath+pkg.Name, "install")
+			runCmds(cmds, pkg, tmpSrcPath+pkg.Name, "install")
 		}
 
 		chapLog("==>", "BLUE", "Installing")
 		copyBins(pkg)
+		mvPath(tmpSrcPath+pkg.Name, srcPath+pkg.Name)
 		writeLoadPkg(pkgName, pkgFile, false)
 
 		chapLog("=>", "GREEN", "Success")
@@ -80,12 +75,9 @@ func installPkgs(pkgNames []string) {
 }
 
 func uninstallPkgs(pkgNames []string) {
-	log(1, "Are you sure you would like to uninstall the following packages:")
-	for _, pkgToUninstall := range pkgNames {
-		fmt.Println("        " + pkgToUninstall)
-	}
+	displayPkgs(pkgNames, "uninstall")
 
-	confirm("y", "(y/n)")
+	fullInit()
 
 	for _, pkgName := range pkgNames {
 		chapLog("=>", "VIOLET", "Uninstalling %s", pkgName)
