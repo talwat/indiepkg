@@ -50,6 +50,9 @@ func getPkgFromGh(query string) []GH_File {
 		errorLog(err, 4, "An error occurred while parsing package list")
 
 		for _, file := range files {
+			if !strings.HasSuffix(file.Name, ".json") {
+				continue
+			}
 			file.Name = strings.TrimSuffix(file.Name, ".json")
 			if strings.Contains(file.Name, query) {
 				file.Repo = replaceRepo(url)

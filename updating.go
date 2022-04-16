@@ -34,9 +34,9 @@ func updateAllPackages() {
 		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))
 	}
 
-	chapLog("=>", "VIOLET", "Starting upgrades")
+	chapLog("=>", "VIOLET", "Starting updates")
 	for _, installedPackage := range installedPackages {
-		chapLog("==>", "BLUE", "Upgrading %s", installedPackage)
+		chapLog("==>", "BLUE", "Updating %s", installedPackage)
 		downloadPkg(installedPackage, false)
 	}
 
