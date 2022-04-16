@@ -15,19 +15,15 @@
     "commands": {
         "all": {
             "install": [
-                "make",
-                "mv target/*"
+                "go build src"
             ],
             "update": [
-                "make clean",
-                "make",
-                "mv target/*"
+                "go build src"
             ]
         }
     },
     "deps": {
         "all": [
-            "make",
             "go"
         ]
     }
