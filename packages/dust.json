@@ -1,0 +1,31 @@
+{
+    "name": "dust",
+    "author": "bootandy",
+    "description": "A more intuitive version of du in rust.",
+    "url": "https://github.com/bootandy/dust.git",
+    "license": "Apache-2.0",
+    "bin": {
+        "in_source": [
+            "target/release/dust"
+        ],
+        "installed": [
+            "dust"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
