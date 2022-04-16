@@ -39,7 +39,7 @@ func upgradePackage(pkgNames []string) {
 		}
 
 		chapLog("==>", "BLUE", "Installing")
-		copyBins(pkg)
+		copyBins(pkg, srcPath)
 
 		chapLog("=>", "GREEN", "Success")
 		log(0, "Successfully upgraded %s!", pkgName)
@@ -70,7 +70,7 @@ func upgradeAllPackages() {
 		cmds := getUpdCmd(pkg)
 
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
-		copyBins(pkg)
+		copyBins(pkg, srcPath)
 	}
 
 	chapLog("=>", "GREEN", "Success")

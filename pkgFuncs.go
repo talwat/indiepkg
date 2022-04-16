@@ -94,12 +94,12 @@ func parseSources() []string {
 	return finalList
 }
 
-func copyBins(pkg Package) {
+func copyBins(pkg Package, srcPath string) {
 	pkgDispName := bolden(pkg.Name)
 	if len(pkg.Bin.In_source) > 0 {
 		log(1, "Copying files for %s...", pkgDispName)
 		for i := range pkg.Bin.In_source {
-			srcDir := tmpSrcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
+			srcDir := srcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
 			destDir := binPath + pkg.Bin.Installed[i]
 			log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
 			copyFile(srcDir, destDir)
