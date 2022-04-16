@@ -1,31 +1,31 @@
 {
-    "name": "micro",
-    "author": "zyedidia",
-    "description": "A modern and intuitive terminal-based text editor.",
-    "url": "https://github.com/zyedidia/micro",
-    "license": "MIT",
+    "name": "ne",
+    "author": "vigna",
+    "description": "ne, the nice editor",
+    "url": "https://github.com/vigna/ne.git",
+    "license": "GPL-3.0",
     "bin": {
         "in_source": [
-            "micro"
+            "src/ne"
         ],
         "installed": [
-            "micro"
+            "ne"
         ]
     },
     "commands": {
         "all": {
             "install": [
-                "make build"
+                "make"
             ],
             "update": [
                 "make clean",
-                "make build"
+                "make"
             ]
         }
     },
     "deps": {
         "all": [
-            "go",
+            "gcc",
             "make"
         ]
     }
