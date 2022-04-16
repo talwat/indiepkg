@@ -1,0 +1,20 @@
+{
+    "name": "ppfetch",
+    "author": "pedroportales",
+    "description": "A simple fetch.",
+    "url": "https://gitlab.com/pedroportales/ppfetch.git",
+    "license": "AGPL-3.0",
+    "bin": {
+        "in_source": [
+            "ppfetch"
+        ],
+        "installed": [
+            "ppfetch"
+        ]
+    },
+    "deps": {
+        "all": [
+            "sh"
+        ]
+    }
+}
