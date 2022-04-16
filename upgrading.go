@@ -5,11 +5,13 @@ import (
 )
 
 func upgradePackage(pkgNames []string) {
-	loadConfig()
+	fullInit()
 
 	for _, pkgName := range pkgNames {
+		chapLog("=>", "VIOLET", "Upgrading %s", pkgName)
 		pkgDisplayName := bolden(pkgName)
 
+		chapLog("==>", "BLUE", "Running checks")
 		if !pkgExists(pkgName) {
 			if force {
 				log(3, "%s is not installed, but force is on, so continuing.", pkgDisplayName)
@@ -19,6 +21,7 @@ func upgradePackage(pkgNames []string) {
 			}
 		}
 
+		chapLog("==>", "BLUE", "Pulling source code")
 		log(1, "Updating source code for %s...", pkgDisplayName)
 		err := pullRepo(pkgName)
 
@@ -26,19 +29,27 @@ func upgradePackage(pkgNames []string) {
 			continue
 		}
 
+		chapLog("==>", "BLUE", "Upgrade info")
 		pkg := readLoad(pkgName)
 		cmds := getUpdCmd(pkg)
 
-		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
-		copyBins(pkg)
+		if len(cmds) > 0 {
+			chapLog("==>", "BLUE", "Compiling")
+			runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
+		}
 
-		log(0, "Successfully upgraded %s!\n", pkgName)
+		chapLog("==>", "BLUE", "Installing")
+		copyBins(pkg, srcPath)
+
+		chapLog("=>", "GREEN", "Success")
+		log(0, "Successfully upgraded %s!", pkgName)
 	}
 }
 
 func upgradeAllPackages() {
-	loadConfig()
+	fullInit()
 
+	chapLog("==>", "BLUE", "Getting installed packages")
 	var installedPackages []string
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
@@ -46,23 +57,22 @@ func upgradeAllPackages() {
 		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))
 	}
 
-	log(1, "Upgrading all packages...")
+	chapLog("=>", "VIOLET", "Starting upgrades")
 	for _, installedPackage := range installedPackages {
-		installedPackageDisplay := bolden(installedPackage)
+		chapLog("==>", "BLUE", "Upgrading %s", installedPackage)
 		err := pullRepo(installedPackage)
 
 		if err.Error() == "already up-to-date" {
 			continue
 		}
 
-		log(1, "Upgrading %s...", installedPackageDisplay)
-
 		pkg := readLoad(installedPackage)
 		cmds := getUpdCmd(pkg)
 
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
-		copyBins(pkg)
+		copyBins(pkg, srcPath)
 	}
 
+	chapLog("=>", "GREEN", "Success")
 	log(0, "Upgraded all packages!")
 }

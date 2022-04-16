@@ -9,6 +9,12 @@ import (
 func loadPkg(packageFile string, pkgName string) Package {
 	var pkg Package
 
+	var environmentVariables = map[string]string{
+		"PREFIX": config.Paths.Prefix,
+		"BIN":    binPath,
+		"HOME":   strings.TrimSuffix(home, "/"),
+	}
+
 	debugLog("Finding environment variables...")
 	keySlice := make([]string, 0)
 	for key := range environmentVariables {
@@ -17,7 +23,9 @@ func loadPkg(packageFile string, pkgName string) Package {
 
 	debugLog("Replacing environment variables...")
 	for _, key := range keySlice {
-		packageFile = strings.Replace(packageFile, ":("+key+"):", environmentVariables[key], -1)
+		environmentVariables["PREFIX"] = config.Paths.Prefix
+		debugLog("Replacing %s with %s...", key, environmentVariables[key])
+		packageFile = strings.ReplaceAll(packageFile, ":("+key+"):", environmentVariables[key])
 	}
 
 	err := json.Unmarshal([]byte(packageFile), &pkg)

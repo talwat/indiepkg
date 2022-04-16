@@ -22,10 +22,14 @@ func listPkgs() {
 }
 
 func sync() {
-	initDirs(false)
+	fullInit()
 
+	chapLog("==>", "BLUE", "Getting packages to sync")
+
+	log(1, "Getting list of package files...")
 	dirs := dirContents(srcPath, "An error occurred while getting list of source files")
 
+	log(1, "Getting missing package info...")
 	var pkgInfoToSync []string
 	for _, dir := range dirs {
 		pkgName := strings.ReplaceAll(dir.Name(), ".json", "")
@@ -35,12 +39,10 @@ func sync() {
 		}
 	}
 
-	for _, pkgToSync := range pkgInfoToSync {
-		downloadPkg(pkgToSync, false)
-	}
-
+	log(1, "Getting list of source directories...")
 	infoFiles := dirContents(infoPath, "An error occurred while getting list of info files")
 
+	log(1, "Getting missing source directories...")
 	var pkgSrcToSync []string
 	for _, infoFile := range infoFiles {
 		pkgName := strings.ReplaceAll(infoFile.Name(), ".json", "")
@@ -50,14 +52,22 @@ func sync() {
 		}
 	}
 
+	chapLog("=>", "VIOLET", "Syncing packages...")
+	for _, pkgToSync := range pkgInfoToSync {
+		chapLog("==>", "BLUE", "Downloading info for %s", pkgToSync)
+		downloadPkg(pkgToSync, false)
+	}
+
 	for _, pkgToSync := range pkgSrcToSync {
-		log(1, "Cloning package source for %s...", pkgToSync)
-		cloneRepo(readLoad(pkgToSync))
+		chapLog("==>", "BLUE", "Cloning source for %s", pkgToSync)
+		cloneRepo(readLoad(pkgToSync), srcPath)
 	}
 
 	if len(pkgInfoToSync) > 0 || len(pkgSrcToSync) > 0 {
-		log(0, "Successfully synced %s!", strings.Join(pkgInfoToSync, ", ")+", "+strings.Join(pkgSrcToSync, ", "))
+		chapLog("=>", "GREEN", "Success")
+		log(0, "Successfully synced info for %s and source for %s!", strings.Join(pkgInfoToSync, ", "), strings.Join(pkgSrcToSync, ", "))
 	} else {
+		chapLog("=>", "CYAN", "Nothing synced")
 		log(1, "Nothing synced.")
 	}
 }
@@ -83,14 +93,10 @@ func rmData(pkgNames []string) {
 	log(3, "Warning: This will remove the data for the selected packages stored in %s", mainPath)
 	log(3, "This will %snot%s run the uninstall commands.", textFx["BOLD"], RESETCOL)
 	log(3, "You should only use this in case a package installation has failed at a certain step, or you want to separate an installed package from indiepkg.")
-	log(1, "Are you sure you would like to remove the data for the following packages:")
-	for _, pkgToRemove := range pkgNames {
-		fmt.Println("        " + pkgToRemove)
-	}
-
-	confirm("y", "(y/n)")
+	displayPkgs(pkgNames, "remove the data for")
 
 	for _, pkgName := range pkgNames {
+		chapLog("=>", "VIOLET", "Removing data for %s", pkgName)
 		pkgDisplayName := bolden(pkgName)
 
 		log(1, "Deleting source files for %s...", pkgDisplayName)
@@ -101,6 +107,9 @@ func rmData(pkgNames []string) {
 
 		log(0, "Successfully deleted the data for %s.\n", pkgDisplayName)
 	}
+
+	chapLog("=>", "GREEN", "Success")
+	log(0, "Successfully deleted data.")
 }
 
 func search(query string) {

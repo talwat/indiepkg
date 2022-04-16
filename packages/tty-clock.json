@@ -15,11 +15,11 @@
     "commands": {
         "all": {
             "install": [
-                "gcc -Wall -Werror -Wextra -std=c99 -pedantic -Wno-unused-parameter -lncurses -o tty-clock ttyclock.c"
+                "gcc -v -Wall -Werror -Wextra -std=c99 -pedantic -Wno-unused-parameter -lncurses -o tty-clock ttyclock.c"
             ],
             "update": [
                 "make clean",
-                "gcc -Wall -Werror -Wextra -std=c99 -pedantic -Wno-unused-parameter -lncurses -o tty-clock ttyclock.c"
+                "gcc -v -Wall -Werror -Wextra -std=c99 -pedantic -Wno-unused-parameter -lncurses -o tty-clock ttyclock.c"
             ]
         }
     },

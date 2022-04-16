@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/url"
 	"os"
 	"strings"
@@ -8,7 +9,18 @@ import (
 
 func readSources() string {
 	log(1, "Reading sources file...")
-	return strings.TrimSpace(readFile(configPath+"sources.txt", "An error occurred while reading sources file"))
+	raw := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
+	log(1, "Parsing sources file...")
+	trimmed := strings.TrimSpace(raw)
+	split := strings.Split(trimmed, "\n")
+	final := ""
+	for _, line := range split {
+		if !strings.HasPrefix(line, "#") && strings.TrimSpace(line) != "" {
+			final += line + "\n"
+		}
+	}
+
+	return strings.TrimSpace(final)
 }
 
 func saveChanges(sourcesFile string) {
@@ -56,4 +68,27 @@ func rmRepo(repoLink string) {
 
 	sourcesFile = strings.Join(repos, "\n")
 	saveChanges(sourcesFile)
+}
+
+func listRepos() {
+	sourcesFile := readSources()
+	repos := strings.Split(sourcesFile, "\n")
+	log(1, "Repos:")
+	for _, repo := range repos {
+		fmt.Printf("        %s - %s\n", bolden(repo), replaceRepo(repo))
+	}
+}
+
+func replaceRepo(repo string) string {
+	var m map[string]string = map[string]string{
+		"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/": textCol["BLUE"] + "(Linux only)" + RESETCOL,
+		"https://raw.githubusercontent.com/talwat/indiepkg/":                          textCol["CYAN"] + "(Official repo)" + RESETCOL,
+	}
+
+	for k, v := range m {
+		if strings.HasPrefix(repo, k) {
+			return v
+		}
+	}
+	return textCol["YELLOW"] + "(Third party repo: " + repo + ")" + RESETCOL
 }

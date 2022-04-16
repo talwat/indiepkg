@@ -13,31 +13,31 @@
         "all": {
             "install": [
                 "make",
-                "make install PREFIX=:(PATH):"
+                "make install PREFIX=:(PREFIX):"
             ],
             "uninstall": [
-                "make uninstall PREFIX=:(PATH):"
+                "make uninstall PREFIX=:(PREFIX):"
             ],
             "update": [
-                "make uninstall PREFIX=:(PATH):",
+                "make uninstall PREFIX=:(PREFIX):",
                 "make clean distclean",
                 "make",
-                "make install PREFIX=:(PATH):"
+                "make install PREFIX=:(PREFIX):"
             ]
         },
         "darwin": {
             "install": [
                 "gmake",
-                "gmake install PREFIX=:(PATH):"
+                "gmake install PREFIX=:(PREFIX):"
             ],
             "uninstall": [
-                "gmake uninstall PREFIX=:(PATH):"
+                "gmake uninstall PREFIX=:(PREFIX):"
             ],
             "update": [
-                "gmake uninstall PREFIX=:(PATH):",
+                "gmake uninstall PREFIX=:(PREFIX):",
                 "gmake clean distclean",
                 "gmake",
-                "gmake install PREFIX=:(PATH):"
+                "gmake install PREFIX=:(PREFIX):"
             ]
         }
     },

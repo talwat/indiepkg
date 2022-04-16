@@ -39,6 +39,7 @@ func initDirs(reset bool) {
 
 	log(1, "Making required directories & files...")
 	newDir(srcPath, "An error occurred while creating sources directory")
+	newDir(tmpSrcPath, "An error occurred while creating temporary sources directory")
 	newDir(infoPath, "An error occurred while creating info directory")
 	newDir(configPath, "An error occurred while creating config directory")
 
@@ -93,7 +94,7 @@ func parseSources() []string {
 	return finalList
 }
 
-func copyBins(pkg Package) {
+func copyBins(pkg Package, srcPath string) {
 	pkgDispName := bolden(pkg.Name)
 	if len(pkg.Bin.In_source) > 0 {
 		log(1, "Copying files for %s...", pkgDispName)
@@ -115,4 +116,19 @@ func getNotes(pkg Package) {
 			fmt.Println("        " + note)
 		}
 	}
+}
+
+func displayPkgs(pkgNames []string, action string) {
+	log(1, "Are you sure you would like to %s the following packages:", bolden(action))
+	for _, pkgToDisplay := range pkgNames {
+		fmt.Println("        " + pkgToDisplay)
+	}
+
+	confirm("y", "(y/n)")
+}
+
+func fullInit() {
+	chapLog("=>", "VIOLET", "Initializing")
+	initDirs(false)
+	loadConfig()
 }

@@ -50,7 +50,14 @@ func delPath(logLevel int, path string, errMsg string, params ...interface{}) {
 	errorLog(err, logLevel, fmt.Sprintf(errMsg, params...))
 }
 
+func mvPath(path string, destPath string) {
+	log(1, "Moving source to proper location...")
+	err := os.Rename(path, destPath)
+	errorLog(err, 4, "An error occurred while moving %s to %s", bolden(path), bolden(destPath))
+}
+
 func pathExists(path string, fileName string, params ...interface{}) bool {
+	debugLog("Checking if %s exists", bolden(path))
 	_, err := os.Stat(path)
 	if err == nil {
 		return true

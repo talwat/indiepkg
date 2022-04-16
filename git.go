@@ -9,24 +9,23 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 )
 
-func cloneRepo(pkg Package) {
+func cloneRepo(pkg Package, cloneDir string) {
 	log(1, "Cloning source code for %s...", bolden(pkg.Name))
 	if pkg.Branch == "" {
-		debugLog("Cloning to %s", bolden(srcPath+pkg.Name))
+		debugLog("Cloning to %s", bolden(cloneDir+pkg.Name))
 
-		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
-			URL:          pkg.Url,
-			Progress:     os.Stdout,
-			SingleBranch: true,
-			Depth:        1,
-			Tags:         git.NoTags,
+		_, err := git.PlainClone(cloneDir+pkg.Name, false, &git.CloneOptions{
+			URL:      pkg.Url,
+			Progress: os.Stdout,
+			Depth:    1,
+			Tags:     git.NoTags,
 		})
 
 		errorLog(err, 4, "An error occurred while cloning repository for %s", bolden(pkg.Name))
 	} else {
 		log(1, "Getting branch %s%s%s...", textFx["BOLD"], pkg.Branch, RESETCOL)
-		debugLog("Cloning to %s on branch %s", srcPath+pkg.Name, pkg.Branch)
-		_, err := git.PlainClone(srcPath+pkg.Name, false, &git.CloneOptions{
+		debugLog("Cloning to %s on branch %s", cloneDir+pkg.Name, pkg.Branch)
+		_, err := git.PlainClone(cloneDir+pkg.Name, false, &git.CloneOptions{
 			URL:           pkg.Url,
 			Progress:      os.Stdout,
 			ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", pkg.Branch)),
@@ -47,10 +46,15 @@ func pullRepo(pkgName string) error {
 	w, err := r.Worktree()
 	errorLog(err, 4, "An error occurred while getting worktree for %s", bolden(pkgName))
 
-	debugLog("Pulling %s", bolden(srcPath+pkgName))
+	b, err := r.Head()
+	ref := b.Name().String()
+	errorLog(err, 4, "An error occurred while getting head for %s", bolden(pkgName))
+
+	debugLog("Pulling %s with ref %s", bolden(srcPath+pkgName), bolden(b.Name().String()))
 	err = w.Pull(&git.PullOptions{
-		RemoteName: "origin",
-		Progress:   os.Stdout,
+		RemoteName:    "origin",
+		Progress:      os.Stdout,
+		ReferenceName: plumbing.ReferenceName(ref),
 	})
 
 	if err.Error() == "already up-to-date" {

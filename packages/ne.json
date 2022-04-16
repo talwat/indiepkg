@@ -1,0 +1,32 @@
+{
+    "name": "ne",
+    "author": "vigna",
+    "description": "ne, the nice editor",
+    "url": "https://github.com/vigna/ne.git",
+    "license": "GPL-3.0",
+    "bin": {
+        "in_source": [
+            "src/ne"
+        ],
+        "installed": [
+            "ne"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make"
+            ],
+            "update": [
+                "make clean",
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "make"
+        ]
+    }
+}
