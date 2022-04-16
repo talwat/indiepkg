@@ -33,14 +33,13 @@ jobs:
         run: ./indiepkg help
 
       - name: Install a few packages
-        run: ./indiepkg install treefetch pfetch timeleft btop -y -d
+        run: ./indiepkg install treefetch pfetch timeleft -y -d
       
       - name: Test installed packages
         run: |
           $HOME/.local/bin/pfetch
           $HOME/.local/bin/treefetch
           $HOME/.local/bin/timeleft
-          $HOME/.local/bin/btop --help
       
       - name: Force upgrade packages
         run: |
