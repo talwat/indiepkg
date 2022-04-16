@@ -1,0 +1,31 @@
+{
+    "name": "didyoumean",
+    "author": "hisbaan",
+    "description": "description",
+    "url": "https://github.com/hisbaan/didyoumean.git",
+    "license": "none",
+    "bin": {
+        "in_source": [
+            "target/release/dym"
+        ],
+        "installed": [
+            "dym"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
