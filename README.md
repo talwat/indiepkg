@@ -19,6 +19,22 @@ IndiePKG is **NOT** ready for use yet. It's still early software.
 
 However, if you would like to submit issues or PR's, you are **more** than welcome to.
 
+## Table of contents
+
+- [IndiePKG](#indiepkg)
+  - [Notice](#notice)
+  - [Table of contents](#table-of-contents)
+  - [What is IndiePKG?](#what-is-indiepkg)
+    - [Pros](#pros)
+    - [Cons](#cons)
+  - [Installation](#installation)
+  - [Making & submitting packages](#making--submitting-packages)
+  - [Basic usage](#basic-usage)
+  - [Supported operating systems](#supported-operating-systems)
+  - [Branches](#branches)
+  - [FAQ](#faq)
+    - [So it's like the AUR?](#so-its-like-the-aur)
+
 ## What is IndiePKG?
 
 IndiePKG is mainly for small simple CLI and TUI programs. Most of them are just for fun, such as **cmatrix**, while others have a bit more utility such as **btop**.
@@ -26,6 +42,20 @@ IndiePKG is mainly for small simple CLI and TUI programs. Most of them are just 
 IndiePKG uses **git** to install packages, and everything is compiled **from source**. This means that while there aren't any versions, it does mean that you get the absolute latest software.
 
 It's also much simpler than your standard package manager, and if a package installation goes wrong you don't have to worry about all your packages failing, because you can super easily remove it.
+
+### Pros
+
+- Easy to use with simple commands.
+- Explains what it's doing at every step.
+- Simple compared to other package managers, and easy to repair if something goes wrong.
+- Clones directly from the package's git repository, giving you the latest version with no manual intervention by a maintainer.
+- Easy to submit to, with no notability requirements.
+- Installs **everything** locally, not interfering with any system components and not requiring root privileges.
+
+### Cons
+
+- Doesn't install & manage dependencies.
+- Slower than other package managers due to needing to compile source code.
 
 ## Installation
 
@@ -74,3 +104,11 @@ The **testing** branch is a good balance of new and stable, and is updated whene
 The **stable** branch is only updated whenever a release is made, and is not recommended for use *yet* because it will sometimes not work due to changes in the package files.
 
 The **main** branch is the default git branch, and contains the **newest** code. This is not recommended for use because it has a higher chance of being broken.
+
+## FAQ
+
+### So it's like the AUR?
+
+Kind of. For one packages are checked, and there is also an official package manager unlike the AUR which is commonly paired with an AUR helper.
+
+It also obviously works on other operating systems besides just Arch Linux.
