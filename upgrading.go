@@ -5,8 +5,7 @@ import (
 )
 
 func upgradePackage(pkgNames []string) {
-	chapLog("=>", "VIOLET", "Initializing")
-	loadConfig()
+	fullInit()
 
 	for _, pkgName := range pkgNames {
 		chapLog("=>", "VIOLET", "Upgrading %s", pkgName)
@@ -48,8 +47,7 @@ func upgradePackage(pkgNames []string) {
 }
 
 func upgradeAllPackages() {
-	chapLog("=>", "VIOLET", "Initializing")
-	loadConfig()
+	fullInit()
 
 	chapLog("==>", "BLUE", "Getting installed packages")
 	var installedPackages []string

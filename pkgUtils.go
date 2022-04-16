@@ -22,8 +22,7 @@ func listPkgs() {
 }
 
 func sync() {
-	chapLog("=>", "VIOLET", "Initializing")
-	initDirs(false)
+	fullInit()
 
 	chapLog("==>", "BLUE", "Getting packages to sync")
 
@@ -61,7 +60,7 @@ func sync() {
 
 	for _, pkgToSync := range pkgSrcToSync {
 		chapLog("==>", "BLUE", "Cloning source for %s", pkgToSync)
-		cloneRepo(readLoad(pkgToSync))
+		cloneRepo(readLoad(pkgToSync), srcPath)
 	}
 
 	if len(pkgInfoToSync) > 0 || len(pkgSrcToSync) > 0 {
@@ -94,12 +93,7 @@ func rmData(pkgNames []string) {
 	log(3, "Warning: This will remove the data for the selected packages stored in %s", mainPath)
 	log(3, "This will %snot%s run the uninstall commands.", textFx["BOLD"], RESETCOL)
 	log(3, "You should only use this in case a package installation has failed at a certain step, or you want to separate an installed package from indiepkg.")
-	log(1, "Are you sure you would like to remove the data for the following packages:")
-	for _, pkgToRemove := range pkgNames {
-		fmt.Println("        " + pkgToRemove)
-	}
-
-	confirm("y", "(y/n)")
+	displayPkgs(pkgNames, "remove the data for")
 
 	for _, pkgName := range pkgNames {
 		chapLog("=>", "VIOLET", "Removing data for %s", pkgName)
