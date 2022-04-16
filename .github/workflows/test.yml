@@ -33,18 +33,20 @@ jobs:
         run: ./indiepkg help
 
       - name: Install a few packages
-        run: ./indiepkg install treefetch pfetch timeleft -y -d
+        run: ./indiepkg install treefetch pfetch timeleft skyfetch ne -y -d
       
       - name: Test installed packages
         run: |
           $HOME/.local/bin/pfetch
           $HOME/.local/bin/treefetch
           $HOME/.local/bin/timeleft
+          $HOME/.local/bin/skyfetch
+          $HOME/.local/bin/ne --help
       
       - name: Force upgrade packages
         run: |
           ./indiepkg upgrade -f -d
-          ./indiepkg upgrade treefetch pfetch timeleft btop -f -d
+          ./indiepkg upgrade treefetch pfetch timeleft skyfetch ne -f -d
       
       - name: Add repo
         run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/

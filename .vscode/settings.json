@@ -20,6 +20,7 @@
         "pfetch",
         "Pkgs",
         "shellcheck",
+        "skyfetch",
         "staticcheck",
         "Talwat",
         "timeleft",
