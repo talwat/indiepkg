@@ -1,0 +1,31 @@
+{
+    "name": "fd",
+    "author": "sharkdp",
+    "description": "A simple, fast and user-friendly alternative to 'find'.",
+    "url": "https://github.com/sharkdp/fd.git",
+    "license": "Apache-2.0",
+    "bin": {
+        "in_source": [
+            "target/release/fd"
+        ],
+        "installed": [
+            "fd"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
