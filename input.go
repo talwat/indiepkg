@@ -99,6 +99,8 @@ func checkCommand(other string, others []string, i int, args []string) {
 		case "remove":
 			checkForOptions("url", 2)
 			rmRepo(others[i+2])
+		case "list":
+			listRepos()
 		default:
 			log(4, "Sub-command %s not found.", bolden(others[i+1]))
 			os.Exit(1)
