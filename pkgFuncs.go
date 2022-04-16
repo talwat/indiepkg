@@ -96,6 +96,8 @@ func parseSources() []string {
 
 func copyBins(pkg Package, srcPath string) {
 	pkgDispName := bolden(pkg.Name)
+	log(1, "Making binary directory...")
+	newDir(binPath, "An error occurred while creating binaries directory")
 	if len(pkg.Bin.In_source) > 0 {
 		log(1, "Copying files for %s...", pkgDispName)
 		for i := range pkg.Bin.In_source {
