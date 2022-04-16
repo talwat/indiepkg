@@ -37,7 +37,8 @@ jobs:
       
       - name: Test installed packages
         run: |
-          $HOME/.local/bin/pfetch
+          $HOME/.local/bin/pfetch || true
+          $HOME/.local/bin/treefetch
           $HOME/.local/bin/timeleft
           $HOME/.local/bin/skyfetch
           $HOME/.local/bin/ne --help
