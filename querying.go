@@ -31,20 +31,6 @@ func getPkgFromGh(query string) []GH_File {
 	}
 
 	for _, url := range urls {
-		replaceRepo := func(repo string) string {
-			var m map[string]string = map[string]string{
-				"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/": textCol["BLUE"] + "(Linux only)" + RESETCOL,
-				"https://raw.githubusercontent.com/talwat/indiepkg/":                          textCol["CYAN"] + "(Official repo)" + RESETCOL,
-			}
-
-			for k, v := range m {
-				if strings.HasPrefix(repo, k) {
-					return v
-				}
-			}
-			return textCol["YELLOW"] + "(Third party repo: " + repo + ")" + RESETCOL
-		}
-
 		if !strings.HasPrefix(url, "https://raw.githubusercontent.com") {
 			log(3, "Non-github repositories can't be queried. Repo: %s", url)
 			continue
