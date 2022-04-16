@@ -1,0 +1,31 @@
+{
+    "name": "micro",
+    "author": "zyedidia",
+    "description": "A modern and intuitive terminal-based text editor.",
+    "url": "https://github.com/zyedidia/micro",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "micro"
+        ],
+        "installed": [
+            "micro"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make build"
+            ],
+            "update": [
+                "make clean",
+                "make build"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}
