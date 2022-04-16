@@ -1,0 +1,38 @@
+{
+    "name": "tui-shop",
+    "author": "Gcat101",
+    "description": "Something between a GUI and a CLI way of downloading apps.",
+    "url": "https://github.com/gcat101/tui-shop.git",
+    "license": "GPL-3.0",
+    "bin": {
+        "in_source": [
+            "tui-shop.py"
+        ],
+        "installed": [
+            "/usr/bin/tui-shop"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "sudo ./install.sh"
+            ],
+            "uninstall": [
+                "sudo rm /usr/bin/tui-shop"
+            ],
+            "update": [
+                "sudo ./install.sh"
+            ]   
+        }
+    },
+    "deps": {
+        "all": [
+            "python3",
+            "python3-pip",
+            "sh"
+        ]
+    },
+    "config_paths": [
+        "/opt/tui-shop"
+    ]
+}
