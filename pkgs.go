@@ -64,7 +64,7 @@ func installPkgs(pkgNames []string) {
 		}
 
 		chapLog("==>", "BLUE", "Installing")
-		copyBins(pkg)
+		copyBins(pkg, tmpSrcPath)
 		mvPath(tmpSrcPath+pkg.Name, srcPath+pkg.Name)
 		writeLoadPkg(pkgName, pkgFile, false)
 
