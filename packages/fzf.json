@@ -1,0 +1,34 @@
+{
+    "name": "fzf",
+    "author": "junegunn",
+    "description": "A command-line fuzzy finder",
+    "url": "https://github.com/junegunn/fzf.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "fzf"
+        ],
+        "installed": [
+            "fzf"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make",
+                "mv target/*"
+            ],
+            "update": [
+                "make clean",
+                "make",
+                "mv target/*"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "make",
+            "go"
+        ]
+    }
+}
