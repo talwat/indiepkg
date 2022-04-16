@@ -15,11 +15,16 @@
     "commands": {
         "all": {
             "install": [
-                "make"
+                "make",
+                "make install PREFIX=:(PREFIX):"
             ],
             "update": [
                 "make clean",
-                "make"
+                "make",
+                "make install PREFIX=:(PREFIX):"
+            ],
+            "uninstall": [
+                "make uninstall PREFIX=:(PREFIX):"
             ]
         }
     },
