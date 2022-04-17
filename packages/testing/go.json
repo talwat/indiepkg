@@ -1,5 +1,5 @@
 {
-    "name": "golang",
+    "name": "go",
     "author": "go",
     "description": "An open source programming language supported by Google.",
     "download": {
@@ -28,10 +28,10 @@
     "commands": {
         "all": {
             "install": [
-                "tar -xvf golang"
+                "tar -xf golang"
             ],
             "update": [
-                "tar -xvf golang"
+                "tar -xf golang"
             ]
         }
     },
