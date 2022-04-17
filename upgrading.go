@@ -47,13 +47,15 @@ func upgradePackage(pkgNames []string) {
 		if directDownload {
 			chapLog("==>", "BLUE", "Updating info")
 			oldVer := pkg.Version
+			log(1, "Getting & writing new info for %s...", pkgDisplayName)
 			writeLoadPkg(pkgName, findPkg(pkgName), false)
+			log(1, "Reading new version number...")
 			newVer := readLoad(pkgName).Version
 
 			debugLog("Old version: %s. New version: %s", oldVer, newVer)
 			chapLog("==>", "BLUE", "Checking if already up to date")
 			log(1, "Checking if %s is already up to date...", bolden(pkgName))
-			if oldVer != newVer {
+			if oldVer == newVer {
 				log(0, "%s already up to date.", pkgDisplayName)
 				continue
 			} else {
