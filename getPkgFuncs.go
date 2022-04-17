@@ -64,6 +64,7 @@ func findPkg(pkgName string) string {
 
 		errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
 
+		log(0, "Found %s in %s!", bolden(pkgName), bolden(url))
 		log(1, "Saving valid info & url...")
 		validInfos = append(validInfos, infoFile)
 		validUrls = append(validUrls, url)

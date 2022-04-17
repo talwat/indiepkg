@@ -12,6 +12,7 @@ func upgradePackage(pkgNames []string) {
 		pkgDisplayName := bolden(pkgName)
 
 		chapLog("==>", "BLUE", "Running checks")
+		log(1, "Checking if %s exists...", pkgDisplayName)
 		if !pkgExists(pkgName) {
 			if force {
 				log(3, "%s is not installed, but force is on, so continuing.", pkgDisplayName)
@@ -25,13 +26,42 @@ func upgradePackage(pkgNames []string) {
 		log(1, "Updating source code for %s...", pkgDisplayName)
 		err := pullRepo(pkgName)
 
+		directDownload := false
+
 		if err.Error() == "already up-to-date" {
-			continue
+			if force {
+				log(3, "%s is already up to date, but force is on, so continuing.", bolden(pkgName))
+			} else {
+				log(0, "%s already up to date.", bolden(pkgName))
+				continue
+			}
+		} else if err.Error() == "repository does not exist" && pathExists(srcPath+pkgName, "An error occurred while checking if %s's source exists", pkgName) {
+			log(1, "Direct download detected.")
+			directDownload = true
 		}
 
 		chapLog("==>", "BLUE", "Upgrade info")
 		pkg := readLoad(pkgName)
 		cmds := getUpdCmd(pkg)
+
+		if directDownload {
+			chapLog("==>", "BLUE", "Updating info")
+			oldVer := pkg.Version
+			writeLoadPkg(pkgName, findPkg(pkgName), false)
+			newVer := readLoad(pkgName).Version
+
+			debugLog("Old version: %s. New version: %s", oldVer, newVer)
+			chapLog("==>", "BLUE", "Checking if already up to date")
+			log(1, "Checking if %s is already up to date...", bolden(pkgName))
+			if oldVer != newVer {
+				log(0, "%s already up to date.", pkgDisplayName)
+				continue
+			} else {
+				log(1, "Not up to date. Upgrading from %s to %s", bolden(oldVer), bolden(newVer))
+			}
+
+			doDirectDownload(pkg, pkgName, srcPath)
+		}
 
 		if len(cmds) > 0 {
 			chapLog("==>", "BLUE", "Compiling")

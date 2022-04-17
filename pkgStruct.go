@@ -29,6 +29,7 @@ type Package struct {
 	Description  string
 	Url          string
 	Download     map[string]interface{}
+	Version      string
 	License      string
 	Branch       string
 	Bin          *Bin

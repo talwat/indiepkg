@@ -120,3 +120,23 @@ func search(query string) {
 		fmt.Println("        " + pkg.Name + " - " + pkg.Repo)
 	}
 }
+
+func doDirectDownload(pkg Package, pkgName string, srcPath string) {
+	pkgDispName := bolden(pkgName)
+
+	chapLog("==>", "BLUE", "Downloading file")
+	log(1, "Making sure %s is not already downloaded...", pkgDispName)
+	delPath(3, srcPath+pkg.Name, "An error occurred while deleting temporary downloaded files for %s", pkgName)
+
+	log(1, "Getting download URL for %s", pkgDispName)
+	url := getDownloadUrl(pkg)
+
+	log(1, "Making temporary directory for %s...", pkgDispName)
+	newDir(tmpSrcPath+pkg.Name, "An error occurred while creating temporary directory for %s", pkgName)
+
+	log(1, "Downloading file for %s from %s...", pkgDispName, bolden(url))
+	nameOfFile := srcPath + pkg.Name + "/" + pkg.Name
+
+	debugLog("Downloading and saving to %s", nameOfFile)
+	downloadFile(nameOfFile, url, "An error occurred while downloading file for %s", pkgName)
+}

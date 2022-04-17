@@ -13,6 +13,7 @@
             "arm64": "https://dl.google.com/go/go1.18.1.linux-arm64.tar.gz"
         }
     },
+    "version": "1.18.1",
     "license": "BSD-3-Clause",
     "bin": {
         "in_source": [
@@ -27,6 +28,9 @@
     "commands": {
         "all": {
             "install": [
+                "tar -xvf golang"
+            ],
+            "update": [
                 "tar -xvf golang"
             ]
         }
