@@ -15,7 +15,7 @@ type GH_File struct {
 	Repo         string
 }
 
-func getPkgFromGh(query string) []GH_File {
+func getPkgFromGh(query []string) []GH_File {
 	urls := parseSources()
 	var matches []GH_File
 
@@ -54,7 +54,7 @@ func getPkgFromGh(query string) []GH_File {
 				continue
 			}
 			file.Name = strings.TrimSuffix(file.Name, ".json")
-			if strings.Contains(file.Name, query) {
+			if containsAll(file.Name, query) {
 				file.Repo = repoLabel(url)
 				matches = append(matches, file)
 			}
@@ -66,4 +66,13 @@ func getPkgFromGh(query string) []GH_File {
 	}
 
 	return matches
+}
+
+func containsAll(text string, query []string) bool {
+	for _, q := range query {
+		if !strings.Contains(text, q) {
+			return false
+		}
+	}
+	return true
 }

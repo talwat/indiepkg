@@ -114,7 +114,7 @@ func checkCommand(other string, others []string, i int, args []string) {
 	case "search":
 		checkForOptions("query", 1)
 		optionToOther = true
-		search(others[i+1])
+		search(others[i+1:])
 
 	case "indiepkg-update":
 		updateIndiePKG()

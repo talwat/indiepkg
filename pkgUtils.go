@@ -118,7 +118,7 @@ func rmData(pkgNames []string) {
 	log(0, "Successfully deleted data.")
 }
 
-func search(query string) {
+func search(query []string) {
 	pkgs := getPkgFromGh(query)
 
 	log(1, "Found %d packages:", len(pkgs))
