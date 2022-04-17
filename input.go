@@ -73,7 +73,12 @@ func checkCommand(other string, others []string, i int, args []string) {
 	case "info":
 		checkForOptions("package name", 1)
 		optionToOther = true
-		infoPkg(others[i+1])
+		for idx, pkg := range others[i+1:] {
+			if idx != 0 {
+				fmt.Printf("\n")
+			}
+			infoPkg(pkg)
+		}
 
 	case "sync":
 		sync()
