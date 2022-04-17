@@ -6,7 +6,7 @@ import (
 	"github.com/pelletier/go-toml/v2"
 )
 
-var mainPath string = home + ".indiepkg/"
+var mainPath string = home + ".config/indiepkg/"
 var srcPath string = mainPath + "data/package_src/"
 var tmpSrcPath string = mainPath + "tmp/package_src/"
 var infoPath string = mainPath + "data/installed_packages/"
