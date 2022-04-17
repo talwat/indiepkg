@@ -1,4 +1,7 @@
-# IndiePKG
+<div align="center">
+    <img src="./assets/roundlogo.svg">
+    <h1>IndiePKG</h1>
+</div>
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/talwat/indiepkg)](https://goreportcard.com/report/github.com/talwat/indiepkg)
 [![GitHub stars](https://img.shields.io/github/stars/talwat/indiepkg)](https://github.com/talwat/indiepkg/stargazers)
@@ -21,19 +24,18 @@ However, if you would like to submit issues or PR's, you are **more** than welco
 
 ## Table of contents
 
-- [IndiePKG](#indiepkg)
-  - [Notice](#notice)
-  - [Table of contents](#table-of-contents)
-  - [What is IndiePKG?](#what-is-indiepkg)
-    - [Pros](#pros)
-    - [Cons](#cons)
-  - [Installation](#installation)
-  - [Making & submitting packages](#making--submitting-packages)
-  - [Basic usage](#basic-usage)
-  - [Supported operating systems](#supported-operating-systems)
-  - [Branches](#branches)
-  - [FAQ](#faq)
-    - [So it's like the AUR?](#so-its-like-the-aur)
+- [Notice](#notice)
+- [Table of contents](#table-of-contents)
+- [What is IndiePKG?](#what-is-indiepkg)
+  - [Pros](#pros)
+  - [Cons](#cons)
+- [Installation](#installation)
+- [Making & submitting packages](#making--submitting-packages)
+- [Basic usage](#basic-usage)
+- [Supported operating systems](#supported-operating-systems)
+- [Branches](#branches)
+- [FAQ](#faq)
+  - [So it's like the AUR?](#so-its-like-the-aur)
 
 ## What is IndiePKG?
 
