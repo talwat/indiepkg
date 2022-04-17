@@ -6,6 +6,7 @@
   - [Table of contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Constructing the package file](#constructing-the-package-file)
+    - [Environment variables](#environment-variables)
     - [Basic fields](#basic-fields)
       - [Name](#name)
       - [Author](#author)
@@ -66,6 +67,18 @@ First, you can copy the minimal example from `samples/pkg_minimal.json`. Or copy
 
 Also, please refrain from using any unicode/special symbols in any field as it can confuse IndiePKG.
 
+### Environment variables
+
+Environment variables are structured like this `:(VARIABLE_NAME):`.
+
+Right now, IndiePKG supports the following environment variables:
+
+- `:(PREFIX):` - By default this is set to `~/.local`. You can use this with Makefile's. For example in the command section you could put `make install PREFIX=:(PREFIX):`.
+- `:(BIN)` - By default this is set to `~/.local/bin`. This is usually not needed.
+- `:(HOME):` - This is the users home directory.
+
+These will work in any field, although they don't have much use outside `commands`.
+
 ### Basic fields
 
 These are super simple pieces of information to fill out.
@@ -111,6 +124,8 @@ This describes the location of **binary** files.
 This is where the binary is directly **after** the package is compiled. It is a relative path.
 
 For example, if the install instructions say to run `make` and then a binary is produced in `bin` directory, you would add `bin/<file>`. *Replace \<file> with the name of the generated file*
+
+This binary will be **moved** to the proper `bin` directory.
 
 ##### Installed
 

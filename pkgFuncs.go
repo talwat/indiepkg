@@ -23,6 +23,7 @@ func pkgExists(pkgName string) bool {
 }
 
 func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
+	debugLog("Work dir: %s", path)
 	if len(cmds) > 0 {
 		log(1, "Running %s commands for %s...", cmdsLabel, pkg.Name)
 		for _, command := range cmds {
