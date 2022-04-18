@@ -24,7 +24,7 @@ func listPkgs() {
 func sync() {
 	fullInit()
 
-	chapLog("==>", "BLUE", "Getting packages to sync")
+	chapLog("==>", "", "Getting packages to sync")
 
 	log(1, "Getting list of package files...")
 	dirs := dirContents(srcPath, "An error occurred while getting list of source files")
@@ -52,18 +52,19 @@ func sync() {
 		}
 	}
 
-	chapLog("=>", "VIOLET", "Syncing packages...")
+	chapLog("=>", "", "Syncing packages...")
 	for _, pkgToSync := range pkgInfoToSync {
-		chapLog("==>", "BLUE", "Downloading info for %s", pkgToSync)
+		chapLog("==>", "", "Downloading info for %s", pkgToSync)
 		downloadPkg(pkgToSync, false)
 	}
 
 	for _, pkgToSync := range pkgSrcToSync {
 		pkg := readLoad(pkgToSync)
 		if pkg.Download == nil {
-			chapLog("==>", "BLUE", "Cloning source for %s", pkgToSync)
+			chapLog("==>", "", "Cloning source for %s", pkgToSync)
 			clonePkgRepo(readLoad(pkgToSync), srcPath)
 		} else {
+			chapLog("==>", "", "Downloading file for %s", pkgToSync)
 			doDirectDownload(pkg, pkgToSync, srcPath)
 		}
 	}
@@ -101,7 +102,7 @@ func rmData(pkgNames []string) {
 	displayPkgs(pkgNames, "remove the data for")
 
 	for _, pkgName := range pkgNames {
-		chapLog("=>", "VIOLET", "Removing data for %s", pkgName)
+		chapLog("=>", "", "Removing data for %s", pkgName)
 		pkgDisplayName := bolden(pkgName)
 
 		log(1, "Deleting source files for %s...", pkgDisplayName)

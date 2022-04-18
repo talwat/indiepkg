@@ -45,7 +45,7 @@ func initDirs(reset bool) {
 	newDir(infoPath, "An error occurred while creating info directory")
 	newDir(configPath, "An error occurred while creating config directory")
 
-	if !pathExists(configPath+"config.json", "config file") || reset {
+	if !pathExists(configPath+"config.toml", "config file") || reset {
 		log(1, "Creating config file...")
 		newFile(configPath+"config.toml", defaultConf, "An error occurred while creating config file")
 	}
@@ -151,7 +151,7 @@ func displayPkgs(pkgNames []string, action string) {
 }
 
 func fullInit() {
-	chapLog("=>", "VIOLET", "Initializing")
+	chapLog("=>", "", "Initializing")
 	initDirs(false)
 	loadConfig()
 	autoUpdate()

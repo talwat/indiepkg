@@ -17,7 +17,22 @@ var logType = map[int]string{
 	6: RESETCOL + textCol["CYAN"] + "[?]" + RESETCOL,
 }
 
-func chapLog(prefix string, color string, msg string, params ...interface{}) {
+func chapLog(prefix string, colorInput string, msg string, params ...interface{}) {
+	var color string = colorInput
+
+	if colorInput != "" {
+		color = colorInput
+	} else {
+		switch len(prefix) {
+		case 2:
+			color = "VIOLET"
+		case 3:
+			color = "BLUE"
+		case 4:
+			color = "CYAN"
+		}
+	}
+
 	fmt.Printf("\n"+RESETCOL+textCol[color]+textFx["BOLD"]+prefix+textCol["WHITE"]+(" %s\n")+RESETCOL, fmt.Sprintf(msg, params...))
 }
 

@@ -42,6 +42,16 @@ const defaultConf = `# IndiePKG config file
 
 # Default: .local
 prefix = ".local"
+
+# Configures updating and auto-updating
+[updating]
+
+# Default: testing
+# The branch to pull from. https://github.com/talwat/indiepkg#branches for more information about the branches.
+branch = "testing"
+
+# Default: true
+auto_update = true
 `
 
 const defaultSources = `# Please only add sources you trust.

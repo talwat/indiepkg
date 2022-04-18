@@ -12,20 +12,37 @@ var tmpSrcPath string = mainPath + "tmp/package_src/"
 var infoPath string = mainPath + "data/installed_packages/"
 var configPath string = mainPath + "config/"
 var indiePkgSrcDir string = mainPath + "src/"
-var binPath string
-var manPath string
 
-type Config struct {
-	Paths struct {
-		Prefix string
-	}
+type Paths struct {
+	Prefix string
 }
 
-var config Config
+type Updating struct {
+	Branch      string
+	Auto_update bool
+}
+
+type Config struct {
+	Paths Paths
+
+	Updating Updating
+}
+
+var config Config = Config{
+	Paths{
+		".local/",
+	},
+
+	Updating{
+		"testing",
+		true,
+	},
+}
 
 func loadConfig() {
 	log(1, "Reading config file...")
 	raw := readFile(configPath+"config.toml", "An error occurred while reading config file")
+
 	log(1, "Loading config file...")
 	err := toml.Unmarshal([]byte(raw), &config)
 	errorLog(err, 4, "An error occurred while loading config file")
@@ -34,8 +51,6 @@ func loadConfig() {
 	if !strings.HasSuffix(config.Paths.Prefix, "/") {
 		config.Paths.Prefix += "/"
 	}
-	newDir(config.Paths.Prefix, "An error occurred while creating prefix directory")
 
-	binPath = config.Paths.Prefix + "bin/"
-	manPath = config.Paths.Prefix + "share/man/"
+	newDir(config.Paths.Prefix, "An error occurred while creating prefix directory")
 }

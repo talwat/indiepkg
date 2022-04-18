@@ -1,39 +1,38 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 )
 
-func upgradePackage(pkgNames []string) {
-	fullInit()
+func upgradePkgFunc(pkgName string, chapPrefix string) {
+	chapLog(chapPrefix+"=>", "", "Upgrading %s", pkgName)
+	pkgDisplayName := bolden(pkgName)
 
-	for _, pkgName := range pkgNames {
-		chapLog("=>", "VIOLET", "Upgrading %s", pkgName)
-		pkgDisplayName := bolden(pkgName)
-
-		chapLog("==>", "BLUE", "Running checks")
-		log(1, "Checking if %s exists...", pkgDisplayName)
-		if !pkgExists(pkgName) {
-			if force {
-				log(3, "%s is not installed, but force is on, so continuing.", pkgDisplayName)
-			} else {
-				log(3, "%s is not installed, so it can't be upgraded.", pkgDisplayName)
-				continue
-			}
+	chapLog(chapPrefix+"==>", "", "Running checks")
+	log(1, "Checking if %s exists...", pkgDisplayName)
+	if !pkgExists(pkgName) {
+		if force {
+			log(3, "%s is not installed, but force is on, so continuing.", pkgDisplayName)
+		} else {
+			log(3, "%s is not installed, so it can't be upgraded.", pkgDisplayName)
+			return
 		}
+	}
 
-		chapLog("==>", "BLUE", "Pulling source code")
-		log(1, "Updating source code for %s...", pkgDisplayName)
-		err := pullPkgRepo(pkgName)
+	chapLog(chapPrefix+"==>", "", "Pulling source code")
+	log(1, "Updating source code for %s...", pkgDisplayName)
+	err := pullPkgRepo(pkgName)
 
-		directDownload := false
+	directDownload := false
 
+	if err != nil {
 		if err.Error() == "already up-to-date" {
 			if force {
 				log(3, "%s is already up to date, but force is on, so continuing.", bolden(pkgName))
 			} else {
 				log(0, "%s already up to date.", bolden(pkgName))
-				continue
+				return
 			}
 		} else if err.Error() == "repository does not exist" && pathExists(srcPath+pkgName, "An error occurred while checking if %s's source exists", pkgName) {
 			log(1, "Direct download detected.")
@@ -41,50 +40,70 @@ func upgradePackage(pkgNames []string) {
 		} else {
 			errorLog(err, 4, "An error occurred while pulling source code")
 		}
+	}
 
-		chapLog("==>", "BLUE", "Getting upgrade commands")
-		pkg := readLoad(pkgName)
-		cmds := getUpdCmd(pkg)
+	chapLog(chapPrefix+"==>", "", "Getting upgrade commands")
+	pkg := readLoad(pkgName)
+	cmds := getUpdCmd(pkg)
 
-		if directDownload {
-			chapLog("==>", "BLUE", "Updating info")
-			oldVer := pkg.Version
-			log(1, "Getting & writing new info for %s...", pkgDisplayName)
-			writeLoadPkg(pkgName, findPkg(pkgName), false)
-			log(1, "Reading new version number...")
-			newVer := readLoad(pkgName).Version
+	if directDownload {
+		chapLog(chapPrefix+"==>", "", "Updating info")
 
-			debugLog("Old version: %s. New version: %s", oldVer, newVer)
-			chapLog("==>", "BLUE", "Checking if already up to date")
-			log(1, "Checking if %s is already up to date...", bolden(pkgName))
-			if oldVer == newVer {
-				log(0, "%s already up to date.", pkgDisplayName)
-				continue
+		log(1, "Getting & writing new info for %s...", pkgDisplayName)
+		writeLoadPkg(pkgName, findPkg(pkgName), false)
+
+		chapLog(chapPrefix+"==>", "", "Getting version numbers")
+		log(1, "Reading new version number...")
+		newVer := readLoad(pkgName).Version
+
+		fmt.Print("\n")
+
+		log(1, "Saving old version number...")
+		oldVer := pkg.Version
+		debugLog("Old version: %s. New version: %s", oldVer, newVer)
+
+		chapLog(chapPrefix+"==>", "", "Checking if already up to date")
+		log(1, "Checking if %s is already up to date...", bolden(pkgName))
+		if oldVer == newVer {
+			if force {
+				log(3, "%s already up to date, but force is on, so continuing.", pkgDisplayName)
 			} else {
-				log(1, "Not up to date. Upgrading from %s to %s", bolden(oldVer), bolden(newVer))
+				log(0, "%s already up to date.", pkgDisplayName)
+				return
 			}
-
-			doDirectDownload(pkg, pkgName, srcPath)
+		} else {
+			log(1, "Not up to date. Upgrading from %s to %s", bolden(oldVer), bolden(newVer))
 		}
 
-		if len(cmds) > 0 {
-			chapLog("==>", "BLUE", "Compiling")
-			runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
-		}
+		chapLog(chapPrefix+"==>", "", "Downloading file")
+		doDirectDownload(pkg, pkgName, srcPath)
+	}
 
-		chapLog("==>", "BLUE", "Installing")
-		copyBins(pkg, srcPath)
-		copyManpages(pkg, srcPath)
+	if len(cmds) > 0 {
+		chapLog(chapPrefix+"==>", "", "Compiling")
+		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
+	}
 
-		chapLog("=>", "GREEN", "Success")
-		log(0, "Successfully upgraded %s!", pkgName)
+	chapLog(chapPrefix+"==>", "", "Installing")
+	copyBins(pkg, srcPath)
+	copyManpages(pkg, srcPath)
+
+	chapLog(chapPrefix+"==>", "GREEN", "Success")
+	log(0, "Successfully upgraded %s!", pkgDisplayName)
+}
+
+func upgradePackage(pkgNames []string) {
+	fullInit()
+
+	for _, pkgName := range pkgNames {
+		upgradePkgFunc(pkgName, "")
 	}
 }
 
 func upgradeAllPackages() {
 	fullInit()
 
-	chapLog("==>", "BLUE", "Getting installed packages")
+	chapLog("==>", "", "Getting installed packages")
 	var installedPackages []string
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
@@ -92,22 +111,11 @@ func upgradeAllPackages() {
 		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))
 	}
 
-	chapLog("=>", "VIOLET", "Starting upgrades")
+	chapLog("=>", "", "Starting upgrades")
 	for _, installedPackage := range installedPackages {
-		chapLog("==>", "BLUE", "Upgrading %s", installedPackage)
-		err := pullPkgRepo(installedPackage)
-
-		if err.Error() == "already up-to-date" {
-			continue
-		}
-
-		pkg := readLoad(installedPackage)
-		cmds := getUpdCmd(pkg)
-
-		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
-		copyBins(pkg, srcPath)
+		upgradePkgFunc(installedPackage, "=")
 	}
 
 	chapLog("=>", "GREEN", "Success")
-	log(0, "Upgraded all packages!")
+	log(0, "Upgraded all packages.")
 }
