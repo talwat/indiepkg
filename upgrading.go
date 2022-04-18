@@ -74,6 +74,7 @@ func upgradePackage(pkgNames []string) {
 
 		chapLog("==>", "BLUE", "Installing")
 		copyBins(pkg, srcPath)
+		copyManpages(pkg, srcPath)
 
 		chapLog("=>", "GREEN", "Success")
 		log(0, "Successfully upgraded %s!", pkgName)

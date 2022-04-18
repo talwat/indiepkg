@@ -7,20 +7,12 @@ import (
 	"strings"
 )
 
-func readSources() string {
+func readSources() ([]string, string) {
 	log(1, "Reading sources file...")
 	raw := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
 	log(1, "Parsing sources file...")
 	trimmed := strings.TrimSpace(raw)
-	split := strings.Split(trimmed, "\n")
-	final := ""
-	for _, line := range split {
-		if !strings.HasPrefix(line, "#") && strings.TrimSpace(line) != "" {
-			final += line + "\n"
-		}
-	}
-
-	return strings.TrimSpace(final)
+	return strings.Split(trimmed, "\n"), trimmed
 }
 
 func saveChanges(sourcesFile string) {
@@ -39,7 +31,7 @@ func addRepo(repoLink string) {
 		}
 	}
 
-	sourcesFile := readSources()
+	_, sourcesFile := readSources()
 
 	if strings.Contains(sourcesFile, "\n"+repoLink) {
 		if force {
@@ -56,9 +48,9 @@ func addRepo(repoLink string) {
 }
 
 func rmRepo(repoLink string) {
-	sourcesFile := readSources()
+	repos, sourcesFile := readSources()
 	log(1, "Removing %s from sources file...", bolden(repoLink))
-	repos := strings.Split(sourcesFile, "\n")
+
 	for i, repo := range repos {
 		if repo == repoLink {
 			repos[i] = ""
@@ -71,18 +63,19 @@ func rmRepo(repoLink string) {
 }
 
 func listRepos() {
-	sourcesFile := readSources()
-	repos := strings.Split(sourcesFile, "\n")
+	repos, _ := readSources()
 	log(1, "Repos:")
 	for _, repo := range repos {
-		fmt.Printf("        %s - %s\n", bolden(repo), replaceRepo(repo))
+		fmt.Printf("        %s - %s\n", bolden(repo), repoLabel(repo))
 	}
 }
 
-func replaceRepo(repo string) string {
+func repoLabel(repo string) string {
 	var m map[string]string = map[string]string{
 		"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/": textCol["BLUE"] + "(Linux only)" + RESETCOL,
-		"https://raw.githubusercontent.com/talwat/indiepkg/":                          textCol["CYAN"] + "(Official repo)" + RESETCOL,
+		"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/":        textCol["VIOLET"] + "(Binary package)" + RESETCOL,
+		"https://raw.githubusercontent.com/talwat/indiepkg/main/":                     textCol["CYAN"] + "(Official repo)" + RESETCOL,
+		"https://raw.githubusercontent.com/talwat/indiepkg/":                          textCol["BLUE"] + "(Other branch)" + RESETCOL,
 	}
 
 	for k, v := range m {

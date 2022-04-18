@@ -12,6 +12,9 @@
             "duf"
         ]
     },
+    "manpages": [
+        "duf.1"
+    ],
     "commands": {
         "all": {
             "install": [

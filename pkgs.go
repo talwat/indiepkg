@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"strings"
 )
 
 func installPkgs(pkgNames []string) {
@@ -10,17 +11,12 @@ func installPkgs(pkgNames []string) {
 	fullInit()
 
 	for _, pkgName := range pkgNames {
-		chapLog("=>", "VIOLET", "Installing %s", pkgName)
-		chapLog("==>", "BLUE", "Getting package info")
-		log(1, "Reading package info for %s...", bolden(pkgName))
-		pkgFile := findPkg(pkgName)
-		pkg := loadPkg(pkgFile, pkgName)
-		cmds := getInstCmd(pkg)
 		pkgDispName := bolden(pkgName)
 
-		chapLog("==>", "BLUE", "Running checks")
-		log(1, "Checking if %s is already installed...", pkgDispName)
+		chapLog("=>", "VIOLET", "Preparing for installation of %s", pkgName)
 
+		chapLog("==>", "BLUE", "Checking if already installed")
+		log(1, "Checking if %s is already installed...", pkgDispName)
 		if pkgExists(pkgName) {
 			if force {
 				log(3, "%s is already installed, but force is on, so continuing.", pkgDispName)
@@ -30,8 +26,16 @@ func installPkgs(pkgNames []string) {
 			}
 		}
 
+		chapLog("==>", "BLUE", "Getting package info")
+		log(1, "Reading package info for %s...", bolden(pkgName))
+		pkgFile := findPkg(pkgName)
+		pkg := loadPkg(pkgFile, pkgName)
+		cmds := getInstCmd(pkg)
+
+		chapLog("==>", "BLUE", "Checking dependencies")
 		checkDeps(pkg, pkgName)
 
+		chapLog("=>", "VIOLET", "Installing %s", pkgName)
 		if pkg.Download == nil {
 			chapLog("==>", "BLUE", "Cloning source code")
 			log(1, "Making sure %s is not already cloned...", pkgDispName)
@@ -79,7 +83,7 @@ func uninstallPkgs(pkgNames []string) {
 
 		pkg := readLoad(pkgName)
 
-		chapLog("==>", "BLUE", "Deleting binary & configuration files")
+		chapLog("==>", "BLUE", "Deleting installed files")
 		if purge {
 			log(1, "Deleting configuration files for %s...", pkgDispName)
 			for _, path := range pkg.Config_paths {
@@ -93,6 +97,20 @@ func uninstallPkgs(pkgNames []string) {
 			for _, path := range pkg.Bin.Installed {
 				log(1, "Deleting %s", bolden(binPath+path))
 				delPath(4, binPath+path, "An error occurred while deleting binary files for %s", pkgDispName)
+			}
+		}
+
+		if len(pkg.Manpages) > 0 {
+			log(1, "Deleting manpages for %s...", pkgDispName)
+			for _, manPage := range pkg.Manpages {
+				// Splitting to get file name
+				split := strings.Split(manPage, "/")
+
+				// Splitting and getting extension to put in proper man directory, eg. man1, man3, etc...
+				path := manPath + "man" + strings.Split(manPage, ".")[1] + "/" + split[len(split)-1]
+
+				log(1, "Deleting %s...", bolden(path))
+				delPath(4, path, "An error occurred while deleting manpages for %s", bolden(pkgDispName))
 			}
 		}
 

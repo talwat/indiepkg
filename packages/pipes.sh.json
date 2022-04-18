@@ -12,6 +12,9 @@
             "pipes.sh"
         ]
     },
+    "manpages": [
+        "pipes.sh.6"
+    ],
     "deps": {
         "all": [
             "bash"

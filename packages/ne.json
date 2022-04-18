@@ -12,6 +12,9 @@
             "ne"
         ]
     },
+    "manpages": [
+        "doc/ne.1"
+    ],
     "commands": {
         "all": {
             "install": [

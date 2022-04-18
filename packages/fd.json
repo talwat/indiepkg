@@ -12,6 +12,9 @@
             "fd"
         ]
     },
+    "manpages": [
+        "doc/fz.1"
+    ],
     "commands": {
         "all": {
             "install": [
