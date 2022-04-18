@@ -24,7 +24,7 @@ func upgradePackage(pkgNames []string) {
 
 		chapLog("==>", "BLUE", "Pulling source code")
 		log(1, "Updating source code for %s...", pkgDisplayName)
-		err := pullRepo(pkgName)
+		err := pullPkgRepo(pkgName)
 
 		directDownload := false
 
@@ -95,7 +95,7 @@ func upgradeAllPackages() {
 	chapLog("=>", "VIOLET", "Starting upgrades")
 	for _, installedPackage := range installedPackages {
 		chapLog("==>", "BLUE", "Upgrading %s", installedPackage)
-		err := pullRepo(installedPackage)
+		err := pullPkgRepo(installedPackage)
 
 		if err.Error() == "already up-to-date" {
 			continue

@@ -54,6 +54,15 @@ func initDirs(reset bool) {
 		log(1, "Creating sources file...")
 		newFile(configPath+"sources.txt", defaultSources, "An error occurred while creating sources file")
 	}
+
+	if !pathExists(indiePkgSrcDir, "IndiePKG source directory") || reset {
+		if reset {
+			log(1, "Resetting IndiePKG source directory...")
+			delPath(4, indiePkgSrcDir, "An error occurred while deleting the IndiePKG source directory")
+		}
+
+		cloneSrcRepo()
+	}
 }
 
 func getDeps(pkg Package) []string {
@@ -145,4 +154,5 @@ func fullInit() {
 	chapLog("=>", "VIOLET", "Initializing")
 	initDirs(false)
 	loadConfig()
+	autoUpdate()
 }

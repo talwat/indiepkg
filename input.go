@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const version = "0.19.3"
+const version = "0.20-beta"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -110,6 +110,9 @@ func checkCommand(other string, others []string, i int, args []string) {
 		checkForOptions("query", 1)
 		optionToOther = true
 		search(others[i+1])
+
+	case "indiepkg-update":
+		updateIndiePKG()
 
 	default:
 		log(4, "Command %s not found.", bolden(other))
