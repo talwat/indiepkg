@@ -28,10 +28,12 @@
     "commands": {
         "all": {
             "install": [
-                "tar -xf go"
+                "mv go go.tar.gz",
+                "tar -zxf go.tar.gz"
             ],
             "update": [
-                "tar -xf go"
+                "mv go go.tar.gz",
+                "tar -zxf go.tar.gz"
             ]
         }
     },
