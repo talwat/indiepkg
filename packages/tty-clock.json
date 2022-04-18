@@ -12,6 +12,9 @@
             "tty-clock"
         ]
     },
+    "manpages": [
+        "tty-clock.1"
+    ],
     "commands": {
         "all": {
             "install": [

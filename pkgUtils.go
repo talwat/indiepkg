@@ -59,8 +59,13 @@ func sync() {
 	}
 
 	for _, pkgToSync := range pkgSrcToSync {
-		chapLog("==>", "BLUE", "Cloning source for %s", pkgToSync)
-		cloneRepo(readLoad(pkgToSync), srcPath)
+		pkg := readLoad(pkgToSync)
+		if pkg.Download == nil {
+			chapLog("==>", "BLUE", "Cloning source for %s", pkgToSync)
+			cloneRepo(readLoad(pkgToSync), srcPath)
+		} else {
+			doDirectDownload(pkg, pkgToSync, srcPath)
+		}
 	}
 
 	if len(pkgInfoToSync) > 0 || len(pkgSrcToSync) > 0 {

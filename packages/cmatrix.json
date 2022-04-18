@@ -12,6 +12,9 @@
             "cmatrix"
         ]
     },
+    "manpages": [
+        "cmatrix.1"
+    ],
     "commands": {
         "all": {
             "install": [

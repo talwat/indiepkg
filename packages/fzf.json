@@ -12,6 +12,9 @@
             "fzf"
         ]
     },
+    "manpages": [
+        "man/man1/fzf.1"
+    ],
     "commands": {
         "all": {
             "install": [
