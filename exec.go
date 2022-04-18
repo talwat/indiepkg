@@ -3,7 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"os"
 	"os/exec"
+	"strings"
 )
 
 func runCommandRealTime(workDir string, cmd string, args ...string) {
@@ -34,6 +36,19 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 	err = cmdObj.Wait()
 	errorLogNewlineBefore(err, 4, "An error occurred while running command to finish")
 	fmt.Printf("\n")
+}
+
+func runCommand(workDir string, cmd string, args ...string) (string, int) {
+	var cmdObj *exec.Cmd = exec.Command(cmd, args...)
+
+	cmdObj.Dir = workDir
+	data, err := cmdObj.CombinedOutput()
+	errCode := 0
+	if err != nil {
+		log(4, "An error occurred while running command: %s %s\n    Output: %s\n    Working Directory: %s\n    Error: %s", cmd, strings.Join(args, " "), string(data), workDir, err.Error())
+		os.Exit(1)
+	}
+	return strings.TrimSuffix(string(data), "\n"), errCode
 }
 
 func checkIfCommandExists(cmd string) bool {

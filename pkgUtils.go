@@ -62,7 +62,7 @@ func sync() {
 		pkg := readLoad(pkgToSync)
 		if pkg.Download == nil {
 			chapLog("==>", "BLUE", "Cloning source for %s", pkgToSync)
-			cloneRepo(readLoad(pkgToSync), srcPath)
+			clonePkgRepo(readLoad(pkgToSync), srcPath)
 		} else {
 			doDirectDownload(pkg, pkgToSync, srcPath)
 		}
