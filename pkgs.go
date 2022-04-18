@@ -40,7 +40,7 @@ func installPkgs(pkgNames []string) {
 			chapLog("==>", "BLUE", "Cloning source code")
 			log(1, "Making sure %s is not already cloned...", pkgDispName)
 			delPath(3, tmpSrcPath+pkg.Name, "An error occurred while deleting temporary source files for %s", pkgName)
-			cloneRepo(pkg, tmpSrcPath)
+			clonePkgRepo(pkg, tmpSrcPath)
 		} else {
 			doDirectDownload(pkg, pkgName, tmpSrcPath)
 		}
@@ -53,6 +53,7 @@ func installPkgs(pkgNames []string) {
 		chapLog("==>", "BLUE", "Installing")
 		copyBins(pkg, tmpSrcPath)
 		copyManpages(pkg, tmpSrcPath)
+		log(1, "Moving source to proper location...")
 		mvPath(tmpSrcPath+pkg.Name, srcPath+pkg.Name)
 		writeLoadPkg(pkg.Name, pkgFile, false)
 
