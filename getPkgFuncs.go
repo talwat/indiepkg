@@ -24,11 +24,13 @@ func writeLoadPkg(pkgName string, pkgFile string, load bool) Package {
 }
 
 func findPkg(pkgName string) string {
+	log(1, "Finding package %s...", pkgName)
 	urls := parseSources()
 	var validInfos, validUrls []string
-	urlsLen := len(urls)
 
 	log(1, "Checking urls length...")
+	urlsLen := len(urls)
+
 	if urlsLen <= 0 {
 		log(4, "You don't have any sources defined in %s.", bolden(configPath+"sources.txt"))
 		os.Exit(1)

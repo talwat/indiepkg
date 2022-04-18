@@ -14,7 +14,7 @@ import (
 
 func viewFile(url string, errMsg string, params ...interface{}) (string, error) {
 	resp, err := http.Get(url)
-	errMsgAdded := fmt.Sprintf(errMsg, params...) + "\n    URL: " + url
+	errMsgAdded := fmt.Sprintf(errMsg, params...) + ". URL: " + bolden(url)
 	errorLog(err, 4, errMsgAdded)
 
 	defer resp.Body.Close()
@@ -26,32 +26,6 @@ func viewFile(url string, errMsg string, params ...interface{}) (string, error) 
 	final, err := ioutil.ReadAll(resp.Body)
 
 	return string(final), err
-}
-
-func downloadFile(filepath string, url string, errMsg string, params ...interface{}) error {
-	resp, err := http.Get(url)
-	errMsgAdded := fmt.Sprintf(errMsg, params...) + "\n    URL: " + url
-	errorLog(err, 4, errMsgAdded)
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return (errors.New("HTTP Error. Code: " + fmt.Sprint(resp.StatusCode)))
-	}
-
-	out, err := os.Create(filepath)
-	if err != nil {
-		return err
-	}
-
-	defer out.Close()
-
-	_, err = io.Copy(out, resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return err
 }
 
 func downloadFileWithProg(filepath string, url string, errMsg string, params ...interface{}) {
@@ -76,7 +50,6 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			progressbar.OptionShowBytes(true),
 			progressbar.OptionSetWidth(10),
 			progressbar.OptionThrottle(65*time.Millisecond),
-			progressbar.OptionShowCount(),
 			progressbar.OptionOnCompletion(func() {
 				fmt.Printf("\n")
 			}),
@@ -84,16 +57,18 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			progressbar.OptionFullWidth(),
 
 			progressbar.OptionEnableColorCodes(true),
+			progressbar.OptionClearOnFinish(),
 			progressbar.OptionSetWidth(15),
 			progressbar.OptionSetTheme(progressbar.Theme{
 				Saucer:        "[cyan]=[reset]",
 				SaucerHead:    "[cyan]>[reset]",
 				SaucerPadding: " ",
-				BarStart:      "[",
-				BarEnd:        "]",
+				BarStart:      "(",
+				BarEnd:        ")",
 			}),
 		)
-		bar.RenderBlank()
+		err := bar.RenderBlank()
+		errorLog(err, 4, "An error occurred while rendering loading bar.")
 		return bar
 	}
 	bar := newBar(
@@ -101,5 +76,6 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 		"Downloading",
 	)
 
-	io.Copy(io.MultiWriter(f, bar), resp.Body)
+	_, err = io.Copy(io.MultiWriter(f, bar), resp.Body)
+	errorLog(err, 4, "An error occurred while running %s.", bolden("io.Copy()"))
 }

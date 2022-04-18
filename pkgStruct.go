@@ -33,6 +33,7 @@ type Package struct {
 	License      string
 	Branch       string
 	Bin          *Bin
+	Manpages     []string
 	Deps         *Deps
 	Commands     *OSCommands
 	Config_paths []string

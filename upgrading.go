@@ -38,9 +38,11 @@ func upgradePackage(pkgNames []string) {
 		} else if err.Error() == "repository does not exist" && pathExists(srcPath+pkgName, "An error occurred while checking if %s's source exists", pkgName) {
 			log(1, "Direct download detected.")
 			directDownload = true
+		} else {
+			errorLog(err, 4, "An error occurred while pulling source code")
 		}
 
-		chapLog("==>", "BLUE", "Upgrade info")
+		chapLog("==>", "BLUE", "Getting upgrade commands")
 		pkg := readLoad(pkgName)
 		cmds := getUpdCmd(pkg)
 

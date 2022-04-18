@@ -44,14 +44,16 @@ func pullRepo(pkgName string) error {
 		return err
 	}
 
+	log(1, "Getting git worktree...")
 	w, err := r.Worktree()
 	errorLog(err, 4, "An error occurred while getting worktree for %s", bolden(pkgName))
 
+	log(1, "Getting head branch...")
 	b, err := r.Head()
 	ref := b.Name().String()
 	errorLog(err, 4, "An error occurred while getting head for %s", bolden(pkgName))
 
-	debugLog("Pulling %s with ref %s", bolden(srcPath+pkgName), bolden(b.Name().String()))
+	log(1, "Pulling %s with ref %s", bolden(srcPath+pkgName), bolden(b.Name().String()))
 	err = w.Pull(&git.PullOptions{
 		RemoteName:    "origin",
 		Progress:      os.Stdout,

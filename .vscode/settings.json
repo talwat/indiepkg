@@ -13,6 +13,7 @@
         "devmasx",
         "gmake",
         "GOARCH",
+        "gofmt",
         "golangci",
         "Indiepkg",
         "katfetch",
