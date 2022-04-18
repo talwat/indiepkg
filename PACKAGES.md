@@ -18,6 +18,7 @@
       - [Bin](#bin)
         - [In Source (optional)](#in-source-optional)
         - [Installed](#installed)
+      - [Manpages](#manpages)
     - [Commands (optional in some cases)](#commands-optional-in-some-cases)
       - [Install](#install)
       - [Update](#update)
@@ -132,6 +133,14 @@ This binary will be **moved** to the proper `bin` directory.
 This is the **name** of the final installed binary file, **not** the path.
 
 For example, if your generated binary file was called `my_file` then you would add `my_file`.
+
+This is used to uninstall the package easily.
+
+#### Manpages
+
+The location of manpages inside the source directory. You don't need to specify **where** to install them because IndiePKG can figure that out automatically.
+
+Make sure the manpage file extension ends with `.x`. *`x` can be any number from 1-9*
 
 ### Commands (optional in some cases)
 
