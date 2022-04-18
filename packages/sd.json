@@ -1,15 +1,15 @@
 {
-    "name": "nameofpkg",
-    "author": "author",
-    "description": "description",
-    "url": "git url",
-    "license": "license",
+    "name": "sd",
+    "author": "chmln",
+    "description": "Intuitive find & replace CLI (sed alternative).",
+    "url": "https://github.com/chmln/sd.git",
+    "license": "MIT",
     "bin": {
         "in_source": [
-            "target/release/nameofpkg"
+            "target/release/sd"
         ],
         "installed": [
-            "nameofpkg"
+            "sd"
         ]
     },
     "commands": {

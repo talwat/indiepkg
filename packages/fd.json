@@ -1,17 +1,20 @@
 {
-    "name": "nameofpkg",
-    "author": "author",
-    "description": "description",
-    "url": "git url",
-    "license": "license",
+    "name": "fd",
+    "author": "sharkdp",
+    "description": "A simple, fast and user-friendly alternative to 'find'.",
+    "url": "https://github.com/sharkdp/fd.git",
+    "license": "Apache-2.0",
     "bin": {
         "in_source": [
-            "target/release/nameofpkg"
+            "target/release/fd"
         ],
         "installed": [
-            "nameofpkg"
+            "fd"
         ]
     },
+    "manpages": [
+        "doc/fz.1"
+    ],
     "commands": {
         "all": {
             "install": [

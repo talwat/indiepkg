@@ -1,27 +1,27 @@
 {
-    "name": "lf",
-    "author": "gokcehan",
-    "description": "Terminal file manager",
-    "url": "https://github.com/gokcehan/lf.git",
+    "name": "fzf",
+    "author": "junegunn",
+    "description": "A command-line fuzzy finder",
+    "url": "https://github.com/junegunn/fzf.git",
     "license": "MIT",
     "bin": {
         "in_source": [
-            "lf"
+            "fzf"
         ],
         "installed": [
-            "lf"
+            "fzf"
         ]
     },
     "manpages": [
-        "lf.1"
+        "man/man1/fzf.1"
     ],
     "commands": {
         "all": {
             "install": [
-                "go build -v ."
+                "go build src"
             ],
             "update": [
-                "go build -v ."
+                "go build src"
             ]
         }
     },

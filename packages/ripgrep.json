@@ -1,15 +1,15 @@
 {
-    "name": "nameofpkg",
-    "author": "author",
-    "description": "description",
-    "url": "git url",
-    "license": "license",
+    "name": "ripgrep",
+    "author": "BurntSushi",
+    "description": "ripgrep recursively searches directories for a regex pattern while respecting your gitignore.",
+    "url": "https://github.com/BurntSushi/ripgrep.git",
+    "license": "Unlicensed (Public Domain)",
     "bin": {
         "in_source": [
-            "target/release/nameofpkg"
+            "target/release/rg"
         ],
         "installed": [
-            "nameofpkg"
+            "rg"
         ]
     },
     "commands": {

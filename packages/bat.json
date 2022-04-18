@@ -1,15 +1,15 @@
 {
-    "name": "nameofpkg",
-    "author": "author",
-    "description": "description",
-    "url": "git url",
-    "license": "license",
+    "name": "bat",
+    "author": "sharkdp",
+    "description": "A cat(1) clone with wings.",
+    "url": "https://github.com/sharkdp/bat.git",
+    "license": "Apache-2.0",
     "bin": {
         "in_source": [
-            "target/release/nameofpkg"
+            "target/release/bat"
         ],
         "installed": [
-            "nameofpkg"
+            "bat"
         ]
     },
     "commands": {

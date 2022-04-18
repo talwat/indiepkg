@@ -13,6 +13,7 @@ Commands:
   info <package>               Displays information about a specific package.
   remove-data <packages...>    Removes package data from .indiepkg. Use this only if a package installation has failed and the uninstall command won't work.
   sync                         Sync package info & package source.
+  list                         Lists all installed packages.
   version                      Shows version.
   init                         Re-generates all the default config files needed for indiepkg to function properly. This is ran automatically.
   search <query>               Searches for packages. NOTE: Only searches repo's that are on Github.
@@ -47,4 +48,5 @@ const defaultSources = `# Please only add sources you trust.
 # You can also edit this file with 'indiepkg repo'.
 
 https://raw.githubusercontent.com/talwat/indiepkg/main/packages/
+# https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/
 # https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/`

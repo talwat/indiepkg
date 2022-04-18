@@ -1,0 +1,33 @@
+{
+    "name": "my-package-name",
+    "author": "my username or name",
+    "description": "this is my awesome package description",
+    "download": {
+        "all": "https://example.com/tarball.tar.gz",
+        "darwin": {
+            "amd64": "https://example.com/darwin_amd64_1.0.tar.gz",
+            "arm64": "https://example.com/darwin_arm64_1.0.tar.gz"
+        },
+        "linux": {
+            "amd64": "https://example.com/linux_amd64_1.0.tar.gz",
+            "arm64": "https://example.com/linux_arm64_1.0.tar.gz"
+        }
+    },
+    "license": "license name",
+    "bin": {
+        "in_source": [
+            "bin/my_file"
+        ],
+        "installed": [
+            "my_file"
+        ]
+    },
+    "deps": {
+        "all": [
+            "my_dep"
+        ]
+    },
+    "config_paths": [
+        ".config/my_file"
+    ]
+}

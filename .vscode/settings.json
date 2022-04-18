@@ -1,24 +1,30 @@
 {
     "cSpell.words": [
         "asyncapi",
+        "Autobuild",
         "avto",
         "btop",
         "cmatrix",
         "cmds",
+        "codeql",
         "conv",
         "deadcode",
         "Deps",
         "devmasx",
         "gmake",
         "GOARCH",
+        "gofmt",
         "golangci",
         "Indiepkg",
         "katfetch",
         "lewagon",
+        "Manpages",
         "nodeps",
         "nolint",
         "pfetch",
         "Pkgs",
+        "roundlogo",
+        "schollz",
         "shellcheck",
         "skyfetch",
         "staticcheck",
@@ -30,5 +36,9 @@
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [
         "!json"
-    ]
+    ],
+    "markdownlint.config": {
+        "MD033": false,
+        "MD041": false,
+    }
 }

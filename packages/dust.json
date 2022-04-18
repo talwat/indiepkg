@@ -1,15 +1,15 @@
 {
-    "name": "nameofpkg",
-    "author": "author",
-    "description": "description",
-    "url": "git url",
-    "license": "license",
+    "name": "dust",
+    "author": "bootandy",
+    "description": "A more intuitive version of du in rust.",
+    "url": "https://github.com/bootandy/dust.git",
+    "license": "Apache-2.0",
     "bin": {
         "in_source": [
-            "target/release/nameofpkg"
+            "target/release/dust"
         ],
         "installed": [
-            "nameofpkg"
+            "dust"
         ]
     },
     "commands": {

@@ -6,7 +6,7 @@
     "license": "license",
     "bin": {
         "in_source": [
-            "target/release/nameofpkg"
+            "nameofpkg"
         ],
         "installed": [
             "nameofpkg"
@@ -15,17 +15,16 @@
     "commands": {
         "all": {
             "install": [
-                "cargo build -v --release"
+                "make"
             ],
             "update": [
-                "cargo build -v --release"
+                "make"
             ]
         }
     },
     "deps": {
         "all": [
-            "rustc",
-            "cargo"
+            "make"
         ]
     }
 }

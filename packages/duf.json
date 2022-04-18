@@ -1,27 +1,27 @@
 {
-    "name": "lf",
-    "author": "gokcehan",
-    "description": "Terminal file manager",
-    "url": "https://github.com/gokcehan/lf.git",
+    "name": "duf",
+    "author": "muesli",
+    "description": "Disk Usage/Free Utility - a better 'df' alternative.",
+    "url": "https://github.com/muesli/duf.git",
     "license": "MIT",
     "bin": {
         "in_source": [
-            "lf"
+            "duf"
         ],
         "installed": [
-            "lf"
+            "duf"
         ]
     },
     "manpages": [
-        "lf.1"
+        "duf.1"
     ],
     "commands": {
         "all": {
             "install": [
-                "go build -v ."
+                "go build ."
             ],
             "update": [
-                "go build -v ."
+                "go build ."
             ]
         }
     },

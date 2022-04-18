@@ -28,9 +28,12 @@ type Package struct {
 	Author       string
 	Description  string
 	Url          string
+	Download     map[string]interface{}
+	Version      string
 	License      string
 	Branch       string
 	Bin          *Bin
+	Manpages     []string
 	Deps         *Deps
 	Commands     *OSCommands
 	Config_paths []string
