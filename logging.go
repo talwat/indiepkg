@@ -9,9 +9,9 @@ import (
 
 var logType = map[int]string{
 	0: RESETCOL + textCol["GREEN"] + "[^]" + RESETCOL,
-	1: RESETCOL + textCol["CYAN"] + "[!]" + RESETCOL,
-	2: RESETCOL + textCol["BLUE"] + "[!]" + RESETCOL,
-	3: RESETCOL + textCol["YELLOW"] + "[!]" + RESETCOL,
+	1: RESETCOL + textCol["CYAN"] + "[.]" + RESETCOL,
+	2: RESETCOL + textCol["BLUE"] + "[#]" + RESETCOL,
+	3: RESETCOL + textCol["YELLOW"] + "[*]" + RESETCOL,
 	4: RESETCOL + textCol["RED"] + "[!]" + RESETCOL,
 	5: RESETCOL + textCol["VIOLET"] + "[+]" + RESETCOL,
 	6: RESETCOL + textCol["CYAN"] + "[?]" + RESETCOL,
