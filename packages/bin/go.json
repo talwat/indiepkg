@@ -28,10 +28,10 @@
     "commands": {
         "all": {
             "install": [
-                "tar -xf golang"
+                "tar -xf go"
             ],
             "update": [
-                "tar -xf golang"
+                "tar -xf go"
             ]
         }
     },
