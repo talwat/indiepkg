@@ -21,7 +21,13 @@ func updateIndiePKG() {
 }
 
 func autoUpdate() {
-	pullSrcRepo(true)
+	log(1, "Checking for an update...")
+	err := pullSrcRepo(true)
+	if err.Error() == "already up-to-date" {
+		debugLog("Auto-update returns already up to date")
+		return
+	}
+
 	runCommand(indiePkgSrcDir, "make")
 	mvPath(indiePkgSrcDir+"indiepkg", home+".local/bin/indiepkg")
 	log(0, "Auto-updated IndiePKG!")

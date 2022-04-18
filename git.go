@@ -8,7 +8,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 )
 
-func pullSrcRepo(silent bool) {
+func pullSrcRepo(silent bool) error {
 	var err error
 	r, err := git.PlainOpen(indiePkgSrcDir)
 	errorLog(err, 4, "An error occurred while opening IndiePKG source")
@@ -39,17 +39,20 @@ func pullSrcRepo(silent bool) {
 	})
 
 	if err.Error() == "already up-to-date" {
-		if force {
+		if silent {
+			return err
+		} else if force {
 			log(3, "IndiePKG already up to date, but continuing because force is on.")
+			return nil
 		} else {
-			if !silent {
-				log(0, "IndiePKG already up to date.")
-				os.Exit(0)
-			}
+			log(0, "IndiePKG already up to date.")
+			os.Exit(0)
 		}
 	} else {
 		errorLog(err, 4, "An error occurred while pulling IndiePKG source")
 	}
+
+	return err
 }
 
 func cloneSrcRepo() {
