@@ -12,6 +12,9 @@
             "neofetch"
         ]
     },
+    "manpages": [
+        "neofetch.1"
+    ],
     "deps": {
         "all": [
             "bash"

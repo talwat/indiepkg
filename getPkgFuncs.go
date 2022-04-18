@@ -24,11 +24,13 @@ func writeLoadPkg(pkgName string, pkgFile string, load bool) Package {
 }
 
 func findPkg(pkgName string) string {
+	log(1, "Finding package %s...", pkgName)
 	urls := parseSources()
 	var validInfos, validUrls []string
-	urlsLen := len(urls)
 
 	log(1, "Checking urls length...")
+	urlsLen := len(urls)
+
 	if urlsLen <= 0 {
 		log(4, "You don't have any sources defined in %s.", bolden(configPath+"sources.txt"))
 		os.Exit(1)
@@ -64,6 +66,7 @@ func findPkg(pkgName string) string {
 
 		errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
 
+		log(0, "Found %s in %s!", bolden(pkgName), bolden(url))
 		log(1, "Saving valid info & url...")
 		validInfos = append(validInfos, infoFile)
 		validUrls = append(validUrls, url)
@@ -109,4 +112,24 @@ func downloadPkg(pkgName string, load bool) Package {
 	log(1, "Downloading package info for %s...", bolden(pkgName))
 
 	return writeLoadPkg(pkgName, findPkg(pkgName), load)
+}
+
+func doDirectDownload(pkg Package, pkgName string, srcPath string) {
+	pkgDispName := bolden(pkgName)
+
+	chapLog("==>", "BLUE", "Downloading file")
+	log(1, "Making sure %s is not already downloaded...", pkgDispName)
+	delPath(3, srcPath+pkg.Name, "An error occurred while deleting temporary downloaded files for %s", pkgName)
+
+	log(1, "Getting download URL for %s", pkgDispName)
+	url := getDownloadUrl(pkg)
+
+	log(1, "Making directory for %s...", pkgDispName)
+	newDir(srcPath+pkg.Name, "An error occurred while creating temporary directory for %s", pkgName)
+
+	log(1, "Downloading file for %s from %s...", pkgDispName, bolden(url))
+	nameOfFile := srcPath + pkg.Name + "/" + pkg.Name
+
+	debugLog("Downloading and saving to %s", bolden(nameOfFile))
+	downloadFileWithProg(nameOfFile, url, "An error occurred while downloading file for %s", pkgName)
 }

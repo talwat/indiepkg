@@ -13,6 +13,10 @@
             "my_file"
         ]
     },
+    "manpages": [
+        "my_man_page.2",
+        "other_man_page_wow.1"
+    ],
     "commands": {
         "all": {
             "install": [

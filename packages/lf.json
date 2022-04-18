@@ -12,6 +12,9 @@
             "lf"
         ]
     },
+    "manpages": [
+        "lf.1"
+    ],
     "commands": {
         "all": {
             "install": [

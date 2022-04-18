@@ -12,6 +12,7 @@ var tmpSrcPath string = mainPath + "tmp/package_src/"
 var infoPath string = mainPath + "data/installed_packages/"
 var configPath string = mainPath + "config/"
 var binPath string
+var manPath string
 
 type Config struct {
 	Paths struct {
@@ -35,4 +36,5 @@ func loadConfig() {
 	newDir(config.Paths.Prefix, "An error occurred while creating prefix directory")
 
 	binPath = config.Paths.Prefix + "bin/"
+	manPath = config.Paths.Prefix + "share/man/"
 }

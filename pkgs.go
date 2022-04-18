@@ -11,17 +11,12 @@ func installPkgs(pkgNames []string) {
 	fullInit()
 
 	for _, pkgName := range pkgNames {
-		chapLog("=>", "VIOLET", "Installing %s", pkgName)
-		chapLog("==>", "BLUE", "Getting package info")
-		log(1, "Reading package info for %s...", bolden(pkgName))
-		pkgFile := findPkg(pkgName)
-		pkg := loadPkg(pkgFile, pkgName)
-		cmds := getInstCmd(pkg)
 		pkgDispName := bolden(pkgName)
 
-		chapLog("==>", "BLUE", "Running checks")
-		log(1, "Checking if %s is already installed...", pkgDispName)
+		chapLog("=>", "VIOLET", "Preparing for installation of %s", pkgName)
 
+		chapLog("==>", "BLUE", "Checking if already installed")
+		log(1, "Checking if %s is already installed...", pkgDispName)
 		if pkgExists(pkgName) {
 			if force {
 				log(3, "%s is already installed, but force is on, so continuing.", pkgDispName)
@@ -31,32 +26,24 @@ func installPkgs(pkgNames []string) {
 			}
 		}
 
-		if !noDeps {
-			log(1, "Checking dependencies for %s...", pkgDispName)
-			deps := getDeps(pkg)
-			if deps != nil {
-				log(1, "Dependencies: %s", strings.Join(deps, ", "))
-				for _, dep := range deps {
-					if checkIfCommandExists(dep) {
-						log(0, "%s found!", bolden(dep))
-					} else if force {
-						log(3, "%s not found, but force is set, so continuing.", bolden(dep))
-					} else {
-						log(4, "%s is either not installed or not in PATH. Please install it with your operating system's package manager.", bolden(dep))
-						os.Exit(1)
-					}
-				}
-			} else {
-				log(1, "No dependencies found.")
-			}
-		} else {
-			log(3, "Skipping dependency check because nodeps is set to true.")
-		}
+		chapLog("==>", "BLUE", "Getting package info")
+		log(1, "Reading package info for %s...", bolden(pkgName))
+		pkgFile := findPkg(pkgName)
+		pkg := loadPkg(pkgFile, pkgName)
+		cmds := getInstCmd(pkg)
 
-		chapLog("==>", "BLUE", "Cloning source code")
-		log(1, "Making sure %s is not already cloned...", pkgDispName)
-		delPath(3, tmpSrcPath+pkg.Name, "An error occurred while deleting temporary source files for %s", pkgName)
-		cloneRepo(pkg, tmpSrcPath)
+		chapLog("==>", "BLUE", "Checking dependencies")
+		checkDeps(pkg, pkgName)
+
+		chapLog("=>", "VIOLET", "Installing %s", pkgName)
+		if pkg.Download == nil {
+			chapLog("==>", "BLUE", "Cloning source code")
+			log(1, "Making sure %s is not already cloned...", pkgDispName)
+			delPath(3, tmpSrcPath+pkg.Name, "An error occurred while deleting temporary source files for %s", pkgName)
+			cloneRepo(pkg, tmpSrcPath)
+		} else {
+			doDirectDownload(pkg, pkgName, tmpSrcPath)
+		}
 
 		if len(cmds) > 0 {
 			chapLog("==>", "BLUE", "Compiling")
@@ -65,8 +52,9 @@ func installPkgs(pkgNames []string) {
 
 		chapLog("==>", "BLUE", "Installing")
 		copyBins(pkg, tmpSrcPath)
+		copyManpages(pkg, tmpSrcPath)
 		mvPath(tmpSrcPath+pkg.Name, srcPath+pkg.Name)
-		writeLoadPkg(pkgName, pkgFile, false)
+		writeLoadPkg(pkg.Name, pkgFile, false)
 
 		chapLog("=>", "GREEN", "Success")
 		log(0, "Installed %s successfully!", pkgDispName)
@@ -95,7 +83,7 @@ func uninstallPkgs(pkgNames []string) {
 
 		pkg := readLoad(pkgName)
 
-		chapLog("==>", "BLUE", "Deleting binary & configuration files")
+		chapLog("==>", "BLUE", "Deleting installed files")
 		if purge {
 			log(1, "Deleting configuration files for %s...", pkgDispName)
 			for _, path := range pkg.Config_paths {
@@ -109,6 +97,20 @@ func uninstallPkgs(pkgNames []string) {
 			for _, path := range pkg.Bin.Installed {
 				log(1, "Deleting %s", bolden(binPath+path))
 				delPath(4, binPath+path, "An error occurred while deleting binary files for %s", pkgDispName)
+			}
+		}
+
+		if len(pkg.Manpages) > 0 {
+			log(1, "Deleting manpages for %s...", pkgDispName)
+			for _, manPage := range pkg.Manpages {
+				// Splitting to get file name
+				split := strings.Split(manPage, "/")
+
+				// Splitting and getting extension to put in proper man directory, eg. man1, man3, etc...
+				path := manPath + "man" + strings.Split(manPage, ".")[1] + "/" + split[len(split)-1]
+
+				log(1, "Deleting %s...", bolden(path))
+				delPath(4, path, "An error occurred while deleting manpages for %s", bolden(pkgDispName))
 			}
 		}
 

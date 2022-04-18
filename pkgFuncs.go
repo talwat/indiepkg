@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"runtime"
 	"strings"
 )
@@ -23,6 +24,7 @@ func pkgExists(pkgName string) bool {
 }
 
 func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
+	debugLog("Work dir: %s", path)
 	if len(cmds) > 0 {
 		log(1, "Running %s commands for %s...", cmdsLabel, pkg.Name)
 		for _, command := range cmds {
@@ -72,6 +74,33 @@ func getDeps(pkg Package) []string {
 	return nil
 }
 
+func checkDeps(pkg Package, pkgName string) {
+	pkgDispName := bolden(pkgName)
+	if !noDeps {
+		log(1, "Getting dependencies for %s...", pkgDispName)
+		deps := getDeps(pkg)
+
+		log(1, "Checking dependencies for %s...", pkgDispName)
+		if deps != nil {
+			log(1, "Dependencies: %s", strings.Join(deps, ", "))
+			for _, dep := range deps {
+				if checkIfCommandExists(dep) {
+					log(0, "%s found!", bolden(dep))
+				} else if force {
+					log(3, "%s not found, but force is set, so continuing.", bolden(dep))
+				} else {
+					log(4, "%s is either not installed or not in PATH. Please install it with your operating system's package manager.", bolden(dep))
+					os.Exit(1)
+				}
+			}
+		} else {
+			log(1, "No dependencies found.")
+		}
+	} else {
+		log(3, "Skipping dependency check because nodeps is set to true.")
+	}
+}
+
 func parseSources() []string {
 	log(1, "Reading sources file...")
 	sourcesFile := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
@@ -92,23 +121,6 @@ func parseSources() []string {
 	}
 
 	return finalList
-}
-
-func copyBins(pkg Package, srcPath string) {
-	pkgDispName := bolden(pkg.Name)
-	log(1, "Making binary directory...")
-	newDir(binPath, "An error occurred while creating binaries directory")
-	if len(pkg.Bin.In_source) > 0 {
-		log(1, "Copying files for %s...", pkgDispName)
-		for i := range pkg.Bin.In_source {
-			srcDir := srcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
-			destDir := binPath + pkg.Bin.Installed[i]
-			log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
-			copyFile(srcDir, destDir)
-			log(1, "Making %s executable...", bolden(destDir))
-			changePerms(destDir, 0770)
-		}
-	}
 }
 
 func getNotes(pkg Package) {
