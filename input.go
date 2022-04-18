@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const version = "0.19"
+const version = "0.19.1"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 

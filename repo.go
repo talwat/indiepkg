@@ -48,7 +48,7 @@ func addRepo(repoLink string) {
 }
 
 func rmRepo(repoLink string) {
-	repos, sourcesFile := readSources()
+	repos, _ := readSources()
 	log(1, "Removing %s from sources file...", bolden(repoLink))
 
 	for i, repo := range repos {
@@ -58,7 +58,7 @@ func rmRepo(repoLink string) {
 		}
 	}
 
-	sourcesFile = strings.Join(repos, "\n")
+	sourcesFile := strings.Join(repos, "\n")
 	saveChanges(sourcesFile)
 }
 
