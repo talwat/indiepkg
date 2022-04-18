@@ -34,7 +34,7 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 	}
 
 	err = cmdObj.Wait()
-	errorLogNewlineBefore(err, 4, "An error occurred while running command to finish")
+	errorLogNewlineBefore(err, 4, "An error occurred while running command")
 	fmt.Printf("\n")
 }
 
