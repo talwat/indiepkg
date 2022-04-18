@@ -60,7 +60,7 @@ func cloneSrcRepo() {
 	_, err := git.PlainClone(indiePkgSrcDir, false, &git.CloneOptions{
 		URL:           "https://github.com/talwat/indiepkg.git",
 		Progress:      os.Stdout,
-		ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/testing")),
+		ReferenceName: plumbing.ReferenceName("refs/heads/testing"),
 		SingleBranch:  true,
 		Depth:         1,
 		Tags:          git.NoTags,

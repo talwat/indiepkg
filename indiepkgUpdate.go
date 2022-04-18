@@ -7,7 +7,7 @@ func updateIndiePKG() {
 
 	chapLog("=>", "VIOLET", "Updating IndiePKG")
 	chapLog("==>", "BLUE", "Pulling source code")
-	pullSrcRepo(false)
+	pullSrcRepo(false) //nolint:errcheck
 
 	chapLog("==>", "BLUE", "Compiling IndiePKG")
 	logNoNewline(1, "Running %s", bolden("make"))
