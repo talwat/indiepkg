@@ -22,23 +22,16 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 
 	chapLog(chapPrefix+"==>", "", "Pulling source code")
 	log(1, "Updating source code for %s...", pkgDisplayName)
-	err := pullPkgRepo(pkgName)
+	isUpToDate, directDownload := pullPkgRepo(pkgName)
 
-	directDownload := false
+	debugLog("Checking if up to date...")
 
-	if err != nil {
-		if err.Error() == "already up-to-date" {
-			if force {
-				log(3, "%s is already up to date, but force is on, so continuing.", bolden(pkgName))
-			} else {
-				log(0, "%s already up to date.", bolden(pkgName))
-				return
-			}
-		} else if err.Error() == "repository does not exist" && pathExists(srcPath+pkgName, "An error occurred while checking if %s's source exists", pkgName) {
-			log(1, "Direct download detected.")
-			directDownload = true
+	if isUpToDate {
+		if force {
+			log(3, "%s already up to date, but force is on, so continuing.", pkgDisplayName)
 		} else {
-			errorLog(err, 4, "An error occurred while pulling source code")
+			log(0, "%s already up to date.", pkgDisplayName)
+			return
 		}
 	}
 
