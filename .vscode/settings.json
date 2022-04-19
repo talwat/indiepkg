@@ -1,8 +1,7 @@
 {
     "cSpell.words": [
-        "asyncapi",
+        "actionshub",
         "Autobuild",
-        "avto",
         "btop",
         "cmatrix",
         "cmds",
@@ -19,6 +18,8 @@
         "katfetch",
         "lewagon",
         "Manpages",
+        "markdownlint",
+        "neofetch",
         "nodeps",
         "nolint",
         "pfetch",
