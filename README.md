@@ -34,6 +34,7 @@ However, if you would like to submit issues or PR's, you are **more** than welco
 - [Basic usage](#basic-usage)
 - [Supported operating systems](#supported-operating-systems)
 - [Branches](#branches)
+- [Libraries used](#libraries-used)
 - [FAQ](#faq)
   - [So it's like the AUR?](#so-its-like-the-aur)
 
@@ -106,6 +107,13 @@ The **testing** branch is a good balance of new and stable, and is updated whene
 The **stable** branch is only updated whenever a release is made, and is not recommended for use *yet* because it will sometimes not work due to changes in the package files.
 
 The **main** branch is the default git branch, and contains the **newest** code. This is not recommended for use because it has a higher chance of being broken.
+
+## Libraries used
+
+A huge thank you to the following libraries:
+
+- [go-toml](https://github.com/pelletier/go-toml.git) - For parsing the configuration file.
+- [progressbar](https://github.com/schollz/progressbar.git) - For making progressbar's during downloads.
 
 ## FAQ
 
