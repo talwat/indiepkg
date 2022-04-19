@@ -1,8 +1,7 @@
 {
     "cSpell.words": [
-        "asyncapi",
+        "actionshub",
         "Autobuild",
-        "avto",
         "btop",
         "cmatrix",
         "cmds",
@@ -19,6 +18,8 @@
         "katfetch",
         "lewagon",
         "Manpages",
+        "markdownlint",
+        "neofetch",
         "nodeps",
         "nolint",
         "pfetch",
@@ -36,9 +37,5 @@
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [
         "!json"
-    ],
-    "markdownlint.config": {
-        "MD033": false,
-        "MD041": false,
-    }
+    ]
 }

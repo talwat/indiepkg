@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 MD041 MD013 -->
+
 <div align="center">
     <img src="./assets/roundlogo.svg">
     <h1>IndiePKG</h1>
