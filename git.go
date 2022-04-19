@@ -20,22 +20,9 @@ func pullSrcRepo(silent bool) error {
 	w, err := r.Worktree()
 	errorLog(err, 4, "An error occurred while getting worktree for IndiePKG source")
 
-	if !silent {
-		log(1, "Getting head branch for IndiePKG source...")
-	}
-
-	b, err := r.Head()
-	ref := b.Name().String()
-	errorLog(err, 4, "An error occurred while getting head for IndiePKG source")
-
-	if !silent {
-		log(1, "Pulling %s with ref %s", bolden(indiePkgSrcDir), bolden(b.Name().String()))
-	}
-
 	err = w.Pull(&git.PullOptions{
-		RemoteName:    "origin",
-		Progress:      os.Stdout,
-		ReferenceName: plumbing.ReferenceName(ref),
+		RemoteName: "origin",
+		Progress:   os.Stdout,
 	})
 
 	if err.Error() == "already up-to-date" {
@@ -62,7 +49,6 @@ func cloneSrcRepo() {
 		Progress:      os.Stdout,
 		ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", config.Updating.Branch)),
 		SingleBranch:  true,
-		Depth:         1,
 		Tags:          git.NoTags,
 	})
 
