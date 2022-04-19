@@ -57,7 +57,6 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			progressbar.OptionFullWidth(),
 
 			progressbar.OptionEnableColorCodes(true),
-			progressbar.OptionClearOnFinish(),
 			progressbar.OptionSetWidth(15),
 			progressbar.OptionSetTheme(progressbar.Theme{
 				Saucer:        "[cyan]=[reset]",

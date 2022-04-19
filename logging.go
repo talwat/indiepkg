@@ -17,21 +17,36 @@ var logType = map[int]string{
 	6: RESETCOL + textCol["CYAN"] + "[?]" + RESETCOL,
 }
 
-func chapLog(prefix string, color string, message string, params ...interface{}) {
-	fmt.Printf("\n"+RESETCOL+textCol[color]+textFx["BOLD"]+prefix+textCol["WHITE"]+(" %s\n")+RESETCOL, fmt.Sprintf(message, params...))
+func chapLog(prefix string, colorInput string, msg string, params ...interface{}) {
+	var color string = colorInput
+
+	if colorInput != "" {
+		color = colorInput
+	} else {
+		switch len(prefix) {
+		case 2:
+			color = "VIOLET"
+		case 3:
+			color = "BLUE"
+		case 4:
+			color = "CYAN"
+		}
+	}
+
+	fmt.Printf("\n"+RESETCOL+textCol[color]+textFx["BOLD"]+prefix+textCol["WHITE"]+(" %s\n")+RESETCOL, fmt.Sprintf(msg, params...))
 }
 
-func log(logTypeInput int, message string, params ...interface{}) {
-	fmt.Printf(logType[logTypeInput]+(" %s\n"), fmt.Sprintf(message, params...))
+func log(logTypeInput int, msg string, params ...interface{}) {
+	fmt.Printf(logType[logTypeInput]+(" %s\n"), fmt.Sprintf(msg, params...))
 }
 
-func logNoNewline(logTypeInput int, message string, params ...interface{}) {
-	fmt.Printf(logType[logTypeInput]+(" %s"), fmt.Sprintf(message, params...))
+func logNoNewline(logTypeInput int, msg string, params ...interface{}) {
+	fmt.Printf(logType[logTypeInput]+(" %s"), fmt.Sprintf(msg, params...))
 }
 
-func errorLog(err error, logTypeInput int, message string, params ...interface{}) {
+func errorLog(err error, logTypeInput int, msg string, params ...interface{}) {
 	if err != nil {
-		msg := fmt.Sprintf(("%s. Error: %s\n"), fmt.Sprintf(message, params...), err.Error())
+		msg := fmt.Sprintf(("%s. Error: %s\n"), fmt.Sprintf(msg, params...), err.Error())
 		if logTypeInput == 4 {
 			if force {
 				log(4, msg)
@@ -46,9 +61,9 @@ func errorLog(err error, logTypeInput int, message string, params ...interface{}
 	}
 }
 
-func errorLogNewlineBefore(err error, logTypeInput int, message string, params ...interface{}) {
+func errorLogNewlineBefore(err error, logTypeInput int, msg string, params ...interface{}) {
 	if err != nil {
-		fmt.Printf("\n"+logType[logTypeInput]+(" %s. Error: %s\n"), fmt.Sprintf(message, params...), err.Error())
+		fmt.Printf("\n"+logType[logTypeInput]+(" %s. Error: %s\n"), fmt.Sprintf(msg, params...), err.Error())
 		if logTypeInput == 4 {
 			if force {
 				log(3, "Continuing despite error because force is enabled...")
@@ -59,25 +74,25 @@ func errorLogNewlineBefore(err error, logTypeInput int, message string, params .
 	}
 }
 
-func input(defVal string, message string, params ...interface{}) string {
+func input(defVal string, msg string, params ...interface{}) string {
 	if assumeYes {
 		return defVal
 	} else {
 		reader := bufio.NewReader(os.Stdin)
-		logNoNewline(6, ("%s")+": ", fmt.Sprintf(message, params...))
+		logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
 		input, _ := reader.ReadString('\n')
 		return strings.TrimSpace(input)
 	}
 }
 
-func confirm(defVal, message string) {
-	if !strings.Contains(input(defVal, message), "y") {
+func confirm(defVal, msg string) {
+	if !strings.Contains(input(defVal, msg), "y") {
 		os.Exit(1)
 	}
 }
 
-func debugLog(message string, params ...interface{}) {
+func debugLog(msg string, params ...interface{}) {
 	if debug {
-		fmt.Printf(logType[5]+(" %s\n"), fmt.Sprintf(message, params...))
+		fmt.Printf(logType[5]+(" %s\n"), fmt.Sprintf(msg, params...))
 	}
 }

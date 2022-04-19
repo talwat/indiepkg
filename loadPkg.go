@@ -11,7 +11,7 @@ func loadPkg(packageFile string, pkgName string) Package {
 
 	var environmentVariables = map[string]string{
 		"PREFIX": config.Paths.Prefix,
-		"BIN":    binPath,
+		"BIN":    config.Paths.Prefix + "bin/",
 		"HOME":   strings.TrimSuffix(home, "/"),
 	}
 

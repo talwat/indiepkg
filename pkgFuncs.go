@@ -29,7 +29,7 @@ func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 		log(1, "Running %s commands for %s...", cmdsLabel, pkg.Name)
 		for _, command := range cmds {
 			logNoNewline(1, "Running command %s", bolden(command))
-			runCommandRealTime(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+			runCommandDot(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
 		}
 	}
 }
@@ -45,7 +45,7 @@ func initDirs(reset bool) {
 	newDir(infoPath, "An error occurred while creating info directory")
 	newDir(configPath, "An error occurred while creating config directory")
 
-	if !pathExists(configPath+"config.json", "config file") || reset {
+	if !pathExists(configPath+"config.toml", "config file") || reset {
 		log(1, "Creating config file...")
 		newFile(configPath+"config.toml", defaultConf, "An error occurred while creating config file")
 	}
@@ -151,7 +151,7 @@ func displayPkgs(pkgNames []string, action string) {
 }
 
 func fullInit() {
-	chapLog("=>", "VIOLET", "Initializing")
+	chapLog("=>", "", "Initializing")
 	initDirs(false)
 	loadConfig()
 	autoUpdate()

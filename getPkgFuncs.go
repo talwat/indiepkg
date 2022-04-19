@@ -24,7 +24,7 @@ func writeLoadPkg(pkgName string, pkgFile string, load bool) Package {
 }
 
 func findPkg(pkgName string) string {
-	log(1, "Finding package %s...", pkgName)
+	log(1, "Finding package %s...", bolden(pkgName))
 	urls := parseSources()
 	var validInfos, validUrls []string
 
@@ -117,7 +117,6 @@ func downloadPkg(pkgName string, load bool) Package {
 func doDirectDownload(pkg Package, pkgName string, srcPath string) {
 	pkgDispName := bolden(pkgName)
 
-	chapLog("==>", "BLUE", "Downloading file")
 	log(1, "Making sure %s is not already downloaded...", pkgDispName)
 	delPath(3, srcPath+pkg.Name, "An error occurred while deleting temporary downloaded files for %s", pkgName)
 

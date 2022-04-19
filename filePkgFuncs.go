@@ -8,6 +8,8 @@ func copyBins(pkg Package, srcPath string) {
 	}
 
 	pkgDispName := bolden(pkg.Name)
+	binPath := config.Paths.Prefix + "bin/"
+
 	log(1, "Making binary directory...")
 	newDir(binPath, "An error occurred while creating binaries directory")
 
@@ -30,6 +32,7 @@ func copyManpages(pkg Package, srcPath string) {
 	}
 
 	pkgDispName := bolden(pkg.Name)
+	manPath := config.Paths.Prefix + "share/man/"
 
 	log(1, "Making manpage directory...")
 	newDir(manPath, "An error occurred while creating manpage directory")
