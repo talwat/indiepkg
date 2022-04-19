@@ -37,9 +37,5 @@
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [
         "!json"
-    ],
-    "markdownlint.config": {
-        "MD033": false,
-        "MD041": false,
-    }
+    ]
 }

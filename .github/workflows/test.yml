@@ -71,7 +71,7 @@ jobs:
         run: ./indiepkg list
 
       - name: Uninstall package with --purge
-        run: ./indiepkg uninstall neofetch -p
+        run: ./indiepkg uninstall neofetch -p -y
       
       - name: Uninstall other packages
         run: ./indiepkg uninstall treefetch pfetch yaf -y -d

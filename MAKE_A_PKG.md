@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD013 -->
+
 # How to make a package
 
 This will guide you how to make, test, and submit an IndiePKG package.
