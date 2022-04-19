@@ -7,11 +7,13 @@ func updateIndiePKG() {
 
 	chapLog("=>", "", "Updating IndiePKG")
 	chapLog("==>", "", "Pulling source code")
-	pullSrcRepo(false) //nolint:errcheck
+	if pullSrcRepo(false) {
+		return
+	}
 
 	chapLog("==>", "", "Compiling IndiePKG")
 	logNoNewline(1, "Running %s", bolden("make"))
-	runCommandRealTime(indiePkgSrcDir, "make")
+	runCommandDot(indiePkgSrcDir, "make")
 
 	chapLog("==>", "", "Moving IndiePKG binary")
 	mvPath(indiePkgSrcDir+"indiepkg", home+".local/bin/indiepkg")
@@ -23,9 +25,8 @@ func updateIndiePKG() {
 func autoUpdate() {
 	if config.Updating.Auto_update {
 		log(1, "Checking for an update...")
-		err := pullSrcRepo(true)
-		if err.Error() == "already up-to-date" {
-			debugLog("Auto-update returns already up to date")
+
+		if pullSrcRepo(true) {
 			return
 		}
 
