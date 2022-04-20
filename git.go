@@ -1,21 +1,26 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 )
 
 func pullSrcRepo(silent bool) bool {
 	output, err := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags")
-	debugLog("Git output from pull: %s", output)
 	errorLog(err, 4, "An error occurred while pulling source code for IndiePKG")
 
 	if strings.Contains(output, "Already up to date.") {
 		if !silent {
+			if force {
+				log(3, "IndiePKG already up to date, but force is on, so continuing.")
+				return false
+			}
 			log(0, "IndiePKG already up to date")
 		}
 		return true
 	}
 
+	fmt.Println(output)
 	return false
 }
 

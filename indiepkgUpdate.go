@@ -16,7 +16,11 @@ func updateIndiePKG() {
 	runCommandDot(indiePkgSrcDir, "make")
 
 	chapLog("==>", "", "Moving IndiePKG binary")
-	mvPath(indiePkgSrcDir+"indiepkg", home+".local/bin/indiepkg")
+	srcPath := indiePkgSrcDir + "indiepkg"
+	destPath := home + ".local/bin/indiepkg"
+
+	log(1, "Moving %s to %s...", bolden(srcPath), bolden(destPath))
+	mvPath(srcPath, destPath)
 
 	chapLog("=>", "GREEN", "Success")
 	log(0, "Updated IndiePKG!")
