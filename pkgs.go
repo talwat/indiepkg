@@ -85,7 +85,7 @@ func uninstallPkgs(pkgNames []string) {
 			if force {
 				log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
 			} else {
-				log(3, "%s is not installed, so it can't be uninstalled", pkgDispName)
+				log(4, "%s is not installed, so it can't be uninstalled", pkgDispName)
 				os.Exit(1)
 			}
 		}
