@@ -5,7 +5,7 @@ import (
 )
 
 func pullSrcRepo(silent bool) bool {
-	output, err := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags", "--depth", "1")
+	output, err := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags")
 	debugLog("Git output from pull: %s", output)
 	errorLog(err, 4, "An error occurred while pulling source code for IndiePKG")
 
