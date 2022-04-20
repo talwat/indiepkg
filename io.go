@@ -15,6 +15,7 @@ func newFile(file string, text string, errMsg string, params ...interface{}) {
 }
 
 func newDir(name string, errMsg string, params ...interface{}) {
+	debugLog("Creating directory %s", bolden(name))
 	err := os.MkdirAll(name, 0770)
 	errorLog(err, 4, fmt.Sprintf(errMsg, params...))
 }
@@ -35,6 +36,7 @@ func copyFile(src string, dst string) {
 	errorLog(err, 4, "An error occurred while creating file %s", dst)
 	defer destination.Close()
 	_, err = io.Copy(destination, source)
+
 	errorLog(err, 4, "An error occurred while copying file %s to %s", dst, src)
 }
 
@@ -51,6 +53,7 @@ func delPath(logLevel int, path string, errMsg string, params ...interface{}) {
 }
 
 func mvPath(path string, destPath string) {
+	debugLog("Moving %s to %s", bolden(path), bolden(destPath))
 	err := os.Rename(path, destPath)
 	errorLog(err, 4, "An error occurred while moving %s to %s", bolden(path), bolden(destPath))
 }

@@ -33,7 +33,7 @@ jobs:
         run: ./indiepkg help
 
       - name: Run setup command
-        run: ./indiepkg setup
+        run: ./indiepkg setup -d
 
       - name: Install a few packages
         run: ./indiepkg install treefetch pfetch yaf skyfetch ne neofetch -y -d
