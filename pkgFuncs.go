@@ -45,6 +45,8 @@ func initDirs(reset bool) {
 	newDir(tmpSrcPath, "An error occurred while creating temporary sources directory")
 	newDir(infoPath, "An error occurred while creating info directory")
 	newDir(configPath, "An error occurred while creating config directory")
+	newDir(config.Paths.Prefix, "An error occurred while creating prefix directory")
+	newDir(config.Paths.Prefix+"bin", "An error occurred while creating binary directory")
 
 	if !pathExists(configPath+"config.toml", "config file") || reset {
 		log(1, "Creating config file...")
