@@ -35,6 +35,7 @@ However, if you would like to submit issues or PR's, you are **more** than welco
 - [Making & submitting packages](#making--submitting-packages)
 - [Basic usage](#basic-usage)
 - [Supported operating systems](#supported-operating-systems)
+  - [List of operating systems](#list-of-operating-systems)
 - [Branches](#branches)
 - [Libraries used](#libraries-used)
 - [FAQ](#faq)
@@ -99,6 +100,19 @@ IndiePKG officially works on **GNU/Linux** and **macOS**.
 It will work on any other unix-like operating system but many packages won't compile properly. If you are interested in supporting a new operating system, please [open an issue](https://github.com/talwat/indiepkg/issues/new/choose) and we can discuss making a new third party repository.
 
 IndiePKG is **completely** broken on Windows. IndiePKG is overall not meant to run on Windows.
+
+### List of operating systems
+
+| Darwin                                                                                  | Linux                                                                                 | Other                                                                                   |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| ![Darwin arm64](https://img.shields.io/badge/darwin%20arm64-full%20support-brightgreen) | ![Linux amd64](https://img.shields.io/badge/linux%20amd64-full%20support-brightgreen) | ![BSDs](https://img.shields.io/badge/BSDs-partial%20support-yellow)            |
+| ![Darwin amd64](https://img.shields.io/badge/darwin%20amd64-great%20support-green)      | ![Linux arm64](https://img.shields.io/badge/linux%20arm64-great%20support-green)      | ![Other unix-like](https://img.shields.io/badge/other%20unix--like-partial%20support-yellow) |
+|                                                                                         | ![Linux other](https://img.shields.io/badge/linux%20other-good%20support-yellowgreen) | ![Windows](https://img.shields.io/badge/windows-borked-red) |
+
+- **Full Support** - All packages & binary packages in the official repo are guaranteed to work. *This excludes linux-only*
+- **Great Support** - All source packages and most binary packages are supposed to work.
+- **Partial Support** - Some packages will work, but not all.
+- **Borked** - IndiePKG itself will not function properly.
 
 ## Branches
 
