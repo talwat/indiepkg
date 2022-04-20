@@ -5,10 +5,13 @@ import (
 )
 
 func pullSrcRepo(silent bool) bool {
-	output, _ := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags", "--depth", "1")
+	output, err := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags", "--depth", "1")
+	debugLog("Git output from pull: %s", output)
+	errorLog(err, 4, "An error occurred while pulling source code for IndiePKG")
+
 	if strings.Contains(output, "Already up to date.") {
 		if !silent {
-			log(0, "IndiePKG already up-to-date")
+			log(0, "IndiePKG already up to date")
 		}
 		return true
 	}
