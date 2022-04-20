@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 func compSrc() {
 	chapLog("==>", "", "Compiling IndiePKG")
@@ -39,12 +42,17 @@ func updateIndiePKG() {
 func autoUpdate() {
 	if config.Updating.Auto_update {
 		log(1, "Checking for an update...")
+		_, err := http.Get("http://clients3.google.com/generate_204")
+		if err != nil {
+			log(3, "No internet connection, skipping auto-update.")
+			return
+		}
 
 		if pullSrcRepo(true) {
 			return
 		}
 
-		_, err := runCommand(indiePkgSrcDir, "make")
+		_, err = runCommand(indiePkgSrcDir, "make")
 		errorLog(err, 4, "An error occurred while compiling IndiePKG because of an auto-update")
 		mvPath(indiePkgSrcDir+"indiepkg", home+".local/bin/indiepkg")
 		log(0, "Auto-updated IndiePKG!")
