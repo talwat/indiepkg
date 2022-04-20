@@ -15,6 +15,7 @@
         "GOARCH",
         "gofmt",
         "golangci",
+        "gomod",
         "Indiepkg",
         "katfetch",
         "lewagon",

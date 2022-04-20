@@ -114,6 +114,9 @@ func checkCommand(other string, others []string, i int, args []string) {
 	case "indiepkg-update":
 		updateIndiePKG()
 
+	case "setup":
+		setup()
+
 	default:
 		log(4, "Command %s not found.", bolden(other))
 		os.Exit(1)

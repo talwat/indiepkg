@@ -1,19 +1,12 @@
 package main
 
-func updateIndiePKG() {
-	chapLog("=>", "", "Initializing")
-	initDirs(false)
-	loadConfig()
+import "fmt"
 
-	chapLog("=>", "", "Updating IndiePKG")
-	chapLog("==>", "", "Pulling source code")
-	if pullSrcRepo(false) {
-		return
-	}
-
+func compSrc() {
 	chapLog("==>", "", "Compiling IndiePKG")
 	logNoNewline(1, "Running %s", bolden("make"))
 	runCommandDot(indiePkgSrcDir, "make")
+	fmt.Print("\n")
 
 	chapLog("==>", "", "Moving IndiePKG binary")
 	srcPath := indiePkgSrcDir + "indiepkg"
@@ -21,6 +14,23 @@ func updateIndiePKG() {
 
 	log(1, "Moving %s to %s...", bolden(srcPath), bolden(destPath))
 	mvPath(srcPath, destPath)
+}
+
+func pullSrc() {
+	chapLog("==>", "", "Pulling source code")
+	if pullSrcRepo(false) {
+		return
+	}
+}
+
+func updateIndiePKG() {
+	chapLog("=>", "", "Initializing")
+	initDirs(false)
+	loadConfig()
+
+	chapLog("=>", "", "Updating IndiePKG")
+	pullSrc()
+	compSrc()
 
 	chapLog("=>", "GREEN", "Success")
 	log(0, "Updated IndiePKG!")
