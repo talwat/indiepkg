@@ -1,0 +1,31 @@
+{
+    "name": "broot",
+    "author": "Canop",
+    "description": "A new way to see and navigate directory trees.",
+    "url": "https://github.com/Canop/broot.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "target/release/broot"
+        ],
+        "installed": [
+            "broot"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
