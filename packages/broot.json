@@ -27,5 +27,8 @@
             "rustc",
             "cargo"
         ]
-    }
+    },
+    "config_paths": [
+        ".config/broot"
+    ]
 }
