@@ -10,9 +10,6 @@ func copyBins(pkg Package, srcPath string) {
 	pkgDispName := bolden(pkg.Name)
 	binPath := config.Paths.Prefix + "bin/"
 
-	log(1, "Making binary directory...")
-	newDir(binPath, "An error occurred while creating binaries directory")
-
 	log(1, "Copying files for %s...", pkgDispName)
 	for i := range pkg.Bin.In_source {
 		srcDir := srcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
@@ -33,9 +30,6 @@ func copyManpages(pkg Package, srcPath string) {
 
 	pkgDispName := bolden(pkg.Name)
 	manPath := config.Paths.Prefix + "share/man/"
-
-	log(1, "Making manpage directory...")
-	newDir(manPath, "An error occurred while creating manpage directory")
 
 	log(1, "Copying manpages for %s...", pkgDispName)
 	for _, manPage := range pkg.Manpages {
