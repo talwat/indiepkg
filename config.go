@@ -51,6 +51,4 @@ func loadConfig() {
 	if !strings.HasSuffix(config.Paths.Prefix, "/") {
 		config.Paths.Prefix += "/"
 	}
-
-	newDir(config.Paths.Prefix, "An error occurred while creating prefix directory")
 }
