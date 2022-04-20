@@ -72,7 +72,7 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 }
 
 func pullPkgRepo(pkgName string) (bool, bool) {
-	output, err := runCommand(srcPath+pkgName, "git", "pull", "--no-tags", "--depth", "1")
+	output, err := runCommand(srcPath+pkgName, "git", "pull", "--no-tags")
 
 	debugLog("Git output from pull:\n%s", output)
 
