@@ -32,6 +32,9 @@ jobs:
       - name: Run help command
         run: ./indiepkg help
 
+      - name: Run setup command
+        run: ./indiepkg setup
+
       - name: Install a few packages
         run: ./indiepkg install treefetch pfetch yaf skyfetch ne neofetch -y -d
 
@@ -48,7 +51,7 @@ jobs:
         run: |
           ./indiepkg upgrade -f -d
           ./indiepkg upgrade treefetch pfetch yaf skyfetch ne neofetch -f -d
-      
+
       - name: Update packages
         run: |
           ./indiepkg update -d
@@ -72,7 +75,7 @@ jobs:
 
       - name: Uninstall package with --purge
         run: ./indiepkg uninstall neofetch -p -y
-      
+
       - name: Uninstall other packages
         run: ./indiepkg uninstall treefetch pfetch yaf -y -d
 
