@@ -32,6 +32,10 @@ However, if you would like to submit issues or PR's, you are **more** than welco
   - [Pros](#pros)
   - [Cons](#cons)
 - [Installation](#installation)
+  - [Dependencies](#dependencies)
+  - [Install script](#install-script)
+  - [Manual install](#manual-install)
+- [Uninstallation](#uninstallation)
 - [Making & submitting packages](#making--submitting-packages)
 - [Basic usage](#basic-usage)
 - [Supported operating systems](#supported-operating-systems)
@@ -65,18 +69,38 @@ It's also much simpler than your standard package manager, and if a package inst
 
 ## Installation
 
-While IndiePKG doesn't have an install script yet, you can still try it out by cloning the repository and building it from source.
-You will need:
+### Dependencies
 
 - Git
 - Go 1.17+
 - Make
+
+### Install script
+
+To install using the install script, run:
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/talwat/indiepkg/testing/scripts/install.sh)
+```
+
+### Manual install
+
+If the install script doesn't work for you, you can manually install the following:
 
 ```bash
 git clone -b testing https://github.com/talwat/indiepkg.git
 cd indiepkg
 make
 make install
+```
+
+## Uninstallation
+
+Currently, there is no uninstallation script, but you can super easily uninstall IndiePKG by running these commands.
+
+```bash
+rm -rf ~/.indiepkg
+rm ~/.local/bin/indiepkg
 ```
 
 ## Making & submitting packages

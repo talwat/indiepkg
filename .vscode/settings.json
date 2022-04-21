@@ -37,7 +37,8 @@
         "Talwat",
         "timeleft",
         "treefetch",
-        "Uninst"
+        "Uninst",
+        "uninstallation"
     ],
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [
