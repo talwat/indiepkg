@@ -9,9 +9,13 @@ jobs:
   test:
     env:
       COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
-
-    runs-on: ubuntu-latest
     if: ${{ startsWith(github.event.commits[0].message, 'New package ') || startsWith(github.event.commits[0].message, 'Fixed package ')  || startsWith(github.event.commits[0].message, 'Test package ') }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Setup go 1.18
