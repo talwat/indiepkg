@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 jobs:
-  release:
+  test:
     env:
       COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
 
