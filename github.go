@@ -95,7 +95,8 @@ func getRepoInfo(author string, repo string) {
 
 	log(1, "Parsing response...")
 	var repo_info Github_Repo_Info
-	json.Unmarshal([]byte(r), &repo_info)
+	err := json.Unmarshal([]byte(r), &repo_info)
+	errorLog(err, 4, "An error occurred while parsing the response.")
 
 	path := "samples/templates/" + strings.ToLower(repo_info.Language) + ".json"
 	if pathExists(path, "An error occurred while checking for language template.") {
@@ -104,7 +105,7 @@ func getRepoInfo(author string, repo string) {
 		path = "samples/basic.json"
 		log(1, "Using default language template")
 	}
-	file := readFile("samples/templates/"+strings.ToLower(repo_info.Language)+".json", "An error occurred while reading the sample file for %s.", repo_info.Language)
+	file := readFile(path, "An error occurred while reading the sample file for %s.", repo_info.Language)
 
 	finalFile := file
 	finalFile = strings.ReplaceAll(finalFile, "nameofpkg", repo_info.Name)
