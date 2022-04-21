@@ -1,0 +1,39 @@
+---
+name: pkg-test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    env:
+      COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
+
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.event.commits[0].message, 'New package ') }} && ${{ startsWith(github.event.commits[0].message, 'Fixed package ') }}
+    needs: [wait]
+
+    steps:
+      - name: Setup go 1.18
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+
+      - name: "Checkout source code"
+        uses: actions/checkout@v3
+
+      - name: "Set Environment Variables"
+        run: |
+          export PKG_NAME=${COMMIT_MESSAGE#*package }
+          echo "PKG_NAME=$PKG_NAME" >> $GITHUB_ENV
+
+          echo "PKG_NAME: $PKG_NAME"
+          echo "COMMIT_MESSAGE: $COMMIT_MESSAGE"
+
+      - name: "Build indiepkg"
+        run: make
+
+      - name: "Test ${{ env.PKG_NAME }}"
+        run: |
+          ./indiepkg install ${{ env.PKG_NAME }} -d
