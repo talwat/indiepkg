@@ -1,0 +1,35 @@
+{
+    "name": "bash",
+    "author": "Free Software Foundation, Inc.",
+    "description": "Bourne again shell.",
+    "url": "https://git.savannah.gnu.org/git/bash.git",
+    "license": "GPL-3.0",
+    "bin": {
+        "in_source": [
+            "bash",
+            "bashbug"
+        ],
+        "installed": [
+            "bash",
+            "bashbug"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "./configure",
+                "make"
+            ],
+            "update": [
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "autoconf",
+            "make"
+        ]
+    }
+}
