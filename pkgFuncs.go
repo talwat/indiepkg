@@ -29,7 +29,8 @@ func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 		log(1, "Running %s commands for %s...", cmdsLabel, pkg.Name)
 		for _, command := range cmds {
 			logNoNewline(1, "Running command %s", bolden(command))
-			runCommandRealTime(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+			runCommandDot(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+			fmt.Printf("\n")
 		}
 	}
 }
@@ -44,6 +45,9 @@ func initDirs(reset bool) {
 	newDir(tmpSrcPath, "An error occurred while creating temporary sources directory")
 	newDir(infoPath, "An error occurred while creating info directory")
 	newDir(configPath, "An error occurred while creating config directory")
+	newDir(config.Paths.Prefix, "An error occurred while creating prefix directory")
+	newDir(home+config.Paths.Prefix+"bin", "An error occurred while creating binary directory")
+	newDir(home+config.Paths.Prefix+"share/man", "An error occurred while creating manpage directory")
 
 	if !pathExists(configPath+"config.toml", "config file") || reset {
 		log(1, "Creating config file...")

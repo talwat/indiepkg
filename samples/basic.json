@@ -11,20 +11,5 @@
         "installed": [
             "nameofpkg"
         ]
-    },
-    "commands": {
-        "all": {
-            "install": [
-                "make"
-            ],
-            "update": [
-                "make"
-            ]
-        }
-    },
-    "deps": {
-        "all": [
-            "make"
-        ]
     }
 }

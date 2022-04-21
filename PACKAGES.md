@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD013 -->
+
 # Making & submitting packages
 
 ## Table of contents

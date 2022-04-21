@@ -1,20 +1,39 @@
 package main
 
+import (
+	"fmt"
+	"net/http"
+)
+
+func compSrc() {
+	chapLog("==>", "", "Compiling IndiePKG")
+	logNoNewline(1, "Running %s", bolden("make"))
+	runCommandDot(indiePkgSrcDir, "make")
+	fmt.Print("\n")
+
+	chapLog("==>", "", "Moving IndiePKG binary")
+	srcPath := indiePkgSrcDir + "indiepkg"
+	destPath := home + ".local/bin/indiepkg"
+
+	log(1, "Moving %s to %s...", bolden(srcPath), bolden(destPath))
+	mvPath(srcPath, destPath)
+}
+
+func pullSrc() {
+	chapLog("==>", "", "Pulling source code")
+	if pullSrcRepo(false) {
+		return
+	}
+}
+
 func updateIndiePKG() {
 	chapLog("=>", "", "Initializing")
 	initDirs(false)
 	loadConfig()
 
 	chapLog("=>", "", "Updating IndiePKG")
-	chapLog("==>", "", "Pulling source code")
-	pullSrcRepo(false) //nolint:errcheck
-
-	chapLog("==>", "", "Compiling IndiePKG")
-	logNoNewline(1, "Running %s", bolden("make"))
-	runCommandRealTime(indiePkgSrcDir, "make")
-
-	chapLog("==>", "", "Moving IndiePKG binary")
-	mvPath(indiePkgSrcDir+"indiepkg", home+".local/bin/indiepkg")
+	pullSrc()
+	compSrc()
 
 	chapLog("=>", "GREEN", "Success")
 	log(0, "Updated IndiePKG!")
@@ -23,13 +42,18 @@ func updateIndiePKG() {
 func autoUpdate() {
 	if config.Updating.Auto_update {
 		log(1, "Checking for an update...")
-		err := pullSrcRepo(true)
-		if err.Error() == "already up-to-date" {
-			debugLog("Auto-update returns already up to date")
+		_, err := http.Get("http://clients3.google.com/generate_204")
+		if err != nil {
+			log(3, "No internet connection, skipping auto-update.")
 			return
 		}
 
-		runCommand(indiePkgSrcDir, "make")
+		if pullSrcRepo(true) {
+			return
+		}
+
+		_, err = runCommand(indiePkgSrcDir, "make")
+		errorLog(err, 4, "An error occurred while compiling IndiePKG because of an auto-update")
 		mvPath(indiePkgSrcDir+"indiepkg", home+".local/bin/indiepkg")
 		log(0, "Auto-updated IndiePKG!")
 	}

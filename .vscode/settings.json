@@ -1,8 +1,8 @@
 {
     "cSpell.words": [
-        "asyncapi",
+        "actionshub",
         "Autobuild",
-        "avto",
+        "Borked",
         "btop",
         "cmatrix",
         "cmds",
@@ -15,10 +15,16 @@
         "GOARCH",
         "gofmt",
         "golangci",
+        "gomod",
         "Indiepkg",
         "katfetch",
         "lewagon",
         "Manpages",
+        "markdownlint",
+        "mypkgauthor",
+        "mypkgdescription",
+        "mypkglicense",
+        "neofetch",
         "nodeps",
         "nolint",
         "pfetch",
@@ -36,9 +42,5 @@
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [
         "!json"
-    ],
-    "markdownlint.config": {
-        "MD033": false,
-        "MD041": false,
-    }
+    ]
 }

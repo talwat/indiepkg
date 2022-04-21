@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const version = "0.21-alpha"
+const version = "0.23.1"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -118,6 +118,15 @@ func checkCommand(other string, others []string, i int, args []string) {
 
 	case "indiepkg-update":
 		updateIndiePKG()
+
+	case "setup":
+		setup()
+
+	case "github-gen":
+		optionToOthers = true
+		checkForOptions("author", 1)
+		checkForOptions("repo", 2)
+		getRepoInfo(others[i+1], others[i+2])
 
 	default:
 		log(4, "Command %s not found.", bolden(other))
