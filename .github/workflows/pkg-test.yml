@@ -33,6 +33,6 @@ jobs:
       - name: "Build indiepkg"
         run: make
 
-      - name: "Test ${{ env.PKG_NAME }}"
+      - name: "Test package"
         run: |
-          ./indiepkg install ${{ env.PKG_NAME }} -d
+          ./indiepkg install ${{ env.PKG_NAME }} -d -y
