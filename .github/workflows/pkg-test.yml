@@ -37,6 +37,14 @@ jobs:
       - name: "Build indiepkg"
         run: make
 
-      - name: "Test package"
+      - name: "Test installing package"
         run: |
           ./indiepkg install ${{ env.PKG_NAME }} -d -y
+
+      - name: "Test upgrading package"
+        run: |
+          ./indiepkg upgrade ${{ env.PKG_NAME }} -d -y -f
+
+      - name: "Test uninstalling package"
+        run: |
+          ./indiepkg uninstall ${{ env.PKG_NAME }} -d -y

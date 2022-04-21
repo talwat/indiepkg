@@ -6,7 +6,7 @@
     "license": "MIT",
     "bin": {
         "in_source": [
-            "dict"
+            "build/dict"
         ],
         "installed": [
             "dict"
@@ -15,10 +15,10 @@
     "commands": {
         "all": {
             "install": [
-                "make"
+                "make binary"
             ],
             "update": [
-                "make"
+                "make binary"
             ]
         }
     },
