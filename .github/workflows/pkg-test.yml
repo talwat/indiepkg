@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 jobs:
-  release:
+  test:
     env:
       COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
 
@@ -33,6 +33,6 @@ jobs:
       - name: "Build indiepkg"
         run: make
 
-      - name: "Test ${{ env.PKG_NAME }}"
+      - name: "Test package"
         run: |
-          ./indiepkg install ${{ env.PKG_NAME }} -d
+          ./indiepkg install ${{ env.PKG_NAME }} -d -y
