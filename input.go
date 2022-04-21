@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const version = "0.22.8"
+const version = "0.23"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -116,6 +116,12 @@ func checkCommand(other string, others []string, i int, args []string) {
 
 	case "setup":
 		setup()
+
+	case "github-gen":
+		optionToOthers = true
+		checkForOptions("author", 1)
+		checkForOptions("repo", 2)
+		getRepoInfo(others[i+1], others[i+2])
 
 	default:
 		log(4, "Command %s not found.", bolden(other))

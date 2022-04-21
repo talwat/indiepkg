@@ -34,6 +34,9 @@ jobs:
 
       - name: Run setup command
         run: ./indiepkg setup -d
+      
+      - name: Run github-gen command
+        run: ./indiepkg github-gen talwat indiepkg -d
 
       - name: Install a few packages
         run: ./indiepkg install treefetch pfetch yaf skyfetch ne neofetch -y -d
