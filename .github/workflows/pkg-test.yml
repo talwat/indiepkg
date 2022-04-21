@@ -11,7 +11,7 @@ jobs:
       COMMIT_MESSAGE: ${{ github.event.commits[0].message }}
 
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.event.commits[0].message, 'New package ') && startsWith(github.event.commits[0].message, 'Fixed package ') }}
+    if: ${{ startsWith(github.event.commits[0].message, 'New package ') || startsWith(github.event.commits[0].message, 'Fixed package ') }}
 
     steps:
       - name: Setup go 1.18
