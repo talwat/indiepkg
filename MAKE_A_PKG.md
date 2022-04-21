@@ -15,6 +15,10 @@ Before you start, you should know there are a few rules to making a package.
 
 First you need to make a package.json file.
 
+If your package is on Github, use `indiepkg github-gen <username> <repo>` to generate a package.json file. (This still should be manually checked after it's generated)
+
+If your package isn't on Github, copy a fitting template from `samples`.
+
 Go to [PACKAGES.md](PACKAGES.md) and look at what each field does to construct your package.json files. Package templates for specific languages are available in [samples/templates](samples/templates).
 
 ## Testing your package
