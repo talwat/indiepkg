@@ -22,10 +22,21 @@ type Updating struct {
 	Auto_update bool
 }
 
+type Progressbar struct {
+	Saucer          string
+	Saucer_head     string
+	Alt_saucer_head string
+	Saucer_padding  string
+	Bar_start       string
+	Bar_end         string
+}
+
 type Config struct {
 	Paths Paths
 
 	Updating Updating
+
+	Progressbar Progressbar
 }
 
 var config Config = Config{
@@ -36,6 +47,15 @@ var config Config = Config{
 	Updating{
 		"testing",
 		true,
+	},
+
+	Progressbar{
+		"[cyan]=[reset]",
+		"[cyan]>[reset]",
+		"[cyan]>[reset]",
+		" ",
+		"(",
+		")",
 	},
 }
 
