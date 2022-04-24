@@ -54,6 +54,16 @@ branch = "testing"
 
 # Default: true
 auto_update = true
+
+# Configures progressbar, purely visual.
+[progressbar]
+
+saucer = "[cyan]=[reset]"
+saucer_head = "[cyan]>[reset]"
+alt_saucer_head = "[cyan]>[reset]"
+saucer_padding = " "
+bar_start = "("
+bar_end = ")"
 `
 
 const defaultSources = `# Please only add sources you trust.

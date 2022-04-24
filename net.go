@@ -41,8 +41,9 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 	newBar := func(maxBytes int64, description ...string) *progressbar.ProgressBar {
 		desc := ""
 		if len(description) > 0 {
-			desc = description[0]
+			desc = logType[2] + description[0]
 		}
+
 		bar := progressbar.NewOptions64(
 			maxBytes,
 			progressbar.OptionSetDescription(desc),
@@ -59,11 +60,12 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			progressbar.OptionEnableColorCodes(true),
 			progressbar.OptionSetWidth(15),
 			progressbar.OptionSetTheme(progressbar.Theme{
-				Saucer:        "[cyan]=[reset]",
-				SaucerHead:    "[cyan]>[reset]",
-				SaucerPadding: " ",
-				BarStart:      "(",
-				BarEnd:        ")",
+				Saucer:        config.Progressbar.Saucer,
+				SaucerHead:    config.Progressbar.Saucer_head,
+				AltSaucerHead: config.Progressbar.Alt_saucer_head,
+				SaucerPadding: config.Progressbar.Saucer_padding,
+				BarStart:      config.Progressbar.Bar_start,
+				BarEnd:        config.Progressbar.Bar_end,
 			}),
 		)
 		err := bar.RenderBlank()
@@ -72,7 +74,7 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 	}
 	bar := newBar(
 		resp.ContentLength,
-		"Downloading",
+		" Progress",
 	)
 
 	_, err = io.Copy(io.MultiWriter(f, bar), resp.Body)

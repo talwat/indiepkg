@@ -33,7 +33,7 @@ func chapLog(prefix string, colorInput string, msg string, params ...interface{}
 		}
 	}
 
-	fmt.Printf("\n"+RESETCOL+textCol[color]+textFx["BOLD"]+prefix+textCol["WHITE"]+(" %s\n")+RESETCOL, fmt.Sprintf(msg, params...))
+	fmt.Printf("\n"+RESETCOL+textCol[color]+textFx["BOLD"]+prefix+RESETCOL+textFx["BOLD"]+(" %s\n")+RESETCOL, fmt.Sprintf(msg, params...))
 }
 
 func log(logTypeInput int, msg string, params ...interface{}) {
