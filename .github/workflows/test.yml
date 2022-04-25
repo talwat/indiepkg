@@ -42,7 +42,7 @@ jobs:
         run: $HOME/.local/bin/indiepkg github-gen talwat indiepkg -d
 
       - name: Install a few packages
-        run: $HOME/.local/bin/indiepkg install pfetch yaf -y -d
+        run: $HOME/.local/bin/indiepkg install pfetch yaf neofetch -y -d
 
       - name: Test installed packages
         run: |
@@ -52,12 +52,12 @@ jobs:
       - name: Force upgrade packages
         run: |
           $HOME/.local/bin/indiepkg upgrade -f -d
-          $HOME/.local/bin/indiepkg upgrade pfetch yaf -f -d
+          $HOME/.local/bin/indiepkg upgrade pfetch yaf neofetch -f -d
 
       - name: Update packages
         run: |
           $HOME/.local/bin/indiepkg update -d
-          $HOME/.local/bin/indiepkg upgrade pfetch yaf -d
+          $HOME/.local/bin/indiepkg upgrade pfetch yaf neofetch -d
 
       - name: Add repo
         run: $HOME/.local/bin/indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
