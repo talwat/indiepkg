@@ -6,10 +6,7 @@ require github.com/pelletier/go-toml/v2 v2.0.0-beta.8
 
 require github.com/schollz/progressbar/v3 v3.8.6
 
-require github.com/acarl005/textcol v0.0.0
-
 require (
-	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d // indirect
 	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
