@@ -3,3 +3,4 @@ linters:
     - deadcode
     - unused
     - staticcheck
+    - varcheck

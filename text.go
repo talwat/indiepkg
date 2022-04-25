@@ -1,5 +1,3 @@
-//nolint:varcheck,deadcode,unused
-
 package main
 
 var RESETCOL string = "\x1B[0m"

@@ -37,9 +37,11 @@
         "staticcheck",
         "Talwat",
         "timeleft",
+        "tracerr",
         "treefetch",
         "Uninst",
-        "uninstallation"
+        "uninstallation",
+        "varcheck"
     ],
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [

@@ -1,5 +1,9 @@
 package main
 
+import "fmt"
+
 func main() {
-	parseInput()
+	err := fmt.Errorf("%s", "fefe")
+	errorLog(err, 4, "An error occurred")
+	//parseInput()
 }

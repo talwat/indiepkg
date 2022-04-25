@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/ztrue/tracerr"
 )
 
 var logType = map[int]string{
@@ -46,7 +48,7 @@ func logNoNewline(logTypeInput int, msg string, params ...interface{}) {
 
 func errorLog(err error, logTypeInput int, msg string, params ...interface{}) {
 	if err != nil {
-		msg := fmt.Sprintf(("%s. Error: %s\n"), fmt.Sprintf(msg, params...), err.Error())
+		msg := fmt.Sprintf(("%s. Error: %s"), fmt.Sprintf(msg, params...), err.Error())
 		if logTypeInput == 4 {
 			if force {
 				log(4, msg)
@@ -55,6 +57,11 @@ func errorLog(err error, logTypeInput int, msg string, params ...interface{}) {
 			} else {
 				chapLog("=>", "RED", "Error")
 				log(4, msg)
+				log(4, "Source error log:")
+				errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
+				for _, line := range strings.Split(errLog, "\n")[2:] {
+					fmt.Println("    " + line)
+				}
 			}
 			os.Exit(1)
 		}
