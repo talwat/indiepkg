@@ -28,9 +28,11 @@ func sendGithubRequest(url string) (string, http.Header) {
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
+	errorLog(err, 4, "An error occurred while creating the GET request. URL: %s", url)
+
 	req.SetBasicAuth(config.Github.Username, config.Github.Token)
 	resp, err := client.Do(req)
-	errMsgAdded := "An error occurred while getting information from the github API" + ". URL: " + bolden(url)
+	errMsgAdded := "An error occurred while getting information from the github API. URL: " + bolden(url)
 	errorLog(err, 4, errMsgAdded)
 
 	defer resp.Body.Close()
