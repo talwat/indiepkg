@@ -71,16 +71,16 @@ func listRepos() {
 }
 
 func repoLabel(repo string) string {
-	var m map[string]string = map[string]string{
-		"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/": textCol["BLUE"] + "(Linux only)" + RESETCOL,
-		"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/":        textCol["VIOLET"] + "(Binary package)" + RESETCOL,
-		"https://raw.githubusercontent.com/talwat/indiepkg/main/":                     textCol["CYAN"] + "(Official repo)" + RESETCOL,
-		"https://raw.githubusercontent.com/talwat/indiepkg/":                          textCol["BLUE"] + "(Other branch)" + RESETCOL,
+	var m [][]string = [][]string{
+		{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/", textCol["BLUE"] + "(Linux only)" + RESETCOL},
+		{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/", textCol["VIOLET"] + "(Binary package)" + RESETCOL},
+		{"https://raw.githubusercontent.com/talwat/indiepkg/main/", textCol["CYAN"] + "(Official repo)" + RESETCOL},
+		{"https://raw.githubusercontent.com/talwat/indiepkg/", textCol["BLUE"] + "(Other branch)" + RESETCOL},
 	}
 
-	for k, v := range m {
-		if strings.HasPrefix(repo, k) {
-			return v
+	for k := range m {
+		if strings.HasPrefix(repo, m[k][0]) {
+			return m[k][1]
 		}
 	}
 	return textCol["YELLOW"] + "(Third party repo: " + repo + ")" + RESETCOL

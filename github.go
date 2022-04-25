@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -15,7 +17,44 @@ type GH_File struct {
 	Repo         string
 }
 
-func getPkgFromGh(query string) []GH_File {
+func sendGithubRequest(url string) (string, http.Header) {
+	debugLog(
+		"Sending request to %s with username %s and token (last 4 digits) %s",
+		bolden(url), bolden(config.Github.Username),
+		bolden(
+			config.Github.Token[len(config.Github.Token)-4:], // Get last 4 digits
+		),
+	)
+
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", url, nil)
+	req.SetBasicAuth(config.Github.Username, config.Github.Token)
+	resp, err := client.Do(req)
+	errMsgAdded := "An error occurred while getting information from the github API" + ". URL: " + bolden(url)
+	errorLog(err, 4, errMsgAdded)
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		log(4, "The Github API returned an error. Status code: %d", resp.StatusCode)
+		log(4, "If you would like to improve the amount of requests you have, specify the [github] fields.")
+		return "", nil
+	}
+
+	final, err := ioutil.ReadAll(resp.Body)
+	errorLog(err, 4, errMsgAdded)
+
+	if string(final) == "" {
+		log(4, "The Github API returned an empty response. This may be because you are getting rate limited. URL: %s", url)
+		os.Exit(1)
+	}
+
+	debugLog("Github API requests limit: %s.", resp.Header.Get("x-ratelimit-limit"))
+	debugLog("Github API requests remaining: %s.", resp.Header.Get("x-ratelimit-remaining"))
+	return string(final), resp.Header
+}
+
+func getPkgFromGh(query string) ([]GH_File, http.Header) {
 	urls := parseSources()
 	var matches []GH_File
 
@@ -30,6 +69,8 @@ func getPkgFromGh(query string) []GH_File {
 		return trimmed + "?ref=" + branch
 	}
 
+	var h http.Header
+
 	for _, url := range urls {
 		if !strings.HasPrefix(url, "https://raw.githubusercontent.com") {
 			log(3, "Non-github repositories can't be queried. Repo: %s", url)
@@ -38,12 +79,8 @@ func getPkgFromGh(query string) []GH_File {
 
 		convUrl := convertUrl(url)
 		debugLog("URL: %s", convUrl)
-		r, _ := viewFile(convUrl, "An error occurred while getting package list")
-
-		if r == "" {
-			log(4, "The Github API returned an empty response. This may be because you are getting rate limited. URL: %s", convUrl)
-			os.Exit(1)
-		}
+		r, headers := sendGithubRequest(convUrl)
+		h = headers
 
 		var files []GH_File
 		err := json.Unmarshal([]byte(r), &files)
@@ -60,12 +97,13 @@ func getPkgFromGh(query string) []GH_File {
 			}
 		}
 	}
+
 	if len(matches) == 0 {
 		log(4, "No matches found.")
 		os.Exit(1)
 	}
 
-	return matches
+	return matches, h
 }
 
 func getRepoInfo(author string, repo string) {
