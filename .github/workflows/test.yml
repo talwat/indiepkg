@@ -42,25 +42,22 @@ jobs:
         run: $HOME/.local/bin/indiepkg github-gen talwat indiepkg -d
 
       - name: Install a few packages
-        run: $HOME/.local/bin/indiepkg install treefetch pfetch yaf skyfetch ne neofetch -y -d
+        run: $HOME/.local/bin/indiepkg install pfetch yaf -y -d
 
       - name: Test installed packages
         run: |
           $HOME/.local/bin/pfetch
-          $HOME/.local/bin/treefetch
           $HOME/.local/bin/yaf
-          $HOME/.local/bin/skyfetch
-          $HOME/.local/bin/ne --help
 
       - name: Force upgrade packages
         run: |
           $HOME/.local/bin/indiepkg upgrade -f -d
-          $HOME/.local/bin/indiepkg upgrade treefetch pfetch yaf skyfetch ne neofetch -f -d
+          $HOME/.local/bin/indiepkg upgrade pfetch yaf -f -d
 
       - name: Update packages
         run: |
           $HOME/.local/bin/indiepkg update -d
-          $HOME/.local/bin/indiepkg upgrade treefetch pfetch yaf skyfetch ne neofetch -d
+          $HOME/.local/bin/indiepkg upgrade pfetch yaf -d
 
       - name: Add repo
         run: $HOME/.local/bin/indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
