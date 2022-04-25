@@ -5,6 +5,8 @@ import (
 	"os"
 	"runtime"
 	"strings"
+
+	"github.com/acarl005/textcol"
 )
 
 func pkgExists(pkgName string) bool {
@@ -147,9 +149,7 @@ func getNotes(pkg Package) {
 
 func displayPkgs(pkgNames []string, action string) {
 	log(1, "Are you sure you would like to %s the following packages:", bolden(action))
-	for _, pkgToDisplay := range pkgNames {
-		fmt.Println("        " + pkgToDisplay)
-	}
+	textcol.PrintColumns(&pkgNames, int(1))
 
 	confirm("y", "(y/n)")
 }

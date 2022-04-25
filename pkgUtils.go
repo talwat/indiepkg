@@ -119,8 +119,11 @@ func rmData(pkgNames []string) {
 }
 
 func search(query string) {
-	pkgs := getPkgFromGh(query)
+	initDirs(false)
+	loadConfig()
+	pkgs, _ := getPkgFromGh(query)
 
+	fmt.Print("\n")
 	log(1, "Found %d packages:", len(pkgs))
 	for _, pkg := range pkgs {
 		fmt.Println("        " + pkg.Name + " - " + pkg.Repo)

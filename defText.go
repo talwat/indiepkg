@@ -64,6 +64,16 @@ alt_saucer_head = "[cyan]>[reset]"
 saucer_padding = " "
 bar_start = "("
 bar_end = ")"
+
+# Configures github authentication, this is used for querying packages.
+[github]
+
+# Github username
+username = ""
+
+# Github access token, this should not expire and have no permissions granted for security purposes.
+# Information about getting a token is available here. https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+token = ""
 `
 
 const defaultSources = `# Please only add sources you trust.

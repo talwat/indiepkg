@@ -22,6 +22,11 @@ type Updating struct {
 	Auto_update bool
 }
 
+type Github struct {
+	Username string
+	Token    string
+}
+
 type Progressbar struct {
 	Saucer          string
 	Saucer_head     string
@@ -37,6 +42,8 @@ type Config struct {
 	Updating Updating
 
 	Progressbar Progressbar
+
+	Github Github
 }
 
 var config Config = Config{
@@ -56,6 +63,11 @@ var config Config = Config{
 		" ",
 		"(",
 		")",
+	},
+
+	Github{
+		"username",
+		"token",
 	},
 }
 
