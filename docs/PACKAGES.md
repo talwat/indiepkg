@@ -1,10 +1,10 @@
 <!-- markdownlint-disable MD013 -->
 
-# Making & submitting packages
+# The package format
 
 ## Table of contents
 
-- [Making & submitting packages](#making--submitting-packages)
+- [The package format](#the-package-format)
   - [Table of contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Constructing the package file](#constructing-the-package-file)
