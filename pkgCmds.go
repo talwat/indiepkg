@@ -1,5 +1,3 @@
-// TODO: Clean this code up
-
 package main
 
 import "runtime"
@@ -31,6 +29,7 @@ func getInstCmd(pkg Package) []string {
 	default:
 		log(3, "Unknown OS: %s", runtime.GOOS)
 	}
+
 	return cmds
 }
 
@@ -61,6 +60,7 @@ func getUninstCmd(pkg Package) []string {
 	default:
 		log(3, "Unknown OS: %s", runtime.GOOS)
 	}
+
 	return cmds
 }
 
@@ -91,5 +91,6 @@ func getUpdCmd(pkg Package) []string {
 	default:
 		log(3, "Unknown OS: %s", runtime.GOOS)
 	}
+
 	return cmds
 }

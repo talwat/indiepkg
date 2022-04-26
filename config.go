@@ -6,20 +6,22 @@ import (
 	"github.com/pelletier/go-toml/v2"
 )
 
-var mainPath string = home + ".indiepkg/"
-var srcPath string = mainPath + "data/package_src/"
-var tmpSrcPath string = mainPath + "tmp/package_src/"
-var infoPath string = mainPath + "data/installed_packages/"
-var configPath string = mainPath + "config/"
-var indiePkgSrcDir string = mainPath + "src/"
+var (
+	mainPath       string = home + ".indiepkg/"
+	srcPath        string = mainPath + "data/package_src/"
+	tmpSrcPath     string = mainPath + "tmp/package_src/"
+	infoPath       string = mainPath + "data/installed_packages/"
+	configPath     string = mainPath + "config/"
+	indiePkgSrcDir string = mainPath + "src/"
+)
 
 type Paths struct {
 	Prefix string
 }
 
 type Updating struct {
-	Branch      string
-	Auto_update bool
+	Branch     string
+	AutoUpdate bool
 }
 
 type Github struct {
@@ -28,12 +30,12 @@ type Github struct {
 }
 
 type Progressbar struct {
-	Saucer          string
-	Saucer_head     string
-	Alt_saucer_head string
-	Saucer_padding  string
-	Bar_start       string
-	Bar_end         string
+	Saucer        string
+	SaucerHead    string
+	AltSaucerHead string
+	SaucerPadding string
+	BarStart      string
+	BarEnd        string
 }
 
 type Config struct {
@@ -77,7 +79,7 @@ func loadConfig() {
 
 	log(1, "Loading config file...")
 	err := toml.Unmarshal([]byte(raw), &config)
-	errorLog(err, 4, "An error occurred while loading config file")
+	errorLog(err, "An error occurred while loading config file")
 
 	config.Paths.Prefix = home + config.Paths.Prefix
 	if !strings.HasSuffix(config.Paths.Prefix, "/") {

@@ -33,7 +33,7 @@ After your done forking, add your package.json file to the `packages` directory 
 
 If your package is only functional on Linux, add it to `packages/linux-only`.
 
-Once that's done, add your repository as a 3rd party repo.
+Once that's done, add your repository as a [3rd party repo](docs/REPOS.md).
 
 ```bash
 indiepkg repo add https://github.com/<YOUR USERNAME HERE>/indiepkg/main/packages/

@@ -7,32 +7,19 @@ import (
 	"strings"
 )
 
-func writeLoadPkg(pkgName string, pkgFile string, load bool) Package {
+func writePkg(pkgName string, pkgFile string) {
 	newFile(infoPath+pkgName+".json", pkgFile, "An error occurred while writing package information for %s", pkgName)
-
-	if load {
-		var pkg Package
-
-		if load {
-			pkg = readLoad(pkgName)
-		}
-
-		return pkg
-	}
-
-	return Package{}
 }
 
 func findPkg(pkgName string) string {
 	log(1, "Finding package %s...", bolden(pkgName))
 	urls := parseSources()
-	var validInfos, validUrls []string
+	validInfos, validUrls := make([]string, 0), make([]string, 0)
 
 	log(1, "Checking urls length...")
-	urlsLen := len(urls)
 
-	if urlsLen <= 0 {
-		log(4, "You don't have any sources defined in %s.", bolden(configPath+"sources.txt"))
+	if urlsLen := len(urls); urlsLen <= 0 {
+		errorLogRaw("You don't have any sources defined in %s", bolden(configPath+"sources.txt"))
 		os.Exit(1)
 	} else if urlsLen == 1 {
 		debugLog("Only one source defined in %s. Using that source.", bolden(configPath+"sources.txt"))
@@ -40,11 +27,11 @@ func findPkg(pkgName string) string {
 		pkgFile, err := viewFile(urls[0]+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
 
 		if errIs404(err) {
-			log(4, "Package %s not found.", bolden(pkgName))
+			errorLogRaw("Package %s not found", bolden(pkgName))
 			os.Exit(1)
 		}
 
-		errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
+		errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
 
 		return pkgFile
 	}
@@ -54,17 +41,17 @@ func findPkg(pkgName string) string {
 		if !strings.HasSuffix(url, "/") {
 			url += "/"
 		}
-		pkgUrl := url + pkgName + ".json"
+		pkgURL := url + pkgName + ".json"
 
 		log(1, "Checking %s for package info...", bolden(url))
-		debugLog("URL: %s", pkgUrl)
-		infoFile, err := viewFile(pkgUrl, "An error occurred while getting package information for %s", pkgName)
+		debugLog("URL: %s", pkgURL)
+		infoFile, err := viewFile(pkgURL, "An error occurred while getting package information for %s", pkgName)
 
 		if errIs404(err) {
 			continue
 		}
 
-		errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
+		errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
 
 		log(0, "Found %s in %s!", bolden(pkgName), bolden(url))
 		log(1, "Saving valid info & url...")
@@ -76,7 +63,7 @@ func findPkg(pkgName string) string {
 	lenValidInfos := len(validInfos)
 
 	if lenValidInfos < 1 {
-		log(4, "Package %s not found in any repo.", bolden(pkgName))
+		errorLogRaw("Package %s not found in any repo", bolden(pkgName))
 		os.Exit(1)
 	} else if lenValidInfos == 1 {
 		return validInfos[0]
@@ -93,10 +80,12 @@ func findPkg(pkgName string) string {
 			os.Exit(1)
 		} else {
 			convChoice, err := strconv.Atoi(choice)
-			errorLog(err, 4, "An error occurred while converting choice to int")
+			errorLog(err, "An error occurred while converting choice to int")
+
 			return validInfos[convChoice]
 		}
 	}
+
 	return ""
 }
 
@@ -108,20 +97,20 @@ func getPkgFromNet(pkgName string) (Package, string) {
 	return pkg, packageFile
 }
 
-func downloadPkg(pkgName string, load bool) Package {
+func downloadPkg(pkgName string) {
 	log(1, "Downloading package info for %s...", bolden(pkgName))
 
-	return writeLoadPkg(pkgName, findPkg(pkgName), load)
+	writePkg(pkgName, findPkg(pkgName))
 }
 
 func doDirectDownload(pkg Package, pkgName string, srcPath string) {
 	pkgDispName := bolden(pkgName)
 
 	log(1, "Making sure %s is not already downloaded...", pkgDispName)
-	delPath(3, srcPath+pkg.Name, "An error occurred while deleting temporary downloaded files for %s", pkgName)
+	delPath(false, srcPath+pkg.Name, "An error occurred while deleting temporary downloaded files for %s", pkgName)
 
 	log(1, "Getting download URL for %s", pkgDispName)
-	url := getDownloadUrl(pkg)
+	url := getDownloadURL(pkg)
 
 	log(1, "Making directory for %s...", pkgDispName)
 	newDir(srcPath+pkg.Name, "An error occurred while creating temporary directory for %s", pkgName)

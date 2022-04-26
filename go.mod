@@ -6,7 +6,10 @@ require github.com/pelletier/go-toml/v2 v2.0.0-beta.8
 
 require github.com/schollz/progressbar/v3 v3.8.6
 
+require github.com/ztrue/tracerr v0.3.0
+
 require (
+	github.com/logrusorgru/aurora v0.0.0-20181002194514-a7b3b318ed4e // indirect
 	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect

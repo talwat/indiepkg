@@ -14,6 +14,7 @@
         "devmasx",
         "gmake",
         "GOARCH",
+        "gocritic",
         "gofmt",
         "golangci",
         "gomod",
@@ -37,12 +38,16 @@
         "staticcheck",
         "Talwat",
         "timeleft",
+        "tracerr",
         "treefetch",
         "Uninst",
-        "uninstallation"
+        "uninstallation",
+        "varcheck"
     ],
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [
-        "!json"
+        "!json",
+        "!yml",
+        "!yaml"
     ]
 }
