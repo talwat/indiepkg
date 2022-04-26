@@ -32,7 +32,7 @@ func findPkg(pkgName string) string {
 	urlsLen := len(urls)
 
 	if urlsLen <= 0 {
-		log(4, "You don't have any sources defined in %s.", bolden(configPath+"sources.txt"))
+		errorLogRaw("You don't have any sources defined in %s", bolden(configPath+"sources.txt"))
 		os.Exit(1)
 	} else if urlsLen == 1 {
 		debugLog("Only one source defined in %s. Using that source.", bolden(configPath+"sources.txt"))
@@ -40,11 +40,11 @@ func findPkg(pkgName string) string {
 		pkgFile, err := viewFile(urls[0]+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
 
 		if errIs404(err) {
-			log(4, "Package %s not found.", bolden(pkgName))
+			errorLogRaw("Package %s not found", bolden(pkgName))
 			os.Exit(1)
 		}
 
-		errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
+		errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
 
 		return pkgFile
 	}
@@ -64,7 +64,7 @@ func findPkg(pkgName string) string {
 			continue
 		}
 
-		errorLog(err, 4, "An error occurred while getting package information for %s", bolden(pkgName))
+		errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
 
 		log(0, "Found %s in %s!", bolden(pkgName), bolden(url))
 		log(1, "Saving valid info & url...")
@@ -76,7 +76,7 @@ func findPkg(pkgName string) string {
 	lenValidInfos := len(validInfos)
 
 	if lenValidInfos < 1 {
-		log(4, "Package %s not found in any repo.", bolden(pkgName))
+		errorLogRaw("Package %s not found in any repo", bolden(pkgName))
 		os.Exit(1)
 	} else if lenValidInfos == 1 {
 		return validInfos[0]
@@ -93,7 +93,7 @@ func findPkg(pkgName string) string {
 			os.Exit(1)
 		} else {
 			convChoice, err := strconv.Atoi(choice)
-			errorLog(err, 4, "An error occurred while converting choice to int")
+			errorLog(err, "An error occurred while converting choice to int")
 			return validInfos[convChoice]
 		}
 	}

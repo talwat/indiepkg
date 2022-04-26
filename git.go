@@ -7,7 +7,7 @@ import (
 
 func pullSrcRepo(silent bool) bool {
 	output, err := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags")
-	errorLog(err, 4, "An error occurred while pulling source code for IndiePKG")
+	errorLog(err, "An error occurred while pulling source code for IndiePKG")
 
 	if strings.Contains(output, "Already up to date.") {
 		if !silent {
@@ -87,7 +87,7 @@ func pullPkgRepo(pkgName string) (bool, bool) {
 		return false, true
 	}
 
-	errorLog(err, 4, "An error occurred while pulling source code for %s", bolden(pkgName))
+	errorLog(err, "An error occurred while pulling source code for %s", bolden(pkgName))
 
 	return false, false
 }

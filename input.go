@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const version = "0.24"
+const version = "0.25-alpha"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -25,7 +25,7 @@ func checkFlag(flag string) {
 	case "-n", "--nodeps":
 		noDeps = true
 	default:
-		log(4, "Flag %s not found.", bolden(flag))
+		errorLogRaw("Flag %s not found", bolden(flag))
 		os.Exit(1)
 	}
 }
@@ -33,7 +33,7 @@ func checkFlag(flag string) {
 func checkCommand(other string, others []string, i int, args []string) {
 	checkForOptions := func(errSpecify string, commandPartsCount int) {
 		if len(others[i+commandPartsCount:]) < 1 {
-			log(4, "No %s specified.", errSpecify)
+			errorLogRaw("No %s specified", errSpecify)
 			os.Exit(1)
 		}
 	}
@@ -102,7 +102,7 @@ func checkCommand(other string, others []string, i int, args []string) {
 		case "list":
 			listRepos()
 		default:
-			log(4, "Sub-command %s not found.", bolden(others[i+1]))
+			errorLogRaw("Sub-command %s not found", bolden(others[i+1]))
 			os.Exit(1)
 		}
 
@@ -124,7 +124,7 @@ func checkCommand(other string, others []string, i int, args []string) {
 		getRepoInfo(others[i+1], others[i+2])
 
 	default:
-		log(4, "Command %s not found.", bolden(other))
+		errorLogRaw("Command %s not found", bolden(other))
 		os.Exit(1)
 	}
 }

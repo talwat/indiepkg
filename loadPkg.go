@@ -29,7 +29,7 @@ func loadPkg(packageFile string, pkgName string) Package {
 	}
 
 	err := json.Unmarshal([]byte(packageFile), &pkg)
-	errorLog(err, 4, "An error occurred while loading package info for %s", pkgName)
+	errorLog(err, "An error occurred while loading package info for %s", pkgName)
 	return pkg
 }
 

@@ -53,7 +53,7 @@ func autoUpdate() {
 		}
 
 		_, err = runCommand(indiePkgSrcDir, "make")
-		errorLog(err, 4, "An error occurred while compiling IndiePKG because of an auto-update")
+		errorLog(err, "An error occurred while compiling IndiePKG because of an auto-update")
 		mvPath(indiePkgSrcDir+"indiepkg", home+".local/bin/indiepkg")
 		log(0, "Auto-updated IndiePKG!")
 	}

@@ -29,7 +29,7 @@ func getDownloadUrl(pkg Package) string {
 		if pkg.Download["all"] != nil {
 			url = pkg.Download["all"].(string)
 		} else {
-			log(4, "Unsupported OS or architecture.")
+			errorLogRaw("Unsupported OS or architecture")
 			os.Exit(1)
 		}
 	}

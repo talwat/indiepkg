@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 var RESETCOL string = "\x1B[0m"
 
 var textFx = map[string]string{
@@ -58,6 +60,6 @@ var lightTextBgCol = map[string]string{
 	"WHITE":  "\x1B[107m",
 }
 
-func bolden(text string) string {
-	return textFx["BOLD"] + text + RESETCOL
+func bolden(text interface{}) string {
+	return textFx["BOLD"] + fmt.Sprint(text) + RESETCOL
 }

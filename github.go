@@ -28,26 +28,25 @@ func sendGithubRequest(url string) (string, http.Header) {
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
-	errorLog(err, 4, "An error occurred while creating the GET request. URL: %s", url)
+	errorLog(err, "An error occurred while creating the GET request. URL: %s", url)
 
 	req.SetBasicAuth(config.Github.Username, config.Github.Token)
 	resp, err := client.Do(req)
 	errMsgAdded := "An error occurred while getting information from the github API. URL: " + bolden(url)
-	errorLog(err, 4, errMsgAdded)
+	errorLog(err, errMsgAdded)
 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		log(4, "The Github API returned an error. Status code: %d", resp.StatusCode)
-		log(4, "If you would like to improve the amount of requests you have, specify the [github] fields.")
+		errorLogRaw("The Github API returned an error. Status code: %s", bolden(resp.StatusCode))
 		return "", nil
 	}
 
 	final, err := ioutil.ReadAll(resp.Body)
-	errorLog(err, 4, errMsgAdded)
+	errorLog(err, errMsgAdded)
 
 	if string(final) == "" {
-		log(4, "The Github API returned an empty response. This may be because you are getting rate limited. URL: %s", url)
+		errorLogRaw("The Github API returned an empty response. This may be because you are getting rate limited. If you would like to improve the amount of requests you have, specify the [github] fields. URL: %s", bolden(url))
 		os.Exit(1)
 	}
 
@@ -86,7 +85,7 @@ func getPkgFromGh(query string) ([]GH_File, http.Header) {
 
 		var files []GH_File
 		err := json.Unmarshal([]byte(r), &files)
-		errorLog(err, 4, "An error occurred while parsing package list")
+		errorLog(err, "An error occurred while parsing package list")
 
 		for _, file := range files {
 			if !strings.HasSuffix(file.Name, ".json") {
@@ -127,7 +126,7 @@ func getRepoInfo(author string, repo string) {
 	r, _ := viewFile(url, "An error occurred while getting info from the Github API.")
 
 	if r == "" {
-		log(4, "The Github API returned an empty response. This may be because you are getting rate limited. URL: %s", url)
+		errorLogRaw("The Github API returned an empty response. This may be because you are getting rate limited. URL: %s", url)
 		os.Exit(1)
 	}
 
@@ -136,7 +135,7 @@ func getRepoInfo(author string, repo string) {
 	log(1, "Parsing response...")
 	var repo_info Github_Repo_Info
 	err := json.Unmarshal([]byte(r), &repo_info)
-	errorLog(err, 4, "An error occurred while parsing the response.")
+	errorLog(err, "An error occurred while parsing the response.")
 
 	path := "samples/templates/" + strings.ToLower(repo_info.Language) + ".json"
 	if pathExists(path, "An error occurred while checking for language template.") {

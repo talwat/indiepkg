@@ -77,7 +77,7 @@ func loadConfig() {
 
 	log(1, "Loading config file...")
 	err := toml.Unmarshal([]byte(raw), &config)
-	errorLog(err, 4, "An error occurred while loading config file")
+	errorLog(err, "An error occurred while loading config file")
 
 	config.Paths.Prefix = home + config.Paths.Prefix
 	if !strings.HasSuffix(config.Paths.Prefix, "/") {

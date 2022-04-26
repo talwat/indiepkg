@@ -46,35 +46,58 @@ func logNoNewline(logTypeInput int, msg string, params ...interface{}) {
 	fmt.Printf(logType[logTypeInput]+(" %s"), fmt.Sprintf(msg, params...))
 }
 
-func errorLog(err error, logTypeInput int, msg string, params ...interface{}) {
+func errorLog(err error, msg string, params ...interface{}) {
 	if err != nil {
 		msg := fmt.Sprintf(("%s. Error: %s"), fmt.Sprintf(msg, params...), err.Error())
-		if logTypeInput == 4 {
-			if force {
-				log(4, msg)
-				log(3, "Continuing despite error because force is enabled...")
-				return
-			} else {
-				chapLog("=>", "RED", "Error")
-				log(4, msg)
-				log(4, "Source error log:")
-				errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
-				for _, line := range strings.Split(errLog, "\n")[2:] {
-					fmt.Println("    " + line)
-				}
+
+		if force {
+			log(4, msg)
+			log(3, "Continuing despite error because force is enabled...")
+			return
+		} else {
+			chapLog("=>", "RED", "Error")
+			log(4, msg)
+			log(4, "Source error log:")
+			errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
+			for _, line := range strings.Split(errLog, "\n")[2:] {
+				fmt.Println("    " + line)
 			}
-			os.Exit(1)
 		}
+		os.Exit(1)
 	}
 }
 
-func errorLogNewlineBefore(err error, logTypeInput int, msg string, params ...interface{}) {
+func errorLogRaw(msg string, params ...interface{}) {
+	var errMsg string
+
+	errMsg = fmt.Sprintf(("%s."), fmt.Sprintf(msg, params...))
+
+	if force {
+		log(4, errMsg)
+		log(3, "Continuing despite error because force is enabled...")
+		return
+	} else {
+		chapLog("=>", "RED", "Error")
+		log(4, errMsg)
+		os.Exit(1)
+	}
+}
+
+func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 	if err != nil {
-		fmt.Printf("\n"+logType[logTypeInput]+(" %s. Error: %s\n"), fmt.Sprintf(msg, params...), err.Error())
-		if logTypeInput == 4 {
-			if force {
-				log(3, "Continuing despite error because force is enabled...")
-				return
+		msg := fmt.Sprintf(("%s. Error: %s"), fmt.Sprintf(msg, params...), err.Error())
+		if force {
+			log(4, msg)
+			log(3, "Continuing despite error because force is enabled...")
+			return
+		} else {
+			fmt.Print("\n")
+			chapLog("=>", "RED", "Error")
+			log(4, msg)
+			log(4, "Source error log:")
+			errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
+			for _, line := range strings.Split(errLog, "\n")[2:] {
+				fmt.Println("    " + line)
 			}
 			os.Exit(1)
 		}
@@ -100,6 +123,6 @@ func confirm(defVal, msg string) {
 
 func debugLog(msg string, params ...interface{}) {
 	if debug {
-		fmt.Printf(logType[5]+(" %s\n"), fmt.Sprintf(msg, params...))
+		log(5, msg, params...)
 	}
 }

@@ -15,7 +15,7 @@ import (
 func viewFile(url string, errMsg string, params ...interface{}) (string, error) {
 	resp, err := http.Get(url)
 	errMsgAdded := fmt.Sprintf(errMsg, params...) + ". URL: " + bolden(url)
-	errorLog(err, 4, errMsgAdded)
+	errorLog(err, errMsgAdded)
 
 	defer resp.Body.Close()
 
@@ -30,9 +30,9 @@ func viewFile(url string, errMsg string, params ...interface{}) (string, error) 
 
 func downloadFileWithProg(filepath string, url string, errMsg string, params ...interface{}) {
 	req, err := http.NewRequest("GET", url, nil)
-	errorLog(err, 4, "An error occurred making a new GET request")
+	errorLog(err, "An error occurred making a new GET request")
 	resp, err := http.DefaultClient.Do(req)
-	errorLog(err, 4, "An error occurred sending GET request")
+	errorLog(err, "An error occurred sending GET request")
 	defer resp.Body.Close()
 
 	f, _ := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0644)
@@ -69,7 +69,7 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			}),
 		)
 		err := bar.RenderBlank()
-		errorLog(err, 4, "An error occurred while rendering loading bar.")
+		errorLog(err, "An error occurred while rendering loading bar.")
 		return bar
 	}
 	bar := newBar(
@@ -78,5 +78,5 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 	)
 
 	_, err = io.Copy(io.MultiWriter(f, bar), resp.Body)
-	errorLog(err, 4, "An error occurred while running %s.", bolden("io.Copy()"))
+	errorLog(err, "An error occurred while running %s.", bolden("io.Copy()"))
 }

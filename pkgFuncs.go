@@ -18,7 +18,7 @@ func pkgExists(pkgName string) bool {
 	} else if !infoInstalled && !srcInstalled {
 		return false
 	} else {
-		log(4, "Package info or source for %s exists, but not both. Please run %sindiepkg sync%s.", packageDisplayName, textFx["BOLD"], RESETCOL)
+		log(3, "Package info or source for %s exists, but not both. Please run %sindiepkg sync%s.", packageDisplayName, textFx["BOLD"], RESETCOL)
 		return false
 	}
 }
@@ -102,7 +102,7 @@ func checkDeps(pkg Package, pkgName string) {
 				} else if force {
 					log(3, "%s not found, but force is set, so continuing.", bolden(dep))
 				} else {
-					log(4, "%s is either not installed or not in PATH. Please install it with your operating system's package manager.", bolden(dep))
+					errorLogRaw("%s is either not installed or not in PATH. Please install it with your operating system's package manager", bolden(dep))
 					os.Exit(1)
 				}
 			}

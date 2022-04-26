@@ -37,7 +37,7 @@ func addRepo(repoLink string) {
 		if force {
 			log(3, "Repo %s already exists in sources file, but continuing because force is set to true.", bolden(repoLink))
 		} else {
-			log(4, "Repo %s already exists in sources file.", bolden(repoLink))
+			errorLogRaw("Repo %s already exists in sources file", bolden(repoLink))
 			os.Exit(1)
 		}
 	}

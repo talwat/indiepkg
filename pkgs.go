@@ -22,7 +22,7 @@ func installPkgs(pkgNames []string) {
 			if force {
 				log(3, "%s is already installed, but force is on, so continuing.", pkgDispName)
 			} else {
-				log(4, "%s is already installed, can't install %s.", pkgDispName, pkgDispName)
+				errorLogRaw("%s is already installed, can't install %s", pkgDispName, pkgDispName)
 				os.Exit(1)
 			}
 		}
@@ -85,8 +85,7 @@ func uninstallPkgs(pkgNames []string) {
 			if force {
 				log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
 			} else {
-				log(4, "%s is not installed, so it can't be uninstalled", pkgDispName)
-				os.Exit(1)
+				errorLogRaw("%s is not installed, so it can't be uninstalled", pkgDispName)
 			}
 		}
 
