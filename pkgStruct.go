@@ -2,7 +2,7 @@ package main
 
 type Bin struct {
 	Installed []string
-	InSource  []string
+	InSource  []string `json:"in_source"`
 }
 
 type Commands struct {
@@ -36,6 +36,6 @@ type Package struct {
 	Manpages    []string
 	Deps        *Deps
 	Commands    *OSCommands
-	ConfigPaths []string
+	ConfigPaths []string `json:"config_paths"`
 	Notes       []string
 }
