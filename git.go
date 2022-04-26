@@ -7,20 +7,23 @@ import (
 
 func pullSrcRepo(silent bool) bool {
 	output, err := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags")
-	errorLog(err, 4, "An error occurred while pulling source code for IndiePKG")
+	errorLog(err, "An error occurred while pulling source code for IndiePKG")
 
 	if strings.Contains(output, "Already up to date.") {
 		if !silent {
 			if force {
 				log(3, "IndiePKG already up to date, but force is on, so continuing.")
+
 				return false
 			}
 			log(0, "IndiePKG already up to date")
 		}
+
 		return true
 	}
 
 	fmt.Println(output)
+
 	return false
 }
 
@@ -54,7 +57,7 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 			"--progress",
 			"--depth",
 			"1",
-			pkg.Url,
+			pkg.URL,
 			pkg.Name,
 		)
 	} else {
@@ -70,7 +73,7 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 			"--progress",
 			"--depth",
 			"1",
-			pkg.Url,
+			pkg.URL,
 			pkg.Name,
 		)
 	}
@@ -87,7 +90,7 @@ func pullPkgRepo(pkgName string) (bool, bool) {
 		return false, true
 	}
 
-	errorLog(err, 4, "An error occurred while pulling source code for %s", bolden(pkgName))
+	errorLog(err, "An error occurred while pulling source code for %s", bolden(pkgName))
 
 	return false, false
 }

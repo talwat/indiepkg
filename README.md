@@ -105,7 +105,7 @@ rm ~/.local/bin/indiepkg
 
 ## Making & submitting packages
 
-If you want to make a package, you should look at [PACKAGES.md](PACKAGES.md)
+If you want to make a package, you should look at [PACKAGES.md](MAKE_A_PKG.md)
 
 ## Basic usage
 

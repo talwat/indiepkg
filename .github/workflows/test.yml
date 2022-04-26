@@ -3,8 +3,8 @@ name: test
 
 on:
   push:
-    branches: [main]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
@@ -79,7 +79,7 @@ jobs:
         run: $HOME/.local/bin/indiepkg uninstall neofetch -p -y
 
       - name: Uninstall other packages
-        run: $HOME/.local/bin/indiepkg uninstall treefetch pfetch yaf -y -d
+        run: $HOME/.local/bin/indiepkg uninstall pfetch yaf -y -d
 
       - name: Try other commands
         run: |

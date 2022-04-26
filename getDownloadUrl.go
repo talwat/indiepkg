@@ -5,16 +5,17 @@ import (
 	"runtime"
 )
 
-func getDownloadUrl(pkg Package) string {
+func getDownloadURL(pkg Package) string {
 	debugLog("GOOS: %s. GOARCH: %s", runtime.GOOS, runtime.GOARCH)
 
 	var url string
+
 	checkForAll := func(pkg Package) string {
 		if pkg.Download["all"] != nil {
 			return pkg.Download["all"].(string)
-		} else {
-			return "nil"
 		}
+
+		return "nil"
 	}
 
 	if pkg.Download[runtime.GOOS] == nil {
@@ -29,9 +30,10 @@ func getDownloadUrl(pkg Package) string {
 		if pkg.Download["all"] != nil {
 			url = pkg.Download["all"].(string)
 		} else {
-			log(4, "Unsupported OS or architecture.")
+			errorLogRaw("Unsupported OS or architecture")
 			os.Exit(1)
 		}
 	}
+
 	return url
 }
