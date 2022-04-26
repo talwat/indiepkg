@@ -4,6 +4,7 @@ linters:
     - unused
     - staticcheck
     - varcheck
+
     - noctx
     - gomnd
     - gochecknoglobals
