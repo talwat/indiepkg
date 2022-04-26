@@ -96,7 +96,7 @@ func getPkgFromGh(query string) ([]GHFile, http.Header) {
 			}
 			file.Name = strings.TrimSuffix(file.Name, ".json")
 			if strings.Contains(file.Name, query) {
-				file.Repo = repoLabel(url)
+				file.Repo = repoLabel(url, true)
 				matches = append(matches, file)
 			}
 		}

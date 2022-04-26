@@ -66,12 +66,16 @@ func rmRepo(repoLink string) {
 func listRepos() {
 	repos, _ := readSources()
 	log(1, "Repos:")
+
 	for _, repo := range repos {
-		fmt.Printf("        %s - %s\n", bolden(repo), repoLabel(repo))
+		if trimmed := strings.TrimSpace(repo); strings.HasPrefix(trimmed, "#") || trimmed == "" {
+			continue
+		}
+		fmt.Printf("        %s - %s\n", bolden(repo), repoLabel(repo, false))
 	}
 }
 
-func repoLabel(repo string) string {
+func repoLabel(repo string, includeLink bool) string {
 	prefixes := [][]string{
 		{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/", textCol["BLUE"] + "(Linux only)" + RESETCOL},
 		{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/", textCol["VIOLET"] + "(Binary package)" + RESETCOL},
@@ -85,5 +89,9 @@ func repoLabel(repo string) string {
 		}
 	}
 
-	return textCol["YELLOW"] + "(Third party repo: " + repo + ")" + RESETCOL
+	if includeLink {
+		return textCol["YELLOW"] + "(Third party repo: " + repo + ")" + RESETCOL
+	}
+
+	return textCol["YELLOW"] + "(Third party repo)" + RESETCOL
 }
