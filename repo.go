@@ -12,6 +12,7 @@ func readSources() ([]string, string) {
 	raw := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
 	log(1, "Parsing sources file...")
 	trimmed := strings.TrimSpace(raw)
+
 	return strings.Split(trimmed, "\n"), trimmed
 }
 
@@ -71,17 +72,18 @@ func listRepos() {
 }
 
 func repoLabel(repo string) string {
-	var m [][]string = [][]string{
+	prefixes := [][]string{
 		{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/", textCol["BLUE"] + "(Linux only)" + RESETCOL},
 		{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/", textCol["VIOLET"] + "(Binary package)" + RESETCOL},
 		{"https://raw.githubusercontent.com/talwat/indiepkg/main/", textCol["CYAN"] + "(Official repo)" + RESETCOL},
 		{"https://raw.githubusercontent.com/talwat/indiepkg/", textCol["BLUE"] + "(Other branch)" + RESETCOL},
 	}
 
-	for k := range m {
-		if strings.HasPrefix(repo, m[k][0]) {
-			return m[k][1]
+	for k := range prefixes {
+		if strings.HasPrefix(repo, prefixes[k][0]) {
+			return prefixes[k][1]
 		}
 	}
+
 	return textCol["YELLOW"] + "(Third party repo: " + repo + ")" + RESETCOL
 }

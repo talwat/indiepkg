@@ -7,31 +7,18 @@ import (
 	"strings"
 )
 
-func writeLoadPkg(pkgName string, pkgFile string, load bool) Package {
+func writePkg(pkgName string, pkgFile string) {
 	newFile(infoPath+pkgName+".json", pkgFile, "An error occurred while writing package information for %s", pkgName)
-
-	if load {
-		var pkg Package
-
-		if load {
-			pkg = readLoad(pkgName)
-		}
-
-		return pkg
-	}
-
-	return Package{}
 }
 
 func findPkg(pkgName string) string {
 	log(1, "Finding package %s...", bolden(pkgName))
 	urls := parseSources()
-	var validInfos, validUrls []string
+	validInfos, validUrls := make([]string, 0), make([]string, 0)
 
 	log(1, "Checking urls length...")
-	urlsLen := len(urls)
 
-	if urlsLen <= 0 {
+	if urlsLen := len(urls); urlsLen <= 0 {
 		errorLogRaw("You don't have any sources defined in %s", bolden(configPath+"sources.txt"))
 		os.Exit(1)
 	} else if urlsLen == 1 {
@@ -54,11 +41,11 @@ func findPkg(pkgName string) string {
 		if !strings.HasSuffix(url, "/") {
 			url += "/"
 		}
-		pkgUrl := url + pkgName + ".json"
+		pkgURL := url + pkgName + ".json"
 
 		log(1, "Checking %s for package info...", bolden(url))
-		debugLog("URL: %s", pkgUrl)
-		infoFile, err := viewFile(pkgUrl, "An error occurred while getting package information for %s", pkgName)
+		debugLog("URL: %s", pkgURL)
+		infoFile, err := viewFile(pkgURL, "An error occurred while getting package information for %s", pkgName)
 
 		if errIs404(err) {
 			continue
@@ -94,9 +81,11 @@ func findPkg(pkgName string) string {
 		} else {
 			convChoice, err := strconv.Atoi(choice)
 			errorLog(err, "An error occurred while converting choice to int")
+
 			return validInfos[convChoice]
 		}
 	}
+
 	return ""
 }
 
@@ -108,20 +97,20 @@ func getPkgFromNet(pkgName string) (Package, string) {
 	return pkg, packageFile
 }
 
-func downloadPkg(pkgName string, load bool) Package {
+func downloadPkg(pkgName string) {
 	log(1, "Downloading package info for %s...", bolden(pkgName))
 
-	return writeLoadPkg(pkgName, findPkg(pkgName), load)
+	writePkg(pkgName, findPkg(pkgName))
 }
 
 func doDirectDownload(pkg Package, pkgName string, srcPath string) {
 	pkgDispName := bolden(pkgName)
 
 	log(1, "Making sure %s is not already downloaded...", pkgDispName)
-	delPath(3, srcPath+pkg.Name, "An error occurred while deleting temporary downloaded files for %s", pkgName)
+	delPath(false, srcPath+pkg.Name, "An error occurred while deleting temporary downloaded files for %s", pkgName)
 
 	log(1, "Getting download URL for %s", pkgDispName)
-	url := getDownloadUrl(pkg)
+	url := getDownloadURL(pkg)
 
 	log(1, "Making directory for %s...", pkgDispName)
 	newDir(srcPath+pkg.Name, "An error occurred while creating temporary directory for %s", pkgName)

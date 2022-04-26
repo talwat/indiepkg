@@ -19,6 +19,7 @@ func pkgExists(pkgName string) bool {
 		return false
 	} else {
 		log(3, "Package info or source for %s exists, but not both. Please run %sindiepkg sync%s.", packageDisplayName, textFx["BOLD"], RESETCOL)
+
 		return false
 	}
 }
@@ -62,7 +63,7 @@ func initDirs(reset bool) {
 	if !pathExists(indiePkgSrcDir, "IndiePKG source directory") || reset {
 		if reset {
 			log(1, "Resetting IndiePKG source directory...")
-			delPath(4, indiePkgSrcDir, "An error occurred while deleting the IndiePKG source directory")
+			delPath(true, indiePkgSrcDir, "An error occurred while deleting the IndiePKG source directory")
 		}
 
 		cloneSrcRepo()
@@ -82,14 +83,15 @@ func getDeps(pkg Package) []string {
 		default:
 			log(3, "Unknown OS: %s", runtime.GOOS)
 		}
+
 		return fullDepsList
 	}
+
 	return nil
 }
 
 func checkDeps(pkg Package, pkgName string) {
-	pkgDispName := bolden(pkgName)
-	if !noDeps {
+	if pkgDispName := bolden(pkgName); !noDeps {
 		log(1, "Getting dependencies for %s...", pkgDispName)
 		deps := getDeps(pkg)
 
@@ -120,10 +122,11 @@ func parseSources() []string {
 
 	if sourcesFile == defaultSources {
 		debugLog("Default sources file detected.")
+
 		return []string{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"}
 	}
 	log(1, "Parsing sources file...")
-	var finalList []string
+	finalList := make([]string, 0)
 
 	for _, line := range strings.Split(sourcesFile, "\n") {
 		if strings.HasPrefix(line, "#") || strings.TrimSpace(line) == "" {

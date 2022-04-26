@@ -30,9 +30,9 @@ func checkFlag(flag string) {
 	}
 }
 
-func checkCommand(other string, others []string, i int, args []string) {
+func checkCommand(other string, others []string, index int, args []string) {
 	checkForOptions := func(errSpecify string, commandPartsCount int) {
-		if len(others[i+commandPartsCount:]) < 1 {
+		if len(others[index+commandPartsCount:]) < 1 {
 			errorLogRaw("No %s specified", errSpecify)
 			os.Exit(1)
 		}
@@ -42,38 +42,38 @@ func checkCommand(other string, others []string, i int, args []string) {
 	case "install":
 		checkForOptions("package names", 1)
 		optionToOthers = true
-		installPkgs(others[i+1:])
+		installPkgs(others[index+1:])
 
 	case "uninstall":
 		checkForOptions("package names", 1)
 		optionToOthers = true
-		uninstallPkgs(others[i+1:])
+		uninstallPkgs(others[index+1:])
 
 	case "remove-data":
 		checkForOptions("package names", 1)
 		optionToOthers = true
-		rmData(others[i+1:])
+		rmData(others[index+1:])
 
 	case "upgrade":
-		if len(others) <= i+1 {
+		if len(others) <= index+1 {
 			upgradeAllPackages()
 		} else {
 			optionToOthers = true
-			upgradePackage(others[i+1:])
+			upgradePackage(others[index+1:])
 		}
 
 	case "update":
-		if len(args) <= i+1 {
+		if len(args) <= index+1 {
 			updateAllPackages()
 		} else {
 			optionToOthers = true
-			updatePackage(others[i+1:])
+			updatePackage(others[index+1:])
 		}
 
 	case "info":
 		checkForOptions("package name", 1)
 		optionToOther = true
-		infoPkg(others[i+1])
+		infoPkg(others[index+1])
 
 	case "sync":
 		sync()
@@ -92,24 +92,24 @@ func checkCommand(other string, others []string, i int, args []string) {
 
 	case "repo":
 		checkForOptions("sub-command", 1)
-		switch others[i+1] {
+		switch others[index+1] {
 		case "add":
 			checkForOptions("url", 2)
-			addRepo(others[i+2])
+			addRepo(others[index+2])
 		case "remove":
 			checkForOptions("url", 2)
-			rmRepo(others[i+2])
+			rmRepo(others[index+2])
 		case "list":
 			listRepos()
 		default:
-			errorLogRaw("Sub-command %s not found", bolden(others[i+1]))
+			errorLogRaw("Sub-command %s not found", bolden(others[index+1]))
 			os.Exit(1)
 		}
 
 	case "search":
 		checkForOptions("query", 1)
 		optionToOther = true
-		search(others[i+1])
+		search(others[index+1])
 
 	case "indiepkg-update":
 		updateIndiePKG()
@@ -121,7 +121,7 @@ func checkCommand(other string, others []string, i int, args []string) {
 		optionToOthers = true
 		checkForOptions("author", 1)
 		checkForOptions("repo", 2)
-		getRepoInfo(others[i+1], others[i+2])
+		getRepoInfo(others[index+1], others[index+2])
 
 	default:
 		errorLogRaw("Command %s not found", bolden(other))

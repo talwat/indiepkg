@@ -69,7 +69,7 @@ func runCommandDot(workDir string, cmd string, args ...string) {
 }
 
 func runCommand(workDir string, cmd string, args ...string) (string, error) {
-	var cmdObj *exec.Cmd = exec.Command(cmd, args...)
+	cmdObj := exec.Command(cmd, args...)
 
 	cmdObj.Dir = workDir
 	data, err := cmdObj.CombinedOutput()
@@ -82,5 +82,6 @@ func runCommand(workDir string, cmd string, args ...string) (string, error) {
 
 func checkIfCommandExists(cmd string) bool {
 	_, err := exec.LookPath(cmd)
+
 	return err == nil
 }

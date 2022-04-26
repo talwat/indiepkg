@@ -35,8 +35,8 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 	errorLog(err, "An error occurred sending GET request")
 	defer resp.Body.Close()
 
-	f, _ := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0644)
-	defer f.Close()
+	file, _ := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0o644)
+	defer file.Close()
 
 	newBar := func(maxBytes int64, description ...string) *progressbar.ProgressBar {
 		desc := ""
@@ -61,15 +61,16 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			progressbar.OptionSetWidth(15),
 			progressbar.OptionSetTheme(progressbar.Theme{
 				Saucer:        config.Progressbar.Saucer,
-				SaucerHead:    config.Progressbar.Saucer_head,
-				AltSaucerHead: config.Progressbar.Alt_saucer_head,
-				SaucerPadding: config.Progressbar.Saucer_padding,
-				BarStart:      config.Progressbar.Bar_start,
-				BarEnd:        config.Progressbar.Bar_end,
+				SaucerHead:    config.Progressbar.SaucerHead,
+				AltSaucerHead: config.Progressbar.AltSaucerHead,
+				SaucerPadding: config.Progressbar.SaucerPadding,
+				BarStart:      config.Progressbar.BarStart,
+				BarEnd:        config.Progressbar.BarEnd,
 			}),
 		)
 		err := bar.RenderBlank()
 		errorLog(err, "An error occurred while rendering loading bar.")
+
 		return bar
 	}
 	bar := newBar(
@@ -77,6 +78,6 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 		" Progress",
 	)
 
-	_, err = io.Copy(io.MultiWriter(f, bar), resp.Body)
+	_, err = io.Copy(io.MultiWriter(file, bar), resp.Body)
 	errorLog(err, "An error occurred while running %s.", bolden("io.Copy()"))
 }

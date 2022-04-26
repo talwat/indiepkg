@@ -13,10 +13,11 @@ func updatePackage(pkgNames []string) {
 
 		if !pkgExists(pkgName) {
 			log(3, "%s is not installed, so it can't be updated.", pkgDisplayName)
+
 			continue
 		}
 
-		downloadPkg(pkgName, false)
+		downloadPkg(pkgName)
 
 		chapLog("==>", "GREEN", "Success")
 		log(0, "Successfully updated package info for %s.", pkgDisplayName)
@@ -30,7 +31,7 @@ func updateAllPackages() {
 	fullInit()
 
 	chapLog("==>", "", "Getting installed packages")
-	var installedPackages []string
+	installedPackages := make([]string, 0)
 
 	log(1, "Getting contents of %s", bolden(infoPath))
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
@@ -43,7 +44,7 @@ func updateAllPackages() {
 	chapLog("=>", "", "Updating packages")
 	for _, installedPackage := range installedPackages {
 		chapLog("==>", "", "Updating %s", installedPackage)
-		downloadPkg(installedPackage, false)
+		downloadPkg(installedPackage)
 
 		chapLog("===>", "GREEN", "Success")
 		log(0, "Successfully updated package info for %s.", bolden(installedPackage))

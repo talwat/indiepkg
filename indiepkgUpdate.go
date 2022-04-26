@@ -40,11 +40,14 @@ func updateIndiePKG() {
 }
 
 func autoUpdate() {
-	if config.Updating.Auto_update {
+	if config.Updating.AutoUpdate {
 		log(1, "Checking for an update...")
-		_, err := http.Get("http://clients3.google.com/generate_204")
+		res, err := http.Get("http://clients3.google.com/generate_204")
+		res.Body.Close()
+
 		if err != nil {
 			log(3, "No internet connection, skipping auto-update.")
+
 			return
 		}
 

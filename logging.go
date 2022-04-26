@@ -20,7 +20,7 @@ var logType = map[int]string{
 }
 
 func chapLog(prefix string, colorInput string, msg string, params ...interface{}) {
-	var color string = colorInput
+	var color string
 
 	if colorInput != "" {
 		color = colorInput
@@ -31,6 +31,8 @@ func chapLog(prefix string, colorInput string, msg string, params ...interface{}
 		case 3:
 			color = "BLUE"
 		case 4:
+			color = "CYAN"
+		default:
 			color = "CYAN"
 		}
 	}
@@ -53,34 +55,34 @@ func errorLog(err error, msg string, params ...interface{}) {
 		if force {
 			log(4, msg)
 			log(3, "Continuing despite error because force is enabled...")
+
 			return
-		} else {
-			chapLog("=>", "RED", "Error")
-			log(4, msg)
-			log(4, "Source error log:")
-			errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
-			for _, line := range strings.Split(errLog, "\n")[2:] {
-				fmt.Println("    " + line)
-			}
+		}
+
+		chapLog("=>", "RED", "Error")
+		log(4, msg)
+		log(4, "Source error log:")
+		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
+		for _, line := range strings.Split(errLog, "\n")[2:] {
+			fmt.Println("    " + line)
 		}
 		os.Exit(1)
 	}
 }
 
 func errorLogRaw(msg string, params ...interface{}) {
-	var errMsg string
-
-	errMsg = fmt.Sprintf(("%s."), fmt.Sprintf(msg, params...))
+	errMsg := fmt.Sprintf(("%s."), fmt.Sprintf(msg, params...))
 
 	if force {
 		log(4, errMsg)
 		log(3, "Continuing despite error because force is enabled...")
+
 		return
-	} else {
-		chapLog("=>", "RED", "Error")
-		log(4, errMsg)
-		os.Exit(1)
 	}
+
+	chapLog("=>", "RED", "Error")
+	log(4, errMsg)
+	os.Exit(1)
 }
 
 func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
@@ -89,30 +91,32 @@ func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 		if force {
 			log(4, msg)
 			log(3, "Continuing despite error because force is enabled...")
+
 			return
-		} else {
-			fmt.Print("\n")
-			chapLog("=>", "RED", "Error")
-			log(4, msg)
-			log(4, "Source error log:")
-			errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
-			for _, line := range strings.Split(errLog, "\n")[2:] {
-				fmt.Println("    " + line)
-			}
-			os.Exit(1)
 		}
+
+		fmt.Print("\n")
+		chapLog("=>", "RED", "Error")
+		log(4, msg)
+		log(4, "Source error log:")
+		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
+		for _, line := range strings.Split(errLog, "\n")[2:] {
+			fmt.Println("    " + line)
+		}
+		os.Exit(1)
 	}
 }
 
 func input(defVal string, msg string, params ...interface{}) string {
 	if assumeYes {
 		return defVal
-	} else {
-		reader := bufio.NewReader(os.Stdin)
-		logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
-		input, _ := reader.ReadString('\n')
-		return strings.TrimSpace(input)
 	}
+
+	reader := bufio.NewReader(os.Stdin)
+	logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
+	input, _ := reader.ReadString('\n')
+
+	return strings.TrimSpace(input)
 }
 
 func confirm(defVal, msg string) {

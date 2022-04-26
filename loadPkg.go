@@ -9,7 +9,7 @@ import (
 func loadPkg(packageFile string, pkgName string) Package {
 	var pkg Package
 
-	var environmentVariables = map[string]string{
+	environmentVariables := map[string]string{
 		"PREFIX": config.Paths.Prefix,
 		"BIN":    config.Paths.Prefix + "bin/",
 		"HOME":   strings.TrimSuffix(home, "/"),
@@ -30,6 +30,7 @@ func loadPkg(packageFile string, pkgName string) Package {
 
 	err := json.Unmarshal([]byte(packageFile), &pkg)
 	errorLog(err, "An error occurred while loading package info for %s", pkgName)
+
 	return pkg
 }
 

@@ -13,14 +13,17 @@ func pullSrcRepo(silent bool) bool {
 		if !silent {
 			if force {
 				log(3, "IndiePKG already up to date, but force is on, so continuing.")
+
 				return false
 			}
 			log(0, "IndiePKG already up to date")
 		}
+
 		return true
 	}
 
 	fmt.Println(output)
+
 	return false
 }
 
@@ -54,7 +57,7 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 			"--progress",
 			"--depth",
 			"1",
-			pkg.Url,
+			pkg.URL,
 			pkg.Name,
 		)
 	} else {
@@ -70,7 +73,7 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 			"--progress",
 			"--depth",
 			"1",
-			pkg.Url,
+			pkg.URL,
 			pkg.Name,
 		)
 	}

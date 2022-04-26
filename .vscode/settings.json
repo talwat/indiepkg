@@ -14,6 +14,7 @@
         "devmasx",
         "gmake",
         "GOARCH",
+        "gocritic",
         "gofmt",
         "golangci",
         "gomod",
@@ -45,6 +46,8 @@
     ],
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [
-        "!json"
+        "!json",
+        "!yml",
+        "!yaml"
     ]
 }

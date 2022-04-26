@@ -16,6 +16,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 			log(3, "%s is not installed, but force is on, so continuing.", pkgDisplayName)
 		} else {
 			log(3, "%s is not installed, so it can't be upgraded.", pkgDisplayName)
+
 			return
 		}
 	}
@@ -31,19 +32,19 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 			log(3, "%s already up to date, but force is on, so continuing.", pkgDisplayName)
 		} else {
 			log(0, "%s already up to date.", pkgDisplayName)
+
 			return
 		}
 	}
 
-	chapLog(chapPrefix+"==>", "", "Getting upgrade commands")
+	chapLog(chapPrefix+"==>", "", "Reading package info")
 	pkg := readLoad(pkgName)
-	cmds := getUpdCmd(pkg)
 
 	if directDownload {
 		chapLog(chapPrefix+"==>", "", "Updating info")
 
 		log(1, "Getting & writing new info for %s...", pkgDisplayName)
-		writeLoadPkg(pkgName, findPkg(pkgName), false)
+		writePkg(pkgName, findPkg(pkgName))
 
 		chapLog(chapPrefix+"==>", "", "Getting version numbers")
 		log(1, "Reading new version number...")
@@ -62,6 +63,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 				log(3, "%s already up to date, but force is on, so continuing.", pkgDisplayName)
 			} else {
 				log(0, "%s already up to date.", pkgDisplayName)
+
 				return
 			}
 		} else {
@@ -72,7 +74,9 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 		doDirectDownload(pkg, pkgName, srcPath)
 	}
 
-	if len(cmds) > 0 {
+	chapLog(chapPrefix+"==>", "", "Getting upgrade commands")
+
+	if cmds := getUpdCmd(pkg); len(cmds) > 0 {
 		chapLog(chapPrefix+"==>", "", "Compiling")
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
 	}
@@ -97,7 +101,8 @@ func upgradeAllPackages() {
 	fullInit()
 
 	chapLog("==>", "", "Getting installed packages")
-	var installedPackages []string
+	installedPackages := make([]string, 0)
+
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
 	for _, file := range files {

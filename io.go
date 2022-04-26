@@ -10,13 +10,13 @@ import (
 )
 
 func newFile(file string, text string, errMsg string, params ...interface{}) {
-	err := ioutil.WriteFile(file, []byte(text), 0770)
+	err := ioutil.WriteFile(file, []byte(text), 0o770)
 	errorLog(err, fmt.Sprintf(errMsg, params...))
 }
 
 func newDir(name string, errMsg string, params ...interface{}) {
 	debugLog("Creating directory %s", bolden(name))
-	err := os.MkdirAll(name, 0770)
+	err := os.MkdirAll(name, 0o770)
 	errorLog(err, fmt.Sprintf(errMsg, params...))
 }
 
@@ -43,13 +43,13 @@ func copyFile(src string, dst string) {
 func readFile(file string, errMsg string, params ...interface{}) string {
 	data, err := ioutil.ReadFile(file)
 	errorLog(err, fmt.Sprintf(errMsg, params...))
+
 	return string(data)
 }
 
-func delPath(logLevel int, path string, errMsg string, params ...interface{}) {
-	err := os.RemoveAll(path)
+func delPath(silent bool, path string, errMsg string, params ...interface{}) {
 	debugLog("Deleting %s", bolden(path))
-	if logLevel == 4 {
+	if err := os.RemoveAll(path); !silent {
 		errorLog(err, fmt.Sprintf(errMsg, params...))
 	}
 }
@@ -70,12 +70,14 @@ func pathExists(path string, fileName string, params ...interface{}) bool {
 		return false
 	}
 	errorLog(err, "An error occurred while checking if %s exists", fileName)
+
 	return false
 }
 
-func dirContents(dir string, errMsg string, params ...interface{}) []fs.FileInfo {
+func dirContents(dir string, errMsg string) []fs.FileInfo {
 	files, err := ioutil.ReadDir(dir)
-	errorLog(err, fmt.Sprintf(errMsg, params...))
+	errorLog(err, errMsg)
+
 	return files
 }
 
