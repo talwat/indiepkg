@@ -76,10 +76,10 @@ func getDeps(pkg Package, deps *Deps) []string {
 		switch runtime.GOOS {
 		case "darwin":
 			debugLog("Getting dependencies specifically for darwin...")
-			fullDepsList = append(fullDepsList, pkg.Deps.Darwin...)
+			fullDepsList = append(fullDepsList, deps.Darwin...)
 		case "linux":
 			debugLog("Getting dependencies specifically for linux...")
-			fullDepsList = append(fullDepsList, pkg.Deps.Linux...)
+			fullDepsList = append(fullDepsList, deps.Linux...)
 		default:
 			log(3, "Unknown OS: %s", runtime.GOOS)
 		}
@@ -119,6 +119,7 @@ func checkDeps(pkg Package, pkgName string) {
 func checkFileDeps(pkg Package, pkgName string) {
 	if pkgDispName := bolden(pkgName); !noDeps {
 		log(1, "Getting file dependencies for %s...", pkgDispName)
+
 		deps := getDeps(pkg, pkg.FileDeps)
 
 		log(1, "Checking file dependencies for %s...", pkgDispName)

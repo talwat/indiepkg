@@ -30,11 +30,14 @@ func installPkgs(pkgNames []string) {
 		chapLog("===>", "", "Getting package info")
 		log(1, "Reading package info for %s...", bolden(pkgName))
 		pkgFile := findPkg(pkgName)
+		debugLog("Package info file:\n%s", pkgFile)
+
 		pkg := loadPkg(pkgFile, pkgName)
 		cmds := getInstCmd(pkg)
 
 		chapLog("===>", "", "Checking dependencies")
 		checkDeps(pkg, pkgName)
+		checkFileDeps(pkg, pkgName)
 
 		if pkg.Download == nil {
 			chapLog("==>", "", "Cloning source code")
