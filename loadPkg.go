@@ -13,6 +13,8 @@ func loadPkg(packageFile string, pkgName string) Package {
 		"PREFIX": config.Paths.Prefix,
 		"BIN":    config.Paths.Prefix + "bin/",
 		"HOME":   strings.TrimSuffix(home, "/"),
+		"BOLD":   textFx["BOLD"],
+		"RESET":  RESETCOL,
 	}
 
 	debugLog("Finding environment variables...")

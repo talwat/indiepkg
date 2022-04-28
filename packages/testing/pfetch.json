@@ -1,0 +1,20 @@
+{
+    "name": "pfetch",
+    "author": "dylanaraps",
+    "description": "A pretty system information tool written in POSIX sh.",
+    "url": "https://github.com/dylanaraps/pfetch.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "pfetch"
+        ],
+        "installed": [
+            "pfetch"
+        ]
+    },
+    "file_deps": {
+        "all": [
+            ":(HOME):sh"
+        ]
+    }
+}

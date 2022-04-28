@@ -70,9 +70,9 @@ func initDirs(reset bool) {
 	}
 }
 
-func getDeps(pkg Package) []string {
-	if pkg.Deps != nil {
-		fullDepsList := pkg.Deps.All
+func getDeps(pkg Package, deps *Deps) []string {
+	if deps != nil {
+		fullDepsList := deps.All
 		switch runtime.GOOS {
 		case "darwin":
 			debugLog("Getting dependencies specifically for darwin...")
@@ -93,7 +93,7 @@ func getDeps(pkg Package) []string {
 func checkDeps(pkg Package, pkgName string) {
 	if pkgDispName := bolden(pkgName); !noDeps {
 		log(1, "Getting dependencies for %s...", pkgDispName)
-		deps := getDeps(pkg)
+		deps := getDeps(pkg, pkg.Deps)
 
 		log(1, "Checking dependencies for %s...", pkgDispName)
 		if deps != nil {
@@ -113,6 +113,32 @@ func checkDeps(pkg Package, pkgName string) {
 		}
 	} else {
 		log(3, "Skipping dependency check because nodeps is set to true.")
+	}
+}
+
+func checkFileDeps(pkg Package, pkgName string) {
+	if pkgDispName := bolden(pkgName); !noDeps {
+		log(1, "Getting file dependencies for %s...", pkgDispName)
+		deps := getDeps(pkg, pkg.FileDeps)
+
+		log(1, "Checking file dependencies for %s...", pkgDispName)
+		if deps != nil {
+			log(1, "File dependencies: %s", strings.Join(deps, ", "))
+			for _, dep := range deps {
+				if pathExists(dep, bolden(dep)) {
+					log(0, "%s found!", bolden(dep))
+				} else if force {
+					log(3, "%s does not exist, but force is set, so continuing.", bolden(dep))
+				} else {
+					errorLogRaw("%s does not exist, please install the package that provides it with your operating system's package manager.", bolden(dep))
+					os.Exit(1)
+				}
+			}
+		} else {
+			log(1, "No file dependencies found.")
+		}
+	} else {
+		log(3, "Skipping file dependency check because nodeps is set to true.")
 	}
 }
 

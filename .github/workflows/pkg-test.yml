@@ -37,6 +37,13 @@ jobs:
       - name: "Build indiepkg"
         run: make
 
+      - name: "Setup indiepkg"
+        run: ./indiepkg setup -d
+
+      - name: "Add testing repo"
+        run: |
+          ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/testing/ -d
+
       - name: "Test installing package"
         run: |
           ./indiepkg install ${{ env.PKG_NAME }} -d -y
