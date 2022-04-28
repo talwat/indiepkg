@@ -103,7 +103,7 @@ func uninstallPkgs(pkgNames []string) {
 			}
 		}
 
-		if len(pkg.Bin.Installed) > 0 {
+		if pkg.Bin != nil && len(pkg.Bin.Installed) > 0 {
 			log(1, "Deleting binary files for %s...", pkgDispName)
 			for _, path := range pkg.Bin.Installed {
 				log(1, "Deleting %s", bolden(binPath+path))
