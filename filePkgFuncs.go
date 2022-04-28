@@ -3,7 +3,7 @@ package main
 import "strings"
 
 func copyBins(pkg Package, srcPath string) {
-	if len(pkg.Bin.InSource) == 0 {
+	if pkg.Bin == nil && len(pkg.Bin.InSource) == 0 {
 		return
 	}
 
