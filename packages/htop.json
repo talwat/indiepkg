@@ -15,7 +15,7 @@
     "commands": {
         "all": {
             "install": [
-                "mkdir -p :(HOME):/.config/htop",
+                "mkdir -p :(HOME):.config/htop",
                 "./autogen.sh",
                 "./configure",
                 "make"

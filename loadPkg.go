@@ -12,7 +12,7 @@ func loadPkg(packageFile string, pkgName string) Package {
 	environmentVariables := map[string]string{
 		"PREFIX": config.Paths.Prefix,
 		"BIN":    config.Paths.Prefix + "bin/",
-		"HOME":   strings.TrimSuffix(home, "/"),
+		"HOME":   home,
 		"BOLD":   textFx["BOLD"],
 		"RESET":  RESETCOL,
 	}

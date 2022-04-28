@@ -35,7 +35,7 @@ type Package struct {
 	Bin         *Bin
 	Manpages    []string
 	Deps        *Deps
-	FileDeps    *Deps
+	FileDeps    *Deps `json:"file_deps"`
 	Commands    *OSCommands
 	ConfigPaths []string `json:"config_paths"`
 	Notes       []string
