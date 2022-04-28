@@ -87,8 +87,11 @@ func infoPkg(pkgName string) {
 	log(1, "License: %s", pkg.License)
 	log(1, "Git URL: %s", pkg.URL)
 
-	if deps := getDeps(pkg); getDeps(pkg) != nil {
+	if deps := getDeps(pkg, pkg.Deps); deps != nil {
 		log(1, "Dependencies: %s", strings.Join(deps, ", "))
+	}
+	if deps := getDeps(pkg, pkg.FileDeps); deps != nil {
+		log(1, "File dependencies: %s", strings.Join(deps, ", "))
 	}
 
 	getNotes(pkg)

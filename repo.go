@@ -7,6 +7,25 @@ import (
 	"strings"
 )
 
+func parseURL(url string, pkgName string) string {
+	log(1, "Parsing URL...")
+
+	repoURL := url
+	repoURL = strings.TrimSpace(repoURL)
+	repoURL = strings.TrimSuffix(repoURL, "/")
+	if split := strings.Split(repoURL, "//"); strings.Contains(repoURL, "://") {
+		repoURL = "http://" + strings.Join(split[1:], "://")
+	} else {
+		repoURL = "http://" + repoURL
+	}
+
+	repoURL += "/"
+
+	pkgURL := repoURL + pkgName + ".json"
+
+	return pkgURL
+}
+
 func readSources() ([]string, string) {
 	log(1, "Reading sources file...")
 	raw := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
@@ -77,10 +96,10 @@ func listRepos() {
 
 func repoLabel(repo string, includeLink bool) string {
 	prefixes := [][]string{
-		{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/", textCol["BLUE"] + "(Linux only)" + RESETCOL},
-		{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/", textCol["VIOLET"] + "(Binary package)" + RESETCOL},
-		{"https://raw.githubusercontent.com/talwat/indiepkg/main/", textCol["CYAN"] + "(Official repo)" + RESETCOL},
-		{"https://raw.githubusercontent.com/talwat/indiepkg/", textCol["BLUE"] + "(Other branch)" + RESETCOL},
+		{"http://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/", textCol["BLUE"] + "(Linux only)" + RESETCOL},
+		{"http://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/", textCol["VIOLET"] + "(Binary package)" + RESETCOL},
+		{"http://raw.githubusercontent.com/talwat/indiepkg/main/", textCol["CYAN"] + "(Official repo)" + RESETCOL},
+		{"http://raw.githubusercontent.com/talwat/indiepkg/", textCol["BLUE"] + "(Other branch)" + RESETCOL},
 	}
 
 	for k := range prefixes {

@@ -36,42 +36,46 @@ func findPkg(pkgName string) string {
 		return pkgFile
 	}
 
-	for _, url := range urls {
-		log(1, "Parsing URL...")
-		if !strings.HasSuffix(url, "/") {
-			url += "/"
-		}
-		pkgURL := url + pkgName + ".json"
+	fmt.Print("\n")
 
-		log(1, "Checking %s for package info...", bolden(url))
+	for _, url := range urls {
+		pkgURL := parseURL(url, pkgName)
+
+		log(1, "Checking %s for package info...", bolden(pkgURL))
 		debugLog("URL: %s", pkgURL)
 		infoFile, err := viewFile(pkgURL, "An error occurred while getting package information for %s", pkgName)
 
 		if errIs404(err) {
+			log(3, "Not found in %s", bolden(pkgURL))
+			fmt.Print("\n")
+
 			continue
 		}
 
 		errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
 
-		log(0, "Found %s in %s!", bolden(pkgName), bolden(url))
+		log(0, "Found %s in %s!", bolden(pkgName), bolden(pkgURL))
 		log(1, "Saving valid info & url...")
+		fmt.Print("\n")
+
 		validInfos = append(validInfos, infoFile)
-		validUrls = append(validUrls, url)
+		validUrls = append(validUrls, pkgURL)
 	}
 
-	log(1, "Checking valid info length...")
+	log(1, "Checking valid info...")
 	lenValidInfos := len(validInfos)
 
 	if lenValidInfos < 1 {
 		errorLogRaw("Package %s not found in any repo", bolden(pkgName))
 		os.Exit(1)
 	} else if lenValidInfos == 1 {
+		log(1, "Only valid 1 repo. Using that repo...")
+
 		return validInfos[0]
 	} else {
-		fmt.Printf("\n")
 		log(1, "Multiple packages found. Please choose one:")
 		for i, url := range validUrls {
-			log(1, "%d) %s", i, bolden(url+pkgName))
+			log(1, "%d) %s - %s", i, bolden(url), repoLabel(url, false))
 		}
 
 		choice := input("0", "Number between 0 and %d or q to quit", lenValidInfos-1)

@@ -4,14 +4,6 @@
     "description": "ncurses Git mirror",
     "url": "https://github.com/mirror/ncurses.git",
     "license": "GPL-3.0",
-    "bin": {
-        "in_source": [
-            "ncurses"
-        ],
-        "installed": [
-            "ncurses"
-        ]
-    },
     "commands": {
         "all": {
             "install": [
@@ -31,9 +23,7 @@
                 "ln -s :(PREFIX):ncurses/6_3/bin/toe :(PREFIX):bin/",
                 "ln -s :(PREFIX):ncurses/6_3/bin/tput :(PREFIX):bin/",
                 "ln -s :(PREFIX):ncurses/6_3/bin/tset :(PREFIX):bin/",
-                
                 "ln -s :(PREFIX):ncurses/6_3/include/ncurses :(PREFIX):include/",
-                
                 "ln -s :(PREFIX):ncurses/6_3/lib/libform.a :(PREFIX):lib/",
                 "ln -s :(PREFIX):ncurses/6_3/lib/libform_g.a :(PREFIX):lib/",
                 "ln -s :(PREFIX):ncurses/6_3/lib/libform.so :(PREFIX):lib/",
@@ -57,7 +47,6 @@
                 "ln -s :(PREFIX):ncurses/6_3/lib/libpanel.so.6 :(PREFIX):lib/",
                 "ln -s :(PREFIX):ncurses/6_3/lib/libpanel.so.6.1 :(PREFIX):lib/",
                 "ln -s :(PREFIX):ncurses/6_3/lib/terminfo :(PREFIX):lib/",
-
                 "ln -s :(PREFIX):ncurses/6_3/lib/pkgconfig/form.pc :(PREFIX):lib/pkgconfig/",
                 "ln -s :(PREFIX):ncurses/6_3/lib/pkgconfig/menu.pc :(PREFIX):lib/pkgconfig/",
                 "ln -s :(PREFIX):ncurses/6_3/lib/pkgconfig/ncurses++.pc :(PREFIX):lib/pkgconfig/",
@@ -70,6 +59,46 @@
                 "make install"
             ],
             "uninstall": [
+                "rm :(PREFIX):bin/captoinfo",
+                "rm :(PREFIX):bin/clear",
+                "rm :(PREFIX):bin/infocmp",
+                "rm :(PREFIX):bin/infotocap",
+                "rm :(PREFIX):bin/ncurses6-config",
+                "rm :(PREFIX):bin/reset",
+                "rm :(PREFIX):bin/tabs",
+                "rm :(PREFIX):bin/tic",
+                "rm :(PREFIX):bin/toe",
+                "rm :(PREFIX):bin/tput",
+                "rm :(PREFIX):bin/tset",
+                "rm :(PREFIX):include/ncurses",
+                "rm :(PREFIX):lib/libform.a",
+                "rm :(PREFIX):lib/libform_g.a",
+                "rm :(PREFIX):lib/libform.so",
+                "rm :(PREFIX):lib/libform.so.6",
+                "rm :(PREFIX):lib/libform.so.6.1",
+                "rm :(PREFIX):lib/libmenu.a",
+                "rm :(PREFIX):lib/libmenu_g.a",
+                "rm :(PREFIX):lib/libmenu.so",
+                "rm :(PREFIX):lib/libmenu.so.6",
+                "rm :(PREFIX):lib/libmenu.so.6.1",
+                "rm :(PREFIX):lib/libncurses++.a",
+                "rm :(PREFIX):lib/libncurses.a",
+                "rm :(PREFIX):lib/libncurses++_g.a",
+                "rm :(PREFIX):lib/libncurses_g.a",
+                "rm :(PREFIX):lib/libncurses.so",
+                "rm :(PREFIX):lib/libncurses.so.6",
+                "rm :(PREFIX):lib/libncurses.so.6.1",
+                "rm :(PREFIX):lib/libpanel.a",
+                "rm :(PREFIX):lib/libpanel_g.a",
+                "rm :(PREFIX):lib/libpanel.so",
+                "rm :(PREFIX):lib/libpanel.so.6",
+                "rm :(PREFIX):lib/libpanel.so.6.1",
+                "rm :(PREFIX):lib/terminfo",
+                "rm :(PREFIX):lib/pkgconfig/form.pc",
+                "rm :(PREFIX):lib/pkgconfig/menu.pc",
+                "rm :(PREFIX):lib/pkgconfig/ncurses++.pc",
+                "rm :(PREFIX):lib/pkgconfig/ncurses.pc",
+                "rm :(PREFIX):lib/pkgconfig/panel.pc",
                 "make uninstall"
             ]
         }
