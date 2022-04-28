@@ -1,0 +1,94 @@
+{
+    "name": "ncurses",
+    "author": "mirror",
+    "description": "ncurses Git mirror",
+    "url": "https://github.com/mirror/ncurses.git",
+    "license": "GPL-3.0",
+    "bin": {
+        "in_source": [
+            "ncurses"
+        ],
+        "installed": [
+            "ncurses"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "./configure --prefix=:(PREFIX):ncurses/6_3 --with-shared --with-pkg-config-libdir=:(PREFIX):ncurses/6_3/lib/pkgconfig --enable-pc-files",
+                "make",
+                "make install",
+                "mkdir -p :(PREFIX)lib",
+                "mkdir -p :(PREFIX)include/pkgconfig",
+                "ln -s :(PREFIX):ncurses/6_3/bin/captoinfo :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/clear :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/infocmp :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/infotocap :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/ncurses6-config :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/reset :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/tabs :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/tic :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/toe :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/tput :(PREFIX):bin/",
+                "ln -s :(PREFIX):ncurses/6_3/bin/tset :(PREFIX):bin/",
+                
+                "ln -s :(PREFIX):ncurses/6_3/include/ncurses :(PREFIX):include/",
+                
+                "ln -s :(PREFIX):ncurses/6_3/lib/libform.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libform_g.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libform.so :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libform.so.6 :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libform.so.6.1 :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libmenu.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libmenu_g.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libmenu.so :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libmenu.so.6 :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libmenu.so.6.1 :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libncurses++.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libncurses.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libncurses++_g.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libncurses_g.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libncurses.so :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libncurses.so.6 :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libncurses.so.6.1 :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libpanel.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libpanel_g.a :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libpanel.so :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libpanel.so.6 :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/libpanel.so.6.1 :(PREFIX):lib/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/terminfo :(PREFIX):lib/",
+
+                "ln -s :(PREFIX):ncurses/6_3/lib/pkgconfig/form.pc :(PREFIX):lib/pkgconfig/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/pkgconfig/menu.pc :(PREFIX):lib/pkgconfig/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/pkgconfig/ncurses++.pc :(PREFIX):lib/pkgconfig/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/pkgconfig/ncurses.pc :(PREFIX):lib/pkgconfig/",
+                "ln -s :(PREFIX):ncurses/6_3/lib/pkgconfig/panel.pc :(PREFIX):lib/pkgconfig/"
+            ],
+            "update": [
+                "make clean",
+                "make",
+                "make install"
+            ],
+            "uninstall": [
+                "make uninstall"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "autoconf",
+            "make"
+        ]
+    },
+    "notes": [
+        "By default, the newly installed ncurses will not be avalible for use when compiling software.",
+        "To make it available, add the following to your ~/.bashrc or ~/.zshrc file:",
+        "",
+        "NCURSES_INC=:(PREFIX):include/ncurses",
+        "",
+        "export CPATH=$NCURSES_INC:$CPATH",
+        "export LD_LIBRARY_PATH=:(PREFIX):lib:$LD_LIBRARY_PATH",
+        "export PKG_CONFIG_PATH=:(PREFIX):lib/pkgconfig:$PKG_CONFIG_PATH"
+    ]
+}

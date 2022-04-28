@@ -117,7 +117,7 @@ func getRepoInfo(author string, repo string) {
 		Owner       struct {
 			Login string
 		}
-		CloneURL string
+		CloneURL string `json:"clone_url"`
 		Language string
 		License  struct {
 			SpdxID string
