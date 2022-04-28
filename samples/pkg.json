@@ -87,7 +87,7 @@
         ],
         "darwin": [
             "/usr/lib/my-other-dep",
-            "/usr/bin/coreutils"
+        "/usr/bin/coreutils"
         ]
     },
     "config_paths": [
