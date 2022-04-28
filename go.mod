@@ -2,7 +2,7 @@ module github.com/talwat/indiepkg
 
 go 1.17
 
-require github.com/pelletier/go-toml/v2 v2.0.0-beta.8
+require github.com/pelletier/go-toml/v2 v2.0.0
 
 require github.com/schollz/progressbar/v3 v3.8.6
 
