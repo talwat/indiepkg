@@ -47,8 +47,8 @@ func initDirs(reset bool) {
 	newDir(infoPath, "An error occurred while creating info directory")
 	newDir(configPath, "An error occurred while creating config directory")
 	newDir(config.Paths.Prefix, "An error occurred while creating prefix directory")
-	newDir(home+config.Paths.Prefix+"bin", "An error occurred while creating binary directory")
-	newDir(home+config.Paths.Prefix+"share/man", "An error occurred while creating manpage directory")
+	newDir(config.Paths.Prefix+"bin", "An error occurred while creating binary directory")
+	newDir(config.Paths.Prefix+"share/man", "An error occurred while creating manpage directory")
 
 	if !pathExists(configPath+"config.toml", "config file") || reset {
 		log(1, "Creating config file...")
