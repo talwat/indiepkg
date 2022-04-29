@@ -13,6 +13,7 @@ Commands:
   info <package>                  Displays information about a specific package.
   remove-data <packages...>       Removes package data from .indiepkg. Use this only if a package installation has failed and the uninstall command won't work.
   sync                            Sync package info & package source.
+  re-clone                        Removes and re-clones IndiePKG source code in the src directory. Useful if you just changed the branch in the config file, or git is throwing errors when updating.
   list                            Lists all installed packages.
   version                         Shows version.
   init                            Re-generates all the default config files needed for indiepkg to function properly. This is ran automatically.

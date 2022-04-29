@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const version = "0.26.1"
+const version = "0.26.2"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -77,6 +77,9 @@ func checkCommand(other string, others []string, index int, args []string) {
 
 	case "sync":
 		sync()
+
+	case "re-clone":
+		reClone()
 
 	case "version":
 		log(1, "Indiepkg Version %s", bolden(version))

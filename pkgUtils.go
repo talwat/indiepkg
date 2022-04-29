@@ -131,3 +131,12 @@ func search(query string) {
 		fmt.Println("        " + pkg.Name + " - " + pkg.Repo)
 	}
 }
+
+func reClone() {
+	loadConfig()
+	log(1, "Resetting IndiePKG source directory...")
+	delPath(true, indiePkgSrcDir, "An error occurred while deleting the IndiePKG source directory")
+
+	cloneSrcRepo()
+	log(0, "Successfully re-cloned IndiePKG source.")
+}

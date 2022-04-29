@@ -28,7 +28,7 @@ func pullSrcRepo(silent bool) bool {
 }
 
 func cloneSrcRepo() {
-	log(1, "Cloning IndiePKG source...")
+	log(1, "Cloning IndiePKG source with branch %s...", config.Updating.Branch)
 	runCommandRealTime(
 		mainPath,
 		"git",
