@@ -50,7 +50,7 @@ type Config struct {
 
 var config Config = Config{
 	Paths{
-		".local/",
+		home + ".local/",
 	},
 
 	Updating{
@@ -81,7 +81,9 @@ func loadConfig() {
 	err := toml.Unmarshal([]byte(raw), &config)
 	errorLog(err, "An error occurred while loading config file")
 
-	config.Paths.Prefix = home + config.Paths.Prefix
+	if !strings.HasPrefix(config.Paths.Prefix, home) {
+		config.Paths.Prefix = home + config.Paths.Prefix
+	}
 	if !strings.HasSuffix(config.Paths.Prefix, "/") {
 		config.Paths.Prefix += "/"
 	}
