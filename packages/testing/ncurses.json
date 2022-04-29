@@ -99,7 +99,8 @@
                 "rm -f :(PREFIX):lib/pkgconfig/ncurses++.pc",
                 "rm -f :(PREFIX):lib/pkgconfig/ncurses.pc",
                 "rm -f :(PREFIX):lib/pkgconfig/panel.pc",
-                "make uninstall"
+                "make uninstall",
+                "rm -rf :(PREFIX):ncurses"
             ]
         }
     },

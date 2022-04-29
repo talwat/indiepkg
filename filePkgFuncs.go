@@ -3,7 +3,9 @@ package main
 import "strings"
 
 func copyBins(pkg Package, srcPath string) {
-	if pkg.Bin == nil && len(pkg.Bin.InSource) == 0 {
+	if pkg.Bin == nil {
+		return
+	} else if len(pkg.Bin.InSource) == 0 {
 		return
 	}
 
