@@ -24,12 +24,12 @@
     "commands": {
         "all": {
             "install": [
-                "mv deno deno.tar.gz",
-                "tar -zxf deno.tar.gz"
+                "mv deno deno.zip",
+                "unzip deno.zip"
             ],
             "update": [
-                "mv deno deno.tar.gz",
-                "tar -zxf deno.tar.gz"
+                "mv deno deno.zip",
+                "unzip deno.zip"
             ]
         }
     },
