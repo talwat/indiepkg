@@ -89,22 +89,24 @@ func addRepo(repoLink string) {
 	}
 
 	log(1, "Appending %s to sources file...", bolden(repoLink))
-	sourcesFile = sourcesFile + "\n" + repoLink
+	sourcesFile = strings.TrimSpace(sourcesFile + "\n" + repoLink)
 	saveChanges(sourcesFile)
 }
 
 func rmRepo(repoLink string) {
 	repos, _ := readSources()
 	log(1, "Removing %s from sources file...", bolden(repoLink))
+	final := ""
 
 	for i, repo := range repos {
 		if repo == repoLink {
-			repos[i] = ""
 			debugLog("Match found at index %d.", i)
+			continue
 		}
+		final = final + repo + "\n"
 	}
 
-	sourcesFile := strings.Join(repos, "\n")
+	sourcesFile := strings.TrimSpace(final)
 	saveChanges(sourcesFile)
 }
 
