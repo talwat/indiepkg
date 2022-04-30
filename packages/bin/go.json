@@ -3,7 +3,6 @@
     "author": "go",
     "description": "An open source programming language supported by Google.",
     "download": {
-        "all": "https://example.com/tarball.tar.gz",
         "darwin": {
             "amd64": "https://dl.google.com/go/go1.18.1.darwin-amd64.tar.gz",
             "arm64": "https://dl.google.com/go/go1.18.1.darwin-arm64.tar.gz"

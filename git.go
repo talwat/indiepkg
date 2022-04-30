@@ -48,7 +48,6 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 	log(1, "Cloning source code for %s...", bolden(pkg.Name))
 
 	if pkg.Branch == "" {
-		log(1, "Getting branch %s...", bolden(pkg.Name))
 		runCommandRealTime(
 			cloneDir,
 			"git",
@@ -61,7 +60,7 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 			pkg.Name,
 		)
 	} else {
-		log(1, "Getting branch %s...", bolden(pkg.Name))
+		log(1, "Getting branch %s...", pkg.Branch)
 		debugLog("Cloning to %s on branch %s.", cloneDir+pkg.Name, pkg.Branch)
 		runCommandRealTime(
 			cloneDir,

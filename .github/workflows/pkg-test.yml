@@ -40,9 +40,10 @@ jobs:
       - name: "Setup indiepkg"
         run: ./indiepkg setup -d
 
-      - name: "Add testing repo"
+      - name: "Add repos"
         run: |
           ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/testing/ -d
+          ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/ -d
 
       - name: "Test installing package"
         run: |

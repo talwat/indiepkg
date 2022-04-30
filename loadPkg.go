@@ -10,11 +10,12 @@ func loadPkg(packageFile string, pkgName string) Package {
 	var pkg Package
 
 	environmentVariables := map[string]string{
-		"PREFIX": config.Paths.Prefix,
-		"BIN":    config.Paths.Prefix + "bin/",
-		"HOME":   home,
-		"BOLD":   textFx["BOLD"],
-		"RESET":  RESETCOL,
+		"PREFIX":        config.Paths.Prefix,
+		"BIN":           config.Paths.Prefix + "bin/",
+		"HOME":          home,
+		"INDIEPKG_PATH": mainPath,
+		"BOLD":          textFx["BOLD"],
+		"RESET":         RESETCOL,
 	}
 
 	debugLog("Finding environment variables...")

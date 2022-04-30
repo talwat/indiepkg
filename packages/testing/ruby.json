@@ -1,0 +1,34 @@
+{
+    "name": "ruby",
+    "author": "ruby",
+    "description": "The Ruby Programming Language.",
+    "url": "https://github.com/ruby/ruby.git",
+    "license": "BSD-2-Clause",
+    "commands": {
+        "all": {
+            "install": [
+                "./autogen.sh -v",
+                "./configure --prefix=:(PREFIX):",
+                "make",
+                "make install"
+            ],
+            "update": [
+                "make",
+                "make install"
+            ],
+            "uninstall": [
+                "make uninstall",
+                "rm -rf :(PREFIX):lib/ruby"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "autoconf",
+            "autoreconf",
+            "automake",
+            "make"
+        ]
+    }
+}
