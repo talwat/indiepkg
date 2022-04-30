@@ -1,0 +1,39 @@
+{
+    "name": "deno",
+    "author": "deno",
+    "description": "A modern runtime for JavaScript and TypeScript.",
+    "download": {
+        "darwin": {
+            "arm64": "https://github.com/denoland/deno/releases/download/v1.21.1/deno-aarch64-apple-darwin.zip",
+            "amd64": "https://github.com/denoland/deno/releases/download/v1.21.1/deno-x86_64-apple-darwin.zip"
+        },
+        "linux": {
+            "amd64": "https://github.com/denoland/deno/releases/download/v1.21.1/deno-x86_64-unknown-linux-gnu.zip"
+        }
+    },
+    "version": "1.21.1",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "deno"
+        ],
+        "installed": [
+            "deno"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "mv deno deno.zip",
+                "unzip deno.zip"
+            ],
+            "update": [
+                "mv deno deno.zip",
+                "unzip deno.zip"
+            ]
+        }
+    },
+    "config_paths": [
+        "deno"
+    ]
+}
