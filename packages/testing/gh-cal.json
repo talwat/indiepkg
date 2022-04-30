@@ -1,0 +1,15 @@
+{
+    "name": "gh-cal",
+    "author": "mrshmllow",
+    "description": "View your github contribution calander in unicode.",
+    "url": "https://github.com/mrshmllow/gh-cal.git",
+    "license": "None",
+    "bin": {
+        "in_source": [
+            "gh-cal.ts"
+        ],
+        "installed": [
+            "gh-cal"
+        ]
+    }
+}
