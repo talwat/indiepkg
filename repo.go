@@ -7,8 +7,10 @@ import (
 	"strings"
 )
 
-func parseURL(url string, pkgName string) string {
-	log(1, "Parsing URL...")
+func parseURL(url string, silent bool) string {
+	if !silent {
+		log(1, "Parsing URL %s...", bolden(url))
+	}
 
 	repoURL := url
 	repoURL = strings.TrimSpace(repoURL)
@@ -21,18 +23,41 @@ func parseURL(url string, pkgName string) string {
 
 	repoURL += "/"
 
-	pkgURL := repoURL + pkgName + ".json"
-
-	return pkgURL
+	return repoURL
 }
 
 func readSources() ([]string, string) {
 	log(1, "Reading sources file...")
 	raw := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
+
 	log(1, "Parsing sources file...")
 	trimmed := strings.TrimSpace(raw)
 
 	return strings.Split(trimmed, "\n"), trimmed
+}
+
+func stripSources(sourcesFile string, noParse bool) ([]string, string) {
+	log(1, "Stripping sources file of comments...")
+	final := []string{}
+	finalStr := ""
+
+	for _, line := range strings.Split(strings.TrimSpace(sourcesFile), "\n") {
+		if strings.HasPrefix(line, "#") || strings.TrimSpace(line) == "" {
+			continue
+		}
+
+		var parsedLine string
+		if noParse {
+			parsedLine = line
+		} else {
+			parsedLine = parseURL(line, true)
+		}
+
+		finalStr += parsedLine + "\n"
+		final = append(final, parsedLine)
+	}
+
+	return final, finalStr
 }
 
 func saveChanges(sourcesFile string) {
@@ -52,8 +77,9 @@ func addRepo(repoLink string) {
 	}
 
 	_, sourcesFile := readSources()
+	_, stripped := stripSources(sourcesFile, true)
 
-	if strings.Contains(sourcesFile, "\n"+repoLink) {
+	if strings.Contains(stripped, repoLink) {
 		if force {
 			log(3, "Repo %s already exists in sources file, but continuing because force is set to true.", bolden(repoLink))
 		} else {
@@ -83,13 +109,11 @@ func rmRepo(repoLink string) {
 }
 
 func listRepos() {
-	repos, _ := readSources()
+	rawRepos, _ := readSources()
+	repos, _ := stripSources(strings.Join(rawRepos, "\n"), true)
 	log(1, "Repos:")
 
 	for _, repo := range repos {
-		if trimmed := strings.TrimSpace(repo); strings.HasPrefix(trimmed, "#") || trimmed == "" {
-			continue
-		}
 		fmt.Printf("        %s - %s\n", bolden(repo), repoLabel(repo, false))
 	}
 }

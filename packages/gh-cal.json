@@ -9,7 +9,12 @@
             "gh-cal.ts"
         ],
         "installed": [
-            "gh-cal"
+            "gh-cal.ts"
+        ]
+    },
+    "deps": {
+        "all": [
+            "deno"
         ]
     }
 }
