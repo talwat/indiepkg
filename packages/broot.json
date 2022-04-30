@@ -1,15 +1,15 @@
 {
-    "name": "nameofpkg",
-    "author": "mypkgauthor",
-    "description": "mypkgdescription",
-    "url": "git url",
-    "license": "mypkglicense",
+    "name": "broot",
+    "author": "Canop",
+    "description": "A new way to see and navigate directory trees.",
+    "url": "https://github.com/Canop/broot.git",
+    "license": "MIT",
     "bin": {
         "in_source": [
-            "target/release/nameofpkg"
+            "target/release/broot"
         ],
         "installed": [
-            "nameofpkg"
+            "broot"
         ]
     },
     "commands": {
@@ -27,5 +27,8 @@
             "rustc",
             "cargo"
         ]
-    }
+    },
+    "config_paths": [
+        ".config/broot"
+    ]
 }

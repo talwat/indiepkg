@@ -2,7 +2,7 @@ package main
 
 type Bin struct {
 	Installed []string
-	In_source []string
+	InSource  []string `json:"in_source"`
 }
 
 type Commands struct {
@@ -24,18 +24,19 @@ type Deps struct {
 }
 
 type Package struct {
-	Name         string
-	Author       string
-	Description  string
-	Url          string
-	Download     map[string]interface{}
-	Version      string
-	License      string
-	Branch       string
-	Bin          *Bin
-	Manpages     []string
-	Deps         *Deps
-	Commands     *OSCommands
-	Config_paths []string
-	Notes        []string
+	Name        string
+	Author      string
+	Description string
+	URL         string
+	Download    map[string]interface{}
+	Version     string
+	License     string
+	Branch      string
+	Bin         *Bin
+	Manpages    []string
+	Deps        *Deps
+	FileDeps    *Deps `json:"file_deps"`
+	Commands    *OSCommands
+	ConfigPaths []string `json:"config_paths"`
+	Notes       []string
 }

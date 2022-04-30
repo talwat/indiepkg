@@ -1,26 +1,34 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 )
 
 func pullSrcRepo(silent bool) bool {
-	output, err := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags", "--depth", "1")
-	debugLog("Git output from pull: %s", output)
-	errorLog(err, 4, "An error occurred while pulling source code for IndiePKG")
+	output, err := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags")
+	errorLog(err, "An error occurred while pulling source code for IndiePKG. Git output:\n%s", output)
 
 	if strings.Contains(output, "Already up to date.") {
 		if !silent {
+			if force {
+				log(3, "IndiePKG already up to date, but force is on, so continuing.")
+
+				return false
+			}
 			log(0, "IndiePKG already up to date")
 		}
+
 		return true
 	}
+
+	fmt.Println(output)
 
 	return false
 }
 
 func cloneSrcRepo() {
-	log(1, "Cloning IndiePKG source...")
+	log(1, "Cloning IndiePKG source with branch %s...", config.Updating.Branch)
 	runCommandRealTime(
 		mainPath,
 		"git",
@@ -49,7 +57,7 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 			"--progress",
 			"--depth",
 			"1",
-			pkg.Url,
+			pkg.URL,
 			pkg.Name,
 		)
 	} else {
@@ -65,14 +73,14 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 			"--progress",
 			"--depth",
 			"1",
-			pkg.Url,
+			pkg.URL,
 			pkg.Name,
 		)
 	}
 }
 
 func pullPkgRepo(pkgName string) (bool, bool) {
-	output, err := runCommand(srcPath+pkgName, "git", "pull", "--no-tags", "--depth", "1")
+	output, err := runCommand(srcPath+pkgName, "git", "pull", "--no-tags")
 
 	debugLog("Git output from pull:\n%s", output)
 
@@ -82,7 +90,7 @@ func pullPkgRepo(pkgName string) (bool, bool) {
 		return false, true
 	}
 
-	errorLog(err, 4, "An error occurred while pulling source code for %s", bolden(pkgName))
+	errorLog(err, "An error occurred while pulling source code for %s", bolden(pkgName))
 
 	return false, false
 }

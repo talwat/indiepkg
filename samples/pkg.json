@@ -77,6 +77,19 @@
             "coreutils"
         ]
     },
+    "fileDeps": {
+        "all": [
+            "/usr/lib/hello-world"
+        ],
+        "linux": [
+            "/usr/lib/my-dep",
+            "/usr/lib/wow"
+        ],
+        "darwin": [
+            "/usr/lib/my-other-dep",
+        "/usr/bin/coreutils"
+        ]
+    },
     "config_paths": [
         ".config/my_pkg"
     ]

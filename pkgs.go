@@ -22,7 +22,7 @@ func installPkgs(pkgNames []string) {
 			if force {
 				log(3, "%s is already installed, but force is on, so continuing.", pkgDispName)
 			} else {
-				log(4, "%s is already installed, can't install %s.", pkgDispName, pkgDispName)
+				errorLogRaw("%s is already installed, can't install %s", pkgDispName, pkgDispName)
 				os.Exit(1)
 			}
 		}
@@ -30,16 +30,19 @@ func installPkgs(pkgNames []string) {
 		chapLog("===>", "", "Getting package info")
 		log(1, "Reading package info for %s...", bolden(pkgName))
 		pkgFile := findPkg(pkgName)
+		debugLog("Package info file:\n%s", pkgFile)
+
 		pkg := loadPkg(pkgFile, pkgName)
 		cmds := getInstCmd(pkg)
 
 		chapLog("===>", "", "Checking dependencies")
 		checkDeps(pkg, pkgName)
+		checkFileDeps(pkg, pkgName)
 
 		if pkg.Download == nil {
 			chapLog("==>", "", "Cloning source code")
 			log(1, "Making sure %s is not already cloned...", pkgDispName)
-			delPath(3, tmpSrcPath+pkg.Name, "An error occurred while deleting temporary source files for %s", pkgName)
+			delPath(false, tmpSrcPath+pkg.Name, "An error occurred while deleting temporary source files for %s", pkgName)
 			clonePkgRepo(pkg, tmpSrcPath)
 		} else {
 			chapLog("==>", "", "Downloading file")
@@ -57,7 +60,7 @@ func installPkgs(pkgNames []string) {
 
 		log(1, "Moving source to proper location...")
 		mvPath(tmpSrcPath+pkg.Name, srcPath+pkg.Name)
-		writeLoadPkg(pkg.Name, pkgFile, false)
+		writePkg(pkg.Name, pkgFile)
 
 		chapLog("==>", "GREEN", "Successfully installed %s", pkgName)
 		log(0, "Installed %s successfully.", pkgDispName)
@@ -85,8 +88,7 @@ func uninstallPkgs(pkgNames []string) {
 			if force {
 				log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
 			} else {
-				log(3, "%s is not installed, so it can't be uninstalled", pkgDispName)
-				os.Exit(1)
+				errorLogRaw("%s is not installed, so it can't be uninstalled", pkgDispName)
 			}
 		}
 
@@ -95,17 +97,17 @@ func uninstallPkgs(pkgNames []string) {
 		chapLog("==>", "", "Deleting installed files")
 		if purge {
 			log(1, "Deleting configuration files for %s...", pkgDispName)
-			for _, path := range pkg.Config_paths {
+			for _, path := range pkg.ConfigPaths {
 				log(1, "Deleting configuration path %s", bolden(home+path))
-				delPath(3, home+path, "An error occurred while deleting configuration files for %s", pkgDispName)
+				delPath(false, home+path, "An error occurred while deleting configuration files for %s", pkgDispName)
 			}
 		}
 
-		if len(pkg.Bin.Installed) > 0 {
+		if pkg.Bin != nil && len(pkg.Bin.Installed) > 0 {
 			log(1, "Deleting binary files for %s...", pkgDispName)
 			for _, path := range pkg.Bin.Installed {
 				log(1, "Deleting %s", bolden(binPath+path))
-				delPath(4, binPath+path, "An error occurred while deleting binary files for %s", pkgDispName)
+				delPath(false, binPath+path, "An error occurred while deleting binary files for %s", pkgDispName)
 			}
 		}
 
@@ -119,7 +121,7 @@ func uninstallPkgs(pkgNames []string) {
 				path := manPath + "man" + strings.Split(manPage, ".")[1] + "/" + split[len(split)-1]
 
 				log(1, "Deleting %s...", bolden(path))
-				delPath(4, path, "An error occurred while deleting manpages for %s", bolden(pkgDispName))
+				delPath(true, path, "An error occurred while deleting manpages for %s", bolden(pkgDispName))
 			}
 		}
 
@@ -129,10 +131,10 @@ func uninstallPkgs(pkgNames []string) {
 
 		chapLog("==>", "", "Deleting info & source")
 		log(1, "Deleting source files for %s...", pkgDispName)
-		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
+		delPath(false, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgName)
 
 		log(1, "Deleting info file for %s...", pkgDispName)
-		delPath(3, infoPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
+		delPath(false, infoPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
 
 		chapLog("==>", "GREEN", "Success")
 		log(0, "Successfully uninstalled %s.", pkgDispName)

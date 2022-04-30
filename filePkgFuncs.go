@@ -3,39 +3,35 @@ package main
 import "strings"
 
 func copyBins(pkg Package, srcPath string) {
-	if len(pkg.Bin.In_source) <= 0 {
+	if pkg.Bin == nil {
+		return
+	} else if len(pkg.Bin.InSource) == 0 {
 		return
 	}
 
 	pkgDispName := bolden(pkg.Name)
 	binPath := config.Paths.Prefix + "bin/"
 
-	log(1, "Making binary directory...")
-	newDir(binPath, "An error occurred while creating binaries directory")
-
 	log(1, "Copying files for %s...", pkgDispName)
-	for i := range pkg.Bin.In_source {
-		srcDir := srcPath + pkg.Name + "/" + pkg.Bin.In_source[i]
+	for i := range pkg.Bin.InSource {
+		srcDir := srcPath + pkg.Name + "/" + pkg.Bin.InSource[i]
 		destDir := binPath + pkg.Bin.Installed[i]
 
 		log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
 		copyFile(srcDir, destDir)
 
 		log(1, "Making %s executable...", bolden(destDir))
-		changePerms(destDir, 0770)
+		changePerms(destDir, 0o770)
 	}
 }
 
 func copyManpages(pkg Package, srcPath string) {
-	if len(pkg.Manpages) <= 0 {
+	if len(pkg.Manpages) == 0 {
 		return
 	}
 
 	pkgDispName := bolden(pkg.Name)
 	manPath := config.Paths.Prefix + "share/man/"
-
-	log(1, "Making manpage directory...")
-	newDir(manPath, "An error occurred while creating manpage directory")
 
 	log(1, "Copying manpages for %s...", pkgDispName)
 	for _, manPage := range pkg.Manpages {

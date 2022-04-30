@@ -1,10 +1,10 @@
 <!-- markdownlint-disable MD013 -->
 
-# Making & submitting packages
+# The package format
 
 ## Table of contents
 
-- [Making & submitting packages](#making--submitting-packages)
+- [The package format](#the-package-format)
   - [Table of contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Constructing the package file](#constructing-the-package-file)
@@ -252,7 +252,7 @@ Again, to our C example:
 
 This tells IndiePKG where your configuration files are located so it can remove them if needed.
 
-**Note: The home directory is *automatically* pre-pended, so you shouldn't put an absolute path.**
+**Note**: The home directory is *automatically* pre-pended, so you shouldn't put an absolute path.xs
 
 #### Notes
 

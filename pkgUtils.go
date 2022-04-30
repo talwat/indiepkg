@@ -7,7 +7,7 @@ import (
 )
 
 func listPkgs() {
-	var installedPkgs []string
+	installedPkgs := make([]string, 0)
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
 	if len(files) == 0 {
@@ -55,7 +55,7 @@ func sync() {
 	chapLog("=>", "", "Syncing packages...")
 	for _, pkgToSync := range pkgInfoToSync {
 		chapLog("==>", "", "Downloading info for %s", pkgToSync)
-		downloadPkg(pkgToSync, false)
+		downloadPkg(pkgToSync)
 	}
 
 	for _, pkgToSync := range pkgSrcToSync {
@@ -85,11 +85,13 @@ func infoPkg(pkgName string) {
 	log(1, "Author: %s", pkg.Author)
 	log(1, "Description: %s", pkg.Description)
 	log(1, "License: %s", pkg.License)
-	log(1, "Git URL: %s", pkg.Url)
+	log(1, "Git URL: %s", pkg.URL)
 
-	deps := getDeps(pkg)
-	if deps != nil {
+	if deps := getDeps(pkg, pkg.Deps); deps != nil {
 		log(1, "Dependencies: %s", strings.Join(deps, ", "))
+	}
+	if deps := getDeps(pkg, pkg.FileDeps); deps != nil {
+		log(1, "File dependencies: %s", strings.Join(deps, ", "))
 	}
 
 	getNotes(pkg)
@@ -106,10 +108,10 @@ func rmData(pkgNames []string) {
 		pkgDisplayName := bolden(pkgName)
 
 		log(1, "Deleting source files for %s...", pkgDisplayName)
-		delPath(3, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgDisplayName)
+		delPath(false, srcPath+pkgName, "An error occurred while deleting source files for %s", pkgDisplayName)
 
 		log(1, "Deleting info file for %s...", pkgDisplayName)
-		delPath(3, infoPath+pkgName+".json", "An error occurred while deleting info file for %s", pkgDisplayName)
+		delPath(false, infoPath+pkgName+".json", "An error occurred while deleting info file for %s", pkgDisplayName)
 
 		log(0, "Successfully deleted the data for %s.\n", pkgDisplayName)
 	}
@@ -119,10 +121,22 @@ func rmData(pkgNames []string) {
 }
 
 func search(query string) {
-	pkgs := getPkgFromGh(query)
+	initDirs(false)
+	loadConfig()
+	pkgs, _ := getPkgFromGh(query)
 
+	fmt.Print("\n")
 	log(1, "Found %d packages:", len(pkgs))
 	for _, pkg := range pkgs {
 		fmt.Println("        " + pkg.Name + " - " + pkg.Repo)
 	}
+}
+
+func reClone() {
+	loadConfig()
+	log(1, "Resetting IndiePKG source directory...")
+	delPath(true, indiePkgSrcDir, "An error occurred while deleting the IndiePKG source directory")
+
+	cloneSrcRepo()
+	log(0, "Successfully re-cloned IndiePKG source.")
 }

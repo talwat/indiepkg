@@ -5,28 +5,31 @@ package main
 const helpMsg = `Usage: indiepkg [<options>...] <command>
 
 Commands:
-  help                         Show this help message.
-  install <packages...>        Installs packages.
-  uninstall <packages...>      Removes packages.
-  update [packages...]         Re-downloads the a package's info & install instructions. If no packages are specified, all packages are updated.
-  upgrade [packages...]        Pulls git repository & recompile's a package. If no package is specified, all packages are upgraded.
-  info <package>               Displays information about a specific package.
-  remove-data <packages...>    Removes package data from .indiepkg. Use this only if a package installation has failed and the uninstall command won't work.
-  sync                         Sync package info & package source.
-  list                         Lists all installed packages.
-  version                      Shows version.
-  init                         Re-generates all the default config files needed for indiepkg to function properly. This is ran automatically.
-  search <query>               Searches for packages. NOTE: Only searches repo's that are on Github.
-  indiepkg-update              Updated source code & re-compiles IndiePKG.
-  repo                         Manages the package sources file.
-    repo add <url>             Adds a repository to the package sources file.
-    repo remove <url>          Removes a repository to the package sources file.
+  help                            Show this help message.
+  install <packages...>           Installs packages.
+  uninstall <packages...>         Removes packages.
+  update [packages...]            Re-downloads the a package's info & install instructions. If no packages are specified, all packages are updated.
+  upgrade [packages...]           Pulls git repository & recompile's a package. If no package is specified, all packages are upgraded.
+  info <package>                  Displays information about a specific package.
+  remove-data <packages...>       Removes package data from .indiepkg. Use this only if a package installation has failed and the uninstall command won't work.
+  sync                            Sync package info & package source.
+  re-clone                        Removes and re-clones IndiePKG source code in the src directory. Useful if you just changed the branch in the config file, or git is throwing errors when updating.
+  list                            Lists all installed packages.
+  version                         Shows version.
+  init                            Re-generates all the default config files needed for indiepkg to function properly. This is ran automatically.
+  search <query>                  Searches for packages. NOTE: Only searches repo's that are on Github.
+  indiepkg-update                 Updated source code & re-compiles IndiePKG.
+  setup                           Sets up everything for a functional installation of IndiePKG.
+  github-gen <username> <repo>    Generates a package info file for a github repo.
+  repo                            Manages the package sources file.
+    repo add <url>                Adds a repository to the package sources file.
+    repo remove <url>             Removes a repository to the package sources file.
 
 Options:
-  -p, --purge                  Removes a package's configuration files as well as the package itself.
-  -d, --debug                  Displays variable & debugging information.
-  -y, --assumeyes              Assumes yes to all prompts. (Use with caution!)
-  -f, --force                  Bypasses all checks before preforming an action. Use will almost certainly lead to an error.
+  -p, --purge                     Removes a package's configuration files as well as the package itself.
+  -d, --debug                     Displays variable & debugging information.
+  -y, --assumeyes                 Assumes yes to all prompts. (Use with caution!)
+  -f, --force                     Bypasses all checks before preforming an action. Use will almost certainly lead to an error.
 
 Examples:
   indiepkg install my-pkg
@@ -52,6 +55,26 @@ branch = "testing"
 
 # Default: true
 auto_update = true
+
+# Configures progressbar, purely visual.
+[progressbar]
+
+saucer = "[cyan]=[reset]"
+saucer_head = "[cyan]>[reset]"
+alt_saucer_head = "[cyan]>[reset]"
+saucer_padding = " "
+bar_start = "("
+bar_end = ")"
+
+# Configures github authentication, this is used for querying packages.
+[github]
+
+# Github username
+username = ""
+
+# Github access token, this should not expire and have no permissions granted for security purposes.
+# Information about getting a token is available here. https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+token = ""
 `
 
 const defaultSources = `# Please only add sources you trust.

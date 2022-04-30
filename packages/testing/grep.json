@@ -1,0 +1,34 @@
+{
+    "name": "grep",
+    "author": "Free Software Foundation, Inc.",
+    "description": "Grep searches one or more input files for lines containing a match to a specified pattern.",
+    "url": "https://git.savannah.gnu.org/git/grep.git",
+    "license": "GPL-3.0",
+    "commands": {
+        "all": {
+            "install": [
+                "./bootstrap",
+                "./configure",
+                "make",
+                "make install prefix=:(PREFIX):"
+            ],
+            "update": [
+                "make clean",
+                "make",
+                "make install prefix=:(PREFIX):"
+            ],
+            "uninstall": [
+                "make uninstall prefix=:(PREFIX):"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "autoconf",
+            "make",
+            "autopoint",
+            "gperf"
+        ]
+    }
+}

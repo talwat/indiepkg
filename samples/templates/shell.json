@@ -1,9 +1,9 @@
 {
     "name": "nameofpkg",
-    "author": "author",
-    "description": "description",
+    "author": "mypkgauthor",
+    "description": "mypkgdescription",
     "url": "git url",
-    "license": "license",
+    "license": "mypkglicense",
     "bin": {
         "in_source": [
             "nameofpkg"

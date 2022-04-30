@@ -13,7 +13,7 @@
         ]
     },
     "manpages": [
-        "doc/fz.1"
+        "doc/fd.1"
     ],
     "commands": {
         "all": {

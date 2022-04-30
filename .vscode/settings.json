@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "acarl",
         "actionshub",
         "Autobuild",
         "Borked",
@@ -13,13 +14,18 @@
         "devmasx",
         "gmake",
         "GOARCH",
+        "gocritic",
         "gofmt",
         "golangci",
+        "gomod",
         "Indiepkg",
         "katfetch",
         "lewagon",
         "Manpages",
         "markdownlint",
+        "mypkgauthor",
+        "mypkgdescription",
+        "mypkglicense",
         "neofetch",
         "nodeps",
         "nolint",
@@ -32,11 +38,17 @@
         "staticcheck",
         "Talwat",
         "timeleft",
+        "tracerr",
         "treefetch",
-        "Uninst"
+        "Uninst",
+        "uninstallation",
+        "varcheck",
+        "ztrue"
     ],
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [
-        "!json"
+        "!json",
+        "!yml",
+        "!yaml"
     ]
 }

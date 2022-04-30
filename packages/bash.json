@@ -1,15 +1,17 @@
 {
-    "name": "nameofpkg",
-    "author": "mypkgauthor",
-    "description": "mypkgdescription",
-    "url": "git url",
-    "license": "mypkglicense",
+    "name": "bash",
+    "author": "Free Software Foundation, Inc.",
+    "description": "Bourne again shell.",
+    "url": "https://git.savannah.gnu.org/git/bash.git",
+    "license": "GPL-3.0",
     "bin": {
         "in_source": [
-            "nameofpkg"
+            "bash",
+            "bashbug"
         ],
         "installed": [
-            "nameofpkg"
+            "bash",
+            "bashbug"
         ]
     },
     "commands": {

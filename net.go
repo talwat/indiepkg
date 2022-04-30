@@ -15,7 +15,7 @@ import (
 func viewFile(url string, errMsg string, params ...interface{}) (string, error) {
 	resp, err := http.Get(url)
 	errMsgAdded := fmt.Sprintf(errMsg, params...) + ". URL: " + bolden(url)
-	errorLog(err, 4, errMsgAdded)
+	errorLog(err, errMsgAdded)
 
 	defer resp.Body.Close()
 
@@ -30,19 +30,20 @@ func viewFile(url string, errMsg string, params ...interface{}) (string, error) 
 
 func downloadFileWithProg(filepath string, url string, errMsg string, params ...interface{}) {
 	req, err := http.NewRequest("GET", url, nil)
-	errorLog(err, 4, "An error occurred making a new GET request")
+	errorLog(err, "An error occurred making a new GET request")
 	resp, err := http.DefaultClient.Do(req)
-	errorLog(err, 4, "An error occurred sending GET request")
+	errorLog(err, "An error occurred sending GET request")
 	defer resp.Body.Close()
 
-	f, _ := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0644)
-	defer f.Close()
+	file, _ := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0o644)
+	defer file.Close()
 
 	newBar := func(maxBytes int64, description ...string) *progressbar.ProgressBar {
 		desc := ""
 		if len(description) > 0 {
-			desc = description[0]
+			desc = logType[2] + description[0]
 		}
+
 		bar := progressbar.NewOptions64(
 			maxBytes,
 			progressbar.OptionSetDescription(desc),
@@ -59,22 +60,24 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			progressbar.OptionEnableColorCodes(true),
 			progressbar.OptionSetWidth(15),
 			progressbar.OptionSetTheme(progressbar.Theme{
-				Saucer:        "[cyan]=[reset]",
-				SaucerHead:    "[cyan]>[reset]",
-				SaucerPadding: " ",
-				BarStart:      "(",
-				BarEnd:        ")",
+				Saucer:        config.Progressbar.Saucer,
+				SaucerHead:    config.Progressbar.SaucerHead,
+				AltSaucerHead: config.Progressbar.AltSaucerHead,
+				SaucerPadding: config.Progressbar.SaucerPadding,
+				BarStart:      config.Progressbar.BarStart,
+				BarEnd:        config.Progressbar.BarEnd,
 			}),
 		)
 		err := bar.RenderBlank()
-		errorLog(err, 4, "An error occurred while rendering loading bar.")
+		errorLog(err, "An error occurred while rendering loading bar.")
+
 		return bar
 	}
 	bar := newBar(
 		resp.ContentLength,
-		"Downloading",
+		" Progress",
 	)
 
-	_, err = io.Copy(io.MultiWriter(f, bar), resp.Body)
-	errorLog(err, 4, "An error occurred while running %s.", bolden("io.Copy()"))
+	_, err = io.Copy(io.MultiWriter(file, bar), resp.Body)
+	errorLog(err, "An error occurred while running %s.", bolden("io.Copy()"))
 }

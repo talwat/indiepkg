@@ -3,8 +3,8 @@ name: test
 
 on:
   push:
-    branches: [main]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
@@ -23,66 +23,71 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Make build for testing
-        run: make
+      - name: Run install script
+        run: |
+          chmod +x scripts/install.sh
+          ./scripts/install.sh
 
       - name: Run with empty args
-        run: ./indiepkg
+        run: $HOME/.local/bin/indiepkg
 
       - name: Run help command
-        run: ./indiepkg help
+        run: $HOME/.local/bin/indiepkg help
+
+      - name: Run setup command
+        run: $HOME/.local/bin/indiepkg setup -d
+
+      - name: Run github-gen command
+        continue-on-error: true
+        run: $HOME/.local/bin/indiepkg github-gen talwat indiepkg -d
 
       - name: Install a few packages
-        run: ./indiepkg install treefetch pfetch yaf skyfetch ne neofetch -y -d
+        run: $HOME/.local/bin/indiepkg install pfetch yaf neofetch -y -d
 
       - name: Test installed packages
-        continue-on-error: true
         run: |
           $HOME/.local/bin/pfetch
-          $HOME/.local/bin/treefetch
           $HOME/.local/bin/yaf
-          $HOME/.local/bin/skyfetch
-          $HOME/.local/bin/ne --help
 
       - name: Force upgrade packages
         run: |
-          ./indiepkg upgrade -f -d
-          ./indiepkg upgrade treefetch pfetch yaf skyfetch ne neofetch -f -d
-      
+          $HOME/.local/bin/indiepkg upgrade -f -d
+          $HOME/.local/bin/indiepkg upgrade pfetch yaf neofetch -f -d
+
       - name: Update packages
         run: |
-          ./indiepkg update -d
-          ./indiepkg upgrade treefetch pfetch yaf skyfetch ne neofetch -d
+          $HOME/.local/bin/indiepkg update -d
+          $HOME/.local/bin/indiepkg upgrade pfetch yaf neofetch -d
 
       - name: Add repo
-        run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
+        run: $HOME/.local/bin/indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
 
       - name: List repos
-        run: ./indiepkg repo list
+        run: $HOME/.local/bin/indiepkg repo list
 
       - name: Test querying
         continue-on-error: true
-        run: ./indiepkg search fetch
+        run: $HOME/.local/bin/indiepkg search fetch
 
       - name: Try installing package from linux-only
-        run: ./indiepkg install katfetch -y -d
+        run: $HOME/.local/bin/indiepkg install katfetch -y -d
 
       - name: List packages
-        run: ./indiepkg list
+        run: $HOME/.local/bin/indiepkg list
 
       - name: Uninstall package with --purge
-        run: ./indiepkg uninstall neofetch -p -y
-      
+        run: $HOME/.local/bin/indiepkg uninstall neofetch -p -y
+
       - name: Uninstall other packages
-        run: ./indiepkg uninstall treefetch pfetch yaf -y -d
+        run: $HOME/.local/bin/indiepkg uninstall pfetch yaf -y -d
 
       - name: Try other commands
         run: |
-          ./indiepkg sync
-          ./indiepkg info btop
-          ./indiepkg remove-data btop -y -d
-          ./indiepkg version
+          $HOME/.local/bin/indiepkg sync
+          $HOME/.local/bin/indiepkg info btop
+          $HOME/.local/bin/indiepkg remove-data btop -y -d
+          $HOME/.local/bin/indiepkg version
 
       - name: Try manually updating IndiePKG
         run: |
-          ./indiepkg indiepkg-update
+          $HOME/.local/bin/indiepkg indiepkg-update

@@ -3,3 +3,31 @@ linters:
     - deadcode
     - unused
     - staticcheck
+    - varcheck
+
+    - noctx
+    - gomnd
+    - gochecknoglobals
+    - goerr113
+    - forcetypeassert
+    - exhaustivestruct
+    - wsl
+    - cyclop
+    - revive
+    - unparam
+    - nestif
+    - lll
+    - gosec
+    - gocritic
+    - funlen
+    - goconst
+    - forbidigo
+    - dupl
+    - tagliatelle
+
+    - golint
+    - interfacer
+    - maligned
+    - scopelint
+
+  enable-all: true
