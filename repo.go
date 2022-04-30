@@ -127,7 +127,7 @@ func repoLabel(repo string, includeLink bool) string {
 	}
 
 	for k := range prefixes {
-		if strings.HasPrefix(repo, prefixes[k][0]) {
+		if strings.HasPrefix(parseURL(repo, true), prefixes[k][0]) {
 			return prefixes[k][1]
 		}
 	}
