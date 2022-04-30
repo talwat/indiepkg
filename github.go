@@ -16,13 +16,18 @@ type GHFile struct {
 }
 
 func sendGithubRequest(url string) (string, http.Header) {
-	debugLog(
-		"Sending request to %s with username %s and token (last 4 digits) %s",
-		bolden(url), bolden(config.Github.Username),
-		bolden(
-			config.Github.Token[len(config.Github.Token)-4:], // Get last 4 digits
-		),
-	)
+	tokenLen := len(config.Github.Token)
+	if tokenLen >= 4 && config.Github.Username != "" {
+		debugLog(
+			"Sending request to %s with username %s and token (last 4 digits) %s",
+			bolden(url), bolden(config.Github.Username),
+			bolden(
+				config.Github.Token[len(config.Github.Token)-4:], // Get last 4 digits
+			),
+		)
+	} else {
+		debugLog("Invalid/default credentials.")
+	}
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
@@ -56,9 +61,10 @@ func sendGithubRequest(url string) (string, http.Header) {
 	return string(final), resp.Header
 }
 
-func getPkgFromGh(query string) ([]GHFile, http.Header) {
+func getAllPkgsFromGh() ([]GHFile, http.Header) {
 	urls := parseSources()
-	var matches []GHFile
+	final := make([]GHFile, 0)
+	var headers http.Header
 
 	convertURL := func(url string) string {
 		apiLink := strings.ReplaceAll(url, "raw.githubusercontent.com", "api.github.com/repos")
@@ -72,10 +78,9 @@ func getPkgFromGh(query string) ([]GHFile, http.Header) {
 		return trimmed + "?ref=" + branch
 	}
 
-	var headers http.Header
-
 	for _, url := range urls {
-		if !strings.HasPrefix(url, "https://raw.githubusercontent.com") {
+		url = parseURL(url, true)
+		if !strings.HasPrefix(url, "http://raw.githubusercontent.com") {
 			log(3, "Non-github repositories can't be queried. Repo: %s", url)
 
 			continue
@@ -94,11 +99,24 @@ func getPkgFromGh(query string) ([]GHFile, http.Header) {
 			if !strings.HasSuffix(file.Name, ".json") {
 				continue
 			}
+
 			file.Name = strings.TrimSuffix(file.Name, ".json")
-			if strings.Contains(file.Name, query) {
-				file.Repo = repoLabel(url, true)
-				matches = append(matches, file)
-			}
+			file.Repo = url
+			final = append(final, file)
+		}
+	}
+
+	return final, headers
+}
+
+func getPkgFromGh(query string) ([]GHFile, http.Header) {
+	files, headers := getAllPkgsFromGh()
+	matches := make([]GHFile, 0)
+
+	for _, file := range files {
+		if strings.Contains(file.Name, query) {
+			file.Repo = repoLabel(file.Repo, true)
+			matches = append(matches, file)
 		}
 	}
 

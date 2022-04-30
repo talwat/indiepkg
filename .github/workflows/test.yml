@@ -37,9 +37,11 @@ jobs:
       - name: Run setup command
         run: $HOME/.local/bin/indiepkg setup -d
 
-      - name: Run github-gen command
+      - name: Run github commands
         continue-on-error: true
-        run: $HOME/.local/bin/indiepkg github-gen talwat indiepkg -d
+        run: |
+          $HOME/.local/bin/indiepkg github-gen talwat indiepkg -d
+          $HOME/.local/bin/indiepkg list-all -d
 
       - name: Install a few packages
         run: $HOME/.local/bin/indiepkg install pfetch yaf neofetch -y -d
@@ -83,6 +85,8 @@ jobs:
 
       - name: Try other commands
         run: |
+          $HOME/.local/bin/indiepkg re-clone
+          $HOME/.local/bin/indiepkg init -y
           $HOME/.local/bin/indiepkg sync
           $HOME/.local/bin/indiepkg info btop
           $HOME/.local/bin/indiepkg remove-data btop -y -d
@@ -91,3 +95,6 @@ jobs:
       - name: Try manually updating IndiePKG
         run: |
           $HOME/.local/bin/indiepkg indiepkg-update
+
+      - name: Remove repo
+        run: $HOME/.local/bin/indiepkg repo remove https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
