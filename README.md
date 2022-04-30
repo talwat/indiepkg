@@ -18,7 +18,7 @@
 
 A package manager written in go for small CLI programs. It is available on GNU/Linux and macOS.
 
-*Thank you to [phisch](https://github.com/buffet) for inspiration & the gradient of the **logo** :)*
+*Thank you to [phisch](https://github.com/phisch) for inspiration & the gradient of the **logo** :)*
 
 ## Notice
 
