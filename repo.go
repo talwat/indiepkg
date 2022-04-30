@@ -101,6 +101,7 @@ func rmRepo(repoLink string) {
 	for i, repo := range repos {
 		if repo == repoLink {
 			debugLog("Match found at index %d.", i)
+
 			continue
 		}
 		final = final + repo + "\n"
