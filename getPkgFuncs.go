@@ -39,7 +39,7 @@ func findPkg(pkgName string) string {
 	fmt.Print("\n")
 
 	for _, url := range urls {
-		pkgURL := parseURL(url, pkgName)
+		pkgURL := parseURL(url, false) + pkgName + ".json"
 
 		log(1, "Checking %s for package info...", bolden(pkgURL))
 		debugLog("URL: %s", pkgURL)
