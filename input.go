@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const version = "0.26.7"
+const version = "0.27-alpha"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -77,6 +77,9 @@ func checkCommand(other string, others []string, index int, args []string) {
 
 	case "sync":
 		sync()
+
+	case "list-all":
+		listAll()
 
 	case "re-clone":
 		reClone()

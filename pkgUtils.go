@@ -132,6 +132,18 @@ func search(query string) {
 	}
 }
 
+func listAll() {
+	initDirs(false)
+	loadConfig()
+	pkgs, _ := getAllPkgsFromGh()
+
+	fmt.Print("\n")
+	log(1, "Found %d packages:", len(pkgs))
+	for _, pkg := range pkgs {
+		fmt.Println("        " + pkg.Name + " - " + repoLabel(pkg.Repo, true))
+	}
+}
+
 func reClone() {
 	loadConfig()
 	log(1, "Resetting IndiePKG source directory...")
