@@ -24,7 +24,11 @@ func findPkg(pkgName string) string {
 	} else if urlsLen == 1 {
 		debugLog("Only one source defined in %s. Using that source.", bolden(configPath+"sources.txt"))
 		log(1, "Getting package info for %s...", bolden(pkgName))
-		pkgFile, err := viewFile(urls[0]+pkgName+".json", "An error occurred while getting package information for %s", pkgName)
+
+		pkgURL := parseURL(urls[0], false) + pkgName + ".json"
+
+		log(1, "Getting info from %s...", bolden(pkgURL))
+		pkgFile, err := viewFile(pkgURL, "An error occurred while getting package information for %s", pkgName)
 
 		if errIs404(err) {
 			errorLogRaw("Package %s not found", bolden(pkgName))
