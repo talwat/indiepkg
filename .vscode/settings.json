@@ -42,7 +42,8 @@
         "treefetch",
         "Uninst",
         "uninstallation",
-        "varcheck"
+        "varcheck",
+        "ztrue"
     ],
     "python.formatting.provider": "black",
     "cSpell.enableFiletypes": [
