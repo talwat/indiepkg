@@ -63,7 +63,7 @@ func errorLog(err error, msg string, params ...interface{}) {
 		log(4, msg)
 		log(4, "Source error log:")
 		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
-		for _, line := range strings.Split(errLog, "\n")[2:] {
+		for _, line := range strings.Split(errLog, "\n\n")[2:] {
 			fmt.Println("    " + line)
 		}
 		os.Exit(1)
@@ -99,7 +99,7 @@ func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 		chapLog("=>", "RED", "Error")
 		log(4, msg)
 		log(4, "Source error log:")
-		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 9)
+		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 6)
 		for _, line := range strings.Split(errLog, "\n")[2:] {
 			fmt.Println("    " + line)
 		}
