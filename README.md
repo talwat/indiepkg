@@ -18,6 +18,8 @@
 
 A package manager written in go for small CLI programs. It is available on GNU/Linux and macOS.
 
+*Thank you to phisch for inspiration & the gradient of the **logo** :)*
+
 ## Notice
 
 IndiePKG is **NOT** ready for use yet. It's still early software.
