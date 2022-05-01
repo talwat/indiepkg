@@ -34,6 +34,7 @@ However, if you would like to [submit issues](https://github.com/talwat/indiepkg
 - [Installation](#installation)
   - [Dependencies](#dependencies)
   - [Install script](#install-script)
+    - [Dependencies for install script](#dependencies-for-install-script)
   - [Manual install](#manual-install)
 - [Uninstallation](#uninstallation)
 - [Making & submitting packages](#making--submitting-packages)
@@ -74,14 +75,19 @@ It's also much simpler than your standard package manager, and if a package inst
 - [Git](https://git-scm.com/)
 - [Go](https://go.dev/) 1.17+
 - [Make](https://en.wikipedia.org/wiki/Make_(software)#Derivatives)
-- [cURL](https://curl.se/)
 
 ### Install script
+
+#### Dependencies for install script
+
+- [cURL](https://curl.se/)
+- [bash](https://gnu.org/software/bash)/[zsh](https://www.zsh.org/)
 
 To install using the install script, run:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/talwat/indiepkg/testing/scripts/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/talwat/indiepkg/testing/scripts/install.sh) # To use bash
+zsh <(curl -s https://raw.githubusercontent.com/talwat/indiepkg/testing/scripts/install.sh) # Or if you only have zsh installed
 ```
 
 ### Manual install
