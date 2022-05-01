@@ -1,0 +1,36 @@
+{
+    "name": "speedtest",
+    "author": "Ookla",
+    "description": "Internet connection measurement for developers.",
+    "download": {
+        "darwin": {
+            "all": "https://install.speedtest.net/app/cli/ookla-speedtest-1.1.1.84-macosx-x86_64.tgz"
+        },
+        "linux": {
+            "arm64": "https://install.speedtest.net/app/cli/ookla-speedtest-1.1.1-linux-aarch64.tgz",
+            "amd64": "https://install.speedtest.net/app/cli/ookla-speedtest-1.1.1-linux-x86_64.tgz"
+        }
+    },
+    "version": "1.1.1",
+    "license": "None",
+    "bin": {
+        "in_source": [
+            "speedtest"
+        ],
+        "installed": [
+            "speedtest"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "mv speedtest speedtest.tar.gz",
+                "tar -zxf speedtest.tar.gz"
+            ],
+            "update": [
+                "mv speedtest speedtest.tar.gz",
+                "tar -zxf speedtest.tar.gz"
+            ]
+        }
+    }
+}
