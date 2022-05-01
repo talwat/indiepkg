@@ -43,6 +43,9 @@ jobs:
           $HOME/.local/bin/indiepkg github-gen talwat indiepkg -d
           $HOME/.local/bin/indiepkg list-all -d
 
+      - name: Add bin repo
+        run: $HOME/.local/bin/indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/
+
       - name: Install a few packages
         run: $HOME/.local/bin/indiepkg install pfetch yaf neofetch deno -y -d
 
