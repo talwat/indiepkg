@@ -1,23 +1,23 @@
-#!/usr/bin/env ksh
+#!/usr/bin/env bash
 #shellcheck disable=SC2059
 
 
 log() {
-    printf "$1[.]${RESET} $2\n"
+    echo -e "$1[.]${RESET} $2"
 }
 
 success_log() {
-    printf "$1[^]${RESET} $2\n"
+    echo -e "$1[^]${RESET} $2"
 }
 
 input() {
-    printf "$1[?]${RESET} $3: "
+    echo -e -n "$1[?]${RESET} $3: "
     read -r "$2"
 }
 
 chap_log() {
-    printf
-    printf "${BOLD}$1 ${WHITE}$2${RESET}\n"
+    echo
+    echo -e "${BOLD}$1 ${WHITE}$2${RESET}"
 }
 
 GREEN="\033[32m"
