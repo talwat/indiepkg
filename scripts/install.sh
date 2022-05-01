@@ -1,31 +1,33 @@
 #!/usr/bin/env bash
+#shellcheck disable=SC2059
 
-function log {
+
+log() {
     echo -e "$1[.]${RESET} $2"
 }
 
-function success_log {
+success_log() {
     echo -e "$1[^]${RESET} $2"
 }
 
-function input {
+input() {
     echo -e -n "$1[?]${RESET} $3: "
     read -r "$2"
 }
 
-function chap_log {
+chap_log() {
     echo
     echo -e "${BOLD}$1 ${WHITE}$2${RESET}"
 }
 
-GREEN="\x1B[32m"
-WHITE="\x1B[37m"
-RED="\x1B[31m"
-CYAN="\x1B[36m"
-BOLD="\x1B[1m"
-MAGENTA="\x1B[35m"
-BLUE="\x1B[34m"
-RESET="\x1B[0m"
+GREEN="\033[32m"
+WHITE="\033[37m"
+RED="\033[31m"
+CYAN="\033[36m"
+BOLD="\033[1m"
+MAGENTA="\033[35m"
+BLUE="\033[34m"
+RESET="\033[0m"
 
 log "$CYAN" "Welcome to the installation script for ${BOLD}IndiePKG${RESET}!"
 

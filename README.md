@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD033 MD041 MD013 -->
 
 <div align="center">
-    <img src="./assets/roundlogo.svg">
+    <img src="./assets/logoDarkRound.svg">
     <h1>IndiePKG</h1>
 </div>
 
@@ -16,15 +16,13 @@
 [![GitHub issues](https://img.shields.io/github/issues/talwat/indiepkg)](https://github.com/talwat/indiepkg/issues)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/talwat/indiepkg)
 
-A package manager written in go for small CLI programs. It is available on GNU/Linux and macOS.
-
-*Thank you to [phisch](https://github.com/phisch) for inspiration & the gradient of the **logo** :)*
+A package manager written in [Go](https://go.dev) for small CLI programs. It is available on [GNU](https://gnu.org)/[Linux](https://kernel.org) and [macOS](https://www.apple.com/macos/).
 
 ## Notice
 
 IndiePKG is **NOT** ready for use yet. It's still early software.
 
-However, if you would like to submit issues or PR's, you are **more** than welcome to.
+However, if you would like to [submit issues](https://github.com/talwat/indiepkg/issues) or [PR's](https://github.com/talwat/indiepkg/pulls), you are **more** than welcome to.
 
 ## Table of contents
 
@@ -49,9 +47,9 @@ However, if you would like to submit issues or PR's, you are **more** than welco
 
 ## What is IndiePKG?
 
-IndiePKG is mainly for small simple CLI and TUI programs. Most of them are just for fun, such as **cmatrix**, while others have a bit more utility such as **btop**.
+IndiePKG is mainly for small simple [CLI](https://en.wikipedia.org/wiki/Command-line_interface) and [TUI](https://en.wikipedia.org/wiki/Text-based_user_interface) programs. Most of them are just for fun, such as **cmatrix**, while others have a bit more utility such as **btop**.
 
-IndiePKG uses **git** to install packages, and everything is compiled **from source**. This means that while there aren't any versions, it does mean that you get the absolute latest software.
+IndiePKG uses [git](https://git-scm.com/) to install packages, and everything is compiled **from source**. This means that while there aren't any versions, it does mean that you get the absolute latest software.
 
 It's also much simpler than your standard package manager, and if a package installation goes wrong you don't have to worry about all your packages failing, because you can super easily remove it.
 
@@ -60,7 +58,7 @@ It's also much simpler than your standard package manager, and if a package inst
 - Easy to use with simple commands.
 - Explains what it's doing at every step.
 - Simple compared to other package managers, and easy to repair if something goes wrong.
-- Clones directly from the package's git repository, giving you the latest version with no manual intervention by a maintainer.
+- Clones directly from the package's [git](https://git-scm.com/) repository, giving you the latest version with no manual intervention by a maintainer.
 - Easy to submit to, with no notability requirements.
 - Installs **everything** locally, not interfering with any system components and not requiring root privileges.
 
@@ -73,9 +71,10 @@ It's also much simpler than your standard package manager, and if a package inst
 
 ### Dependencies
 
-- Git
-- Go 1.17+
-- Make
+- [Git](https://git-scm.com/)
+- [Go](https://go.dev/) 1.17+
+- [Make](https://en.wikipedia.org/wiki/Make_(software)#Derivatives)
+- [cURL](https://curl.se/)
 
 ### Install script
 
