@@ -1,0 +1,31 @@
+{
+    "name": "got",
+    "author": "fedeztk",
+    "description": "Translating TUI written in go using simplytranslate's API",
+    "url": "https://github.com/fedeztk/got.git",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "got"
+        ],
+        "installed": [
+            "got"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make"
+            ],
+            "update": [
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "make",
+            "go"
+        ]
+    }
+}
