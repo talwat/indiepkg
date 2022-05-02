@@ -13,7 +13,6 @@
                 "make install prefix=:(PREFIX):"
             ],
             "update": [
-                "make clean",
                 "make",
                 "make install prefix=:(PREFIX):"
             ],
