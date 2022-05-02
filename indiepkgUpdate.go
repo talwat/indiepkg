@@ -43,13 +43,14 @@ func autoUpdate() {
 	if config.Updating.AutoUpdate {
 		log(1, "Checking for an update...")
 		res, err := http.Get("http://clients3.google.com/generate_204")
-		res.Body.Close()
 
 		if err != nil {
 			log(3, "No internet connection, skipping auto-update.")
 
 			return
 		}
+
+		res.Body.Close()
 
 		if pullSrcRepo(true) {
 			return

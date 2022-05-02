@@ -57,9 +57,9 @@ func runCommandDot(workDir string, cmd string, args ...string) {
 	for scanner.Scan() {
 		output += scanner.Text() + "\n"
 		if debug {
-			fmt.Printf(logType[5]+(" %s\n"), scanner.Text())
+			rawLog(logType[5]+(" %s\n"), scanner.Text())
 		} else {
-			fmt.Printf(textCol["VIOLET"] + "." + RESETCOL)
+			rawLog(textCol["VIOLET"] + "." + RESETCOL)
 		}
 	}
 

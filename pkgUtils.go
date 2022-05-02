@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"strings"
 )
@@ -18,7 +17,7 @@ func listPkgs() {
 	for _, file := range files {
 		installedPkgs = append(installedPkgs, strings.ReplaceAll(file.Name(), ".json", ""))
 	}
-	fmt.Println(strings.Join(installedPkgs, "\n"))
+	rawLog(strings.Join(installedPkgs, "\n") + "\n")
 }
 
 func sync() {
@@ -80,7 +79,7 @@ func sync() {
 
 func infoPkg(pkgName string) {
 	pkg, _ := getPkgFromNet(pkgName)
-	fmt.Printf("\n")
+	rawLog("\n")
 	log(1, "Name: %s", pkg.Name)
 	log(1, "Author: %s", pkg.Author)
 	log(1, "Description: %s", pkg.Description)
@@ -125,10 +124,10 @@ func search(query string) {
 	loadConfig()
 	pkgs, _ := getPkgFromGh(query)
 
-	fmt.Print("\n")
+	rawLog("\n")
 	log(1, "Found %d packages:", len(pkgs))
 	for _, pkg := range pkgs {
-		fmt.Println("        " + pkg.Name + " - " + pkg.Repo)
+		rawLog("        " + pkg.Name + " - " + pkg.Repo)
 	}
 }
 
@@ -137,10 +136,10 @@ func listAll() {
 	loadConfig()
 	pkgs, _ := getAllPkgsFromGh()
 
-	fmt.Print("\n")
+	rawLog("\n")
 	log(1, "Found %d packages:", len(pkgs))
 	for _, pkg := range pkgs {
-		fmt.Println("        " + pkg.Name + " - " + repoLabel(pkg.Repo, true))
+		rawLog("        " + pkg.Name + " - " + repoLabel(pkg.Repo, true))
 	}
 }
 

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -50,7 +49,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 		log(1, "Reading new version number...")
 		newVer := readLoad(pkgName).Version
 
-		fmt.Print("\n")
+		rawLog("\n")
 
 		log(1, "Saving old version number...")
 		oldVer := pkg.Version

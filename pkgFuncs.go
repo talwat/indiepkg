@@ -169,16 +169,14 @@ func parseSources() []string {
 func getNotes(pkg Package) {
 	if len(pkg.Notes) > 0 {
 		log(1, bolden("Important note!"))
-		for _, note := range pkg.Notes {
-			fmt.Println("        " + note)
-		}
+		indent(strings.Join(pkg.Notes, "\n"))
 	}
 }
 
 func displayPkgs(pkgNames []string, action string) {
 	log(1, "Are you sure you would like to %s the following packages:", bolden(action))
 	for _, pkgToDisplay := range pkgNames {
-		fmt.Println("        " + pkgToDisplay)
+		indent(pkgToDisplay)
 	}
 
 	confirm("y", "(y/n)")

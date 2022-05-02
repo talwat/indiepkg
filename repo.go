@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/url"
 	"os"
 	"strings"
@@ -117,7 +116,7 @@ func listRepos() {
 	log(1, "Repos:")
 
 	for _, repo := range repos {
-		fmt.Printf("        %s - %s\n", bolden(repo), repoLabel(repo, false))
+		rawLog("        %s - %s\n", bolden(repo), repoLabel(repo, false))
 	}
 }
 

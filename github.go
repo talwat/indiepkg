@@ -138,7 +138,7 @@ func getRepoInfo(author string, repo string) {
 		CloneURL string `json:"clone_url"`
 		Language string
 		License  struct {
-			SpdxID string
+			SpdxID string `json:"spdx_id"`
 		}
 	}
 
@@ -164,6 +164,11 @@ func getRepoInfo(author string, repo string) {
 	} else {
 		path = "samples/basic.json"
 		log(1, "Using default language template")
+	}
+	log(1, "Parsing description")
+	repoInfo.Description = strings.ToUpper(string(repoInfo.Description[0])) + repoInfo.Description[1:]
+	if !strings.HasSuffix(repoInfo.Description, ".") {
+		repoInfo.Description += "."
 	}
 	file := readFile(path, "An error occurred while reading the sample file for %s.", repoInfo.Language)
 

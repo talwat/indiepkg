@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -22,7 +21,7 @@ func pullSrcRepo(silent bool) bool {
 		return true
 	}
 
-	fmt.Println(output)
+	rawLog(output + "\n")
 
 	return false
 }
