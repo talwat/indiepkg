@@ -81,7 +81,7 @@ jobs:
         run: | 
           make
           export VERSION=$(./indiepkg raw-version)
-          echo "VERSION=$(./indiepkg raw-version)" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "VERSION: $VERSION"
 
       - name: Update testing branch
