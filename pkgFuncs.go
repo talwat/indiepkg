@@ -206,7 +206,7 @@ func checkRoot() {
 			return
 		}
 
-		errorLogRaw("You are running as root. This is dangerous, and is absolutely not reccommended. Please try again as a normal user")
+		errorLogRaw("You are running as root. This is dangerous, and is absolutely not recommended. Please try again as a normal user")
 	}
 }
 
