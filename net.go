@@ -23,8 +23,6 @@ func makeReq(url string) (http.Response, error) {
 		return http.Response{}, fmt.Errorf("error while doing http request: %w", err)
 	}
 
-	defer resp.Body.Close()
-
 	return *resp, nil
 }
 
@@ -41,8 +39,6 @@ func makeGithubReq(url string) (http.Response, error) {
 		return http.Response{}, fmt.Errorf("error while doing http request: %w", err)
 	}
 
-	defer resp.Body.Close()
-
 	return *resp, nil
 }
 
@@ -51,6 +47,8 @@ func viewFile(url string, errMsg string, params ...interface{}) (string, int, er
 	if err != nil {
 		return "", resp.StatusCode, err
 	}
+
+	defer resp.Body.Close()
 
 	final, err := ioutil.ReadAll(resp.Body)
 
@@ -61,6 +59,8 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 	resp, err := makeReq(url)
 
 	errorLog(err, "An error occurred while making GET request to %s", url)
+
+	defer resp.Body.Close()
 
 	file, _ := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0o644)
 	defer file.Close()

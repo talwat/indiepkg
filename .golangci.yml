@@ -12,6 +12,7 @@ linters:
     - gomnd
     - gochecknoglobals
     - revive
+    - bodyclose
 
     - forcetypeassert
     - cyclop

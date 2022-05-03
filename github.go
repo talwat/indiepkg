@@ -34,6 +34,8 @@ func sendGithubRequest(url string) (string, http.Header) {
 
 	errorLog(err, errMsgAdded)
 
+	defer resp.Body.Close()
+
 	if resp.StatusCode != http.StatusOK {
 		errorLogRaw("The Github API returned an error. Status code: %s", bolden(resp.StatusCode))
 
