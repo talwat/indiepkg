@@ -42,13 +42,12 @@ func chapLog(prefix string, colorInput string, msg string, params ...interface{}
 
 func indent(text string) {
 	for _, line := range strings.Split(text, "\n") {
-		rawLog("      " + string(line))
+		rawLog("      " + line + "\n")
 	}
-	rawLog("\n")
 }
 
 func rawLog(msg string, params ...interface{}) {
-	fmt.Printf(fmt.Sprintf(msg, params...))
+	fmt.Printf(msg, params...) // nolint:forbidigo
 }
 
 func log(logTypeInput int, msg string, params ...interface{}) {
@@ -77,10 +76,13 @@ func errorLog(err error, msg string, params ...interface{}) {
 		chapLog("=>", "RED", "Error")
 		log(4, msg)
 		log(4, "Source error log:")
+
 		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 6)
+
 		for _, line := range strings.Split(errLog, "\n\n")[2:] {
 			rawLog("    " + line + "\n")
 		}
+
 		os.Exit(1)
 	}
 }
@@ -113,10 +115,13 @@ func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 		chapLog("\n=>", "RED", "Error")
 		logNewlineBefore(4, msg)
 		log(4, "Source error log:")
+
 		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 6)
+
 		for _, line := range strings.Split(errLog, "\n")[2:] {
 			rawLog("    " + line + "\n")
 		}
+
 		os.Exit(1)
 	}
 }
@@ -127,8 +132,9 @@ func input(defVal string, msg string, params ...interface{}) string {
 	}
 
 	reader := bufio.NewReader(os.Stdin)
-	logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
 	input, _ := reader.ReadString('\n')
+
+	logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
 
 	return strings.TrimSpace(input)
 }

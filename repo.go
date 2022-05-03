@@ -14,6 +14,7 @@ func parseURL(url string, silent bool) string {
 	repoURL := url
 	repoURL = strings.TrimSpace(repoURL)
 	repoURL = strings.TrimSuffix(repoURL, "/")
+
 	if split := strings.Split(repoURL, "//"); strings.Contains(repoURL, "://") {
 		repoURL = "http://" + strings.Join(split[1:], "://")
 	} else {
@@ -27,9 +28,11 @@ func parseURL(url string, silent bool) string {
 
 func readSources() ([]string, string) {
 	log(1, "Reading sources file...")
+
 	raw := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
 
 	log(1, "Parsing sources file...")
+
 	trimmed := strings.TrimSpace(raw)
 
 	return strings.Split(trimmed, "\n"), trimmed
@@ -37,6 +40,7 @@ func readSources() ([]string, string) {
 
 func stripSources(sourcesFile string, noParse bool) ([]string, string) {
 	log(1, "Stripping sources file of comments...")
+
 	final := []string{}
 	finalStr := ""
 
@@ -94,7 +98,9 @@ func addRepo(repoLink string) {
 
 func rmRepo(repoLink string) {
 	repos, _ := readSources()
+
 	log(1, "Removing %s from sources file...", bolden(repoLink))
+
 	final := ""
 
 	for i, repo := range repos {
@@ -103,16 +109,19 @@ func rmRepo(repoLink string) {
 
 			continue
 		}
+
 		final = final + repo + "\n"
 	}
 
 	sourcesFile := strings.TrimSpace(final)
+
 	saveChanges(sourcesFile)
 }
 
 func listRepos() {
 	rawRepos, _ := readSources()
 	repos, _ := stripSources(strings.Join(rawRepos, "\n"), true)
+
 	log(1, "Repos:")
 
 	for _, repo := range repos {

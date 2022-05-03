@@ -26,11 +26,12 @@ func getDownloadURL(pkg Package) string {
 		return "nil"
 	}
 
-	if pkg.Download[runtime.GOOS] == nil {
+	switch {
+	case pkg.Download[runtime.GOOS] == nil:
 		url = checkForAll(pkg)
-	} else if pkg.Download[runtime.GOOS].(map[string]interface{})[runtime.GOARCH] == nil {
+	case pkg.Download[runtime.GOOS].(map[string]interface{})[runtime.GOARCH] == nil:
 		url = checkForAllArch(pkg)
-	} else {
+	default:
 		url = pkg.Download[runtime.GOOS].(map[string]interface{})[runtime.GOARCH].(string)
 	}
 

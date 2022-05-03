@@ -15,6 +15,7 @@ func pullSrcRepo(silent bool) bool {
 
 				return false
 			}
+
 			log(0, "IndiePKG already up to date")
 		}
 

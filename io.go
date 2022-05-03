@@ -30,11 +30,14 @@ func copyFile(src string, dst string) {
 
 	source, err := os.Open(src)
 	errorLog(err, "An error occurred while opening file %s", src)
+
 	defer source.Close()
 
 	destination, err := os.Create(dst)
 	errorLog(err, "An error occurred while creating file %s", dst)
+
 	defer destination.Close()
+
 	_, err = io.Copy(destination, source)
 
 	errorLog(err, "An error occurred while copying file %s to %s", dst, src)
@@ -49,6 +52,7 @@ func readFile(file string, errMsg string, params ...interface{}) string {
 
 func delPath(silent bool, path string, errMsg string, params ...interface{}) {
 	debugLog("Deleting %s", bolden(path))
+
 	if err := os.RemoveAll(path); !silent {
 		errorLog(err, fmt.Sprintf(errMsg, params...))
 	}
@@ -63,12 +67,15 @@ func mvPath(path string, destPath string) {
 func pathExists(path string, fileName string, params ...interface{}) bool {
 	debugLog("Checking if %s exists", bolden(path))
 	_, err := os.Stat(path)
+
 	if err == nil {
 		return true
 	}
+
 	if errors.Is(err, os.ErrNotExist) {
 		return false
 	}
+
 	errorLog(err, "An error occurred while checking if %s exists", fileName)
 
 	return false

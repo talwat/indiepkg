@@ -1,17 +1,17 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"strings"
 )
 
 func compSrc() {
 	chapLog("==>", "", "Compiling IndiePKG")
 	logNoNewline(1, "Running %s", bolden("make"))
 	runCommandDot(indiePkgSrcDir, "make")
-	fmt.Print("\n")
+	rawLog("\n")
 
 	chapLog("==>", "", "Moving IndiePKG binary")
+
 	srcPath := indiePkgSrcDir + "indiepkg"
 	destPath := home + ".local/bin/indiepkg"
 
@@ -21,6 +21,7 @@ func compSrc() {
 
 func pullSrc() {
 	chapLog("==>", "", "Pulling source code")
+
 	if pullSrcRepo(false) {
 		return
 	}
@@ -42,15 +43,17 @@ func updateIndiePKG() {
 func autoUpdate() {
 	if config.Updating.AutoUpdate {
 		log(1, "Checking for an update...")
-		res, err := http.Get("http://clients3.google.com/generate_204")
 
-		if err != nil {
+		resp, err := makeReq("http://clients3.google.com/generate_204")
+
+		if err != nil && strings.HasSuffix(err.Error(), "no such host") {
+			debugLog("Error of ping: %s", bolden(err.Error()))
 			log(3, "No internet connection, skipping auto-update.")
 
 			return
 		}
 
-		res.Body.Close()
+		debugLog("StatusCode of ping: %s", bolden(resp.StatusCode))
 
 		if pullSrcRepo(true) {
 			return

@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os/exec"
 	"strings"
 )
@@ -10,14 +9,13 @@ import (
 func runCommandRealTime(workDir string, cmd string, args ...string) {
 	cmdObj := exec.Command(cmd, args...)
 	cmdObj.Dir = workDir
-
 	cmdReader, err := cmdObj.StdoutPipe()
 	cmdObj.Stderr = cmdObj.Stdout
 
 	errorLogNewlineBefore(err, "An error occurred while creating stdout pipe")
 
 	if debug {
-		fmt.Print("\n")
+		rawLog("\n")
 	}
 
 	err = cmdObj.Start()
@@ -26,7 +24,8 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 	for {
 		tmp := make([]byte, 1024)
 		_, err := cmdReader.Read(tmp)
-		fmt.Print(string(tmp))
+		rawLog(string(tmp))
+
 		if err != nil {
 			break
 		}
@@ -46,7 +45,7 @@ func runCommandDot(workDir string, cmd string, args ...string) {
 	errorLogNewlineBefore(err, "An error occurred while creating stdout pipe")
 
 	if debug {
-		fmt.Print("\n")
+		rawLog("\n")
 	}
 
 	err = cmdObj.Start()
@@ -54,8 +53,10 @@ func runCommandDot(workDir string, cmd string, args ...string) {
 
 	output := ""
 	scanner := bufio.NewScanner(cmdReader)
+
 	for scanner.Scan() {
 		output += scanner.Text() + "\n"
+
 		if debug {
 			rawLog(logType[5]+(" %s\n"), scanner.Text())
 		} else {
@@ -70,8 +71,8 @@ func runCommandDot(workDir string, cmd string, args ...string) {
 
 func runCommand(workDir string, cmd string, args ...string) (string, error) {
 	cmdObj := exec.Command(cmd, args...)
-
 	cmdObj.Dir = workDir
+
 	data, err := cmdObj.CombinedOutput()
 	if err != nil {
 		return string(data), err

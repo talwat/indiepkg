@@ -75,15 +75,19 @@ var config Config = Config{
 
 func loadConfig() {
 	log(1, "Reading config file...")
+
 	raw := readFile(configPath+"config.toml", "An error occurred while reading config file")
 
 	log(1, "Loading config file...")
+
 	err := toml.Unmarshal([]byte(raw), &config)
+
 	errorLog(err, "An error occurred while loading config file")
 
 	if !strings.HasPrefix(config.Paths.Prefix, home) {
 		config.Paths.Prefix = home + config.Paths.Prefix
 	}
+
 	if !strings.HasSuffix(config.Paths.Prefix, "/") {
 		config.Paths.Prefix += "/"
 	}

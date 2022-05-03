@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"runtime"
 	"strings"
@@ -13,11 +12,12 @@ func pkgExists(pkgName string) bool {
 	infoInstalled := pathExists(infoPath+pkgName+".json", "package info for %s", packageDisplayName)
 	srcInstalled := pathExists(srcPath+pkgName, "package source for %s", packageDisplayName)
 
-	if infoInstalled && srcInstalled {
+	switch {
+	case infoInstalled && srcInstalled:
 		return true
-	} else if !infoInstalled && !srcInstalled {
+	case !infoInstalled && !srcInstalled:
 		return false
-	} else {
+	default:
 		log(3, "Package info or source for %s exists, but not both. Please run %sindiepkg sync%s.", packageDisplayName, textFx["BOLD"], RESETCOL)
 
 		return false
@@ -26,12 +26,14 @@ func pkgExists(pkgName string) bool {
 
 func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 	debugLog("Work dir: %s", path)
+
 	if len(cmds) > 0 {
 		log(1, "Running %s commands for %s...", cmdsLabel, pkg.Name)
+
 		for _, command := range cmds {
 			logNoNewline(1, "Running command %s", bolden(command))
 			runCommandDot(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
-			fmt.Printf("\n")
+			rawLog("\n")
 		}
 	}
 }
@@ -70,15 +72,18 @@ func initDirs(reset bool) {
 	}
 }
 
-func getDeps(pkg Package, deps *Deps) []string {
+func getDeps(deps *Deps) []string {
 	if deps != nil {
 		fullDepsList := deps.All
+
 		switch runtime.GOOS {
 		case "darwin":
 			debugLog("Getting dependencies specifically for darwin...")
+
 			fullDepsList = append(fullDepsList, deps.Darwin...)
 		case "linux":
 			debugLog("Getting dependencies specifically for linux...")
+
 			fullDepsList = append(fullDepsList, deps.Linux...)
 		default:
 			log(3, "Unknown OS: %s", runtime.GOOS)
@@ -93,17 +98,21 @@ func getDeps(pkg Package, deps *Deps) []string {
 func checkDeps(pkg Package, pkgName string) {
 	if pkgDispName := bolden(pkgName); !noDeps {
 		log(1, "Getting dependencies for %s...", pkgDispName)
-		deps := getDeps(pkg, pkg.Deps)
+
+		deps := getDeps(pkg.Deps)
 
 		log(1, "Checking dependencies for %s...", pkgDispName)
+
 		if deps != nil {
 			log(1, "Dependencies: %s", strings.Join(deps, ", "))
+
 			for _, dep := range deps {
-				if checkIfCommandExists(dep) {
+				switch {
+				case checkIfCommandExists(dep):
 					log(0, "%s found!", bolden(dep))
-				} else if force {
+				case force:
 					log(3, "%s not found, but force is set, so continuing.", bolden(dep))
-				} else {
+				default:
 					errorLogRaw("%s is either not installed or not in PATH. Please install it with your operating system's package manager", bolden(dep))
 					os.Exit(1)
 				}
@@ -120,17 +129,20 @@ func checkFileDeps(pkg Package, pkgName string) {
 	if pkgDispName := bolden(pkgName); !noDeps {
 		log(1, "Getting file dependencies for %s...", pkgDispName)
 
-		deps := getDeps(pkg, pkg.FileDeps)
+		deps := getDeps(pkg.FileDeps)
 
 		log(1, "Checking file dependencies for %s...", pkgDispName)
+
 		if deps != nil {
 			log(1, "File dependencies: %s", strings.Join(deps, ", "))
+
 			for _, dep := range deps {
-				if pathExists(dep, bolden(dep)) {
+				switch {
+				case pathExists(dep, bolden(dep)):
 					log(0, "%s found!", bolden(dep))
-				} else if force {
+				case force:
 					log(3, "%s does not exist, but force is set, so continuing.", bolden(dep))
-				} else {
+				default:
 					errorLogRaw("%s does not exist, please install the package that provides it with your operating system's package manager.", bolden(dep))
 					os.Exit(1)
 				}
@@ -145,6 +157,7 @@ func checkFileDeps(pkg Package, pkgName string) {
 
 func parseSources() []string {
 	log(1, "Reading sources file...")
+
 	sourcesFile := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
 
 	if sourcesFile == defaultSources {
@@ -152,7 +165,9 @@ func parseSources() []string {
 
 		return []string{"https://raw.githubusercontent.com/talwat/indiepkg/main/packages/"}
 	}
+
 	log(1, "Parsing sources file...")
+
 	finalList := make([]string, 0)
 
 	for _, line := range strings.Split(sourcesFile, "\n") {
@@ -175,6 +190,7 @@ func getNotes(pkg Package) {
 
 func displayPkgs(pkgNames []string, action string) {
 	log(1, "Are you sure you would like to %s the following packages:", bolden(action))
+
 	for _, pkgToDisplay := range pkgNames {
 		indent(pkgToDisplay)
 	}
