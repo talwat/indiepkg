@@ -69,7 +69,19 @@ jobs:
     needs: [wait]
 
     steps:
+      - name: Setup go 1.18
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+
+      - name: "Checkout source code"
+        uses: actions/checkout@v3
+
+      - name: Get version number
+        run: echo "VERSION=$(go run . raw-version)" >> $GITHUB_ENV
+
       - name: Update testing branch
+        if: ${{ !endsWith(env.VERSION, 'alpha') && !startsWith(env.VERSION, 'beta') && !startsWith(github.event.commits[0].message, 'dev') }}
         uses: devmasx/merge-branch@1.4.0
 
         with:

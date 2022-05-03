@@ -96,6 +96,9 @@ func checkCommand(other string, others []string, index int, args []string) {
 	case "version":
 		log(1, "Indiepkg Version %s", bolden(version))
 
+	case "raw-version":
+		rawLog(version)
+
 	case "help":
 		rawLog(helpMsg)
 
