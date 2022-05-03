@@ -12,6 +12,7 @@
         "deadcode",
         "Deps",
         "devmasx",
+        "forbidigo",
         "gmake",
         "GOARCH",
         "gocritic",

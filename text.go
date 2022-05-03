@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-var RESETCOL string = "\x1B[0m"
+var RESETCOL = "\x1B[0m"
 
 var textFx = map[string]string{
 	"END":           "\x1B[0m",

@@ -19,12 +19,15 @@ func loadPkg(packageFile string, pkgName string) Package {
 	}
 
 	debugLog("Finding environment variables...")
+
 	keySlice := make([]string, 0)
+
 	for key := range environmentVariables {
 		keySlice = append(keySlice, key)
 	}
 
 	debugLog("Replacing environment variables...")
+
 	for _, key := range keySlice {
 		environmentVariables["PREFIX"] = config.Paths.Prefix
 		debugLog("Replacing %s with %s...", key, environmentVariables[key])

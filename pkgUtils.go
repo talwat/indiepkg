@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"strings"
 )
@@ -18,7 +17,8 @@ func listPkgs() {
 	for _, file := range files {
 		installedPkgs = append(installedPkgs, strings.ReplaceAll(file.Name(), ".json", ""))
 	}
-	fmt.Println(strings.Join(installedPkgs, "\n"))
+
+	rawLog(strings.Join(installedPkgs, "\n") + "\n")
 }
 
 func sync() {
@@ -27,32 +27,41 @@ func sync() {
 	chapLog("==>", "", "Getting packages to sync")
 
 	log(1, "Getting list of package files...")
+
 	dirs := dirContents(srcPath, "An error occurred while getting list of source files")
 
 	log(1, "Getting missing package info...")
+
 	var pkgInfoToSync []string
+
 	for _, dir := range dirs {
 		pkgName := strings.ReplaceAll(dir.Name(), ".json", "")
 		infoExists := pathExists(infoPath+pkgName+".json", "An error occurred while checking if %s is properly installed", pkgName)
+
 		if !infoExists && dir.IsDir() {
 			pkgInfoToSync = append(pkgInfoToSync, pkgName)
 		}
 	}
 
 	log(1, "Getting list of source directories...")
+
 	infoFiles := dirContents(infoPath, "An error occurred while getting list of info files")
 
 	log(1, "Getting missing source directories...")
+
 	var pkgSrcToSync []string
+
 	for _, infoFile := range infoFiles {
 		pkgName := strings.ReplaceAll(infoFile.Name(), ".json", "")
 		srcExists := pathExists(srcPath+pkgName, "An error occurred while checking if %s is properly installed", pkgName)
+
 		if !srcExists && !infoFile.IsDir() {
 			pkgSrcToSync = append(pkgSrcToSync, pkgName)
 		}
 	}
 
 	chapLog("=>", "", "Syncing packages...")
+
 	for _, pkgToSync := range pkgInfoToSync {
 		chapLog("==>", "", "Downloading info for %s", pkgToSync)
 		downloadPkg(pkgToSync)
@@ -80,17 +89,19 @@ func sync() {
 
 func infoPkg(pkgName string) {
 	pkg, _ := getPkgFromNet(pkgName)
-	fmt.Printf("\n")
+
+	rawLog("\n")
 	log(1, "Name: %s", pkg.Name)
 	log(1, "Author: %s", pkg.Author)
 	log(1, "Description: %s", pkg.Description)
 	log(1, "License: %s", pkg.License)
 	log(1, "Git URL: %s", pkg.URL)
 
-	if deps := getDeps(pkg, pkg.Deps); deps != nil {
+	if deps := getDeps(pkg.Deps); deps != nil {
 		log(1, "Dependencies: %s", strings.Join(deps, ", "))
 	}
-	if deps := getDeps(pkg, pkg.FileDeps); deps != nil {
+
+	if deps := getDeps(pkg.FileDeps); deps != nil {
 		log(1, "File dependencies: %s", strings.Join(deps, ", "))
 	}
 
@@ -123,24 +134,28 @@ func rmData(pkgNames []string) {
 func search(query string) {
 	initDirs(false)
 	loadConfig()
+
 	pkgs, _ := getPkgFromGh(query)
 
-	fmt.Print("\n")
+	rawLog("\n")
 	log(1, "Found %d packages:", len(pkgs))
+
 	for _, pkg := range pkgs {
-		fmt.Println("        " + pkg.Name + " - " + pkg.Repo)
+		rawLog("        " + pkg.Name + " - " + pkg.Repo + "\n")
 	}
 }
 
 func listAll() {
 	initDirs(false)
 	loadConfig()
+
 	pkgs, _ := getAllPkgsFromGh()
 
-	fmt.Print("\n")
+	rawLog("\n")
 	log(1, "Found %d packages:", len(pkgs))
+
 	for _, pkg := range pkgs {
-		fmt.Println("        " + pkg.Name + " - " + repoLabel(pkg.Repo, true))
+		rawLog("        " + pkg.Name + " - " + repoLabel(pkg.Repo, true) + "\n")
 	}
 }
 

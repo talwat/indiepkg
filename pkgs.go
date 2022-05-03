@@ -18,6 +18,7 @@ func installPkgs(pkgNames []string) {
 
 		chapLog("===>", "", "Checking if already installed")
 		log(1, "Checking if %s is already installed...", pkgDispName)
+
 		if pkgExists(pkgName) {
 			if force {
 				log(3, "%s is already installed, but force is on, so continuing.", pkgDispName)
@@ -84,6 +85,7 @@ func uninstallPkgs(pkgNames []string) {
 		pkgDispName := bolden(pkgName)
 
 		chapLog("==>", "", "Running checks & getting info")
+
 		if !pkgExists(pkgName) {
 			if force {
 				log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
@@ -95,8 +97,10 @@ func uninstallPkgs(pkgNames []string) {
 		pkg := readLoad(pkgName)
 
 		chapLog("==>", "", "Deleting installed files")
+
 		if purge {
 			log(1, "Deleting configuration files for %s...", pkgDispName)
+
 			for _, path := range pkg.ConfigPaths {
 				log(1, "Deleting configuration path %s", bolden(home+path))
 				delPath(false, home+path, "An error occurred while deleting configuration files for %s", pkgDispName)
@@ -105,6 +109,7 @@ func uninstallPkgs(pkgNames []string) {
 
 		if pkg.Bin != nil && len(pkg.Bin.Installed) > 0 {
 			log(1, "Deleting binary files for %s...", pkgDispName)
+
 			for _, path := range pkg.Bin.Installed {
 				log(1, "Deleting %s", bolden(binPath+path))
 				delPath(false, binPath+path, "An error occurred while deleting binary files for %s", pkgDispName)
@@ -113,6 +118,7 @@ func uninstallPkgs(pkgNames []string) {
 
 		if len(pkg.Manpages) > 0 {
 			log(1, "Deleting manpages for %s...", pkgDispName)
+
 			for _, manPage := range pkg.Manpages {
 				// Splitting to get file name
 				split := strings.Split(manPage, "/")
@@ -126,7 +132,9 @@ func uninstallPkgs(pkgNames []string) {
 		}
 
 		chapLog("==>", "", "Running uninstall commands")
+
 		cmds := getUninstCmd(pkg)
+
 		runCmds(cmds, pkg, srcPath+pkg.Name, "uninstall")
 
 		chapLog("==>", "", "Deleting info & source")

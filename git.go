@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -16,13 +15,14 @@ func pullSrcRepo(silent bool) bool {
 
 				return false
 			}
+
 			log(0, "IndiePKG already up to date")
 		}
 
 		return true
 	}
 
-	fmt.Println(output)
+	rawLog(output + "\n")
 
 	return false
 }

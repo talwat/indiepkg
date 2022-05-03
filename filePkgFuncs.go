@@ -13,6 +13,7 @@ func copyBins(pkg Package, srcPath string) {
 	binPath := config.Paths.Prefix + "bin/"
 
 	log(1, "Copying files for %s...", pkgDispName)
+
 	for i := range pkg.Bin.InSource {
 		srcDir := srcPath + pkg.Name + "/" + pkg.Bin.InSource[i]
 		destDir := binPath + pkg.Bin.Installed[i]
@@ -34,6 +35,7 @@ func copyManpages(pkg Package, srcPath string) {
 	manPath := config.Paths.Prefix + "share/man/"
 
 	log(1, "Copying manpages for %s...", pkgDispName)
+
 	for _, manPage := range pkg.Manpages {
 		srcFile := srcPath + pkg.Name + "/" + manPage
 

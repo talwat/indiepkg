@@ -29,13 +29,9 @@ func sendGithubRequest(url string) (string, http.Header) {
 		debugLog("Invalid/default credentials.")
 	}
 
-	client := &http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
-	errorLog(err, "An error occurred while creating the GET request. URL: %s", url)
-
-	req.SetBasicAuth(config.Github.Username, config.Github.Token)
-	resp, err := client.Do(req)
 	errMsgAdded := "An error occurred while getting information from the github API. URL: " + bolden(url)
+	resp, err := makeGithubReq(url)
+
 	errorLog(err, errMsgAdded)
 
 	defer resp.Body.Close()
@@ -64,13 +60,15 @@ func sendGithubRequest(url string) (string, http.Header) {
 func getAllPkgsFromGh() ([]GHFile, http.Header) {
 	urls := parseSources()
 	final := make([]GHFile, 0)
+
 	var headers http.Header
 
 	convertURL := func(url string) string {
 		apiLink := strings.ReplaceAll(url, "raw.githubusercontent.com", "api.github.com/repos")
 		split := strings.Split(apiLink, "/")
 		index := 6
-		inserted := append(split[:index], split[index:]...)
+		inserted := split[:index]
+		inserted = append(inserted, split[index:]...)
 		branch := split[index]
 		inserted[index] = "contents"
 		trimmed := strings.TrimSuffix(strings.Join(inserted, "/"), "/")
@@ -138,13 +136,16 @@ func getRepoInfo(author string, repo string) {
 		CloneURL string `json:"clone_url"`
 		Language string
 		License  struct {
-			SpdxID string
+			SpdxID string `json:"spdx_id"`
 		}
 	}
 
 	log(1, "Getting repository info from the Github API...")
+
 	url := "https://api.github.com/repos/" + author + "/" + repo
-	response, _ := viewFile(url, "An error occurred while getting info from the Github API.")
+	response, _, err := viewFile(url, "An error occurred while getting info from the Github API.")
+
+	errorLog(err, "An error occurred while getting info from the Github API")
 
 	if response == "" {
 		errorLogRaw("The Github API returned an empty response. This may be because you are getting rate limited. URL: %s", url)
@@ -154,8 +155,9 @@ func getRepoInfo(author string, repo string) {
 	debugLog("Response:\n%s", response)
 
 	log(1, "Parsing response...")
+
 	var repoInfo GithubRepoInfo
-	err := json.Unmarshal([]byte(response), &repoInfo)
+	err = json.Unmarshal([]byte(response), &repoInfo)
 	errorLog(err, "An error occurred while parsing the response.")
 
 	path := "samples/templates/" + strings.ToLower(repoInfo.Language) + ".json"
@@ -165,6 +167,15 @@ func getRepoInfo(author string, repo string) {
 		path = "samples/basic.json"
 		log(1, "Using default language template")
 	}
+
+	log(1, "Parsing description")
+
+	repoInfo.Description = strings.ToUpper(string(repoInfo.Description[0])) + repoInfo.Description[1:]
+
+	if !strings.HasSuffix(repoInfo.Description, ".") {
+		repoInfo.Description += "."
+	}
+
 	file := readFile(path, "An error occurred while reading the sample file for %s.", repoInfo.Language)
 
 	finalFile := file
