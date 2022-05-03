@@ -79,7 +79,8 @@ jobs:
 
       - name: Get version number
         run: | 
-          echo "VERSION=$(go run . raw-version)" >> $GITHUB_ENV
+          make
+          echo "VERSION=$(./indiepkg raw-version)" >> $GITHUB_ENV
           echo "VERSION: $VERSION"
 
       - name: Update testing branch
