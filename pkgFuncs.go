@@ -198,8 +198,21 @@ func displayPkgs(pkgNames []string, action string) {
 	confirm("y", "(y/n)")
 }
 
+func checkRoot() {
+	if isRoot() {
+		if force {
+			log(3, "Running as root, but force is set, so continuing.")
+
+			return
+		}
+
+		errorLogRaw("You are running as root. This is dangerous, and is absolutely not reccommended. Please try again as a normal user")
+	}
+}
+
 func fullInit() {
 	chapLog("=>", "", "Initializing")
+	checkRoot()
 	initDirs(false)
 	loadConfig()
 	autoUpdate()

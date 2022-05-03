@@ -80,7 +80,8 @@ jobs:
       - name: Get version number
         run: | 
           make
-          echo "VERSION=$(./indiepkg raw-version)" >> $GITHUB_ENV
+          export VERSION=$(./indiepkg raw-version)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "VERSION: $VERSION"
 
       - name: Update testing branch

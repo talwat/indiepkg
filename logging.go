@@ -131,10 +131,10 @@ func input(defVal string, msg string, params ...interface{}) string {
 		return defVal
 	}
 
+	logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
+
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
-
-	logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
 
 	return strings.TrimSpace(input)
 }
