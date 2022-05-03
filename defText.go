@@ -17,6 +17,7 @@ Commands:
   list                            Lists all installed packages.
   list-all                        Lists all packages in all github repositories.
   version                         Shows version.
+  raw-version                     Shows version without any formatting (For use in scripts).
   init                            Re-generates all the default config files needed for indiepkg to function properly. This is ran automatically.
   search <query>                  Searches for packages. NOTE: Only searches repo's that are on Github.
   indiepkg-update                 Updated source code & re-compiles IndiePKG.
