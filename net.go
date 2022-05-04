@@ -79,7 +79,7 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			progressbar.OptionSetWidth(10),
 			progressbar.OptionThrottle(65*time.Millisecond),
 			progressbar.OptionOnCompletion(func() {
-				rawLog("\n")
+				rawLogf("\n")
 			}),
 			progressbar.OptionSpinnerType(14),
 			progressbar.OptionFullWidth(),

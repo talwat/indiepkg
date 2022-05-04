@@ -123,7 +123,7 @@ func listRepos() {
 	log(1, "Repos:")
 
 	for _, repo := range repos {
-		rawLog("        %s - %s\n", bolden(repo), repoLabel(repo, false))
+		rawLogf("        %s - %s\n", bolden(repo), repoLabel(repo, false))
 	}
 }
 

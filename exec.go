@@ -15,7 +15,7 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 	errorLogNewlineBefore(err, "An error occurred while creating stdout pipe")
 
 	if debug {
-		rawLog("\n")
+		rawLogf("\n")
 	}
 
 	err = cmdObj.Start()
@@ -45,7 +45,7 @@ func runCommandDot(workDir string, cmd string, args ...string) {
 	errorLogNewlineBefore(err, "An error occurred while creating stdout pipe")
 
 	if debug {
-		rawLog("\n")
+		rawLogf("\n")
 	}
 
 	err = cmdObj.Start()
@@ -58,9 +58,9 @@ func runCommandDot(workDir string, cmd string, args ...string) {
 		output += scanner.Text() + "\n"
 
 		if debug {
-			rawLog(logType[5]+(" %s\n"), scanner.Text())
+			rawLogf(logType[5]+(" %s\n"), scanner.Text())
 		} else {
-			rawLog(textCol["VIOLET"] + "." + RESETCOL)
+			rawLogf(textCol["VIOLET"] + "." + RESETCOL)
 		}
 	}
 

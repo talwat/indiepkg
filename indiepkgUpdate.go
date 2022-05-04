@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"strings"
 )
 
@@ -8,7 +9,7 @@ func compSrc() {
 	chapLog("==>", "", "Compiling IndiePKG")
 	logNoNewline(1, "Running %s", bolden("make"))
 	runCommandDot(indiePkgSrcDir, "make")
-	rawLog("\n")
+	rawLogf("\n")
 
 	chapLog("==>", "", "Moving IndiePKG binary")
 
@@ -19,21 +20,20 @@ func compSrc() {
 	mvPath(srcPath, destPath)
 }
 
-func pullSrc() {
-	chapLog("==>", "", "Pulling source code")
-
-	if pullSrcRepo(false) {
-		return
-	}
-}
-
 func updateIndiePKG() {
 	chapLog("=>", "", "Initializing")
 	initDirs(false)
 	loadConfig()
 
 	chapLog("=>", "", "Updating IndiePKG")
-	pullSrc()
+	chapLog("==>", "", "Pulling source code")
+
+	if pullSrcRepo(true) {
+		chapLog("=>", "GREEN", "Success")
+		log(0, "IndiePKG already up to date.")
+		os.Exit(0)
+	}
+
 	compSrc()
 
 	chapLog("=>", "GREEN", "Success")

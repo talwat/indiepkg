@@ -25,7 +25,7 @@ func findPkg(pkgName string) string {
 		debugLog("Only one source defined in %s. Using that source.", bolden(configPath+"sources.txt"))
 		log(1, "Getting package info for %s...", bolden(pkgName))
 
-		pkgURL := parseURL(urls[0], false) + pkgName + ".json"
+		pkgURL := parseURL(urls[0], false) + "/" + pkgName + ".json"
 
 		log(1, "Getting info from %s...", bolden(pkgURL))
 
@@ -44,10 +44,10 @@ func findPkg(pkgName string) string {
 		return pkgFile
 	}
 
-	rawLog("\n")
+	rawLogf("\n")
 
 	for _, url := range urls {
-		pkgURL := parseURL(url, false) + pkgName + ".json"
+		pkgURL := parseURL(url, false) + "/" + pkgName + ".json"
 
 		log(1, "Checking %s for package info...", bolden(pkgURL))
 
@@ -58,7 +58,7 @@ func findPkg(pkgName string) string {
 
 		if checkFor404(statusCode, pkgName) {
 			log(3, "Not found in %s", bolden(pkgURL))
-			rawLog("\n")
+			rawLogf("\n")
 
 			continue
 		}
@@ -67,7 +67,7 @@ func findPkg(pkgName string) string {
 
 		log(0, "Found %s in %s!", bolden(pkgName), bolden(pkgURL))
 		log(1, "Saving valid info & url...")
-		rawLog("\n")
+		rawLogf("\n")
 
 		validInfos = append(validInfos, infoFile)
 		validUrls = append(validUrls, pkgURL)

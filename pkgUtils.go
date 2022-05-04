@@ -18,7 +18,7 @@ func listPkgs() {
 		installedPkgs = append(installedPkgs, strings.ReplaceAll(file.Name(), ".json", ""))
 	}
 
-	rawLog(strings.Join(installedPkgs, "\n") + "\n")
+	rawLogf(strings.Join(installedPkgs, "\n") + "\n")
 }
 
 func sync() {
@@ -90,7 +90,7 @@ func sync() {
 func infoPkg(pkgName string) {
 	pkg, _ := getPkgFromNet(pkgName)
 
-	rawLog("\n")
+	rawLogf("\n")
 	log(1, "Name: %s", pkg.Name)
 	log(1, "Author: %s", pkg.Author)
 	log(1, "Description: %s", pkg.Description)
@@ -137,11 +137,11 @@ func search(query string) {
 
 	pkgs, _ := getPkgFromGh(query)
 
-	rawLog("\n")
+	rawLogf("\n")
 	log(1, "Found %d packages:", len(pkgs))
 
 	for _, pkg := range pkgs {
-		rawLog("        " + pkg.Name + " - " + pkg.Repo + "\n")
+		rawLogf("        " + pkg.Name + " - " + pkg.Repo + "\n")
 	}
 }
 
@@ -151,11 +151,11 @@ func listAll() {
 
 	pkgs, _ := getAllPkgsFromGh()
 
-	rawLog("\n")
+	rawLogf("\n")
 	log(1, "Found %d packages:", len(pkgs))
 
 	for _, pkg := range pkgs {
-		rawLog("        " + pkg.Name + " - " + repoLabel(pkg.Repo, true) + "\n")
+		rawLogf("        " + pkg.Name + " - " + repoLabel(pkg.Repo, true) + "\n")
 	}
 }
 
