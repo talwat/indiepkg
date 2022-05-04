@@ -68,7 +68,7 @@ func saveChanges(sourcesFile string) {
 }
 
 func addRepo(repoLink string) {
-	if isURL(repoLink) {
+	if !isURL(repoLink) {
 		if force {
 			log(3, "Invalid url, but continuing because force is set to true.")
 		} else {
