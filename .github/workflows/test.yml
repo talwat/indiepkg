@@ -47,7 +47,7 @@ jobs:
         run: $HOME/.local/bin/indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/
 
       - name: Install a few packages
-        run: $HOME/.local/bin/indiepkg install pfetch yaf neofetch deno -y -d
+        run: $HOME/.local/bin/indiepkg install https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch packages/yaf neofetch deno -y -d
 
       - name: Test installed packages
         run: |

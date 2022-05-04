@@ -28,11 +28,14 @@ func findPkg(pkgName string) string {
 		pkgURL := parseURL(urls[0], false) + pkgName + ".json"
 
 		log(1, "Getting info from %s...", bolden(pkgURL))
-		pkgFile, statusCode, err := viewFile(pkgURL, "An error occurred while getting package information for %s", pkgName)
+
+		pkgFile, statusCode, err := viewFile(pkgURL)
+
+		errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
 		debugLog("Status code: %d", statusCode)
 
-		if statusCode == 404 || statusCode == 204 {
-			errorLogRaw("Package %s not found", bolden(pkgName))
+		if checkFor404(statusCode, pkgName) {
+			errorLogRaw("URL %s not found", bolden(pkgName))
 			os.Exit(1)
 		}
 
@@ -47,10 +50,13 @@ func findPkg(pkgName string) string {
 		pkgURL := parseURL(url, false) + pkgName + ".json"
 
 		log(1, "Checking %s for package info...", bolden(pkgURL))
-		infoFile, statusCode, err := viewFile(pkgURL, "An error occurred while getting package information for %s", pkgName)
+
+		infoFile, statusCode, err := viewFile(pkgURL)
+
+		errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
 		debugLog("Status code: %d", statusCode)
 
-		if statusCode == 404 || statusCode == 204 {
+		if checkFor404(statusCode, pkgName) {
 			log(3, "Not found in %s", bolden(pkgURL))
 			rawLog("\n")
 
