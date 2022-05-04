@@ -37,29 +37,33 @@ func chapLog(prefix string, colorInput string, msg string, params ...interface{}
 		}
 	}
 
-	rawLog("\n"+RESETCOL+textCol[color]+bolden(prefix+RESETCOL+textFx["BOLD"]+" %s\n"), fmt.Sprintf(msg, params...))
+	rawLogf("\n"+RESETCOL+textCol[color]+bolden(prefix+RESETCOL+textFx["BOLD"]+" %s\n"), fmt.Sprintf(msg, params...))
 }
 
 func indent(text string) {
 	for _, line := range strings.Split(text, "\n") {
-		rawLog("      " + line + "\n")
+		rawLogf("      " + line + "\n")
 	}
 }
 
-func rawLog(msg string, params ...interface{}) {
+func rawLogf(msg string, params ...interface{}) {
 	fmt.Printf(msg, params...) // nolint:forbidigo
 }
 
+func rawLog(msg string) {
+	fmt.Print(msg) // nolint:forbidigo
+}
+
 func log(logTypeInput int, msg string, params ...interface{}) {
-	rawLog(logType[logTypeInput]+(" %s\n"), fmt.Sprintf(msg, params...))
+	rawLogf(logType[logTypeInput]+(" %s\n"), fmt.Sprintf(msg, params...))
 }
 
 func logNoNewline(logTypeInput int, msg string, params ...interface{}) {
-	rawLog(logType[logTypeInput]+(" %s"), fmt.Sprintf(msg, params...))
+	rawLogf(logType[logTypeInput]+(" %s"), fmt.Sprintf(msg, params...))
 }
 
 func logNewlineBefore(logTypeInput int, msg string, params ...interface{}) {
-	rawLog("\n"+logType[logTypeInput]+(" %s\n"), fmt.Sprintf(msg, params...))
+	rawLogf("\n"+logType[logTypeInput]+(" %s\n"), fmt.Sprintf(msg, params...))
 }
 
 func errorLog(err error, msg string, params ...interface{}) {
@@ -80,7 +84,7 @@ func errorLog(err error, msg string, params ...interface{}) {
 		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 6)
 
 		for _, line := range strings.Split(errLog, "\n\n")[2:] {
-			rawLog("    " + line + "\n")
+			rawLogf("    " + line + "\n")
 		}
 
 		os.Exit(1)
@@ -119,7 +123,7 @@ func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 6)
 
 		for _, line := range strings.Split(errLog, "\n")[2:] {
-			rawLog("    " + line + "\n")
+			rawLogf("    " + line + "\n")
 		}
 
 		os.Exit(1)

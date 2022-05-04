@@ -1,7 +1,6 @@
 package main
 
 import (
-	"net/url"
 	"os"
 	"strings"
 )
@@ -21,7 +20,7 @@ func parseURL(url string, silent bool) string {
 		repoURL = "http://" + repoURL
 	}
 
-	repoURL += "/"
+	debugLog("Parsed URL: %s", repoURL)
 
 	return repoURL
 }
@@ -69,8 +68,7 @@ func saveChanges(sourcesFile string) {
 }
 
 func addRepo(repoLink string) {
-	_, err := url.ParseRequestURI(repoLink)
-	if err != nil {
+	if !isURL(repoLink) {
 		if force {
 			log(3, "Invalid url, but continuing because force is set to true.")
 		} else {
@@ -125,7 +123,7 @@ func listRepos() {
 	log(1, "Repos:")
 
 	for _, repo := range repos {
-		rawLog("        %s - %s\n", bolden(repo), repoLabel(repo, false))
+		rawLogf("        %s - %s\n", bolden(repo), repoLabel(repo, false))
 	}
 }
 

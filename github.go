@@ -143,9 +143,7 @@ func getRepoInfo(author string, repo string) {
 	log(1, "Getting repository info from the Github API...")
 
 	url := "https://api.github.com/repos/" + author + "/" + repo
-	response, _, err := viewFile(url, "An error occurred while getting info from the Github API.")
-
-	errorLog(err, "An error occurred while getting info from the Github API")
+	response, _ := sendGithubRequest(url)
 
 	if response == "" {
 		errorLogRaw("The Github API returned an empty response. This may be because you are getting rate limited. URL: %s", url)
@@ -157,7 +155,7 @@ func getRepoInfo(author string, repo string) {
 	log(1, "Parsing response...")
 
 	var repoInfo GithubRepoInfo
-	err = json.Unmarshal([]byte(response), &repoInfo)
+	err := json.Unmarshal([]byte(response), &repoInfo)
 	errorLog(err, "An error occurred while parsing the response.")
 
 	path := "samples/templates/" + strings.ToLower(repoInfo.Language) + ".json"

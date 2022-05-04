@@ -33,7 +33,7 @@ func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 		for _, command := range cmds {
 			logNoNewline(1, "Running command %s", bolden(command))
 			runCommandDot(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
-			rawLog("\n")
+			rawLogf("\n")
 		}
 	}
 }
@@ -95,8 +95,14 @@ func getDeps(deps *Deps) []string {
 	return nil
 }
 
-func checkDeps(pkg Package, pkgName string) {
-	if pkgDispName := bolden(pkgName); !noDeps {
+func getPkgNameFromURL(url string) string {
+	log(1, "Getting package name from URL...")
+
+	return strings.TrimSuffix(strings.Split(url, "/")[len(strings.Split(url, "/"))-1], ".json")
+}
+
+func checkDeps(pkg Package) {
+	if pkgDispName := bolden(pkg.Name); !noDeps {
 		log(1, "Getting dependencies for %s...", pkgDispName)
 
 		deps := getDeps(pkg.Deps)
@@ -125,8 +131,8 @@ func checkDeps(pkg Package, pkgName string) {
 	}
 }
 
-func checkFileDeps(pkg Package, pkgName string) {
-	if pkgDispName := bolden(pkgName); !noDeps {
+func checkFileDeps(pkg Package) {
+	if pkgDispName := bolden(pkg.Name); !noDeps {
 		log(1, "Getting file dependencies for %s...", pkgDispName)
 
 		deps := getDeps(pkg.FileDeps)

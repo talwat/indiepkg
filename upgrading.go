@@ -54,7 +54,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 
 		newVer := readLoad(pkgName).Version
 
-		rawLog("\n")
+		rawLogf("\n")
 
 		log(1, "Saving old version number...")
 

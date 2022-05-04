@@ -42,7 +42,7 @@ func makeGithubReq(url string) (http.Response, error) {
 	return *resp, nil
 }
 
-func viewFile(url string, errMsg string, params ...interface{}) (string, int, error) {
+func viewFile(url string) (string, int, error) {
 	resp, err := makeReq(url)
 	if err != nil {
 		return "", resp.StatusCode, err
@@ -79,7 +79,7 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			progressbar.OptionSetWidth(10),
 			progressbar.OptionThrottle(65*time.Millisecond),
 			progressbar.OptionOnCompletion(func() {
-				rawLog("\n")
+				rawLogf("\n")
 			}),
 			progressbar.OptionSpinnerType(14),
 			progressbar.OptionFullWidth(),

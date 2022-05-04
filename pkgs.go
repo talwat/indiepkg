@@ -11,6 +11,7 @@ func installPkgs(pkgNames []string) {
 	fullInit()
 
 	for _, pkgName := range pkgNames {
+		isURL := isURL(pkgName)
 		pkgDispName := bolden(pkgName)
 
 		chapLog("=>", "", "Installing %s", pkgName)
@@ -19,26 +20,59 @@ func installPkgs(pkgNames []string) {
 		chapLog("===>", "", "Checking if already installed")
 		log(1, "Checking if %s is already installed...", pkgDispName)
 
-		if pkgExists(pkgName) {
+		var toCheckName string
+
+		if isURL {
+			toCheckName = getPkgNameFromURL(pkgName)
+		}
+
+		if pkgExists(toCheckName) {
 			if force {
-				log(3, "%s is already installed, but force is on, so continuing.", pkgDispName)
+				log(3, "%s is already installed, but force is on, so continuing.", bolden(toCheckName))
 			} else {
-				errorLogRaw("%s is already installed, can't install %s", pkgDispName, pkgDispName)
+				errorLogRaw("%s is already installed, can't install %s", bolden(toCheckName), bolden(toCheckName))
+
 				os.Exit(1)
 			}
 		}
 
 		chapLog("===>", "", "Getting package info")
 		log(1, "Reading package info for %s...", bolden(pkgName))
-		pkgFile := findPkg(pkgName)
+
+		var pkgFile string
+
+		switch {
+		case isURL: // Run this if a URL is selected to be installed
+			log(1, "Reading info from direct URL...")
+
+			parsedURL := parseURL(pkgName, false)
+			raw, statusCode, err := viewFile(parsedURL)
+			pkgFile = raw
+
+			errorLog(err, "An error occurred while getting info from %s", bolden(pkgName))
+
+			if checkFor404(statusCode, pkgName) {
+				errorLogRaw("Package %s not found", bolden(pkgName))
+				os.Exit(1)
+			}
+		case strings.HasSuffix(pkgName, ".json"): // Run this if a file is selected to be installed
+			log(1, "Reading info from file...")
+
+			pkgFile = readFile(pkgName, "An error occurred while reading %s", bolden(pkgName))
+		default: // Run this to read from repos
+			log(1, "Reading info from official repositories...")
+
+			pkgFile = findPkg(pkgName)
+		}
+
 		debugLog("Package info file:\n%s", pkgFile)
 
 		pkg := loadPkg(pkgFile, pkgName)
 		cmds := getInstCmd(pkg)
 
 		chapLog("===>", "", "Checking dependencies")
-		checkDeps(pkg, pkgName)
-		checkFileDeps(pkg, pkgName)
+		checkDeps(pkg)
+		checkFileDeps(pkg)
 
 		if pkg.Download == nil {
 			chapLog("==>", "", "Cloning source code")
@@ -63,7 +97,7 @@ func installPkgs(pkgNames []string) {
 		mvPath(tmpSrcPath+pkg.Name, srcPath+pkg.Name)
 		writePkg(pkg.Name, pkgFile)
 
-		chapLog("==>", "GREEN", "Successfully installed %s", pkgName)
+		chapLog("==>", "GREEN", "Successfully installed %s", pkg.Name)
 		log(0, "Installed %s successfully.", pkgDispName)
 		getNotes(pkg)
 	}
