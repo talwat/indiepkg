@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"runtime"
 	"strings"
 )
 
@@ -166,4 +167,28 @@ func reClone() {
 
 	cloneSrcRepo()
 	log(0, "Successfully re-cloned IndiePKG source.")
+}
+
+func fetch() {
+	log(1, "OS: %s", runtime.GOOS)
+	log(1, "Arch: %s", runtime.GOARCH)
+	log(1, "Go Version: %s", strings.TrimPrefix(runtime.Version(), "go"))
+	log(1, "IndiePKG Version: %s", version)
+
+	macOSVer, err := runCommand(".", "sw_vers", "-productVersion")
+	if err == nil {
+		log(1, "macOS version: %s", macOSVer)
+	}
+
+	bashVer, err := runCommand(".", "bash", "--version")
+	if err == nil {
+		log(1, "Bash version: %s", strings.Split(strings.TrimPrefix(strings.Split(bashVer, "\n")[0], "GNU bash, version "), "(")[0])
+	} else {
+		log(3, "Could not get bash version. Error: %s", err.Error())
+	}
+
+	if pathExists("/etc/os-release", "An error occurred while checking if /etc/os-release exists") {
+		log(1, "OS-Release:")
+		indent(readFile("/etc/os-release", "An error occurred while reading /etc/os-release"))
+	}
 }

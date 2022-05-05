@@ -96,6 +96,7 @@ jobs:
           $HOME/.local/bin/indiepkg info btop
           $HOME/.local/bin/indiepkg remove-data btop -y -d
           $HOME/.local/bin/indiepkg version
+          $HOME/.local/bin/indiepkg fetch
 
       - name: Try manually updating IndiePKG
         run: |
