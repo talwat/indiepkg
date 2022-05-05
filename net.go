@@ -1,7 +1,7 @@
 package main
 
 import (
-	"errors"
+	"context"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -12,27 +12,54 @@ import (
 	"github.com/schollz/progressbar/v3"
 )
 
-func viewFile(url string, errMsg string, params ...interface{}) (string, error) {
-	resp, err := http.Get(url)
-	errMsgAdded := fmt.Sprintf(errMsg, params...) + ". URL: " + bolden(url)
-	errorLog(err, errMsgAdded)
+func makeReq(url string) (http.Response, error) {
+	req, err := http.NewRequestWithContext(context.Background(), "GET", url, nil)
+	if err != nil {
+		return http.Response{}, fmt.Errorf("error while making http request: %w", err)
+	}
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return http.Response{}, fmt.Errorf("error while doing http request: %w", err)
+	}
+
+	return *resp, nil
+}
+
+func makeGithubReq(url string) (http.Response, error) {
+	req, err := http.NewRequestWithContext(context.Background(), "GET", url, nil)
+	req.SetBasicAuth(config.Github.Username, config.Github.Token)
+
+	if err != nil {
+		return http.Response{}, fmt.Errorf("error while making http request: %w", err)
+	}
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return http.Response{}, fmt.Errorf("error while doing http request: %w", err)
+	}
+
+	return *resp, nil
+}
+
+func viewFile(url string) (string, int, error) {
+	resp, err := makeReq(url)
+	if err != nil {
+		return "", resp.StatusCode, err
+	}
 
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return "", errors.New("HTTP Error. Code: " + fmt.Sprint(resp.StatusCode))
-	}
-
 	final, err := ioutil.ReadAll(resp.Body)
 
-	return string(final), err
+	return string(final), resp.StatusCode, err
 }
 
 func downloadFileWithProg(filepath string, url string, errMsg string, params ...interface{}) {
-	req, err := http.NewRequest("GET", url, nil)
-	errorLog(err, "An error occurred making a new GET request")
-	resp, err := http.DefaultClient.Do(req)
-	errorLog(err, "An error occurred sending GET request")
+	resp, err := makeReq(url)
+
+	errorLog(err, "An error occurred while making GET request to %s", url)
+
 	defer resp.Body.Close()
 
 	file, _ := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0o644)
@@ -52,7 +79,7 @@ func downloadFileWithProg(filepath string, url string, errMsg string, params ...
 			progressbar.OptionSetWidth(10),
 			progressbar.OptionThrottle(65*time.Millisecond),
 			progressbar.OptionOnCompletion(func() {
-				fmt.Printf("\n")
+				rawLogf("\n")
 			}),
 			progressbar.OptionSpinnerType(14),
 			progressbar.OptionFullWidth(),

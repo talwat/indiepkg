@@ -3,7 +3,7 @@
     "author": "Talwat",
     "description": "Convert Images into ASCII art.",
     "url": "https://github.com/talwat/textpy.git",
-    "license": "none",
+    "license": "None",
     "bin": {
         "in_source": [
             "main.py"

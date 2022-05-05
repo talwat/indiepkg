@@ -1,27 +1,25 @@
+linters-settings:
+  gosec:
+    excludes:
+      - G306
+      - G107
+
 linters:
   disable:
     - deadcode
     - unused
-    - staticcheck
     - varcheck
-
-    - noctx
     - gomnd
     - gochecknoglobals
-    - goerr113
-    - forcetypeassert
-    - exhaustivestruct
-    - wsl
-    - cyclop
     - revive
+    - bodyclose
+
+    - forcetypeassert
+    - cyclop
     - unparam
-    - nestif
     - lll
-    - gosec
-    - gocritic
     - funlen
     - goconst
-    - forbidigo
     - dupl
     - tagliatelle
 

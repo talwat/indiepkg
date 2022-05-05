@@ -1,38 +1,65 @@
 package main
 
 import (
-	"fmt"
-	"net/url"
 	"os"
 	"strings"
 )
 
-func parseURL(url string, pkgName string) string {
-	log(1, "Parsing URL...")
+func parseURL(url string, silent bool) string {
+	if !silent {
+		log(1, "Parsing URL %s...", bolden(url))
+	}
 
 	repoURL := url
 	repoURL = strings.TrimSpace(repoURL)
 	repoURL = strings.TrimSuffix(repoURL, "/")
+
 	if split := strings.Split(repoURL, "//"); strings.Contains(repoURL, "://") {
 		repoURL = "http://" + strings.Join(split[1:], "://")
 	} else {
 		repoURL = "http://" + repoURL
 	}
 
-	repoURL += "/"
+	debugLog("Parsed URL: %s", repoURL)
 
-	pkgURL := repoURL + pkgName + ".json"
-
-	return pkgURL
+	return repoURL
 }
 
 func readSources() ([]string, string) {
 	log(1, "Reading sources file...")
+
 	raw := readFile(configPath+"sources.txt", "An error occurred while reading sources file")
+
 	log(1, "Parsing sources file...")
+
 	trimmed := strings.TrimSpace(raw)
 
 	return strings.Split(trimmed, "\n"), trimmed
+}
+
+func stripSources(sourcesFile string, noParse bool) ([]string, string) {
+	log(1, "Stripping sources file of comments...")
+
+	final := []string{}
+	finalStr := ""
+
+	for _, line := range strings.Split(strings.TrimSpace(sourcesFile), "\n") {
+		if strings.HasPrefix(line, "#") || strings.TrimSpace(line) == "" {
+			continue
+		}
+
+		var parsedLine string
+		if noParse {
+			parsedLine = line
+		} else {
+			parsedLine = parseURL(line, true)
+		}
+
+		finalStr += parsedLine + "\n"
+		final = append(final, parsedLine)
+	}
+
+	return final, finalStr
 }
 
 func saveChanges(sourcesFile string) {
@@ -41,8 +68,7 @@ func saveChanges(sourcesFile string) {
 }
 
 func addRepo(repoLink string) {
-	_, err := url.ParseRequestURI(repoLink)
-	if err != nil {
+	if !isURL(repoLink) {
 		if force {
 			log(3, "Invalid url, but continuing because force is set to true.")
 		} else {
@@ -52,8 +78,9 @@ func addRepo(repoLink string) {
 	}
 
 	_, sourcesFile := readSources()
+	_, stripped := stripSources(sourcesFile, true)
 
-	if strings.Contains(sourcesFile, "\n"+repoLink) {
+	if strings.Contains(stripped, repoLink) {
 		if force {
 			log(3, "Repo %s already exists in sources file, but continuing because force is set to true.", bolden(repoLink))
 		} else {
@@ -63,34 +90,40 @@ func addRepo(repoLink string) {
 	}
 
 	log(1, "Appending %s to sources file...", bolden(repoLink))
-	sourcesFile = sourcesFile + "\n" + repoLink
+	sourcesFile = strings.TrimSpace(sourcesFile + "\n" + repoLink)
 	saveChanges(sourcesFile)
 }
 
 func rmRepo(repoLink string) {
 	repos, _ := readSources()
+
 	log(1, "Removing %s from sources file...", bolden(repoLink))
+
+	final := ""
 
 	for i, repo := range repos {
 		if repo == repoLink {
-			repos[i] = ""
 			debugLog("Match found at index %d.", i)
+
+			continue
 		}
+
+		final = final + repo + "\n"
 	}
 
-	sourcesFile := strings.Join(repos, "\n")
+	sourcesFile := strings.TrimSpace(final)
+
 	saveChanges(sourcesFile)
 }
 
 func listRepos() {
-	repos, _ := readSources()
+	rawRepos, _ := readSources()
+	repos, _ := stripSources(strings.Join(rawRepos, "\n"), true)
+
 	log(1, "Repos:")
 
 	for _, repo := range repos {
-		if trimmed := strings.TrimSpace(repo); strings.HasPrefix(trimmed, "#") || trimmed == "" {
-			continue
-		}
-		fmt.Printf("        %s - %s\n", bolden(repo), repoLabel(repo, false))
+		rawLogf("        %s - %s\n", bolden(repo), repoLabel(repo, false))
 	}
 }
 
@@ -103,7 +136,7 @@ func repoLabel(repo string, includeLink bool) string {
 	}
 
 	for k := range prefixes {
-		if strings.HasPrefix(repo, prefixes[k][0]) {
+		if strings.HasPrefix(parseURL(repo, true), prefixes[k][0]) {
 			return prefixes[k][1]
 		}
 	}

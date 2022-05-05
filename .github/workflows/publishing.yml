@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Setup go 1.18
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
           go-version: 1.18
 
@@ -69,7 +69,23 @@ jobs:
     needs: [wait]
 
     steps:
+      - name: Setup go 1.18
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+
+      - name: "Checkout source code"
+        uses: actions/checkout@v3
+
+      - name: Get version number
+        run: | 
+          make
+          export VERSION=$(./indiepkg raw-version)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION: $VERSION"
+
       - name: Update testing branch
+        if: ${{ !endsWith(env.VERSION, 'alpha') && !endsWith(env.VERSION, 'beta') && !endsWith(github.event.commits[0].message, 'dev') }}
         uses: devmasx/merge-branch@1.4.0
 
         with:

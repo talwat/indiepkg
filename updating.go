@@ -31,17 +31,21 @@ func updateAllPackages() {
 	fullInit()
 
 	chapLog("==>", "", "Getting installed packages")
+
 	installedPackages := make([]string, 0)
 
 	log(1, "Getting contents of %s", bolden(infoPath))
+
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
 
 	log(1, "Iterating through contents of %s", bolden(infoPath))
+
 	for _, file := range files {
 		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))
 	}
 
 	chapLog("=>", "", "Updating packages")
+
 	for _, installedPackage := range installedPackages {
 		chapLog("==>", "", "Updating %s", installedPackage)
 		downloadPkg(installedPackage)

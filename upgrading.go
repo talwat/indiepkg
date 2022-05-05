@@ -1,16 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
 func upgradePkgFunc(pkgName string, chapPrefix string) {
 	chapLog(chapPrefix+"=>", "", "Upgrading %s", pkgName)
+
 	pkgDisplayName := bolden(pkgName)
 
 	chapLog(chapPrefix+"==>", "", "Running checks")
 	log(1, "Checking if %s exists...", pkgDisplayName)
+
 	if !pkgExists(pkgName) {
 		if force {
 			log(3, "%s is not installed, but force is on, so continuing.", pkgDisplayName)
@@ -23,6 +24,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 
 	chapLog(chapPrefix+"==>", "", "Pulling source code")
 	log(1, "Updating source code for %s...", pkgDisplayName)
+
 	isUpToDate, directDownload := pullPkgRepo(pkgName)
 
 	debugLog("Checking if up to date...")
@@ -38,6 +40,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 	}
 
 	chapLog(chapPrefix+"==>", "", "Reading package info")
+
 	pkg := readLoad(pkgName)
 
 	if directDownload {
@@ -48,24 +51,28 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 
 		chapLog(chapPrefix+"==>", "", "Getting version numbers")
 		log(1, "Reading new version number...")
+
 		newVer := readLoad(pkgName).Version
 
-		fmt.Print("\n")
+		rawLogf("\n")
 
 		log(1, "Saving old version number...")
+
 		oldVer := pkg.Version
+
 		debugLog("Old version: %s. New version: %s", oldVer, newVer)
 
 		chapLog(chapPrefix+"==>", "", "Checking if already up to date")
 		log(1, "Checking if %s is already up to date...", bolden(pkgName))
+
 		if oldVer == newVer {
-			if force {
-				log(3, "%s already up to date, but force is on, so continuing.", pkgDisplayName)
-			} else {
+			if !force {
 				log(0, "%s already up to date.", pkgDisplayName)
 
 				return
 			}
+
+			log(3, "%s already up to date, but force is on, so continuing.", pkgDisplayName)
 		} else {
 			log(1, "Not up to date. Upgrading from %s to %s", bolden(oldVer), bolden(newVer))
 		}
@@ -101,6 +108,7 @@ func upgradeAllPackages() {
 	fullInit()
 
 	chapLog("==>", "", "Getting installed packages")
+
 	installedPackages := make([]string, 0)
 
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
@@ -110,6 +118,7 @@ func upgradeAllPackages() {
 	}
 
 	chapLog("=>", "", "Starting upgrades")
+
 	for _, installedPackage := range installedPackages {
 		upgradePkgFunc(installedPackage, "=")
 	}

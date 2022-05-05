@@ -15,7 +15,9 @@ Commands:
   sync                            Sync package info & package source.
   re-clone                        Removes and re-clones IndiePKG source code in the src directory. Useful if you just changed the branch in the config file, or git is throwing errors when updating.
   list                            Lists all installed packages.
+  list-all                        Lists all packages in all github repositories.
   version                         Shows version.
+  raw-version                     Shows version without any formatting (For use in scripts).
   init                            Re-generates all the default config files needed for indiepkg to function properly. This is ran automatically.
   search <query>                  Searches for packages. NOTE: Only searches repo's that are on Github.
   indiepkg-update                 Updated source code & re-compiles IndiePKG.

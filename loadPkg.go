@@ -10,20 +10,24 @@ func loadPkg(packageFile string, pkgName string) Package {
 	var pkg Package
 
 	environmentVariables := map[string]string{
-		"PREFIX": config.Paths.Prefix,
-		"BIN":    config.Paths.Prefix + "bin/",
-		"HOME":   home,
-		"BOLD":   textFx["BOLD"],
-		"RESET":  RESETCOL,
+		"PREFIX":        config.Paths.Prefix,
+		"BIN":           config.Paths.Prefix + "bin/",
+		"HOME":          home,
+		"INDIEPKG_PATH": mainPath,
+		"BOLD":          textFx["BOLD"],
+		"RESET":         RESETCOL,
 	}
 
 	debugLog("Finding environment variables...")
+
 	keySlice := make([]string, 0)
+
 	for key := range environmentVariables {
 		keySlice = append(keySlice, key)
 	}
 
 	debugLog("Replacing environment variables...")
+
 	for _, key := range keySlice {
 		environmentVariables["PREFIX"] = config.Paths.Prefix
 		debugLog("Replacing %s with %s...", key, environmentVariables[key])

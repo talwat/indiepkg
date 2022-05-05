@@ -1,12 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"strings"
 )
 
-const version = "0.26.3"
+const version = "0.31"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -41,17 +40,23 @@ func checkCommand(other string, others []string, index int, args []string) {
 	switch other {
 	case "install":
 		checkForOptions("package names", 1)
+
 		optionToOthers = true
+
 		installPkgs(others[index+1:])
 
 	case "uninstall":
 		checkForOptions("package names", 1)
+
 		optionToOthers = true
+
 		uninstallPkgs(others[index+1:])
 
 	case "remove-data":
 		checkForOptions("package names", 1)
+
 		optionToOthers = true
+
 		rmData(others[index+1:])
 
 	case "upgrade":
@@ -59,6 +64,7 @@ func checkCommand(other string, others []string, index int, args []string) {
 			upgradeAllPackages()
 		} else {
 			optionToOthers = true
+
 			upgradePackage(others[index+1:])
 		}
 
@@ -67,16 +73,22 @@ func checkCommand(other string, others []string, index int, args []string) {
 			updateAllPackages()
 		} else {
 			optionToOthers = true
+
 			updatePackage(others[index+1:])
 		}
 
 	case "info":
 		checkForOptions("package name", 1)
+
 		optionToOther = true
+
 		infoPkg(others[index+1])
 
 	case "sync":
 		sync()
+
+	case "list-all":
+		listAll()
 
 	case "re-clone":
 		reClone()
@@ -84,8 +96,11 @@ func checkCommand(other string, others []string, index int, args []string) {
 	case "version":
 		log(1, "Indiepkg Version %s", bolden(version))
 
+	case "raw-version":
+		rawLogf(version)
+
 	case "help":
-		fmt.Print(helpMsg)
+		rawLogf(helpMsg)
 
 	case "list":
 		listPkgs()
@@ -95,6 +110,7 @@ func checkCommand(other string, others []string, index int, args []string) {
 
 	case "repo":
 		checkForOptions("sub-command", 1)
+
 		switch others[index+1] {
 		case "add":
 			checkForOptions("url", 2)
@@ -111,7 +127,9 @@ func checkCommand(other string, others []string, index int, args []string) {
 
 	case "search":
 		checkForOptions("query", 1)
+
 		optionToOther = true
+
 		search(others[index+1])
 
 	case "indiepkg-update":
@@ -122,6 +140,7 @@ func checkCommand(other string, others []string, index int, args []string) {
 
 	case "github-gen":
 		optionToOthers = true
+
 		checkForOptions("author", 1)
 		checkForOptions("repo", 2)
 		getRepoInfo(others[index+1], others[index+2])
@@ -134,8 +153,11 @@ func checkCommand(other string, others []string, index int, args []string) {
 
 func parseInput() {
 	args := os.Args[1:]
-	var flags []string
-	var others []string
+
+	var (
+		flags  []string
+		others []string
+	)
 
 	for _, arg := range args {
 		if strings.HasPrefix(arg, "-") {

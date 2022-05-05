@@ -6,7 +6,7 @@ func setup() {
 	initDirs(false)
 
 	chapLog("=>", "", "Updating & recompiling IndiePKG")
-	pullSrc()
+	pullSrcRepo(false)
 	compSrc()
 
 	log(1, "Initialized and updated IndiePKG.")
