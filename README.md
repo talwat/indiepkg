@@ -6,10 +6,11 @@
 </div>
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/talwat/indiepkg)](https://goreportcard.com/report/github.com/talwat/indiepkg)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/talwat/indiepkg.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/talwat/indiepkg/alerts/)
+![GitHub Action](https://img.shields.io/github/workflow/status/talwat/indiepkg/test)
 [![GitHub stars](https://img.shields.io/github/stars/talwat/indiepkg)](https://github.com/talwat/indiepkg/stargazers)
 ![GitHub watchers](https://img.shields.io/github/watchers/talwat/indiepkg)
 [![GitHub forks](https://img.shields.io/github/forks/talwat/indiepkg)](https://github.com/talwat/indiepkg/network)
-![GitHub Action](https://img.shields.io/github/workflow/status/talwat/indiepkg/test)
 [![GitHub license](https://img.shields.io/github/license/talwat/indiepkg)](https://github.com/talwat/indiepkg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/talwat/indiepkg)
 ![GitHub contributors](https://img.shields.io/github/contributors/talwat/indiepkg)

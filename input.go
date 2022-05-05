@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-const version = "0.31"
+const version = "0.32"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -137,6 +137,9 @@ func checkCommand(other string, others []string, index int, args []string) {
 
 	case "setup":
 		setup()
+
+	case "fetch":
+		fetch()
 
 	case "github-gen":
 		optionToOthers = true
