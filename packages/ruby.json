@@ -4,6 +4,7 @@
     "description": "The Ruby Programming Language.",
     "url": "https://github.com/ruby/ruby.git",
     "license": "BSD-2-Clause",
+    "language": "C",
     "commands": {
         "all": {
             "install": [

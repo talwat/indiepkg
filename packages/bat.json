@@ -4,6 +4,7 @@
     "description": "A cat(1) clone with wings.",
     "url": "https://github.com/sharkdp/bat.git",
     "license": "Apache-2.0",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/bat"

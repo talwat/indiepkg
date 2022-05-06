@@ -1,9 +1,10 @@
 {
     "name": "skyfetch",
     "author": "justleoo",
-    "description": "A aesthetic system information fetch written in rust",
+    "description": "A aesthetic system information fetch written in rust.",
     "url": "https://github.com/justleoo/skyfetch.git",
     "license": "GPL-3.0",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/skyfetch"

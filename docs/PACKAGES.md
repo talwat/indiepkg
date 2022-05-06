@@ -14,7 +14,8 @@
       - [Author](#author)
       - [Description](#description)
       - [URL](#url)
-      - [License](#license)
+      - [License (optional, but heavily encouraged)](#license-optional-but-heavily-encouraged)
+      - [Language (optional, but heavily encouraged)](#language-optional-but-heavily-encouraged)
       - [Branch (optional)](#branch-optional)
     - [Paths](#paths)
       - [Bin](#bin)
@@ -49,6 +50,7 @@ First, you can copy the minimal example from `samples/pkg_minimal.json`. Or copy
     "description": "this is my awesome package description",
     "url": "https://github.com/username/repo.git",
     "license": "license name",
+    "language": "the language my package is written in",
     "bin": {
         "in_source": [
             "bin/my_file"
@@ -106,13 +108,17 @@ This is the **git** url. It must end with `.git`.
 
 Your repository **must** be public. This is the URL you would use to `git clone`.
 
-#### License
+#### License (optional, but heavily encouraged)
 
-This is the license. It can be any free license.
+This is the license. It can be any license. Make sure to use the SPDX ID.
+
+#### Language (optional, but heavily encouraged)
+
+This is the primary programming language used to make the program.
 
 #### Branch (optional)
 
-You can specify which branch to clone. If this isn't specified it will simply clone the default branch *Usually master or main*.
+You can specify which branch to clone. If this isn't specified it will simply clone the default branch *Usually `master` or `main`*.
 
 ### Paths
 

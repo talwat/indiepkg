@@ -4,6 +4,7 @@
     "description": "ne, the nice editor",
     "url": "https://github.com/vigna/ne.git",
     "license": "GPL-3.0",
+    "language": "C",
     "bin": {
         "in_source": [
             "src/ne"

@@ -4,6 +4,7 @@
     "description": "A command-line system information tool written in bash 3.2+",
     "url": "https://github.com/dylanaraps/neofetch.git",
     "license": "MIT",
+    "language": "Bash",
     "bin": {
         "in_source": [
             "neofetch"

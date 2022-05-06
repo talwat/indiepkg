@@ -3,7 +3,7 @@
     "author": "hisbaan",
     "description": "description",
     "url": "https://github.com/hisbaan/didyoumean.git",
-    "license": "none",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/dym"

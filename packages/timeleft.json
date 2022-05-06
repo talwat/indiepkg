@@ -3,7 +3,8 @@
     "author": "timeleft",
     "description": "BetaPictoris",
     "url": "https://github.com/BetaPictoris/timeleft.git",
-    "license": "license",
+    "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "timeleft"

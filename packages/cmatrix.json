@@ -4,6 +4,7 @@
     "description": "Terminal based \"The Matrix\" like implementation.",
     "url": "https://github.com/abishekvashok/cmatrix.git",
     "license": "GPL-3.0",
+    "language": "C",
     "bin": {
         "in_source": [
             "cmatrix"

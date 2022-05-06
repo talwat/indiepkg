@@ -4,6 +4,7 @@
     "description": "Grep searches one or more input files for lines containing a match to a specified pattern.",
     "url": "https://git.savannah.gnu.org/git/grep.git",
     "license": "GPL-3.0",
+    "language": "C",
     "commands": {
         "all": {
             "install": [

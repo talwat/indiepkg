@@ -4,6 +4,7 @@
     "description": "A monitor of resources.",
     "url": "https://github.com/aristocratos/bashtop.git",
     "license": "Apache-2.0",
+    "language": "Bash",
     "bin": {
         "installed": [
             "bashtop"

@@ -4,6 +4,7 @@
     "description": "Prints a motivational quote to your terminal.",
     "url": "https://github.com/AlfredEVOL/motivate.git",
     "license": "MIT",
+    "language": "C++",
     "bin": {
         "in_source": [
             "build/motivate"

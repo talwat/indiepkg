@@ -4,6 +4,7 @@
     "description": "A simple, fast and user-friendly alternative to 'find'.",
     "url": "https://github.com/sharkdp/fd.git",
     "license": "Apache-2.0",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/fd"

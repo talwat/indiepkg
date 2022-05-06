@@ -4,6 +4,7 @@
     "description": "A TUI for searching through catalogs of radio transients: pulsars, FRBs, & RRATs.",
     "url": "https://github.com/astrogewgaw/koshka.git",
     "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "koshka"
