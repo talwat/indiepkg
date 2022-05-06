@@ -4,6 +4,7 @@
     "description": "TUI program for managing kanban boards with vim-like keybindings.",
     "url": "https://github.com/PlankCipher/kabmat.git",
     "license": "GPL-3.0",
+    "language": "C++",
     "bin": {
         "in_source": [
             "kabmat"

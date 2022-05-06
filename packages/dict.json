@@ -4,6 +4,7 @@
     "description": "View the dictionary through the CLI.",
     "url": "https://github.com/BetaPictoris/dict.git",
     "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "build/dict"

@@ -5,6 +5,7 @@
     "url": "https://github.com/talwat/pokeget.git",
     "license": "MIT",
     "branch": "testing",
+    "language": "Bash",
     "bin": {
         "in_source": [
             "pokeget"

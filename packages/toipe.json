@@ -4,6 +4,7 @@
     "description": "Yet another typing test, but crab flavoured.",
     "url": "https://github.com/Samyak2/toipe.git",
     "license": "MIT",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/toipe"

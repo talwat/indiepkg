@@ -4,6 +4,7 @@
     "description": "A modern replacement for 'ls'.",
     "url": "https://github.com/ogham/exa.git",
     "license": "MIT",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/exa"

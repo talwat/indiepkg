@@ -4,6 +4,7 @@
     "description": "Navigate through Mandelbrot set right in the terminal.",
     "url": "https://github.com/sinandredemption/ascii_mandelbrot.git",
     "license": "GPL-3.0",
+    "language": "C",
     "bin": {
         "in_source": [
             "mandelbrot"

@@ -4,6 +4,7 @@
     "description": "Disk Usage/Free Utility - a better 'df' alternative.",
     "url": "https://github.com/muesli/duf.git",
     "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "duf"

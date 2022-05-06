@@ -4,6 +4,7 @@
     "description": "A command-line fuzzy finder",
     "url": "https://github.com/junegunn/fzf.git",
     "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "fzf"

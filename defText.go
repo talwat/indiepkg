@@ -2,7 +2,7 @@ package main
 
 // This file is mainly for long strings of text, like the default config file & help message.
 
-const helpMsg = `Usage: indiepkg [<options>...] <command>
+const helpMsg = `Usage: indiepkg [options...] <command> [args...]
 
 Commands:
   help                            Show this help message.
@@ -17,15 +17,19 @@ Commands:
   list                            Lists all installed packages.
   list-all                        Lists all packages in all github repositories.
   version                         Shows version.
-  raw-version                     Shows version without any formatting (For use in scripts).
   init                            Re-generates all the default config files needed for indiepkg to function properly. This is ran automatically.
   search <query>                  Searches for packages. NOTE: Only searches repo's that are on Github.
   indiepkg-update                 Updated source code & re-compiles IndiePKG.
   setup                           Sets up everything for a functional installation of IndiePKG.
-  github-gen <username> <repo>    Generates a package info file for a github repo.
   repo                            Manages the package sources file.
     repo add <url>                Adds a repository to the package sources file.
     repo remove <url>             Removes a repository to the package sources file.
+
+Developer & Debugging Commands:
+  fetch                           Fetches OS & IndiePKG info.
+  raw-version                     Shows version without any formatting (For use in scripts).
+  github-gen <username> <repo>    Generates a package info file for a github repo.
+  help2man                        Generates a manpage in the current working directory. NOTE: This only works if your current working directory is in the IndiePKG source directory.
 
 Options:
   -p, --purge                     Removes a package's configuration files as well as the package itself.
@@ -35,7 +39,9 @@ Options:
 
 Examples:
   indiepkg install my-pkg
+
   indiepkg uninstall other-pkg
+
   indiepkg upgrade third-pkg
 `
 

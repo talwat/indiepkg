@@ -4,6 +4,7 @@
     "description": "Trim portions from online videos with ease.",
     "url": "https://gitlab.com/chanceboudreaux/yttrim.git",
     "license": "GPL-3.0",
+    "language": "Bash",
     "bin": {
         "in_source": [
             "yttrim"

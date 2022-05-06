@@ -1,16 +1,16 @@
 {
-    "name": "ripgrep",
-    "author": "BurntSushi",
-    "description": "ripgrep recursively searches directories for a regex pattern while respecting your gitignore.",
-    "url": "https://github.com/BurntSushi/ripgrep.git",
-    "license": "Unlicensed (Public Domain)",
+    "name": "artem",
+    "author": "FineFindus",
+    "description": "Artem is a small cli program written in rust to easily convert images to ascii art.",
+    "url": "https://github.com/FineFindus/artem.git",
+    "license": "MPL-2.0",
     "language": "Rust",
     "bin": {
         "in_source": [
-            "target/release/rg"
+            "target/release/artem"
         ],
         "installed": [
-            "rg"
+            "artem"
         ]
     },
     "commands": {

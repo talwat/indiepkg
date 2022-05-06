@@ -31,6 +31,7 @@ type Package struct {
 	Download    map[string]interface{}
 	Version     string
 	License     string
+	Language    string
 	Branch      string
 	Bin         *Bin
 	Manpages    []string

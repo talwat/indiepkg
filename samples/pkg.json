@@ -5,6 +5,7 @@
     "url": "https://github.com/username/repo.git",
     "branch": "my branch",
     "license": "license name",
+    "language": "the language my package is written in",
     "bin": {
         "in_source": [
             "bin/my_file"

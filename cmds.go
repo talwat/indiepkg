@@ -89,13 +89,22 @@ func sync() {
 }
 
 func infoPkg(pkgName string) {
-	pkg, _ := getPkgFromNet(pkgName)
+	pkg := loadPkg(getPkgInfo(pkgName, isURL(pkgName)), pkgName)
+
+	safePrintVal := func(name string, val string) {
+		if val != "" {
+			log(1, "%s: %s", name, val)
+		} else {
+			log(1, "%s: Undefined", name)
+		}
+	}
 
 	rawLogf("\n")
 	log(1, "Name: %s", pkg.Name)
 	log(1, "Author: %s", pkg.Author)
 	log(1, "Description: %s", pkg.Description)
-	log(1, "License: %s", pkg.License)
+	safePrintVal("License", pkg.License)
+	safePrintVal("Programming Language", pkg.Language)
 	log(1, "Git URL: %s", pkg.URL)
 
 	if deps := getDeps(pkg.Deps); deps != nil {
@@ -191,4 +200,24 @@ func fetch() {
 		log(1, "OS-Release:")
 		indent(readFile("/etc/os-release", "An error occurred while reading /etc/os-release"))
 	}
+}
+
+func help2man() {
+	log(1, "Compiling IndiePKG...")
+
+	runCommand(".", "make")
+
+	log(1, "Running help2man...")
+
+	output, _ := runCommand(".", "help2man", "-h", "help", "-v", "raw-version", "./indiepkg")
+
+	log(1, "Parsing generated manpage...")
+
+	output = strings.ReplaceAll(output, ".TP", ".SS")
+	output = strings.ReplaceAll(output, ".SS \"Commands:\"\n", "")
+	output = strings.ReplaceAll(output, ".SS \"Developer & Debugging Commands:\"\n", "")
+
+	log(1, "Writing final manpage...")
+
+	newFile("indiepkg.1", output, "An error occurred while writing generated manpage")
 }

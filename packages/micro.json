@@ -4,6 +4,7 @@
     "description": "A modern and intuitive terminal-based text editor.",
     "url": "https://github.com/zyedidia/micro",
     "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "micro"

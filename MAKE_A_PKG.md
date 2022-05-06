@@ -23,11 +23,17 @@ Go to [PACKAGES.md](PACKAGES.md) and look at what each field does to construct y
 
 ## Testing your package
 
-Now, we will need to make a third party repository to test the package.
+### Installing from a file (recommended)
 
-This is super simple. First, download and install IndiePKG.
+Simply run `indiepkg install <the name of your package file>` to install your package.
 
-Next, [fork](https://github.com/talwat/IndiePKG/fork) IndiePKG on github.
+If it was successful and your package installed correctly, you can move on to the final step.
+
+### Installing from a 3rd party repository
+
+This is a little more complicated, but not too complicated.
+
+First, [fork](https://github.com/talwat/IndiePKG/fork) IndiePKG on github.
 
 After your done forking, add your package.json file to the `packages` directory by either cloning the fork locally and committing, or using the Github Web UI.
 

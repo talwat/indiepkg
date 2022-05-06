@@ -4,6 +4,7 @@
     "description": "A more intuitive version of du in rust.",
     "url": "https://github.com/bootandy/dust.git",
     "license": "Apache-2.0",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/dust"

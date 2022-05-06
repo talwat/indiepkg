@@ -4,6 +4,7 @@
     "description": "An interactive process viewer",
     "url": "https://github.com/htop-dev/htop.git",
     "license": "GPL-2.0",
+    "language": "C",
     "bin": {
         "in_source": [
             "htop"

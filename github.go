@@ -166,7 +166,7 @@ func getRepoInfo(author string, repo string) {
 		log(1, "Using default language template")
 	}
 
-	log(1, "Parsing description")
+	log(1, "Parsing description...")
 
 	repoInfo.Description = strings.ToUpper(string(repoInfo.Description[0])) + repoInfo.Description[1:]
 
@@ -182,6 +182,7 @@ func getRepoInfo(author string, repo string) {
 	finalFile = strings.ReplaceAll(finalFile, "mypkgdescription", repoInfo.Description)
 	finalFile = strings.ReplaceAll(finalFile, "mypkgauthor", repoInfo.Owner.Login)
 	finalFile = strings.ReplaceAll(finalFile, "git url", repoInfo.CloneURL)
+	finalFile = strings.ReplaceAll(finalFile, "nameoflang", repoInfo.Language)
 
 	log(1, "Writing generated package info...")
 	newFile(repoInfo.Name+".json", finalFile, "An error occurred while writing generated package info file")

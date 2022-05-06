@@ -88,12 +88,17 @@ jobs:
       - name: Uninstall other packages
         run: $HOME/.local/bin/indiepkg uninstall pfetch yaf deno -y -d
 
+      - name: Test info command
+        run: |
+          $HOME/.local/bin/indiepkg info btop
+          $HOME/.local/bin/indiepkg info https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json
+          $HOME/.local/bin/indiepkg info packages/yaf.json
+
       - name: Try other commands
         run: |
           $HOME/.local/bin/indiepkg re-clone
           $HOME/.local/bin/indiepkg init -y
           $HOME/.local/bin/indiepkg sync
-          $HOME/.local/bin/indiepkg info btop
           $HOME/.local/bin/indiepkg remove-data btop -y -d
           $HOME/.local/bin/indiepkg version
           $HOME/.local/bin/indiepkg fetch

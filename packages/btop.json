@@ -4,6 +4,7 @@
     "description": "A monitor of resources.",
     "url": "https://github.com/aristocratos/btop.git",
     "license": "Apache-2.0",
+    "language": "C++",
     "bin": {
         "installed": [
             "btop"
