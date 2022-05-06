@@ -42,7 +42,7 @@ func chapLog(prefix string, colorInput string, msg string, params ...interface{}
 
 func indent(text string) {
 	for _, line := range strings.Split(text, "\n") {
-		rawLogf("      " + line + "\n")
+		rawLog("      " + line + "\n")
 	}
 }
 
@@ -84,7 +84,7 @@ func errorLog(err error, msg string, params ...interface{}) {
 		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 6)
 
 		for _, line := range strings.Split(errLog, "\n\n")[2:] {
-			rawLogf("    " + line + "\n")
+			rawLog("    " + line + "\n")
 		}
 
 		os.Exit(1)
@@ -123,7 +123,7 @@ func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 		errLog := tracerr.SprintSourceColor(tracerr.Wrap(err), 6)
 
 		for _, line := range strings.Split(errLog, "\n")[2:] {
-			rawLogf("    " + line + "\n")
+			rawLog("    " + line + "\n")
 		}
 
 		os.Exit(1)

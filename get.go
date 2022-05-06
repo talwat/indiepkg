@@ -44,7 +44,7 @@ func findPkg(pkgName string) string {
 		return pkgFile
 	}
 
-	rawLogf("\n")
+	rawLog("\n")
 
 	for _, url := range urls {
 		pkgURL := parseURL(url, false) + "/" + pkgName + ".json"
@@ -58,7 +58,7 @@ func findPkg(pkgName string) string {
 
 		if checkFor404(statusCode, pkgName) {
 			log(3, "Not found in %s", bolden(pkgURL))
-			rawLogf("\n")
+			rawLog("\n")
 
 			continue
 		}
@@ -67,7 +67,7 @@ func findPkg(pkgName string) string {
 
 		log(0, "Found %s in %s!", bolden(pkgName), bolden(pkgURL))
 		log(1, "Saving valid info & url...")
-		rawLogf("\n")
+		rawLog("\n")
 
 		validInfos = append(validInfos, infoFile)
 		validUrls = append(validUrls, pkgURL)

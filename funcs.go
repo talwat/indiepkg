@@ -33,7 +33,7 @@ func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 		for _, command := range cmds {
 			logNoNewline(1, "Running command %s", bolden(command))
 			runCommandDot(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
-			rawLogf("\n")
+			rawLog("\n")
 		}
 	}
 }

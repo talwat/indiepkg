@@ -22,7 +22,7 @@ func pullSrcRepo(silent bool) bool {
 		return true
 	}
 
-	rawLogf(output + "\n")
+	rawLog(output + "\n")
 
 	return false
 }

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-const version = "0.32"
+const version = "0.33"
 
 var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
 
@@ -106,7 +106,7 @@ func checkCommand(other string, others []string, index int, args []string) {
 		log(1, "Indiepkg Version %s", bolden(version))
 
 	case "raw-version":
-		rawLogf(version)
+		rawLog(version)
 
 	case "help":
 		rawLog(helpMsg)
