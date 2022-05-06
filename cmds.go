@@ -205,7 +205,9 @@ func fetch() {
 func help2man() {
 	log(1, "Compiling IndiePKG...")
 
-	runCommand(".", "make")
+	_, err := runCommand(".", "make")
+
+	errorLog(err, "An error occurred while compiling IndiePKG")
 
 	log(1, "Running help2man...")
 
