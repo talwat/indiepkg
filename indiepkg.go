@@ -34,6 +34,7 @@ func updateIndiePKG() {
 			log(0, "IndiePKG already up to date.")
 			os.Exit(0)
 		}
+
 		log(3, "IndiePKG already up to date, but force is on, so continuing.")
 	}
 
