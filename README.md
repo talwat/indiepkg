@@ -16,6 +16,7 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/talwat/indiepkg)
 [![GitHub issues](https://img.shields.io/github/issues/talwat/indiepkg)](https://github.com/talwat/indiepkg/issues)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/talwat/indiepkg)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftalwat%2Findiepkg.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftalwat%2Findiepkg?ref=badge_shield)
 
 A package manager written in [Go](https://go.dev) for small CLI programs. It is available on [GNU](https://gnu.org)/[Linux](https://kernel.org) and [macOS](https://www.apple.com/macos/).
 
@@ -170,3 +171,7 @@ A huge thank you to the following libraries:
 Kind of. For one packages are checked, and there is also an official package manager unlike the AUR which is commonly paired with an AUR helper.
 
 It also obviously works on other operating systems besides just Arch Linux.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftalwat%2Findiepkg.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftalwat%2Findiepkg?ref=badge_large)
