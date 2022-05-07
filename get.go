@@ -35,7 +35,7 @@ func findPkg(pkgName string) string {
 		debugLog("Status code: %d", statusCode)
 
 		if checkFor404(statusCode, pkgName) {
-			errorLogRaw("URL %s not found", bolden(pkgName))
+			errorLogRaw("Package %s not found", bolden(pkgName))
 			os.Exit(1)
 		}
 

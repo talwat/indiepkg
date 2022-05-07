@@ -1,0 +1,32 @@
+{
+    "name": "xplr",
+    "author": "sayanarijit",
+    "description": "A hackable, minimal, fast TUI file explorer.",
+    "url": "https://github.com/sayanarijit/xplr.git",
+    "license": "MIT",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/xplr"
+        ],
+        "installed": [
+            "xplr"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --locked --release --bin xplr"
+            ],
+            "update": [
+                "cargo build -v --locked --release --bin xplr"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

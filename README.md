@@ -162,6 +162,7 @@ A huge thank you to the following libraries:
 
 - [go-toml](https://github.com/pelletier/go-toml.git) - For parsing the configuration file.
 - [progressbar](https://github.com/schollz/progressbar.git) - For making progressbar's during downloads.
+- [tracerr](https://github.com/ztrue/tracerr) - For displaying source error logs.
 
 ## FAQ
 

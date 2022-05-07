@@ -1,0 +1,59 @@
+{
+    "name": "nasm",
+    "author": "netwide-assembler",
+    "description": "A cross-platform x86 assembler with an Intel-like syntax.",
+    "url": "https://github.com/netwide-assembler/nasm.git",
+    "license": "BSD-2-Clause",
+    "language": "C",
+    "bin": {
+        "in_source": [
+            "ndisasm",
+            "nasm",
+            "rdoff/rdf2srec",
+            "rdoff/rdf2ihx",
+            "rdoff/rdf2com",
+            "rdoff/rdflib",
+            "rdoff/rdx",
+            "rdoff/rdf2bin",
+            "rdoff/ldrdf",
+            "rdoff/rdfdump",
+            "rdoff/rdf2ith"
+        ],
+        "installed": [
+            "ndisasm",
+            "nasm",
+            "rdf2srec",
+            "rdf2ihx",
+            "rdf2com",
+            "rdflib",
+            "rdx",
+            "rdf2bin",
+            "ldrdf",
+            "rdfdump",
+            "rdf2ith"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "./autogen.sh",
+                "./configure prefix=:(PREFIX):",
+                "make"
+            ],
+            "update": [
+                "make clean",
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "autoconf",
+            "make",
+            "perl",
+            "asciidoc",
+            "xmlto"
+        ]
+    }
+}

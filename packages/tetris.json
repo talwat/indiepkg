@@ -1,0 +1,34 @@
+{
+    "name": "tetris",
+    "author": "k-vernooy",
+    "description": "My rendition of the classic tetris for terminal.",
+    "url": "https://github.com/k-vernooy/tetris.git",
+    "license": "MIT",
+    "language": "C++",
+    "bin": {
+        "in_source": [
+            "bin/tetris"
+        ],
+        "installed": [
+            "tetris"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make"
+            ],
+            "update": [
+                "make clean",
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "g++",
+            "make"
+        ]
+    }
+}
