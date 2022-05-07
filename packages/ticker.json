@@ -1,21 +1,18 @@
 {
-    "name": "fzf",
-    "author": "junegunn",
-    "description": "A command-line fuzzy finder",
-    "url": "https://github.com/junegunn/fzf.git",
-    "license": "MIT",
+    "name": "ticker",
+    "author": "achannarasappa",
+    "description": "Terminal stock ticker with live updates and position tracking.",
+    "url": "https://github.com/achannarasappa/ticker.git",
+    "license": "GPL-3.0",
     "language": "Go",
     "bin": {
         "in_source": [
-            "fzf"
+            "ticker"
         ],
         "installed": [
-            "fzf"
+            "ticker"
         ]
     },
-    "manpages": [
-        "man/man1/fzf.1"
-    ],
     "commands": {
         "all": {
             "install": [

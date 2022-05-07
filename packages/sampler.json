@@ -1,21 +1,18 @@
 {
-    "name": "fzf",
-    "author": "junegunn",
-    "description": "A command-line fuzzy finder",
-    "url": "https://github.com/junegunn/fzf.git",
-    "license": "MIT",
+    "name": "sampler",
+    "author": "sqshq",
+    "description": "Tool for shell commands execution, visualization and alerting. Configured with a simple YAML file.",
+    "url": "https://github.com/sqshq/sampler.git",
+    "license": "GPL-3.0",
     "language": "Go",
     "bin": {
         "in_source": [
-            "fzf"
+            "sampler"
         ],
         "installed": [
-            "fzf"
+            "sampler"
         ]
     },
-    "manpages": [
-        "man/man1/fzf.1"
-    ],
     "commands": {
         "all": {
             "install": [

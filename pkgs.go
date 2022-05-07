@@ -145,7 +145,7 @@ func uninstallPkgs(pkgNames []string) {
 			log(1, "Deleting binary files for %s...", pkgDispName)
 
 			for _, path := range pkg.Bin.Installed {
-				log(1, "Deleting %s", bolden(binPath+path))
+				log(1, "Deleting %s...", bolden(binPath+path))
 				delPath(false, binPath+path, "An error occurred while deleting binary files for %s", pkgDispName)
 			}
 		}
