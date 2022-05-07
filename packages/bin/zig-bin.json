@@ -27,11 +27,11 @@
         "all": {
             "install": [
                 "mv zig-bin zig-bin.tar.xz",
-                "tar -zxf zig-bin.tar.xz --strip-components=1"
+                "tar -xf zig-bin.tar.xz --strip-components=1"
             ],
             "update": [
                 "mv zig-bin zig-bin.tar.xz",
-                "tar -zxf zig-bin.tar.xz --strip-components=1"
+                "tar -xf zig-bin.tar.xz --strip-components=1"
             ]
         }
     }
