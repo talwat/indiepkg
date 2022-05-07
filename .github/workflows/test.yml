@@ -58,7 +58,7 @@ jobs:
           $HOME/.local/bin/yaf
           $HOME/.local/bin/neofetch
           $HOME/.local/bin/deno --version
-          $HOME/.local/bin/zig --version
+          $HOME/.local/bin/zig version
 
       - name: Force upgrade packages
         run: |
