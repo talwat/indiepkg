@@ -26,12 +26,12 @@
     "commands": {
         "all": {
             "install": [
-                "mv zig-bin zig-bin.tar.gz",
-                "tar -zxf zig-bin.tar.gz --strip-components=1"
+                "mv zig-bin zig-bin.tar.xz",
+                "tar -zxf zig-bin.tar.xz --strip-components=1"
             ],
             "update": [
-                "mv zig-bin zig-bin.tar.gz",
-                "tar -zxf zig-bin.tar.gz --strip-components=1"
+                "mv zig-bin zig-bin.tar.xz",
+                "tar -zxf zig-bin.tar.xz --strip-components=1"
             ]
         }
     }
