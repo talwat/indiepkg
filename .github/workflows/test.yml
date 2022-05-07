@@ -28,26 +28,29 @@ jobs:
           chmod +x scripts/install.sh
           ./scripts/install.sh
 
+      - name: Compile IndiePKG
+        run: make
+
       - name: Run with empty args
-        run: $HOME/.local/bin/indiepkg
+        run: ./indiepkg
 
       - name: Run help command
-        run: $HOME/.local/bin/indiepkg help
+        run: ./indiepkg help
 
       - name: Run setup command
-        run: $HOME/.local/bin/indiepkg setup -d
+        run: ./indiepkg setup -d
 
       - name: Run github commands
         continue-on-error: true
         run: |
-          $HOME/.local/bin/indiepkg github-gen talwat indiepkg -d
-          $HOME/.local/bin/indiepkg list-all -d
+          ./indiepkg github-gen talwat indiepkg -d
+          ./indiepkg list-all -d
 
       - name: Add bin repo
-        run: $HOME/.local/bin/indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/
+        run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/
 
       - name: Install a few packages
-        run: $HOME/.local/bin/indiepkg install https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/zig-bin.json https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json packages/yaf.json neofetch deno -y -d
+        run: ./indiepkg install https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/zig-bin.json https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json packages/yaf.json neofetch deno -y -d
 
       - name: Test installed packages
         run: |
@@ -58,54 +61,54 @@ jobs:
 
       - name: Force upgrade packages
         run: |
-          $HOME/.local/bin/indiepkg upgrade -f -d
-          $HOME/.local/bin/indiepkg upgrade pfetch yaf neofetch deno zig-bin -f -d
+          ./indiepkg upgrade -f -d
+          ./indiepkg upgrade pfetch yaf neofetch deno zig-bin -f -d
 
       - name: Update packages
         run: |
-          $HOME/.local/bin/indiepkg update -d
-          $HOME/.local/bin/indiepkg upgrade pfetch yaf neofetch deno zig-bin -d
+          ./indiepkg update -d
+          ./indiepkg upgrade pfetch yaf neofetch deno zig-bin -d
 
       - name: Add repo
-        run: $HOME/.local/bin/indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
+        run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
 
       - name: List repos
-        run: $HOME/.local/bin/indiepkg repo list
+        run: ./indiepkg repo list
 
       - name: Test querying
         continue-on-error: true
-        run: $HOME/.local/bin/indiepkg search fetch
+        run: ./indiepkg search fetch
 
       - name: Try installing package from linux-only
-        run: $HOME/.local/bin/indiepkg install katfetch -y -d
+        run: ./indiepkg install katfetch -y -d
 
       - name: List packages
-        run: $HOME/.local/bin/indiepkg list
+        run: ./indiepkg list
 
       - name: Uninstall package with --purge
-        run: $HOME/.local/bin/indiepkg uninstall neofetch -p -y
+        run: ./indiepkg uninstall neofetch -p -y
 
       - name: Uninstall other packages
-        run: $HOME/.local/bin/indiepkg uninstall pfetch yaf deno -y -d
+        run: ./indiepkg uninstall pfetch yaf deno -y -d
 
       - name: Test info command
         run: |
-          $HOME/.local/bin/indiepkg info btop
-          $HOME/.local/bin/indiepkg info https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json
-          $HOME/.local/bin/indiepkg info packages/yaf.json
+          ./indiepkg info btop
+          ./indiepkg info https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json
+          ./indiepkg info packages/yaf.json
 
       - name: Try other commands
         run: |
-          $HOME/.local/bin/indiepkg re-clone
-          $HOME/.local/bin/indiepkg init -y
-          $HOME/.local/bin/indiepkg sync
-          $HOME/.local/bin/indiepkg remove-data btop -y -d
-          $HOME/.local/bin/indiepkg version
-          $HOME/.local/bin/indiepkg fetch
+          ./indiepkg re-clone
+          ./indiepkg init -y
+          ./indiepkg sync
+          ./indiepkg remove-data btop -y -d
+          ./indiepkg version
+          ./indiepkg fetch
 
       - name: Try manually updating IndiePKG
         run: |
-          $HOME/.local/bin/indiepkg indiepkg-update
+          ./indiepkg indiepkg-update
 
       - name: Remove repo
-        run: $HOME/.local/bin/indiepkg repo remove https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
+        run: ./indiepkg repo remove https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
