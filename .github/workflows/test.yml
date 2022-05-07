@@ -50,7 +50,7 @@ jobs:
         run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/
 
       - name: Install a few packages
-        run: ./indiepkg install https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json packages/yaf.json neofetch deno -y -d
+        run: ./indiepkg install https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/zig-bin.json https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json packages/yaf.json neofetch deno -y -d
 
       - name: Test installed packages
         run: |
@@ -58,16 +58,17 @@ jobs:
           $HOME/.local/bin/yaf
           $HOME/.local/bin/neofetch
           $HOME/.local/bin/deno --version
+          $HOME/.local/bin/zig --version
 
       - name: Force upgrade packages
         run: |
           ./indiepkg upgrade -f -d
-          ./indiepkg upgrade pfetch yaf neofetch deno -f -d
+          ./indiepkg upgrade pfetch yaf neofetch deno zig-bin -f -d
 
       - name: Update packages
         run: |
           ./indiepkg update -d
-          ./indiepkg upgrade pfetch yaf neofetch deno -d
+          ./indiepkg upgrade pfetch yaf neofetch deno zig-bin -d
 
       - name: Add repo
         run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
@@ -89,11 +90,12 @@ jobs:
         run: ./indiepkg uninstall neofetch -p -y
 
       - name: Uninstall other packages
-        run: ./indiepkg uninstall pfetch yaf deno -y -d
+        run: ./indiepkg uninstall pfetch yaf deno zig-bin -y -d
 
       - name: Test info command
         run: |
           ./indiepkg info btop
+          ./indiepkg info zig-bin
           ./indiepkg info https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json
           ./indiepkg info packages/yaf.json
 
