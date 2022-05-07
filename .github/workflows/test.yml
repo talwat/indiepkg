@@ -47,7 +47,7 @@ jobs:
         run: $HOME/.local/bin/indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/
 
       - name: Install a few packages
-        run: $HOME/.local/bin/indiepkg install https://raw.githubusercontent.com/talwat/indiepkg/main/packages/zig-bin.json https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json packages/yaf.json neofetch deno -y -d
+        run: $HOME/.local/bin/indiepkg install https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/zig-bin.json https://raw.githubusercontent.com/talwat/indiepkg/main/packages/pfetch.json packages/yaf.json neofetch deno -y -d
 
       - name: Test installed packages
         run: |
