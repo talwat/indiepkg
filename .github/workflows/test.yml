@@ -101,7 +101,6 @@ jobs:
         run: |
           ./indiepkg re-clone
           ./indiepkg init -y
-          ./indiepkg sync
           ./indiepkg remove-data btop -y -d
           ./indiepkg version
           ./indiepkg fetch

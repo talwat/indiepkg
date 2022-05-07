@@ -7,10 +7,10 @@ import (
 )
 
 func pkgExists(pkgName string) bool {
-	packageDisplayName := bolden(pkgName)
+	pkgDispName := bolden(pkgName)
 
-	infoInstalled := pathExists(infoPath+pkgName+".json", "package info for %s", packageDisplayName)
-	srcInstalled := pathExists(srcPath+pkgName, "package source for %s", packageDisplayName)
+	infoInstalled := pathExists(infoPath+pkgName+".json", "package info for %s", pkgDispName)
+	srcInstalled := pathExists(srcPath+pkgName, "package source for %s", pkgDispName)
 
 	switch {
 	case infoInstalled && srcInstalled:
@@ -18,7 +18,7 @@ func pkgExists(pkgName string) bool {
 	case !infoInstalled && !srcInstalled:
 		return false
 	default:
-		log(3, "Package info or source for %s exists, but not both. Please run %sindiepkg sync%s.", packageDisplayName, textFx["BOLD"], RESETCOL)
+		log(3, "Package info or source for %s exists, but not both", pkgDispName)
 
 		return false
 	}
