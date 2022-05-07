@@ -81,7 +81,7 @@ func installPkgs(pkgNames []string) {
 			clonePkgRepo(pkg, tmpSrcPath)
 		} else {
 			chapLog("==>", "", "Downloading file")
-			doDirectDownload(pkg, pkgName, tmpSrcPath)
+			doDirectDownload(pkg, pkg.Name, tmpSrcPath)
 		}
 
 		if len(cmds) > 0 {

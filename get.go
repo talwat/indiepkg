@@ -115,10 +115,15 @@ func getPkgFromNet(pkgName string) (Package, string) {
 	return pkg, packageFile
 }
 
-func downloadPkg(pkgName string) {
-	log(1, "Downloading package info for %s...", bolden(pkgName))
+func getPkgFromURL(pkgName string, url string) string {
+	packageFile, statusCode, err := viewFile(url)
+	errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
 
-	writePkg(pkgName, findPkg(pkgName))
+	if checkFor404(statusCode, pkgName) {
+		errorLogRaw("The info URL provided from %s does not exist", bolden(pkgName))
+	}
+
+	return packageFile
 }
 
 func doDirectDownload(pkg Package, pkgName string, srcPath string) {
