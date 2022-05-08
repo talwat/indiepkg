@@ -7,7 +7,7 @@ import (
 
 const version = "0.34-alpha"
 
-var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
+var purge, debug, assumeYes, force, noDeps, ignoreRoot bool = false, false, false, false, false, false
 
 var optionToOthers, optionToOther bool = false, false
 
@@ -23,6 +23,8 @@ func checkFlag(flag string) {
 		force = true
 	case "-n", "--nodeps":
 		noDeps = true
+	case "-r", "--ignoreroot":
+		ignoreRoot = true
 	case "-help", "--help":
 		rawLog(helpMsg)
 

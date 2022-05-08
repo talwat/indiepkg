@@ -28,7 +28,8 @@
             "autoconf",
             "make",
             "autopoint",
-            "gperf"
+            "gperf",
+            "makeinfo"
         ]
     }
 }

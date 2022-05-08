@@ -206,7 +206,7 @@ func displayPkgs(pkgNames []string, action string) {
 
 func checkRoot() {
 	if isRoot() {
-		if force {
+		if force || ignoreRoot {
 			log(3, "Running as root, but force is set, so continuing.")
 
 			return

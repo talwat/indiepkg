@@ -70,6 +70,6 @@ func updateAllPackages() {
 		log(0, "Successfully updated package info for %s.", bolden(installedPackage))
 	}
 
-	chapLog("=>", "", "Success")
+	chapLog("=>", "GREEN", "Success")
 	log(0, "Successfully updated info for all packages.")
 }

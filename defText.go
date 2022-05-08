@@ -35,6 +35,8 @@ Options:
   -d, --debug                     Displays variable & debugging information.
   -y, --assumeyes                 Assumes yes to all prompts. (Use with caution!)
   -f, --force                     Bypasses all checks before preforming an action. Use will almost certainly lead to an error.
+  -r, --ignoreroot                Continues even if user is root.
+  -n, --nodeps                    Continues even if there are unmet dependencies.
 
 Examples:
   indiepkg install my-pkg

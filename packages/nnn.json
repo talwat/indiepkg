@@ -1,0 +1,33 @@
+{
+    "name": "nnn",
+    "author": "jarun",
+    "description": "The unorthodox terminal file manager.",
+    "url": "https://github.com/jarun/nnn.git",
+    "license": "BSD-2-Clause",
+    "language": "C",
+    "bin": {
+        "in_source": [
+            "nnn"
+        ],
+        "installed": [
+            "nnn"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make"
+            ],
+            "update": [
+                "make clean",
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "make"
+        ]
+    }
+}

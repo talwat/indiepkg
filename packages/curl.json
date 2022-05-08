@@ -1,0 +1,37 @@
+{
+    "name": "curl",
+    "author": "curl",
+    "description": "A command line tool and library for transferring data with URL syntax.",
+    "url": "https://github.com/curl/curl.git",
+    "language": "C",
+    "commands": {
+        "all": {
+            "install": [
+                "autoreconf -i",
+                "./configure --with-openssl --prefix=:(PREFIX):",
+                "make",
+                "make install"
+            ],
+            "update": [
+                "make clean",
+                "./configure --with-openssl --prefix=:(PREFIX):",
+                "make",
+                "make install"
+            ],
+            "uninstall": [
+                "make uninstall"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "autoconf",
+            "autoreconf",
+            "automake",
+            "libtool",
+            "make",
+            "openssl"
+        ]
+    }
+}

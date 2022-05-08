@@ -60,7 +60,7 @@ chap_log "$BLUE==>" "Cloning source code"
 
 log "$CYAN" "Cloning source code..."
 mkdir "$HOME/.indiepkg/"
-git clone https://github.com/talwat/indiepkg.git "$HOME/.indiepkg/src"
+git clone -b testing https://github.com/talwat/indiepkg.git "$HOME/.indiepkg/src"
 
 chap_log "$BLUE==>" "Compiling source code"
 
