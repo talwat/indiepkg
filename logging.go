@@ -135,6 +135,7 @@ func input(defVal string, msg string, params ...interface{}) string {
 
 	if assumeYes {
 		rawLog("\n")
+
 		return defVal
 	}
 

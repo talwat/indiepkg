@@ -90,7 +90,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
 	}
 
-	chapLog(chapPrefix+"==>", "", "Installing")
+	chapLog(chapPrefix+"==>", "", "Upgrading")
 	copyBins(pkg, srcPath)
 	copyManpages(pkg, srcPath)
 

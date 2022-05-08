@@ -22,6 +22,8 @@
                 "make"
             ],
             "update": [
+                "make clean",
+                "./configure",
                 "make"
             ]
         }
