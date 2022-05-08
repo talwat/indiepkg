@@ -113,8 +113,7 @@
         ]
     },
     "notes": [
-        "Do NOT uninstall your system's provided ncurses after installing this if your system's package manager flags it as dangerous to delete.",
-        "By default, the newly installed ncurses will not be avalible for use when compiling software.",
+        "By default, the newly installed package will not be avalible for use when compiling software.",
         "To make it available, add the following to your ~/.bashrc or ~/.zshrc file:",
         "",
         "export CPATH=:(PREFIX):include/ncurses:$CPATH",
