@@ -4,6 +4,7 @@
     "description": "ncurses Git mirror",
     "url": "https://github.com/mirror/ncurses.git",
     "license": "GPL-3.0",
+    "language": "C",
     "commands": {
         "all": {
             "install": [

@@ -1,0 +1,21 @@
+{
+    "name": "footy",
+    "author": "fritzrehde",
+    "description": "A small command line tool to get the latest football scores, fixtures and standings.",
+    "url": "https://github.com/fritzrehde/footy.git",
+    "license": "MIT",
+    "language": "Bash",
+    "bin": {
+        "in_source": [
+            "footy"
+        ],
+        "installed": [
+            "footy"
+        ]
+    },
+    "deps": {
+        "all": [
+            "bash"
+        ]
+    }
+}

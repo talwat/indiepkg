@@ -4,6 +4,7 @@
     "description": "Intuitive find & replace CLI (sed alternative).",
     "url": "https://github.com/chmln/sd.git",
     "license": "MIT",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/sd"

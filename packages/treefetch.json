@@ -4,6 +4,7 @@
     "description": "A plant-based system fetch tool made with Rust.",
     "url": "https://github.com/angelofallars/treefetch.git",
     "license": "GPL-3.0",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/treefetch"

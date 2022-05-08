@@ -13,8 +13,11 @@
       - [Name](#name)
       - [Author](#author)
       - [Description](#description)
-      - [URL](#url)
-      - [License](#license)
+      - [URL (don't use with Download URL)](#url-dont-use-with-download-url)
+      - [Download URL (don't use with URL)](#download-url-dont-use-with-url)
+      - [Info URL (optional)](#info-url-optional)
+      - [License (optional, but heavily encouraged)](#license-optional-but-heavily-encouraged)
+      - [Language (optional, but heavily encouraged)](#language-optional-but-heavily-encouraged)
       - [Branch (optional)](#branch-optional)
     - [Paths](#paths)
       - [Bin](#bin)
@@ -49,6 +52,7 @@ First, you can copy the minimal example from `samples/pkg_minimal.json`. Or copy
     "description": "this is my awesome package description",
     "url": "https://github.com/username/repo.git",
     "license": "license name",
+    "language": "the language my package is written in",
     "bin": {
         "in_source": [
             "bin/my_file"
@@ -100,19 +104,70 @@ This is your name, it can be a username or a real name.
 
 This is a super short summary of the purpose or function of the package.
 
-#### URL
+#### URL (don't use with [Download URL](#download-url-dont-use-with-url))
 
 This is the **git** url. It must end with `.git`.
 
 Your repository **must** be public. This is the URL you would use to `git clone`.
 
-#### License
+#### Download URL (don't use with [URL](#url-dont-use-with-download-url))
 
-This is the license. It can be any free license.
+This is the **download** url to the file/archive. Do not use this with the `URL` property.
+
+The structure goes something like this:
+
+```json
+...
+"download": {
+    "darwin": {
+        "arm64": "link",
+        "amd64": "second link"
+    },
+    "linux": {
+        "amd64": "other link",
+        "arm64": "third link"
+    }
+}
+```
+
+As you can specify which architecture should download which file, however if your archive works on all operating systems and architectures you can also do:
+
+```json
+...
+"download": {
+    "all": "link"
+}
+```
+
+Or if it works on a specific operating system but all architectures:
+
+```json
+...
+"download": {
+    "linux": {
+        "all": "link"
+    },
+    "darwin": {
+        "all": "other link"
+    }
+}
+```
+
+#### Info URL (optional)
+
+This is the URL to the package's info file. Please only put this if you are **not** distributing the package in a repository and instead using a direct URL/file.
+
+#### License (optional, but heavily encouraged)
+
+This is the license. It can be any license. Make sure to use the SPDX ID.
+
+#### Language (optional, but heavily encouraged)
+
+This is the primary programming language used to make the program.
 
 #### Branch (optional)
 
-You can specify which branch to clone. If this isn't specified it will simply clone the default branch *Usually master or main*.
+You can specify which branch to clone. If this isn't specified it will simply clone the default branch *Usually `master` or `main`*.
 
 ### Paths
 

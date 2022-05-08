@@ -1,0 +1,34 @@
+{
+    "name": "nameofpkg",
+    "author": "mypkgauthor",
+    "description": "mypkgdescription",
+    "url": "git url",
+    "license": "mypkglicense",
+    "language": "nameoflang",
+    "bin": {
+        "in_source": [
+            "nameofpkg"
+        ],
+        "installed": [
+            "nameofpkg"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "./configure",
+                "make"
+            ],
+            "update": [
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "g++",
+            "make"
+        ]
+    }
+}

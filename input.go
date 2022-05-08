@@ -5,9 +5,9 @@ import (
 	"strings"
 )
 
-const version = "0.31"
+const version = "0.34"
 
-var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
+var purge, debug, assumeYes, force, noDeps, ignoreRoot bool = false, false, false, false, false, false
 
 var optionToOthers, optionToOther bool = false, false
 
@@ -23,6 +23,16 @@ func checkFlag(flag string) {
 		force = true
 	case "-n", "--nodeps":
 		noDeps = true
+	case "-r", "--ignoreroot":
+		ignoreRoot = true
+	case "-help", "--help":
+		rawLog(helpMsg)
+
+		os.Exit(0)
+	case "-version", "--version":
+		rawLog(version)
+
+		os.Exit(0)
 	default:
 		errorLogRaw("Flag %s not found", bolden(flag))
 		os.Exit(1)
@@ -33,6 +43,7 @@ func checkCommand(other string, others []string, index int, args []string) {
 	checkForOptions := func(errSpecify string, commandPartsCount int) {
 		if len(others[index+commandPartsCount:]) < 1 {
 			errorLogRaw("No %s specified", errSpecify)
+
 			os.Exit(1)
 		}
 	}
@@ -69,7 +80,7 @@ func checkCommand(other string, others []string, index int, args []string) {
 		}
 
 	case "update":
-		if len(args) <= index+1 {
+		if len(others) <= index+1 {
 			updateAllPackages()
 		} else {
 			optionToOthers = true
@@ -84,9 +95,6 @@ func checkCommand(other string, others []string, index int, args []string) {
 
 		infoPkg(others[index+1])
 
-	case "sync":
-		sync()
-
 	case "list-all":
 		listAll()
 
@@ -97,10 +105,10 @@ func checkCommand(other string, others []string, index int, args []string) {
 		log(1, "Indiepkg Version %s", bolden(version))
 
 	case "raw-version":
-		rawLogf(version)
+		rawLog(version)
 
 	case "help":
-		rawLogf(helpMsg)
+		rawLog(helpMsg)
 
 	case "list":
 		listPkgs()
@@ -138,12 +146,18 @@ func checkCommand(other string, others []string, index int, args []string) {
 	case "setup":
 		setup()
 
+	case "fetch":
+		fetch()
+
 	case "github-gen":
 		optionToOthers = true
 
 		checkForOptions("author", 1)
 		checkForOptions("repo", 2)
 		getRepoInfo(others[index+1], others[index+2])
+
+	case "help2man":
+		help2man()
 
 	default:
 		errorLogRaw("Command %s not found", bolden(other))

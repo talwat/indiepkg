@@ -4,6 +4,7 @@
     "description": "Translating TUI written in go using simplytranslate's API",
     "url": "https://github.com/fedeztk/got.git",
     "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "got"

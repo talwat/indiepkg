@@ -1,8 +1,27 @@
 <!-- markdownlint-disable MD013 -->
-
 # How to make a package
 
 This will guide you how to make, test, and submit an IndiePKG package.
+
+## Table of contents
+
+- [How to make a package](#how-to-make-a-package)
+  - [Table of contents](#table-of-contents)
+  - [Package requirements](#package-requirements)
+  - [Constructing your package.json file](#constructing-your-packagejson-file)
+  - [Testing your package](#testing-your-package)
+    - [Installing from a file (recommended)](#installing-from-a-file-recommended)
+    - [Installing from a 3rd party repository](#installing-from-a-3rd-party-repository)
+  - [Making a pull request](#making-a-pull-request)
+  - [Badges](#badges)
+    - [Flat](#flat)
+      - [Markdown (flat)](#markdown-flat)
+    - [Flat square](#flat-square)
+      - [Markdown (flat square)](#markdown-flat-square)
+    - [Plastic](#plastic)
+      - [Markdown (plastic)](#markdown-plastic)
+    - [For the badge](#for-the-badge)
+      - [Markdown (for the badge)](#markdown-for-the-badge)
 
 ## Package requirements
 
@@ -23,11 +42,17 @@ Go to [PACKAGES.md](PACKAGES.md) and look at what each field does to construct y
 
 ## Testing your package
 
-Now, we will need to make a third party repository to test the package.
+### Installing from a file (recommended)
 
-This is super simple. First, download and install IndiePKG.
+Simply run `indiepkg install <the name of your package file>` to install your package.
 
-Next, [fork](https://github.com/talwat/IndiePKG/fork) IndiePKG on github.
+If it was successful and your package installed correctly, you can move on to the final step.
+
+### Installing from a 3rd party repository
+
+This is a little more complicated, but not too complicated.
+
+First, [fork](https://github.com/talwat/IndiePKG/fork) IndiePKG on github.
 
 After your done forking, add your package.json file to the `packages` directory by either cloning the fork locally and committing, or using the Github Web UI.
 
@@ -60,3 +85,47 @@ Finally, go to your Github repo and make a pull request.
 I will then test the package myself, and if everything works, I will merge it into the main repository.
 
 Make sure when you make your PR you merge to the **main** branch.
+
+## Badges
+
+If you have successfully submitted your program to IndiePKG, if you wish, you can add a badge to your repository.
+
+### Flat
+
+[![indiepkg-badge](https://img.shields.io/badge/get_on-indiepkg-blue?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAxklEQVRoge3Zuw3CMBRGYYzoGYEhIrEGSLTswCywQ0pGyRKMQEthRvCPFF7H56uvnBy5uUrKIlRrrenst5RSSmtm+YkX+SUG0xlMZzCdwXSrdxyabDyvmHPL6+6GDaYzmM5gOoPpyj98q5pTdzdsMJ3BdAbTGUwXf9M6nm7xoeNlE82lS951GKK5wzQ1Z7q7YYPpDKYzmM5gunjTWu938aH1nG1Q6U/Gx30bP7uluxs2mM5gOoPpDKbz7yGdwXQG0xlMZzDdE3J4HtdWbCB+AAAAAElFTkSuQmCC)](https://github.com/talwat/indiepkg)
+
+#### Markdown (flat)
+
+```markdown
+[![indiepkg-badge](https://img.shields.io/badge/get_on-indiepkg-blue?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAxklEQVRoge3Zuw3CMBRGYYzoGYEhIrEGSLTswCywQ0pGyRKMQEthRvCPFF7H56uvnBy5uUrKIlRrrenst5RSSmtm+YkX+SUG0xlMZzCdwXSrdxyabDyvmHPL6+6GDaYzmM5gOoPpyj98q5pTdzdsMJ3BdAbTGUwXf9M6nm7xoeNlE82lS951GKK5wzQ1Z7q7YYPpDKYzmM5gunjTWu938aH1nG1Q6U/Gx30bP7uluxs2mM5gOoPpDKbz7yGdwXQG0xlMZzDdE3J4HtdWbCB+AAAAAElFTkSuQmCC)](https://github.com/talwat/indiepkg)
+```
+
+### Flat square
+
+[![indiepkg-badge](https://img.shields.io/badge/get_on-indiepkg-blue?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAxklEQVRoge3Zuw3CMBRGYYzoGYEhIrEGSLTswCywQ0pGyRKMQEthRvCPFF7H56uvnBy5uUrKIlRrrenst5RSSmtm+YkX+SUG0xlMZzCdwXSrdxyabDyvmHPL6+6GDaYzmM5gOoPpyj98q5pTdzdsMJ3BdAbTGUwXf9M6nm7xoeNlE82lS951GKK5wzQ1Z7q7YYPpDKYzmM5gunjTWu938aH1nG1Q6U/Gx30bP7uluxs2mM5gOoPpDKbz7yGdwXQG0xlMZzDdE3J4HtdWbCB+AAAAAElFTkSuQmCC)](https://github.com/talwat/indiepkg)
+
+#### Markdown (flat square)
+
+```markdown
+[![indiepkg-badge](https://img.shields.io/badge/get_on-indiepkg-blue?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAxklEQVRoge3Zuw3CMBRGYYzoGYEhIrEGSLTswCywQ0pGyRKMQEthRvCPFF7H56uvnBy5uUrKIlRrrenst5RSSmtm+YkX+SUG0xlMZzCdwXSrdxyabDyvmHPL6+6GDaYzmM5gOoPpyj98q5pTdzdsMJ3BdAbTGUwXf9M6nm7xoeNlE82lS951GKK5wzQ1Z7q7YYPpDKYzmM5gunjTWu938aH1nG1Q6U/Gx30bP7uluxs2mM5gOoPpDKbz7yGdwXQG0xlMZzDdE3J4HtdWbCB+AAAAAElFTkSuQmCC)](https://github.com/talwat/indiepkg)
+```
+
+### Plastic
+
+[![indiepkg-badge](https://img.shields.io/badge/get_on-indiepkg-blue?style=plastic&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAxklEQVRoge3Zuw3CMBRGYYzoGYEhIrEGSLTswCywQ0pGyRKMQEthRvCPFF7H56uvnBy5uUrKIlRrrenst5RSSmtm+YkX+SUG0xlMZzCdwXSrdxyabDyvmHPL6+6GDaYzmM5gOoPpyj98q5pTdzdsMJ3BdAbTGUwXf9M6nm7xoeNlE82lS951GKK5wzQ1Z7q7YYPpDKYzmM5gunjTWu938aH1nG1Q6U/Gx30bP7uluxs2mM5gOoPpDKbz7yGdwXQG0xlMZzDdE3J4HtdWbCB+AAAAAElFTkSuQmCC)](https://github.com/talwat/indiepkg)
+
+#### Markdown (plastic)
+
+```markdown
+[![indiepkg-badge](https://img.shields.io/badge/get_on-indiepkg-blue?style=plastic&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAxklEQVRoge3Zuw3CMBRGYYzoGYEhIrEGSLTswCywQ0pGyRKMQEthRvCPFF7H56uvnBy5uUrKIlRrrenst5RSSmtm+YkX+SUG0xlMZzCdwXSrdxyabDyvmHPL6+6GDaYzmM5gOoPpyj98q5pTdzdsMJ3BdAbTGUwXf9M6nm7xoeNlE82lS951GKK5wzQ1Z7q7YYPpDKYzmM5gunjTWu938aH1nG1Q6U/Gx30bP7uluxs2mM5gOoPpDKbz7yGdwXQG0xlMZzDdE3J4HtdWbCB+AAAAAElFTkSuQmCC)](https://github.com/talwat/indiepkg)
+```
+
+### For the badge
+
+[![indiepkg-badge](https://img.shields.io/badge/get_on-indiepkg-blue?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAxklEQVRoge3Zuw3CMBRGYYzoGYEhIrEGSLTswCywQ0pGyRKMQEthRvCPFF7H56uvnBy5uUrKIlRrrenst5RSSmtm+YkX+SUG0xlMZzCdwXSrdxyabDyvmHPL6+6GDaYzmM5gOoPpyj98q5pTdzdsMJ3BdAbTGUwXf9M6nm7xoeNlE82lS951GKK5wzQ1Z7q7YYPpDKYzmM5gunjTWu938aH1nG1Q6U/Gx30bP7uluxs2mM5gOoPpDKbz7yGdwXQG0xlMZzDdE3J4HtdWbCB+AAAAAElFTkSuQmCC)](https://github.com/talwat/indiepkg)
+
+#### Markdown (for the badge)
+
+```markdown
+[![indiepkg-badge](https://img.shields.io/badge/get_on-indiepkg-blue?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAxklEQVRoge3Zuw3CMBRGYYzoGYEhIrEGSLTswCywQ0pGyRKMQEthRvCPFF7H56uvnBy5uUrKIlRrrenst5RSSmtm+YkX+SUG0xlMZzCdwXSrdxyabDyvmHPL6+6GDaYzmM5gOoPpyj98q5pTdzdsMJ3BdAbTGUwXf9M6nm7xoeNlE82lS951GKK5wzQ1Z7q7YYPpDKYzmM5gunjTWu938aH1nG1Q6U/Gx30bP7uluxs2mM5gOoPpDKbz7yGdwXQG0xlMZzDdE3J4HtdWbCB+AAAAAElFTkSuQmCC)](https://github.com/talwat/indiepkg)
+```

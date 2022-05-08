@@ -1,0 +1,31 @@
+{
+    "name": "ticker",
+    "author": "achannarasappa",
+    "description": "Terminal stock ticker with live updates and position tracking.",
+    "url": "https://github.com/achannarasappa/ticker.git",
+    "license": "GPL-3.0",
+    "language": "Go",
+    "bin": {
+        "in_source": [
+            "ticker"
+        ],
+        "installed": [
+            "ticker"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build ."
+            ],
+            "update": [
+                "go build ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}

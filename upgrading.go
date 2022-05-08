@@ -27,7 +27,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 
 	isUpToDate, directDownload := pullPkgRepo(pkgName)
 
-	debugLog("Checking if up to date...")
+	log(1, "Checking if up to date...")
 
 	if isUpToDate {
 		if force {
@@ -47,14 +47,16 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 		chapLog(chapPrefix+"==>", "", "Updating info")
 
 		log(1, "Getting & writing new info for %s...", pkgDisplayName)
-		writePkg(pkgName, findPkg(pkgName))
+		log(1, "Checking for info URL...")
+
+		rawGetInfo(pkgName, pkg)
 
 		chapLog(chapPrefix+"==>", "", "Getting version numbers")
 		log(1, "Reading new version number...")
 
 		newVer := readLoad(pkgName).Version
 
-		rawLogf("\n")
+		rawLog("\n")
 
 		log(1, "Saving old version number...")
 
@@ -88,7 +90,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
 	}
 
-	chapLog(chapPrefix+"==>", "", "Installing")
+	chapLog(chapPrefix+"==>", "", "Upgrading")
 	copyBins(pkg, srcPath)
 	copyManpages(pkg, srcPath)
 

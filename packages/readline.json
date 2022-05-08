@@ -1,0 +1,34 @@
+{
+    "name": "readline",
+    "author": "Free Software Foundation, Inc.",
+    "description": "Bourne again shell.",
+    "url": "https://git.savannah.gnu.org/git/readline.git",
+    "license": "GPL-3.0",
+    "language": "C",
+    "commands": {
+        "all": {
+            "install": [
+                "./configure --prefix=:(PREFIX):",
+                "make",
+                "make install"
+            ],
+            "update": [
+                "make clean",
+                "./configure --prefix=:(PREFIX):",
+                "make",
+                "make install"
+            ],
+            "uninstall": [
+                "make uninstall"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "autoconf",
+            "make",
+            "openssl"
+        ]
+    }
+}

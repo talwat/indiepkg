@@ -1,0 +1,32 @@
+{
+    "name": "navi",
+    "author": "denisidoro",
+    "description": "An interactive cheatsheet tool for the command-line.",
+    "url": "https://github.com/denisidoro/navi.git",
+    "license": "Apache-2.0",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/navi"
+        ],
+        "installed": [
+            "navi"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --locked --release"
+            ],
+            "update": [
+                "cargo build -v --locked --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

@@ -4,6 +4,7 @@
     "description": "ripgrep recursively searches directories for a regex pattern while respecting your gitignore.",
     "url": "https://github.com/BurntSushi/ripgrep.git",
     "license": "Unlicensed (Public Domain)",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/rg"

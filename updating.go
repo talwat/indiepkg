@@ -4,6 +4,21 @@ import (
 	"strings"
 )
 
+func rawGetInfo(pkgName string, pkg Package) {
+	log(1, "Getting info for %s", bolden(pkgName))
+	log(1, "Checking for info URL...")
+
+	if pkg.InfoURL == "" {
+		log(1, "Getting info from repos...")
+
+		writePkg(pkgName, findPkg(pkgName))
+	} else {
+		log(1, "Getting info from %s...", bolden(pkg.InfoURL))
+
+		writePkg(pkgName, getPkgFromURL(pkgName, pkg.InfoURL))
+	}
+}
+
 func updatePackage(pkgNames []string) {
 	fullInit()
 
@@ -17,7 +32,7 @@ func updatePackage(pkgNames []string) {
 			continue
 		}
 
-		downloadPkg(pkgName)
+		rawGetInfo(pkgName, readLoad(pkgName))
 
 		chapLog("==>", "GREEN", "Success")
 		log(0, "Successfully updated package info for %s.", pkgDisplayName)
@@ -48,12 +63,13 @@ func updateAllPackages() {
 
 	for _, installedPackage := range installedPackages {
 		chapLog("==>", "", "Updating %s", installedPackage)
-		downloadPkg(installedPackage)
+
+		rawGetInfo(installedPackage, readLoad(installedPackage))
 
 		chapLog("===>", "GREEN", "Success")
 		log(0, "Successfully updated package info for %s.", bolden(installedPackage))
 	}
 
-	chapLog("=>", "", "Success")
+	chapLog("=>", "GREEN", "Success")
 	log(0, "Successfully updated info for all packages.")
 }

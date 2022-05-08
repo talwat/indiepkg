@@ -4,6 +4,7 @@
     "description": "A sleek typing tui written in rust.",
     "url": "https://github.com/coloradocolby/thokr.git",
     "license": "MIT",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/thokr"

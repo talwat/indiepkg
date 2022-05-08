@@ -3,7 +3,8 @@
     "author": "kawaki-san",
     "description": "A rust port of Ugly-ToDo.",
     "url": "https://github.com/kawaki-san/utd-rs.git",
-    "license": "license",
+    "license": "Apache-2.0",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/utd"

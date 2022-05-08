@@ -1,0 +1,38 @@
+{
+    "name": "zig-bin",
+    "author": "ziglang",
+    "description": "General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software. (BINARY VERSION)",
+    "download": {
+        "darwin": {
+            "arm64": "https://ziglang.org/builds/zig-macos-aarch64-0.10.0-dev.2112+0df28f9d4.tar.xz",
+            "amd64": "https://ziglang.org/builds/zig-macos-x86_64-0.10.0-dev.2112+0df28f9d4.tar.xz"
+        },
+        "linux": {
+            "arm64": "https://ziglang.org/builds/zig-linux-aarch64-0.10.0-dev.2112+0df28f9d4.tar.xz",
+            "amd64": "https://ziglang.org/builds/zig-linux-x86_64-0.10.0-dev.2112+0df28f9d4.tar.xz"
+        }
+    },
+    "info_url": "https://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/zig-bin.json",
+    "version": "0.10-dev",
+    "license": "MIT",
+    "bin": {
+        "in_source": [
+            "zig"
+        ],
+        "installed": [
+            "zig"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "mv zig-bin zig-bin.tar.xz",
+                "tar -xf zig-bin.tar.xz --strip-components=1"
+            ],
+            "update": [
+                "mv zig-bin zig-bin.tar.xz",
+                "tar -xf zig-bin.tar.xz --strip-components=1"
+            ]
+        }
+    }
+}

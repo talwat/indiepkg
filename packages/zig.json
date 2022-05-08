@@ -1,0 +1,45 @@
+{
+    "name": "zig",
+    "author": "ziglang",
+    "description": "General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software.",
+    "url": "https://github.com/ziglang/zig.git",
+    "license": "MIT",
+    "language": "Zig",
+    "bin": {
+        "in_source": [
+            "zig"
+        ],
+        "installed": [
+            "zig"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cmake .",
+                "make"
+            ],
+            "update": [
+                "make clean",
+                "make"
+            ]
+        },
+        "darwin": {
+            "install": [
+                "cmake . -DCMAKE_PREFIX_PATH=/opt/homebrew/opt/llvm",
+                "make"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "cmake",
+            "make",
+            "gcc"
+        ]
+    },
+    "notes": [
+        "This package file, if installed on macOS, requires llvm to be installed with homebrew to the default location.",
+        "If you can't do this or do not have brew installed, you can install 'zig-bin' instead."
+    ]
+}

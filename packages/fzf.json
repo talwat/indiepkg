@@ -4,6 +4,7 @@
     "description": "A command-line fuzzy finder",
     "url": "https://github.com/junegunn/fzf.git",
     "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "fzf"
@@ -18,10 +19,10 @@
     "commands": {
         "all": {
             "install": [
-                "go build src"
+                "go build ."
             ],
             "update": [
-                "go build src"
+                "go build ."
             ]
         }
     },

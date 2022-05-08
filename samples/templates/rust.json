@@ -4,6 +4,7 @@
     "description": "mypkgdescription",
     "url": "git url",
     "license": "mypkglicense",
+    "language": "nameoflang",
     "bin": {
         "in_source": [
             "target/release/nameofpkg"

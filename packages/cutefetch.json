@@ -1,0 +1,21 @@
+{
+    "name": "cutefetch",
+    "author": "cybardev",
+    "description": "Cute little sysinfo fetch script for use in screenshots.",
+    "url": "https://github.com/cybardev/cutefetch.git",
+    "license": "GPL-3.0",
+    "language": "POSIX sh",
+    "bin": {
+        "in_source": [
+            "cutefetch"
+        ],
+        "installed": [
+            "cutefetch"
+        ]
+    },
+    "deps": {
+        "all": [
+            "sh"
+        ]
+    }
+}

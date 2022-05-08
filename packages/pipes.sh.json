@@ -4,6 +4,7 @@
     "description": "Animated pipes terminal screensaver",
     "url": "https://github.com/pipeseroni/pipes.sh.git",
     "license": "MIT",
+    "language": "Bash",
     "bin": {
         "in_source": [
             "pipes.sh"

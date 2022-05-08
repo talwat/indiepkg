@@ -3,7 +3,7 @@
     "author": "FlynnOwen",
     "description": "A terminal application of Conways Game of Life, implemented in C.",
     "url": "https://github.com/FlynnOwen/GOL-C.git",
-    "license": "none",
+    "language": "C",
     "bin": {
         "in_source": [
             "GOL"

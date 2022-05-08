@@ -21,6 +21,7 @@ linters:
     - funlen
     - goconst
     - dupl
+    - nestif
     - tagliatelle
 
     - golint

@@ -35,7 +35,7 @@ func findPkg(pkgName string) string {
 		debugLog("Status code: %d", statusCode)
 
 		if checkFor404(statusCode, pkgName) {
-			errorLogRaw("URL %s not found", bolden(pkgName))
+			errorLogRaw("Package %s not found", bolden(pkgName))
 			os.Exit(1)
 		}
 
@@ -44,7 +44,7 @@ func findPkg(pkgName string) string {
 		return pkgFile
 	}
 
-	rawLogf("\n")
+	rawLog("\n")
 
 	for _, url := range urls {
 		pkgURL := parseURL(url, false) + "/" + pkgName + ".json"
@@ -58,7 +58,7 @@ func findPkg(pkgName string) string {
 
 		if checkFor404(statusCode, pkgName) {
 			log(3, "Not found in %s", bolden(pkgURL))
-			rawLogf("\n")
+			rawLog("\n")
 
 			continue
 		}
@@ -67,7 +67,7 @@ func findPkg(pkgName string) string {
 
 		log(0, "Found %s in %s!", bolden(pkgName), bolden(pkgURL))
 		log(1, "Saving valid info & url...")
-		rawLogf("\n")
+		rawLog("\n")
 
 		validInfos = append(validInfos, infoFile)
 		validUrls = append(validUrls, pkgURL)
@@ -82,7 +82,7 @@ func findPkg(pkgName string) string {
 		errorLogRaw("Package %s not found in any repo", bolden(pkgName))
 		os.Exit(1)
 	case lenValidInfos == 1:
-		log(1, "Only valid 1 repo. Using that repo...")
+		log(1, "Only 1 valid repo found. Using that repo...")
 
 		return validInfos[0]
 	default:
@@ -115,10 +115,15 @@ func getPkgFromNet(pkgName string) (Package, string) {
 	return pkg, packageFile
 }
 
-func downloadPkg(pkgName string) {
-	log(1, "Downloading package info for %s...", bolden(pkgName))
+func getPkgFromURL(pkgName string, url string) string {
+	packageFile, statusCode, err := viewFile(url)
+	errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
 
-	writePkg(pkgName, findPkg(pkgName))
+	if checkFor404(statusCode, pkgName) {
+		errorLogRaw("The info URL provided from %s does not exist", bolden(pkgName))
+	}
+
+	return packageFile
 }
 
 func doDirectDownload(pkg Package, pkgName string, srcPath string) {
@@ -140,4 +145,34 @@ func doDirectDownload(pkg Package, pkgName string, srcPath string) {
 
 	debugLog("Downloading and saving to %s", bolden(nameOfFile))
 	downloadFileWithProg(nameOfFile, url, "An error occurred while downloading file for %s", pkgName)
+}
+
+func getPkgInfo(pkgName string, isURL bool) string {
+	var pkgFile string
+
+	switch {
+	case isURL: // Run this if a URL is selected
+		log(1, "Reading info from direct URL...")
+
+		parsedURL := parseURL(pkgName, false)
+		raw, statusCode, err := viewFile(parsedURL)
+		pkgFile = raw
+
+		errorLog(err, "An error occurred while getting info from %s", bolden(pkgName))
+
+		if checkFor404(statusCode, pkgName) {
+			errorLogRaw("Package %s not found", bolden(pkgName))
+			os.Exit(1)
+		}
+	case strings.HasSuffix(pkgName, ".json"): // Run this if a file is selected
+		log(1, "Reading info from file...")
+
+		pkgFile = readFile(pkgName, "An error occurred while reading %s", bolden(pkgName))
+	default: // Run this to read from repos
+		log(1, "Reading info from official repositories...")
+
+		pkgFile = findPkg(pkgName)
+	}
+
+	return pkgFile
 }

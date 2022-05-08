@@ -1,0 +1,32 @@
+{
+    "name": "paydept",
+    "author": "mufeedvh",
+    "description": "Shows every open-source dependency you use in your system that accept donations.",
+    "url": "https://github.com/mufeedvh/paydept.git",
+    "license": "MIT",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/paydept"
+        ],
+        "installed": [
+            "paydept"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

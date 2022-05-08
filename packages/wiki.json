@@ -4,6 +4,7 @@
     "description": "View Wikipedia articles through the CLI.",
     "url": "https://github.com/BetaPictoris/wiki.git",
     "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "wiki"

@@ -4,6 +4,7 @@
     "description": "Follow your favourite stock right in the terminal window.",
     "url": "https://github.com/bjarneo/superstonk.git",
     "license": "MIT",
+    "language": "Go",
     "bin": {
         "in_source": [
             "superstonk"

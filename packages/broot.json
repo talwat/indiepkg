@@ -4,6 +4,7 @@
     "description": "A new way to see and navigate directory trees.",
     "url": "https://github.com/Canop/broot.git",
     "license": "MIT",
+    "language": "Rust",
     "bin": {
         "in_source": [
             "target/release/broot"

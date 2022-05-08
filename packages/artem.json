@@ -1,0 +1,32 @@
+{
+    "name": "artem",
+    "author": "FineFindus",
+    "description": "Artem is a small cli program written in rust to easily convert images to ascii art.",
+    "url": "https://github.com/FineFindus/artem.git",
+    "license": "MPL-2.0",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/artem"
+        ],
+        "installed": [
+            "artem"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
