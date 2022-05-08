@@ -5,9 +5,9 @@ import (
 	"strings"
 )
 
-const version = "0.33"
+const version = "0.34"
 
-var purge, debug, assumeYes, force, noDeps bool = false, false, false, false, false
+var purge, debug, assumeYes, force, noDeps, ignoreRoot bool = false, false, false, false, false, false
 
 var optionToOthers, optionToOther bool = false, false
 
@@ -23,6 +23,8 @@ func checkFlag(flag string) {
 		force = true
 	case "-n", "--nodeps":
 		noDeps = true
+	case "-r", "--ignoreroot":
+		ignoreRoot = true
 	case "-help", "--help":
 		rawLog(helpMsg)
 
@@ -78,7 +80,7 @@ func checkCommand(other string, others []string, index int, args []string) {
 		}
 
 	case "update":
-		if len(args) <= index+1 {
+		if len(others) <= index+1 {
 			updateAllPackages()
 		} else {
 			optionToOthers = true
@@ -92,9 +94,6 @@ func checkCommand(other string, others []string, index int, args []string) {
 		optionToOther = true
 
 		infoPkg(others[index+1])
-
-	case "sync":
-		sync()
 
 	case "list-all":
 		listAll()

@@ -1,29 +1,25 @@
 {
-    "name": "bash",
-    "author": "Free Software Foundation, Inc.",
-    "description": "Bourne again shell.",
-    "url": "https://git.savannah.gnu.org/git/bash.git",
-    "license": "GPL-3.0",
+    "name": "nnn",
+    "author": "jarun",
+    "description": "The unorthodox terminal file manager.",
+    "url": "https://github.com/jarun/nnn.git",
+    "license": "BSD-2-Clause",
     "language": "C",
     "bin": {
         "in_source": [
-            "bash",
-            "bashbug"
+            "nnn"
         ],
         "installed": [
-            "bash",
-            "bashbug"
+            "nnn"
         ]
     },
     "commands": {
         "all": {
             "install": [
-                "./configure",
                 "make"
             ],
             "update": [
                 "make clean",
-                "./configure",
                 "make"
             ]
         }
@@ -31,7 +27,6 @@
     "deps": {
         "all": [
             "gcc",
-            "autoconf",
             "make"
         ]
     }

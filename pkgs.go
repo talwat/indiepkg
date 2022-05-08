@@ -12,6 +12,7 @@ func installPkgs(pkgNames []string) {
 
 	for _, pkgName := range pkgNames {
 		isURL := isURL(pkgName)
+		isFile := strings.HasSuffix(pkgName, ".json")
 		pkgDispName := bolden(pkgName)
 
 		chapLog("=>", "", "Installing %s", pkgName)
@@ -22,8 +23,14 @@ func installPkgs(pkgNames []string) {
 
 		var toCheckName string
 
-		if isURL {
+		switch {
+		case isURL:
 			toCheckName = getPkgNameFromURL(pkgName)
+		case isFile:
+			split := strings.Split(pkgName, "/")
+			toCheckName = strings.TrimSuffix(split[len(split)-1], ".json")
+		default:
+			toCheckName = pkgName
 		}
 
 		if pkgExists(toCheckName) {
@@ -60,7 +67,7 @@ func installPkgs(pkgNames []string) {
 
 			pkgFile = readFile(pkgName, "An error occurred while reading %s", bolden(pkgName))
 		default: // Run this to read from repos
-			log(1, "Reading info from official repositories...")
+			log(1, "Reading info from repositories...")
 
 			pkgFile = findPkg(pkgName)
 		}
@@ -81,7 +88,7 @@ func installPkgs(pkgNames []string) {
 			clonePkgRepo(pkg, tmpSrcPath)
 		} else {
 			chapLog("==>", "", "Downloading file")
-			doDirectDownload(pkg, pkgName, tmpSrcPath)
+			doDirectDownload(pkg, pkg.Name, tmpSrcPath)
 		}
 
 		if len(cmds) > 0 {

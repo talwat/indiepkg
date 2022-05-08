@@ -12,7 +12,6 @@ Commands:
   upgrade [packages...]           Pulls git repository & recompile's a package. If no package is specified, all packages are upgraded.
   info <package>                  Displays information about a specific package.
   remove-data <packages...>       Removes package data from .indiepkg. Use this only if a package installation has failed and the uninstall command won't work.
-  sync                            Sync package info & package source.
   re-clone                        Removes and re-clones IndiePKG source code in the src directory. Useful if you just changed the branch in the config file, or git is throwing errors when updating.
   list                            Lists all installed packages.
   list-all                        Lists all packages in all github repositories.
@@ -36,6 +35,8 @@ Options:
   -d, --debug                     Displays variable & debugging information.
   -y, --assumeyes                 Assumes yes to all prompts. (Use with caution!)
   -f, --force                     Bypasses all checks before preforming an action. Use will almost certainly lead to an error.
+  -r, --ignoreroot                Continues even if user is root.
+  -n, --nodeps                    Continues even if there are unmet dependencies.
 
 Examples:
   indiepkg install my-pkg

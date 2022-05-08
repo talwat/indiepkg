@@ -29,6 +29,7 @@ type Package struct {
 	Description string
 	URL         string
 	Download    map[string]interface{}
+	InfoURL     string `json:"info_url"`
 	Version     string
 	License     string
 	Language    string

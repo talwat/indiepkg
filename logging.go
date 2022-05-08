@@ -131,11 +131,13 @@ func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 }
 
 func input(defVal string, msg string, params ...interface{}) string {
+	logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
+
 	if assumeYes {
+		rawLog("\n")
+
 		return defVal
 	}
-
-	logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
 
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
