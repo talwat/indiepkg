@@ -1,0 +1,31 @@
+{
+    "name": "glow",
+    "author": "charmbracelet",
+    "description": "Render markdown on the CLI, with pizzazz!",
+    "url": "https://github.com/charmbracelet/glow.git",
+    "license": "MIT",
+    "language": "Go",
+    "bin": {
+        "in_source": [
+            "glow"
+        ],
+        "installed": [
+            "glow"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build ."
+            ],
+            "update": [
+                "go build ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}
