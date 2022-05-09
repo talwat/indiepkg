@@ -39,7 +39,11 @@ func infoPkg(pkgName string) {
 	log(1, "Description: %s", pkg.Description)
 	safePrintVal("License", pkg.License)
 	safePrintVal("Programming Language", pkg.Language)
-	log(1, "Git URL: %s", pkg.URL)
+	safePrintVal("Git URL", pkg.URL)
+
+	if pkg.Bin != nil {
+		log(1, "Binaries: %s", strings.Join(pkg.Bin.Installed, ", "))
+	}
 
 	if deps := getDeps(pkg.Deps); deps != nil {
 		log(1, "Dependencies: %s", strings.Join(deps, ", "))

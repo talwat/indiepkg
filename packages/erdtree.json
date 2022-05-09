@@ -1,0 +1,32 @@
+{
+    "name": "erdtree",
+    "author": "solidiquis",
+    "description": "The fallen leaves tell a story... of a colorful file tree visualizer for the command-line.",
+    "url": "https://github.com/solidiquis/erdtree.git",
+    "license": "MIT",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/erdtree"
+        ],
+        "installed": [
+            "erdtree"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

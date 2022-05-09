@@ -1,0 +1,32 @@
+{
+    "name": "tealdeer",
+    "author": "dbrgn",
+    "description": "A very fast implementation of tldr in Rust.",
+    "url": "https://github.com/dbrgn/tealdeer.git",
+    "license": "NOASSERTION",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/tldr"
+        ],
+        "installed": [
+            "tldr"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

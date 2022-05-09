@@ -1,0 +1,32 @@
+{
+    "name": "gitui",
+    "author": "extrawurst",
+    "description": "Blazing fast terminal-ui for git written in rust.",
+    "url": "https://github.com/extrawurst/gitui.git",
+    "license": "MIT",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/gitui"
+        ],
+        "installed": [
+            "gitui"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
