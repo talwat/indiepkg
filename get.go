@@ -7,6 +7,7 @@ import (
 )
 
 func writePkg(pkgName string, pkgFile string) {
+	log(1, "Writing package info for %s...", bolden(pkgName))
 	newFile(infoPath+pkgName+".json", pkgFile, "An error occurred while writing package information for %s", pkgName)
 }
 
@@ -126,25 +127,25 @@ func getPkgFromURL(pkgName string, url string) string {
 	return packageFile
 }
 
-func doDirectDownload(pkg Package, pkgName string, srcPath string) {
-	pkgDispName := bolden(pkgName)
+func doDirectDownload(pkg Package, srcPath string) {
+	pkgDispName := bolden(pkg.Name)
 
 	log(1, "Making sure %s is not already downloaded...", pkgDispName)
-	delPath(false, srcPath+pkg.Name, "An error occurred while deleting temporary downloaded files for %s", pkgName)
+	delPath(false, srcPath+pkg.Name, "An error occurred while deleting temporary downloaded files for %s", pkgDispName)
 
 	log(1, "Getting download URL for %s", pkgDispName)
 
 	url := getDownloadURL(pkg)
 
 	log(1, "Making directory for %s...", pkgDispName)
-	newDir(srcPath+pkg.Name, "An error occurred while creating temporary directory for %s", pkgName)
+	newDir(srcPath+pkg.Name, "An error occurred while creating temporary directory for %s", pkgDispName)
 
 	log(1, "Downloading file for %s from %s...", pkgDispName, bolden(url))
 
 	nameOfFile := srcPath + pkg.Name + "/" + pkg.Name
 
 	debugLog("Downloading and saving to %s", bolden(nameOfFile))
-	downloadFileWithProg(nameOfFile, url, "An error occurred while downloading file for %s", pkgName)
+	downloadFileWithProg(nameOfFile, url, "An error occurred while downloading file for %s", pkgDispName)
 }
 
 func getPkgInfo(pkgName string, isURL bool) string {
