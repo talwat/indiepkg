@@ -29,5 +29,8 @@
             "g++",
             "make"
         ]
-    }
+    },
+    "config_paths": [
+        ".local/kabmat"
+    ]
 }

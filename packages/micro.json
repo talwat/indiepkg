@@ -29,5 +29,8 @@
             "go",
             "make"
         ]
-    }
+    },
+    "config_paths": [
+        ".config/micro"
+    ]
 }

@@ -1,16 +1,16 @@
 {
-    "name": "gitui",
-    "author": "extrawurst",
-    "description": "Blazing fast terminal-ui for git written in rust.",
-    "url": "https://github.com/extrawurst/gitui.git",
-    "license": "MIT",
+    "name": "helix",
+    "author": "helix-editor",
+    "description": "A post-modern modal text editor.",
+    "url": "https://github.com/helix-editor/helix.git",
+    "license": "MPL-2.0",
     "language": "Rust",
     "bin": {
         "in_source": [
-            "target/release/gitui"
+            "target/release/hx"
         ],
         "installed": [
-            "gitui"
+            "hx"
         ]
     },
     "commands": {
@@ -30,6 +30,6 @@
         ]
     },
     "config_paths": [
-        ".config/gitui"
+        ".config/helix"
     ]
 }
