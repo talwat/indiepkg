@@ -80,7 +80,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 		}
 
 		chapLog(chapPrefix+"==>", "", "Downloading file")
-		doDirectDownload(pkg, pkgName, srcPath)
+		doDirectDownload(pkg, srcPath)
 	}
 
 	chapLog(chapPrefix+"==>", "", "Getting upgrade commands")
