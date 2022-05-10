@@ -31,5 +31,8 @@
             "pkg-config",
             "make"
         ]
-    }
+    },
+    "config_paths": [
+        ".local/the_silver_searcher"
+    ]
 }

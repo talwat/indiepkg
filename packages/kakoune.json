@@ -1,16 +1,16 @@
 {
-    "name": "nnn",
-    "author": "jarun",
-    "description": "The unorthodox terminal file manager.",
-    "url": "https://github.com/jarun/nnn.git",
-    "license": "BSD-2-Clause",
-    "language": "C",
+    "name": "kakoune",
+    "author": "mawww",
+    "description": "Mawww's experiment for a better code editor.",
+    "url": "https://github.com/mawww/kakoune.git",
+    "license": "Unlicense",
+    "language": "C++",
     "bin": {
         "in_source": [
-            "nnn"
+            "src/kak"
         ],
         "installed": [
-            "nnn"
+            "src/kak"
         ]
     },
     "commands": {
@@ -19,7 +19,6 @@
                 "make"
             ],
             "update": [
-                "make clean",
                 "make"
             ]
         }
@@ -27,10 +26,8 @@
     "deps": {
         "all": [
             "gcc",
+            "g++",
             "make"
         ]
-    },
-    "config_paths": [
-        ".config/nnn"
-    ]
+    }
 }
