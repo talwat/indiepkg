@@ -16,7 +16,7 @@
     "commands": {
         "all": {
             "install": [
-                "./configure",
+                "./configure --prefix=:(PREFIX):",
                 "make"
             ],
             "update": [
@@ -28,6 +28,8 @@
         "all": [
             "gcc",
             "g++",
+            "autoconf",
+            "autoreconf",
             "make"
         ]
     }
