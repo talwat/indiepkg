@@ -14,7 +14,7 @@ func loadPkg(packageFile string, pkgName string) Package {
 	environmentVariables := map[string]string{
 		"PREFIX":        config.Paths.Prefix,
 		"BIN":           config.Paths.Prefix + "bin/",
-		"HOME":          Home,
+		"HOME":          home,
 		"INDIEPKG_PATH": mainPath,
 		"BOLD":          textFx.Bold,
 		"RESET":         RESETCOL,

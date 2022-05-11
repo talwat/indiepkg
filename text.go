@@ -26,62 +26,62 @@ type Effects struct {
 	Strikethrough string
 }
 
-var RESETCOL = "\x1B[0"
+var RESETCOL = "\x1B[0m"
 
 var textFx = Effects{
-	End:           "\x1B[0",
-	Bold:          "\x1B[1",
-	Dim:           "\x1B[",
-	Italic:        "\x1B[3",
-	URL:           "\x1B[4",
-	Blink:         "\x1B[5",
-	Blink2:        "\x1B[6",
-	Selected:      "\x1B[7",
-	Strikethrough: "\x1B[9",
+	End:           "\x1B[0m",
+	Bold:          "\x1B[1m",
+	Dim:           "\x1B[m",
+	Italic:        "\x1B[3m",
+	URL:           "\x1B[4m",
+	Blink:         "\x1B[5m",
+	Blink2:        "\x1B[6m",
+	Selected:      "\x1B[7m",
+	Strikethrough: "\x1B[9m",
 }
 
 var textCol = Color{
-	Black:  "\x1B[30",
-	Red:    "\x1B[31",
-	Green:  "\x1B[32",
-	Yellow: "\x1B[33",
-	Blue:   "\x1B[34",
-	Violet: "\x1B[35",
-	Cyan:   "\x1B[36",
-	White:  "\x1B[37",
+	Black:  "\x1B[30m",
+	Red:    "\x1B[31m",
+	Green:  "\x1B[32m",
+	Yellow: "\x1B[33m",
+	Blue:   "\x1B[34m",
+	Violet: "\x1B[35m",
+	Cyan:   "\x1B[36m",
+	White:  "\x1B[37m",
 }
 
 var textBgCol = Color{
-	Black:  "\x1B[40",
-	Red:    "\x1B[41",
-	Green:  "\x1B[4",
-	Yellow: "\x1B[43",
-	Blue:   "\x1B[44",
-	Violet: "\x1B[45",
-	Beige:  "\x1B[46",
-	White:  "\x1B[47",
+	Black:  "\x1B[40m",
+	Red:    "\x1B[41m",
+	Green:  "\x1B[4m",
+	Yellow: "\x1B[43m",
+	Blue:   "\x1B[44m",
+	Violet: "\x1B[45m",
+	Beige:  "\x1B[46m",
+	White:  "\x1B[47m",
 }
 
 var lightTextCol = Color{
-	Black:  "\x1B[90",
-	Red:    "\x1B[91",
-	Green:  "\x1B[9",
-	Yellow: "\x1B[93",
-	Blue:   "\x1B[94",
-	Violet: "\x1B[95",
-	Beige:  "\x1B[96",
-	White:  "\x1B[97",
+	Black:  "\x1B[90m",
+	Red:    "\x1B[91m",
+	Green:  "\x1B[9m",
+	Yellow: "\x1B[93m",
+	Blue:   "\x1B[94m",
+	Violet: "\x1B[95m",
+	Beige:  "\x1B[96m",
+	White:  "\x1B[97m",
 }
 
 var lightTextBgCol = Color{
-	Black:  "\x1B[100",
-	Red:    "\x1B[101",
-	Green:  "\x1B[10",
-	Yellow: "\x1B[103",
-	Blue:   "\x1B[104",
-	Violet: "\x1B[105",
-	Beige:  "\x1B[106",
-	White:  "\x1B[107",
+	Black:  "\x1B[100m",
+	Red:    "\x1B[101m",
+	Green:  "\x1B[10m",
+	Yellow: "\x1B[103m",
+	Blue:   "\x1B[104m",
+	Violet: "\x1B[105m",
+	Beige:  "\x1B[106m",
+	White:  "\x1B[107m",
 }
 
 func bolden(text interface{}) string {

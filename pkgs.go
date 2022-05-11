@@ -144,8 +144,8 @@ func uninstallPkgs(pkgNames []string) {
 			log(1, "Deleting configuration files for %s...", pkgDispName)
 
 			for _, path := range pkg.ConfigPaths {
-				log(1, "Deleting configuration path %s", bolden(Home+path))
-				delPath(false, Home+path, "An error occurred while deleting configuration files for %s", pkgDispName)
+				log(1, "Deleting configuration path %s", bolden(home+path))
+				delPath(false, home+path, "An error occurred while deleting configuration files for %s", pkgDispName)
 			}
 		}
 

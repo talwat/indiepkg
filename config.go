@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	mainPath       string = Home + ".indiepkg/"
+	mainPath       string = home + ".indiepkg/"
 	srcPath        string = mainPath + "data/package_src/"
 	tmpSrcPath     string = mainPath + "tmp/package_src/"
 	infoPath       string = mainPath + "data/installed_packages/"
@@ -50,7 +50,7 @@ type Config struct {
 
 var config Config = Config{
 	Paths{
-		Home + ".local/",
+		home + ".local/",
 	},
 
 	Updating{
@@ -84,8 +84,8 @@ func loadConfig() {
 
 	errorLog(err, "An error occurred while loading config file")
 
-	if !strings.HasPrefix(config.Paths.Prefix, Home) {
-		config.Paths.Prefix = Home + config.Paths.Prefix
+	if !strings.HasPrefix(config.Paths.Prefix, home) {
+		config.Paths.Prefix = home + config.Paths.Prefix
 	}
 
 	if !strings.HasSuffix(config.Paths.Prefix, "/") {
