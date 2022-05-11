@@ -60,7 +60,7 @@ func runCommandDot(workDir string, cmd string, args ...string) {
 		if debug {
 			rawLogf(logType[5]+(" %s\n"), scanner.Text())
 		} else {
-			rawLog(textCol["VIOLET"] + "." + RESETCOL)
+			rawLog(textCol.Violet + "." + RESETCOL)
 		}
 	}
 

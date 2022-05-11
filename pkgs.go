@@ -105,12 +105,12 @@ func installPkgs(pkgNames []string) {
 		mvPath(tmpSrcPath+pkg.Name, srcPath+pkg.Name)
 		writePkg(pkg.Name, pkgFile)
 
-		chapLog("==>", "GREEN", "Successfully installed %s", pkgDispName)
+		chapLog("==>", textCol.Green, "Successfully installed %s", pkgDispName)
 		log(0, "Installed %s successfully.", pkgDispName)
 		getNotes(pkg)
 	}
 
-	chapLog("=>", "GREEN", "Success")
+	chapLog("=>", textCol.Green, "Success")
 	log(0, "Installed all selected packages successfully.")
 }
 
@@ -144,8 +144,8 @@ func uninstallPkgs(pkgNames []string) {
 			log(1, "Deleting configuration files for %s...", pkgDispName)
 
 			for _, path := range pkg.ConfigPaths {
-				log(1, "Deleting configuration path %s", bolden(home+path))
-				delPath(false, home+path, "An error occurred while deleting configuration files for %s", pkgDispName)
+				log(1, "Deleting configuration path %s", bolden(Home+path))
+				delPath(false, Home+path, "An error occurred while deleting configuration files for %s", pkgDispName)
 			}
 		}
 
@@ -186,10 +186,10 @@ func uninstallPkgs(pkgNames []string) {
 		log(1, "Deleting info file for %s...", pkgDispName)
 		delPath(false, infoPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
 
-		chapLog("==>", "GREEN", "Success")
+		chapLog("==>", textCol.Green, "Success")
 		log(0, "Successfully uninstalled %s.", pkgDispName)
 	}
 
-	chapLog("=>", "GREEN", "Success")
+	chapLog("=>", textCol.Green, "Success")
 	log(0, "Successfully uninstalled all selected packages.")
 }

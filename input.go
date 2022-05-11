@@ -194,6 +194,6 @@ func parseInput() {
 	}
 
 	if len(others) < 1 {
-		log(1, "Indiepkg Version %s, run %sindiepkg help%s for usage.", bolden(version), textFx["BOLD"], RESETCOL)
+		log(1, "Indiepkg Version %s, run %sindiepkg help%s for usage.", bolden(version), textFx.Bold, RESETCOL)
 	}
 }

@@ -2,64 +2,88 @@ package main
 
 import "fmt"
 
-var RESETCOL = "\x1B[0m"
-
-var textFx = map[string]string{
-	"END":           "\x1B[0m",
-	"BOLD":          "\x1B[1m",
-	"DIM":           "\x1B[m",
-	"ITALIC":        "\x1B[3m",
-	"URL":           "\x1B[4m",
-	"BLINK":         "\x1B[5m",
-	"BLINK2":        "\x1B[6m",
-	"SELECTED":      "\x1B[7m",
-	"STRIKETHROUGH": "\x1B[9m",
+type Color struct {
+	Black  string
+	Red    string
+	Green  string
+	Yellow string
+	Blue   string
+	Violet string
+	Cyan   string
+	Beige  string
+	White  string
 }
 
-var textCol = map[string]string{
-	"BLACK":  "\x1B[30m",
-	"RED":    "\x1B[31m",
-	"GREEN":  "\x1B[32m",
-	"YELLOW": "\x1B[33m",
-	"BLUE":   "\x1B[34m",
-	"VIOLET": "\x1B[35m",
-	"CYAN":   "\x1B[36m",
-	"WHITE":  "\x1B[37m",
+type Effects struct {
+	End           string
+	Bold          string
+	Dim           string
+	Italic        string
+	URL           string
+	Blink         string
+	Blink2        string
+	Selected      string
+	Strikethrough string
 }
 
-var textBgCol = map[string]string{
-	"BLACK":  "\x1B[40m",
-	"RED":    "\x1B[41m",
-	"GREEN":  "\x1B[4m",
-	"YELLOW": "\x1B[43m",
-	"BLUE":   "\x1B[44m",
-	"VIOLET": "\x1B[45m",
-	"BEIGE":  "\x1B[46m",
-	"WHITE":  "\x1B[47m",
+var RESETCOL = "\x1B[0"
+
+var textFx = Effects{
+	End:           "\x1B[0",
+	Bold:          "\x1B[1",
+	Dim:           "\x1B[",
+	Italic:        "\x1B[3",
+	URL:           "\x1B[4",
+	Blink:         "\x1B[5",
+	Blink2:        "\x1B[6",
+	Selected:      "\x1B[7",
+	Strikethrough: "\x1B[9",
 }
 
-var lightTextCol = map[string]string{
-	"BLACK":  "\x1B[90m",
-	"RED":    "\x1B[91m",
-	"GREEN":  "\x1B[9m",
-	"YELLOW": "\x1B[93m",
-	"BLUE":   "\x1B[94m",
-	"VIOLET": "\x1B[95m",
-	"BEIGE":  "\x1B[96m",
-	"WHITE":  "\x1B[97m",
+var textCol = Color{
+	Black:  "\x1B[30",
+	Red:    "\x1B[31",
+	Green:  "\x1B[32",
+	Yellow: "\x1B[33",
+	Blue:   "\x1B[34",
+	Violet: "\x1B[35",
+	Cyan:   "\x1B[36",
+	White:  "\x1B[37",
 }
 
-var lightTextBgCol = map[string]string{
-	"GREY":   "\x1B[100m",
-	"RED":    "\x1B[101m",
-	"GREEN":  "\x1B[10m",
-	"YELLOW": "\x1B[103m",
-	"BLUE":   "\x1B[104m",
-	"VIOLET": "\x1B[105m",
-	"BEIGE":  "\x1B[106m",
-	"WHITE":  "\x1B[107m",
+var textBgCol = Color{
+	Black:  "\x1B[40",
+	Red:    "\x1B[41",
+	Green:  "\x1B[4",
+	Yellow: "\x1B[43",
+	Blue:   "\x1B[44",
+	Violet: "\x1B[45",
+	Beige:  "\x1B[46",
+	White:  "\x1B[47",
+}
+
+var lightTextCol = Color{
+	Black:  "\x1B[90",
+	Red:    "\x1B[91",
+	Green:  "\x1B[9",
+	Yellow: "\x1B[93",
+	Blue:   "\x1B[94",
+	Violet: "\x1B[95",
+	Beige:  "\x1B[96",
+	White:  "\x1B[97",
+}
+
+var lightTextBgCol = Color{
+	Black:  "\x1B[100",
+	Red:    "\x1B[101",
+	Green:  "\x1B[10",
+	Yellow: "\x1B[103",
+	Blue:   "\x1B[104",
+	Violet: "\x1B[105",
+	Beige:  "\x1B[106",
+	White:  "\x1B[107",
 }
 
 func bolden(text interface{}) string {
-	return textFx["BOLD"] + fmt.Sprint(text) + RESETCOL
+	return textFx.Bold + fmt.Sprint(text) + RESETCOL
 }

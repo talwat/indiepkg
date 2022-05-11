@@ -14,7 +14,7 @@ func compSrc() {
 	chapLog("==>", "", "Moving IndiePKG binary")
 
 	srcPath := indiePkgSrcDir + "indiepkg"
-	destPath := home + ".local/bin/indiepkg"
+	destPath := Home + ".local/bin/indiepkg"
 
 	log(1, "Moving %s to %s...", bolden(srcPath), bolden(destPath))
 	mvPath(srcPath, destPath)
@@ -65,7 +65,7 @@ func autoUpdate() {
 
 		_, err = runCommand(indiePkgSrcDir, "make")
 		errorLog(err, "An error occurred while compiling IndiePKG because of an auto-update")
-		mvPath(indiePkgSrcDir+"indiepkg", home+".local/bin/indiepkg")
+		mvPath(indiePkgSrcDir+"indiepkg", Home+".local/bin/indiepkg")
 		log(0, "Auto-updated IndiePKG!")
 	}
 }
