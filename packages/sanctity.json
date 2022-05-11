@@ -3,7 +3,6 @@
     "author": "papojari",
     "description": "RuSt ANsi16 Color Test utIliTY.",
     "url": "https://codeberg.org/papojari/sanctity.git",
-    "license": "",
     "language": "Rust",
     "bin": {
         "in_source": [
