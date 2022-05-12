@@ -121,6 +121,14 @@ func fetch() {
 	log(1, "Arch: %s", runtime.GOARCH)
 	log(1, "Go Version: %s", strings.TrimPrefix(runtime.Version(), "go"))
 	log(1, "IndiePKG Version: %s", version)
+	log(1, "Shell: %s", os.Getenv("SHELL"))
+	log(1, "TERM: %s", os.Getenv("TERM"))
+
+	if isRoot() {
+		log(3, "Running as %s", textCol.Red+"root"+RESETCOL)
+	} else {
+		log(1, "Running as %s", textCol.Green+"normal user"+RESETCOL)
+	}
 
 	macOSVer, err := runCommand(".", "sw_vers", "-productVersion")
 	if err == nil {
@@ -130,6 +138,13 @@ func fetch() {
 	bashVer, err := runCommand(".", "bash", "--version")
 	if err == nil {
 		log(1, "Bash version: %s", strings.Split(strings.TrimPrefix(strings.Split(bashVer, "\n")[0], "GNU bash, version "), "(")[0])
+	} else {
+		log(3, "Could not get bash version. Error: %s", err.Error())
+	}
+
+	zshVer, err := runCommand(".", "zsh", "--version")
+	if err == nil {
+		log(1, "Zsh version: %s", strings.Split(strings.TrimPrefix(zshVer, "zsh "), "(")[0])
 	} else {
 		log(3, "Could not get bash version. Error: %s", err.Error())
 	}

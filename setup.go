@@ -47,4 +47,8 @@ func envAdd() {
 	fullAppendRc("zshrc")
 	fullAppendRc("profile")
 	fullAppendRc("zprofile")
+
+	if checkIfCommandExists("fish") {
+		log(3, "Fish found, but fish is not supported officially. You will have to add the environment variables manually.")
+	}
 }
