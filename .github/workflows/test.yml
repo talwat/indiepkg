@@ -75,7 +75,7 @@ jobs:
       
       - name: Re-compile packages
         run: |
-          ./indiepkg re-compile pfetch yaf neofetch deno zig-bin -d
+          ./indiepkg re-compile pfetch yaf neofetch deno zig-bin -y -d
 
       - name: Add repo
         run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/
