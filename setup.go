@@ -22,7 +22,6 @@ func envAdd() {
 	}
 
 	appendRc := func(name string, text string) {
-		log(1, "%s found, adding to it...", bolden(name))
 		appendToFile(home+"."+name, text)
 	}
 
