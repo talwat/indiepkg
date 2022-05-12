@@ -1,0 +1,31 @@
+{
+    "name": "sanctity",
+    "author": "papojari",
+    "description": "RuSt ANsi16 Color Test utIliTY.",
+    "url": "https://codeberg.org/papojari/sanctity.git",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/sanctity"
+        ],
+        "installed": [
+            "sanctity"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

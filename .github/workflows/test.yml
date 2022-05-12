@@ -37,6 +37,9 @@ jobs:
       - name: Run help command
         run: ./indiepkg help
 
+      - name: Run env-add command
+        run: ./indiepkg env-add -y
+
       - name: Run setup command
         run: ./indiepkg setup -d
 

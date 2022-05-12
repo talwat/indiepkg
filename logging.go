@@ -10,13 +10,13 @@ import (
 )
 
 var logType = map[int]string{
-	0: RESETCOL + textCol["GREEN"] + "[^]" + RESETCOL,
-	1: RESETCOL + textCol["CYAN"] + "[.]" + RESETCOL,
-	2: RESETCOL + textCol["BLUE"] + "[#]" + RESETCOL,
-	3: RESETCOL + textCol["YELLOW"] + "[*]" + RESETCOL,
-	4: RESETCOL + textCol["RED"] + "[!]" + RESETCOL,
-	5: RESETCOL + textCol["VIOLET"] + "[+]" + RESETCOL,
-	6: RESETCOL + textCol["CYAN"] + "[?]" + RESETCOL,
+	0: RESETCOL + textCol.Green + "[^]" + RESETCOL,
+	1: RESETCOL + textCol.Cyan + "[.]" + RESETCOL,
+	2: RESETCOL + textCol.Blue + "[#]" + RESETCOL,
+	3: RESETCOL + textCol.Yellow + "[*]" + RESETCOL,
+	4: RESETCOL + textCol.Red + "[!]" + RESETCOL,
+	5: RESETCOL + textCol.Violet + "[+]" + RESETCOL,
+	6: RESETCOL + textCol.Cyan + "[?]" + RESETCOL,
 }
 
 func chapLog(prefix string, colorInput string, msg string, params ...interface{}) {
@@ -27,17 +27,17 @@ func chapLog(prefix string, colorInput string, msg string, params ...interface{}
 	} else {
 		switch len(prefix) {
 		case 2:
-			color = "VIOLET"
+			color = textCol.Violet
 		case 3:
-			color = "BLUE"
+			color = textCol.Blue
 		case 4:
-			color = "CYAN"
+			color = textCol.Cyan
 		default:
-			color = "CYAN"
+			color = textCol.Cyan
 		}
 	}
 
-	rawLogf("\n"+RESETCOL+textCol[color]+bolden(prefix+RESETCOL+textFx["BOLD"]+" %s\n"), fmt.Sprintf(msg, params...))
+	rawLogf("\n"+RESETCOL+color+bolden(prefix+RESETCOL+textFx.Bold+" %s\n"), fmt.Sprintf(msg, params...))
 }
 
 func indent(text string) {
@@ -77,7 +77,7 @@ func errorLog(err error, msg string, params ...interface{}) {
 			return
 		}
 
-		chapLog("=>", "RED", "Error")
+		chapLog("=>", textCol.Red, "Error")
 		log(4, msg)
 		log(4, "Source error log:")
 
@@ -101,7 +101,7 @@ func errorLogRaw(msg string, params ...interface{}) {
 		return
 	}
 
-	chapLog("=>", "RED", "Error")
+	chapLog("=>", textCol.Red, "Error")
 	log(4, errMsg)
 	os.Exit(1)
 }
@@ -116,7 +116,7 @@ func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 			return
 		}
 
-		chapLog("\n=>", "RED", "Error")
+		chapLog("\n=>", textCol.Red, "Error")
 		logNewlineBefore(4, msg)
 		log(4, "Source error log:")
 
@@ -145,8 +145,8 @@ func input(defVal string, msg string, params ...interface{}) string {
 	return strings.TrimSpace(input)
 }
 
-func confirm(defVal, msg string) {
-	if !strings.Contains(input(defVal, msg), "y") {
+func confirm(defVal, msg string, params ...interface{}) {
+	if !strings.Contains(input(defVal, msg, params...), "y") {
 		os.Exit(1)
 	}
 }

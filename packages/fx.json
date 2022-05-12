@@ -1,0 +1,31 @@
+{
+    "name": "fx",
+    "author": "antonmedv",
+    "description": "Terminal JSON viewer.",
+    "url": "https://github.com/antonmedv/fx.git",
+    "license": "MIT",
+    "language": "Go",
+    "bin": {
+        "in_source": [
+            "fx"
+        ],
+        "installed": [
+            "fx"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build ."
+            ],
+            "update": [
+                "go build ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}

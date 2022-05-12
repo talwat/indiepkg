@@ -94,7 +94,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 	copyBins(pkg, srcPath)
 	copyManpages(pkg, srcPath)
 
-	chapLog(chapPrefix+"==>", "GREEN", "Success")
+	chapLog(chapPrefix+"==>", textCol.Green, "Success")
 	log(0, "Successfully upgraded %s!", pkgDisplayName)
 }
 
@@ -125,6 +125,6 @@ func upgradeAllPackages() {
 		upgradePkgFunc(installedPackage, "=")
 	}
 
-	chapLog("=>", "GREEN", "Success")
+	chapLog("=>", textCol.Green, "Success")
 	log(0, "Upgraded all packages.")
 }

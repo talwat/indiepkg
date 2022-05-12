@@ -16,7 +16,7 @@ func loadPkg(packageFile string, pkgName string) Package {
 		"BIN":           config.Paths.Prefix + "bin/",
 		"HOME":          home,
 		"INDIEPKG_PATH": mainPath,
-		"BOLD":          textFx["BOLD"],
+		"BOLD":          textFx.Bold,
 		"RESET":         RESETCOL,
 	}
 

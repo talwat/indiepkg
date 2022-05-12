@@ -58,7 +58,7 @@ func infoPkg(pkgName string) {
 
 func rmData(pkgNames []string) {
 	log(3, "Warning: This will remove the data for the selected packages stored in %s", mainPath)
-	log(3, "This will %snot%s run the uninstall commands.", textFx["BOLD"], RESETCOL)
+	log(3, "This will %snot%s run the uninstall commands.", textFx.Bold, RESETCOL)
 	log(3, "You should only use this in case a package installation has failed at a certain step, or you want to separate an installed package from indiepkg.")
 	displayPkgs(pkgNames, "remove the data for")
 
@@ -75,7 +75,7 @@ func rmData(pkgNames []string) {
 		log(0, "Successfully deleted the data for %s.\n", pkgDisplayName)
 	}
 
-	chapLog("=>", "GREEN", "Success")
+	chapLog("=>", textCol.Green, "Success")
 	log(0, "Successfully deleted data.")
 }
 

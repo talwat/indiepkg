@@ -34,11 +34,11 @@ func updatePackage(pkgNames []string) {
 
 		rawGetInfo(pkgName, readLoad(pkgName))
 
-		chapLog("==>", "GREEN", "Success")
+		chapLog("==>", textCol.Green, "Success")
 		log(0, "Successfully updated package info for %s.", pkgDisplayName)
 	}
 
-	chapLog("=>", "GREEN", "Success")
+	chapLog("=>", textCol.Green, "Success")
 	log(0, "Successfully updated info for all selected packages.")
 }
 
@@ -66,10 +66,10 @@ func updateAllPackages() {
 
 		rawGetInfo(installedPackage, readLoad(installedPackage))
 
-		chapLog("===>", "GREEN", "Success")
+		chapLog("===>", textCol.Green, "Success")
 		log(0, "Successfully updated package info for %s.", bolden(installedPackage))
 	}
 
-	chapLog("=>", "GREEN", "Success")
+	chapLog("=>", textCol.Green, "Success")
 	log(0, "Successfully updated info for all packages.")
 }
