@@ -49,6 +49,7 @@ var textCol = Color{
 	Violet: "\x1B[35m",
 	Cyan:   "\x1B[36m",
 	White:  "\x1B[37m",
+	Beige:  "\x1B[37m",
 }
 
 var textBgCol = Color{
@@ -57,6 +58,7 @@ var textBgCol = Color{
 	Green:  "\x1B[4m",
 	Yellow: "\x1B[43m",
 	Blue:   "\x1B[44m",
+	Cyan:   "\x1B[44m",
 	Violet: "\x1B[45m",
 	Beige:  "\x1B[46m",
 	White:  "\x1B[47m",
@@ -68,6 +70,7 @@ var lightTextCol = Color{
 	Green:  "\x1B[9m",
 	Yellow: "\x1B[93m",
 	Blue:   "\x1B[94m",
+	Cyan:   "\x1B[94m",
 	Violet: "\x1B[95m",
 	Beige:  "\x1B[96m",
 	White:  "\x1B[97m",
@@ -79,6 +82,7 @@ var lightTextBgCol = Color{
 	Green:  "\x1B[10m",
 	Yellow: "\x1B[103m",
 	Blue:   "\x1B[104m",
+	Cyan:   "\x1B[104m",
 	Violet: "\x1B[105m",
 	Beige:  "\x1B[106m",
 	White:  "\x1B[107m",

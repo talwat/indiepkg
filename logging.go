@@ -145,8 +145,8 @@ func input(defVal string, msg string, params ...interface{}) string {
 	return strings.TrimSpace(input)
 }
 
-func confirm(defVal, msg string) {
-	if !strings.Contains(input(defVal, msg), "y") {
+func confirm(defVal, msg string, params ...interface{}) {
+	if !strings.Contains(input(defVal, msg, params...), "y") {
 		os.Exit(1)
 	}
 }
