@@ -1,0 +1,32 @@
+{
+    "name": "snake",
+    "author": "kschat",
+    "description": "Snake for the terminal implemented in Rust.",
+    "url": "https://github.com/kschat/snake.git",
+    "license": "MIT",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/snake"
+        ],
+        "installed": [
+            "snake"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
