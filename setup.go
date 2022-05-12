@@ -13,9 +13,7 @@ func setup() {
 }
 
 func envAdd() {
-	confirm("y", "Are you sure you would like to add %s to $PATH? This will fix a lot of issues with packages not being found (y/n)", bolden(home+".local/bin"))
-
-	debug = true
+	confirm("y", "Are you sure you would like to add %s to several environment variables? This will fix a lot of issues with packages not being found (y/n)", bolden(home+".local"))
 
 	appendVarRc := func(varName string, path string) string {
 		textToAppend := "export " + varName + "=\"$HOME/" + path + ":$" + varName + "\"" + "\n"
