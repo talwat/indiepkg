@@ -98,6 +98,9 @@ func checkCommand(other string, others []string, index int, args []string) {
 	case "list-all":
 		listAll()
 
+	case "env-add":
+		envAdd()
+
 	case "re-clone":
 		reClone()
 

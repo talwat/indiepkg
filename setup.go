@@ -12,7 +12,7 @@ func setup() {
 	log(1, "Initialized and updated IndiePKG.")
 }
 
-func pathAdd() {
+func envAdd() {
 	confirm("y", "Are you sure you would like to add %s to $PATH? This will fix a lot of issues with packages not being found (y/n)", bolden(home+".local/bin"))
 
 	debug = true
