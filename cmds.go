@@ -39,7 +39,11 @@ func infoPkg(pkgName string) {
 	log(1, "Description: %s", pkg.Description)
 	safePrintVal("License", pkg.License)
 	safePrintVal("Programming Language", pkg.Language)
-	log(1, "Git URL: %s", pkg.URL)
+	safePrintVal("Git URL", pkg.URL)
+
+	if pkg.Bin != nil {
+		log(1, "Binaries: %s", strings.Join(pkg.Bin.Installed, ", "))
+	}
 
 	if deps := getDeps(pkg.Deps); deps != nil {
 		log(1, "Dependencies: %s", strings.Join(deps, ", "))
@@ -54,7 +58,7 @@ func infoPkg(pkgName string) {
 
 func rmData(pkgNames []string) {
 	log(3, "Warning: This will remove the data for the selected packages stored in %s", mainPath)
-	log(3, "This will %snot%s run the uninstall commands.", textFx["BOLD"], RESETCOL)
+	log(3, "This will %snot%s run the uninstall commands.", textFx.Bold, RESETCOL)
 	log(3, "You should only use this in case a package installation has failed at a certain step, or you want to separate an installed package from indiepkg.")
 	displayPkgs(pkgNames, "remove the data for")
 
@@ -71,7 +75,7 @@ func rmData(pkgNames []string) {
 		log(0, "Successfully deleted the data for %s.\n", pkgDisplayName)
 	}
 
-	chapLog("=>", "GREEN", "Success")
+	chapLog("=>", textCol.Green, "Success")
 	log(0, "Successfully deleted data.")
 }
 

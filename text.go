@@ -2,64 +2,92 @@ package main
 
 import "fmt"
 
+type Color struct {
+	Black  string
+	Red    string
+	Green  string
+	Yellow string
+	Blue   string
+	Violet string
+	Cyan   string
+	Beige  string
+	White  string
+}
+
+type Effects struct {
+	End           string
+	Bold          string
+	Dim           string
+	Italic        string
+	URL           string
+	Blink         string
+	Blink2        string
+	Selected      string
+	Strikethrough string
+}
+
 var RESETCOL = "\x1B[0m"
 
-var textFx = map[string]string{
-	"END":           "\x1B[0m",
-	"BOLD":          "\x1B[1m",
-	"DIM":           "\x1B[m",
-	"ITALIC":        "\x1B[3m",
-	"URL":           "\x1B[4m",
-	"BLINK":         "\x1B[5m",
-	"BLINK2":        "\x1B[6m",
-	"SELECTED":      "\x1B[7m",
-	"STRIKETHROUGH": "\x1B[9m",
+var textFx = Effects{
+	End:           "\x1B[0m",
+	Bold:          "\x1B[1m",
+	Dim:           "\x1B[m",
+	Italic:        "\x1B[3m",
+	URL:           "\x1B[4m",
+	Blink:         "\x1B[5m",
+	Blink2:        "\x1B[6m",
+	Selected:      "\x1B[7m",
+	Strikethrough: "\x1B[9m",
 }
 
-var textCol = map[string]string{
-	"BLACK":  "\x1B[30m",
-	"RED":    "\x1B[31m",
-	"GREEN":  "\x1B[32m",
-	"YELLOW": "\x1B[33m",
-	"BLUE":   "\x1B[34m",
-	"VIOLET": "\x1B[35m",
-	"CYAN":   "\x1B[36m",
-	"WHITE":  "\x1B[37m",
+var textCol = Color{
+	Black:  "\x1B[30m",
+	Red:    "\x1B[31m",
+	Green:  "\x1B[32m",
+	Yellow: "\x1B[33m",
+	Blue:   "\x1B[34m",
+	Violet: "\x1B[35m",
+	Cyan:   "\x1B[36m",
+	White:  "\x1B[37m",
+	Beige:  "\x1B[37m",
 }
 
-var textBgCol = map[string]string{
-	"BLACK":  "\x1B[40m",
-	"RED":    "\x1B[41m",
-	"GREEN":  "\x1B[4m",
-	"YELLOW": "\x1B[43m",
-	"BLUE":   "\x1B[44m",
-	"VIOLET": "\x1B[45m",
-	"BEIGE":  "\x1B[46m",
-	"WHITE":  "\x1B[47m",
+var textBgCol = Color{
+	Black:  "\x1B[40m",
+	Red:    "\x1B[41m",
+	Green:  "\x1B[4m",
+	Yellow: "\x1B[43m",
+	Blue:   "\x1B[44m",
+	Cyan:   "\x1B[44m",
+	Violet: "\x1B[45m",
+	Beige:  "\x1B[46m",
+	White:  "\x1B[47m",
 }
 
-var lightTextCol = map[string]string{
-	"BLACK":  "\x1B[90m",
-	"RED":    "\x1B[91m",
-	"GREEN":  "\x1B[9m",
-	"YELLOW": "\x1B[93m",
-	"BLUE":   "\x1B[94m",
-	"VIOLET": "\x1B[95m",
-	"BEIGE":  "\x1B[96m",
-	"WHITE":  "\x1B[97m",
+var lightTextCol = Color{
+	Black:  "\x1B[90m",
+	Red:    "\x1B[91m",
+	Green:  "\x1B[9m",
+	Yellow: "\x1B[93m",
+	Blue:   "\x1B[94m",
+	Cyan:   "\x1B[94m",
+	Violet: "\x1B[95m",
+	Beige:  "\x1B[96m",
+	White:  "\x1B[97m",
 }
 
-var lightTextBgCol = map[string]string{
-	"GREY":   "\x1B[100m",
-	"RED":    "\x1B[101m",
-	"GREEN":  "\x1B[10m",
-	"YELLOW": "\x1B[103m",
-	"BLUE":   "\x1B[104m",
-	"VIOLET": "\x1B[105m",
-	"BEIGE":  "\x1B[106m",
-	"WHITE":  "\x1B[107m",
+var lightTextBgCol = Color{
+	Black:  "\x1B[100m",
+	Red:    "\x1B[101m",
+	Green:  "\x1B[10m",
+	Yellow: "\x1B[103m",
+	Blue:   "\x1B[104m",
+	Cyan:   "\x1B[104m",
+	Violet: "\x1B[105m",
+	Beige:  "\x1B[106m",
+	White:  "\x1B[107m",
 }
 
 func bolden(text interface{}) string {
-	return textFx["BOLD"] + fmt.Sprint(text) + RESETCOL
+	return textFx.Bold + fmt.Sprint(text) + RESETCOL
 }

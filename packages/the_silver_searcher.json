@@ -1,0 +1,38 @@
+{
+    "name": "the_silver_searcher",
+    "author": "ggreer",
+    "description": "A code-searching tool similar to ack, but faster.",
+    "url": "https://github.com/ggreer/the_silver_searcher.git",
+    "license": "Apache-2.0",
+    "language": "C",
+    "commands": {
+        "all": {
+            "install": [
+                "./build.sh --prefix=:(PREFIX):",
+                "make install"
+            ],
+            "update": [
+                "make clean",
+                "./build.sh --prefix=:(PREFIX)",
+                "make install"
+            ],
+            "uninstall": [
+                "make uninstall"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "gcc",
+            "xz",
+            "pcre2-config",
+            "autoconf",
+            "automake",
+            "pkg-config",
+            "make"
+        ]
+    },
+    "config_paths": [
+        ".local/the_silver_searcher"
+    ]
+}

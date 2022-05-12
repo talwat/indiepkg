@@ -7,6 +7,8 @@ import (
 )
 
 func loadPkg(packageFile string, pkgName string) Package {
+	log(1, "Loading package info for %s...", bolden(pkgName))
+
 	var pkg Package
 
 	environmentVariables := map[string]string{
@@ -14,7 +16,7 @@ func loadPkg(packageFile string, pkgName string) Package {
 		"BIN":           config.Paths.Prefix + "bin/",
 		"HOME":          home,
 		"INDIEPKG_PATH": mainPath,
-		"BOLD":          textFx["BOLD"],
+		"BOLD":          textFx.Bold,
 		"RESET":         RESETCOL,
 	}
 

@@ -28,5 +28,6 @@ linters:
     - interfacer
     - maligned
     - scopelint
+    - exhaustivestruct
 
   enable-all: true

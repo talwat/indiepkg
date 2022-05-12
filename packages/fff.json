@@ -1,0 +1,24 @@
+{
+    "name": "fff",
+    "author": "dylanaraps",
+    "description": "A simple file manager written in bash.",
+    "url": "https://github.com/dylanaraps/fff.git",
+    "license": "MIT",
+    "language": "Bash",
+    "bin": {
+        "in_source": [
+            "fff"
+        ],
+        "installed": [
+            "fff"
+        ]
+    },
+    "manpages": [
+        "fff.1"
+    ],
+    "deps": {
+        "all": [
+            "bash"
+        ]
+    }
+}

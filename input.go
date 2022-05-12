@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-const version = "0.34"
+const version = "0.35"
 
 var purge, debug, assumeYes, force, noDeps, ignoreRoot bool = false, false, false, false, false, false
 
@@ -97,6 +97,9 @@ func checkCommand(other string, others []string, index int, args []string) {
 
 	case "list-all":
 		listAll()
+
+	case "env-add":
+		envAdd()
 
 	case "re-clone":
 		reClone()
@@ -194,6 +197,6 @@ func parseInput() {
 	}
 
 	if len(others) < 1 {
-		log(1, "Indiepkg Version %s, run %sindiepkg help%s for usage.", bolden(version), textFx["BOLD"], RESETCOL)
+		log(1, "Indiepkg Version %s, run %sindiepkg help%s for usage.", bolden(version), textFx.Bold, RESETCOL)
 	}
 }

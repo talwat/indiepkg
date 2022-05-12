@@ -92,3 +92,17 @@ func changePerms(file string, perms fs.FileMode) {
 	err := os.Chmod(file, perms)
 	errorLog(err, "An error occurred while changing permissions for the file %s", bolden(file))
 }
+
+func appendToFile(file string, text string, params ...interface{}) {
+	toAppend := fmt.Sprintf(text, params...)
+
+	debugLog("Appending %s to %s", bolden(toAppend), bolden(file))
+	fileObj, err := os.OpenFile(file,
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
+	errorLog(err, "An error occurred while opening file %s", bolden(file))
+
+	defer fileObj.Close()
+
+	_, err = fileObj.WriteString(toAppend + "\n")
+	errorLog(err, "An error occurred while writing to %s", bolden(file))
+}

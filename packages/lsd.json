@@ -1,0 +1,32 @@
+{
+    "name": "lsd",
+    "author": "Peltoche",
+    "description": "The next gen ls command.",
+    "url": "https://github.com/Peltoche/lsd.git",
+    "license": "Apache-2.0",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/lsd"
+        ],
+        "installed": [
+            "lsd"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

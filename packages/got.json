@@ -28,5 +28,8 @@
             "make",
             "go"
         ]
-    }
+    },
+    "config_paths": [
+        ".config/got"
+    ]
 }

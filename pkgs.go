@@ -76,6 +76,7 @@ func installPkgs(pkgNames []string) {
 
 		pkg := loadPkg(pkgFile, pkgName)
 		cmds := getInstCmd(pkg)
+		loadedPkgDispName := bolden(pkg.Name)
 
 		chapLog("===>", "", "Checking dependencies")
 		checkDeps(pkg)
@@ -83,12 +84,12 @@ func installPkgs(pkgNames []string) {
 
 		if pkg.Download == nil {
 			chapLog("==>", "", "Cloning source code")
-			log(1, "Making sure %s is not already cloned...", pkgDispName)
-			delPath(false, tmpSrcPath+pkg.Name, "An error occurred while deleting temporary source files for %s", pkgName)
+			log(1, "Making sure %s is not already cloned...", loadedPkgDispName)
+			delPath(false, tmpSrcPath+pkg.Name, "An error occurred while deleting temporary source files for %s", loadedPkgDispName)
 			clonePkgRepo(pkg, tmpSrcPath)
 		} else {
 			chapLog("==>", "", "Downloading file")
-			doDirectDownload(pkg, pkg.Name, tmpSrcPath)
+			doDirectDownload(pkg, tmpSrcPath)
 		}
 
 		if len(cmds) > 0 {
@@ -104,12 +105,12 @@ func installPkgs(pkgNames []string) {
 		mvPath(tmpSrcPath+pkg.Name, srcPath+pkg.Name)
 		writePkg(pkg.Name, pkgFile)
 
-		chapLog("==>", "GREEN", "Successfully installed %s", pkg.Name)
+		chapLog("==>", textCol.Green, "Successfully installed %s", pkgDispName)
 		log(0, "Installed %s successfully.", pkgDispName)
 		getNotes(pkg)
 	}
 
-	chapLog("=>", "GREEN", "Success")
+	chapLog("=>", textCol.Green, "Success")
 	log(0, "Installed all selected packages successfully.")
 }
 
@@ -185,10 +186,10 @@ func uninstallPkgs(pkgNames []string) {
 		log(1, "Deleting info file for %s...", pkgDispName)
 		delPath(false, infoPath+pkgName+".json", "An error occurred while deleting info file for package %s", pkgName)
 
-		chapLog("==>", "GREEN", "Success")
+		chapLog("==>", textCol.Green, "Success")
 		log(0, "Successfully uninstalled %s.", pkgDispName)
 	}
 
-	chapLog("=>", "GREEN", "Success")
+	chapLog("=>", textCol.Green, "Success")
 	log(0, "Successfully uninstalled all selected packages.")
 }

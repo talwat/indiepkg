@@ -1,25 +1,28 @@
 {
-    "name": "curl",
-    "author": "curl",
-    "description": "A command line tool and library for transferring data with URL syntax.",
-    "url": "https://github.com/curl/curl.git",
+    "name": "pcre2",
+    "author": "PCRE2Project",
+    "description": "PCRE2.",
+    "url": "https://github.com/PCRE2Project/pcre2.git",
+    "license": "PCRE2",
     "language": "C",
     "commands": {
         "all": {
             "install": [
-                "autoreconf -i",
-                "./configure --with-openssl --prefix=:(PREFIX):",
+                "./autogen.sh",
+                "./configure --prefix=:(PREFIX):",
                 "make",
-                "make install"
+                "make install",
+                "ln -s :(PREFIX):include/pcre2.h :(PREFIX):include/pcre.h"
             ],
             "update": [
                 "make clean",
-                "./configure --with-openssl --prefix=:(PREFIX):",
+                "./configure --prefix=:(PREFIX):",
                 "make",
                 "make install"
             ],
             "uninstall": [
-                "make uninstall"
+                "make uninstall",
+                "rm -f :(PREFIX):include/pcre.h"
             ]
         }
     },
@@ -27,18 +30,14 @@
         "all": [
             "gcc",
             "autoconf",
-            "autoreconf",
             "automake",
-            "libtool",
-            "make",
-            "openssl"
+            "make"
         ]
     },
     "notes": [
         "By default, the newly installed package will not be avalible for use when compiling software.",
         "To make it available, add the following to your ~/.bashrc or ~/.zshrc file:",
         "",
-        "export CPATH=:(PREFIX):include/curl:$CPATH",
         "export CPATH=:(PREFIX):include:$CPATH",
         "export LD_LIBRARY_PATH=:(PREFIX):lib:$LD_LIBRARY_PATH",
         "export PKG_CONFIG_PATH=:(PREFIX):lib/pkgconfig:$PKG_CONFIG_PATH"

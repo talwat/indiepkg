@@ -1,0 +1,32 @@
+{
+    "name": "atuin",
+    "author": "ellie",
+    "description": "Magical shell history.",
+    "url": "https://github.com/ellie/atuin.git",
+    "license": "MIT",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/atuin"
+        ],
+        "installed": [
+            "atuin"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

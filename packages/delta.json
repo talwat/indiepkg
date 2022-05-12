@@ -1,0 +1,32 @@
+{
+    "name": "delta",
+    "author": "dandavison",
+    "description": "A syntax-highlighting pager for git, diff, and grep output.",
+    "url": "https://github.com/dandavison/delta.git",
+    "license": "MIT",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/delta"
+        ],
+        "installed": [
+            "delta"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}

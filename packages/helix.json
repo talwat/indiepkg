@@ -1,0 +1,35 @@
+{
+    "name": "helix",
+    "author": "helix-editor",
+    "description": "A post-modern modal text editor.",
+    "url": "https://github.com/helix-editor/helix.git",
+    "license": "MPL-2.0",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/hx"
+        ],
+        "installed": [
+            "hx"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    },
+    "config_paths": [
+        ".config/helix"
+    ]
+}

@@ -30,5 +30,14 @@
             "make",
             "openssl"
         ]
-    }
+    },
+    "notes": [
+        "By default, the newly installed package will not be avalible for use when compiling software.",
+        "To make it available, add the following to your ~/.bashrc or ~/.zshrc file:",
+        "",
+        "export CPATH=:(PREFIX):include/readline:$CPATH",
+        "export CPATH=:(PREFIX):include:$CPATH",
+        "export LD_LIBRARY_PATH=:(PREFIX):lib:$LD_LIBRARY_PATH",
+        "export PKG_CONFIG_PATH=:(PREFIX):lib/pkgconfig:$PKG_CONFIG_PATH"
+    ]
 }
