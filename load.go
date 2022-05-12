@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
 )
 
@@ -43,13 +42,11 @@ func loadPkg(packageFile string, pkgName string) Package {
 }
 
 func readLoad(pkgName string) Package {
-	packageDisplayName := bolden(pkgName)
+	pkgDispName := bolden(pkgName)
 
-	log(1, "Reading package info for %s...", packageDisplayName)
-	pkgFile := readFile(infoPath+pkgName+".json", "An error occurred while reading package %s", packageDisplayName)
-
-	log(1, "Loading package info for %s...", packageDisplayName)
-	pkg := loadPkg(pkgFile, fmt.Sprintf("An error occurred while loading package information for %s", packageDisplayName))
+	log(1, "Reading package info for %s...", pkgDispName)
+	pkgFile := readFile(infoPath+pkgName+".json", "An error occurred while reading package %s", pkgDispName)
+	pkg := loadPkg(pkgFile, pkgName)
 
 	return pkg
 }

@@ -20,11 +20,12 @@ Commands:
   search <query>                  Searches for packages. NOTE: Only searches repo's that are on Github.
   indiepkg-update                 Updated source code & re-compiles IndiePKG.
   setup                           Sets up everything for a functional installation of IndiePKG.
+  re-compile <packages...>        Re-compiles packages. Useful if the info for a packages are present but the binaries are not.
   env-add                         Adds IndiePKG to several environment variables. This is useful if packages installed with IndiePKG are not being found.
   repo                            Manages the package sources file.
     repo add <url>                Adds a repository to the package sources file.
     repo remove <url>             Removes a repository to the package sources file.
-    repo list                     Lists all repositories in the package sources file.
+    repo list                     Lists all repositories in the package sources file.]
 
 Developer & Debugging Commands:
   fetch                           Fetches OS & IndiePKG info.

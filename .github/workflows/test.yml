@@ -72,6 +72,10 @@ jobs:
         run: |
           ./indiepkg update -d
           ./indiepkg upgrade pfetch yaf neofetch deno zig-bin -d
+      
+      - name: Re-compile packages
+        run: |
+          ./indiepkg re-compile pfetch yaf neofetch deno zig-bin -d
 
       - name: Add repo
         run: ./indiepkg repo add https://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/

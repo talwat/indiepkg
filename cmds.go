@@ -176,3 +176,51 @@ func help2man() {
 
 	newFile("indiepkg.1", output, "An error occurred while writing generated manpage")
 }
+
+func reCompile(pkgNames []string) {
+	displayPkgs(pkgNames, "re-compile")
+
+	fullInit()
+
+	for _, pkgName := range pkgNames {
+		pkgDispName := bolden(pkgName)
+		chapLog("==>", "", "Preparing for re-compilation of %s", pkgDispName)
+
+		chapLog("===>", "", "Checking if already installed")
+		log(1, "Checking if %s is already installed...", pkgDispName)
+
+		if !pkgExists(pkgName) {
+			if force {
+				log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
+			} else {
+				errorLogRaw("%s is not installed, so it can't be re-compiled", pkgDispName)
+			}
+		}
+
+		chapLog("===>", "", "Getting info")
+
+		pkg := readLoad(pkgName)
+		cmds := getInstCmd(pkg)
+
+		chapLog("===>", "", "Checking dependencies")
+		checkDeps(pkg)
+		checkFileDeps(pkg)
+
+		chapLog("==>", "", "Re-installing")
+
+		if len(cmds) > 0 {
+			chapLog("===>", "", "Compiling")
+			runCmds(cmds, pkg, srcPath+pkg.Name, "install")
+		}
+
+		chapLog("===>", "", "Moving files")
+		copyBins(pkg, srcPath)
+		copyManpages(pkg, srcPath)
+
+		chapLog("===>", textCol.Green, "Success")
+		log(0, "Successfully re-compiled %s.", pkgDispName)
+	}
+
+	chapLog("=>", textCol.Green, "Success")
+	log(0, "Successfully re-compiled all selected packages.")
+}
