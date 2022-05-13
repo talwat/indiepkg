@@ -22,7 +22,7 @@
     - [Paths](#paths)
       - [Bin](#bin)
         - [In Source (optional)](#in-source-optional)
-        - [Installed](#installed)
+        - [Installed (optional)](#installed-optional)
       - [Manpages](#manpages)
     - [Commands (optional in some cases)](#commands-optional-in-some-cases)
       - [Install](#install)
@@ -153,6 +153,8 @@ Or if it works on a specific operating system but all architectures:
 }
 ```
 
+**Note**: This will save the downloaded file as `<package name>.indiepkg.downloaded`.
+
 #### Info URL (optional)
 
 This is the URL to the package's info file. Please only put this if you are **not** distributing the package in a repository and instead using a direct URL/file.
@@ -185,7 +187,7 @@ For example, if the install instructions say to run `make` and then a binary is 
 
 This binary will be **moved** to the proper `bin` directory.
 
-##### Installed
+##### Installed (optional)
 
 This is the **name** of the final installed binary file, **not** the path.
 
@@ -197,7 +199,7 @@ This is used to uninstall the package easily.
 
 The location of manpages inside the source directory. You don't need to specify **where** to install them because IndiePKG can figure that out automatically.
 
-Make sure the manpage file extension ends with `.x`. *`x` can be any number from 1-9*
+Make sure the manpage file extension ends with `.x`. `x` can be any number from 1-9*
 
 ### Commands (optional in some cases)
 
@@ -236,6 +238,19 @@ For example:
     }
 }
 ```
+
+If you want the program to continue even if a command throws an error, prefix the command with `!(FORCE)!`.
+
+Eg.
+
+```json
+[
+    "make",
+    "!(FORCE)! mkdir -p :(PREFIX):share/foo",
+]
+```
+
+]
 
 #### Install
 

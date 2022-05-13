@@ -26,12 +26,12 @@
     "commands": {
         "all": {
             "install": [
-                "mv zig-bin.indiepkg.downloaded zig-bin.tar.xz",
+                "cp zig-bin.indiepkg.downloaded zig-bin.tar.xz",
                 "rm -rf zig",
                 "tar -xf zig-bin.tar.xz --strip-components=1"
             ],
             "update": [
-                "mv zig-bin.indiepkg.downloaded zig-bin.tar.xz",
+                "cp zig-bin.indiepkg.downloaded zig-bin.tar.xz",
                 "rm -rf zig",
                 "tar -xf zig-bin.tar.xz --strip-components=1"
             ]

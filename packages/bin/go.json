@@ -27,12 +27,12 @@
     "commands": {
         "all": {
             "install": [
-                "mv go.indiepkg.downloaded go.tar.gz",
+                "cp go.indiepkg.downloaded go.tar.gz",
                 "rm -rf go",
                 "tar -zxf go.tar.gz"
             ],
             "update": [
-                "mv go.indiepkg.downloaded go.tar.gz",
+                "cp go.indiepkg.downloaded go.tar.gz",
                 "rm -rf go",
                 "tar -zxf go.tar.gz"
             ]
