@@ -142,7 +142,7 @@ func doDirectDownload(pkg Package, srcPath string) {
 
 	log(1, "Downloading file for %s from %s...", pkgDispName, bolden(url))
 
-	nameOfFile := srcPath + pkg.Name + "/" + pkg.Name
+	nameOfFile := srcPath + pkg.Name + "/" + pkg.Name + ".indiepkg.downloaded"
 
 	debugLog("Downloading and saving to %s", bolden(nameOfFile))
 	downloadFileWithProg(nameOfFile, url, "An error occurred while downloading file for %s", pkgDispName)

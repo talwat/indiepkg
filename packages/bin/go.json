@@ -4,15 +4,15 @@
     "description": "An open source programming language supported by Google.",
     "download": {
         "darwin": {
-            "amd64": "https://dl.google.com/go/go1.18.1.darwin-amd64.tar.gz",
-            "arm64": "https://dl.google.com/go/go1.18.1.darwin-arm64.tar.gz"
+            "amd64": "https://dl.google.com/go/go1.18.2.darwin-amd64.tar.gz",
+            "arm64": "https://dl.google.com/go/go1.18.2.darwin-arm64.tar.gz"
         },
         "linux": {
-            "amd64": "https://dl.google.com/go/go1.18.1.linux-amd64.tar.gz",
-            "arm64": "https://dl.google.com/go/go1.18.1.linux-arm64.tar.gz"
+            "amd64": "https://dl.google.com/go/go1.18.2.linux-amd64.tar.gz",
+            "arm64": "https://dl.google.com/go/go1.18.2.linux-arm64.tar.gz"
         }
     },
-    "version": "1.18.1",
+    "version": "1.18.2",
     "license": "BSD-3-Clause",
     "bin": {
         "in_source": [
@@ -27,11 +27,13 @@
     "commands": {
         "all": {
             "install": [
-                "mv go go.tar.gz",
+                "mv go.indiepkg.downloaded go.tar.gz",
+                "rm -rf go",
                 "tar -zxf go.tar.gz"
             ],
             "update": [
-                "mv go go.tar.gz",
+                "mv go.indiepkg.downloaded go.tar.gz",
+                "rm -rf go",
                 "tar -zxf go.tar.gz"
             ]
         }

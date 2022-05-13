@@ -30,9 +30,11 @@ func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 	if len(cmds) > 0 {
 		log(1, "Running %s commands for %s...", cmdsLabel, pkg.Name)
 
-		for _, command := range cmds {
-			logNoNewline(1, "Running command %s", bolden(command))
-			runCommandDot(path, strings.Split(command, " ")[0], strings.Split(command, " ")[1:]...)
+		for _, cmd := range cmds {
+			parsedCmd := strings.TrimPrefix(cmd, "!(FORCE)! ")
+
+			logNoNewline(1, "Running command %s", bolden(parsedCmd))
+			runCommandDot(path, strings.HasPrefix(cmd, "!(FORCE)! "), strings.Split(parsedCmd, " ")[0], strings.Split(parsedCmd, " ")[1:]...)
 			rawLog("\n")
 		}
 	}

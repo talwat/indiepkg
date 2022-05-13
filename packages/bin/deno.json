@@ -24,11 +24,13 @@
     "commands": {
         "all": {
             "install": [
-                "mv deno deno.zip",
+                "cp deno.indiepkg.downloaded deno.zip",
+                "rm -f deno",
                 "unzip deno.zip"
             ],
             "update": [
-                "mv deno deno.zip",
+                "cp deno.indiepkg.downloaded deno.zip",
+                "rm -f deno",
                 "unzip deno.zip"
             ]
         }
