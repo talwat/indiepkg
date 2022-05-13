@@ -23,11 +23,13 @@
     "commands": {
         "all": {
             "install": [
-                "mv speedtest speedtest.tar.gz",
+                "cp speedtest.indiepkg.downloaded speedtest.tar.gz",
+                "rm -rf speedtest",
                 "tar -zxf speedtest.tar.gz"
             ],
             "update": [
-                "mv speedtest speedtest.tar.gz",
+                "cp speedtest.indiepkg.downloaded speedtest.tar.gz",
+                "rm -rf speedtest",
                 "tar -zxf speedtest.tar.gz"
             ]
         }

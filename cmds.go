@@ -117,15 +117,53 @@ func reClone() {
 }
 
 func fetch() {
+	configExists := pathExists(configPath+"config.toml", "config file")
+
+	if configExists {
+		loadConfig()
+	} else {
+		log(3, "No config file found, skipping configuration related info.")
+	}
+
+	chapLog("=>", "", "OS & Environment")
+
 	log(1, "OS: %s", runtime.GOOS)
 	log(1, "Arch: %s", runtime.GOARCH)
 	log(1, "Go Version: %s", strings.TrimPrefix(runtime.Version(), "go"))
-	log(1, "IndiePKG Version: %s", version)
+
+	if isRoot() {
+		log(3, "Running as %s", textCol.Red+"root"+RESETCOL)
+	} else {
+		log(1, "Running as %s", textCol.Green+"normal user"+RESETCOL)
+	}
 
 	macOSVer, err := runCommand(".", "sw_vers", "-productVersion")
 	if err == nil {
 		log(1, "macOS version: %s", macOSVer)
 	}
+
+	if pathExists("/etc/os-release", "os release") {
+		log(1, "OS-Release:")
+		indent(readFile("/etc/os-release", "An error occurred while reading /etc/os-release"))
+	}
+
+	kern, err := runCommand(".", "uname", "-rsp")
+	if err != nil {
+		log(3, "Could not get kernel info. Error: %s", err.Error())
+	} else {
+		log(1, "Kernel: %s", kern)
+	}
+
+	chapLog("=>", "", "IndiePKG Information")
+	log(1, "IndiePKG Version: %s", version)
+
+	if configExists {
+		log(1, "IndiePKG Branch: %s", config.Updating.Branch)
+	}
+
+	chapLog("=>", "", "CLI Information")
+	log(1, "Shell: %s", os.Getenv("SHELL"))
+	log(1, "TERM: %s", os.Getenv("TERM"))
 
 	bashVer, err := runCommand(".", "bash", "--version")
 	if err == nil {
@@ -134,9 +172,11 @@ func fetch() {
 		log(3, "Could not get bash version. Error: %s", err.Error())
 	}
 
-	if pathExists("/etc/os-release", "An error occurred while checking if /etc/os-release exists") {
-		log(1, "OS-Release:")
-		indent(readFile("/etc/os-release", "An error occurred while reading /etc/os-release"))
+	zshVer, err := runCommand(".", "zsh", "--version")
+	if err == nil {
+		log(1, "Zsh version: %s", strings.Split(strings.TrimPrefix(zshVer, "zsh "), "(")[0])
+	} else {
+		log(3, "Could not get zsh version. Error: %s", err.Error())
 	}
 }
 
@@ -160,4 +200,52 @@ func help2man() {
 	log(1, "Writing final manpage...")
 
 	newFile("indiepkg.1", output, "An error occurred while writing generated manpage")
+}
+
+func reCompile(pkgNames []string) {
+	displayPkgs(pkgNames, "re-compile")
+
+	fullInit()
+
+	for _, pkgName := range pkgNames {
+		pkgDispName := bolden(pkgName)
+		chapLog("==>", "", "Preparing for re-compilation of %s", pkgDispName)
+
+		chapLog("===>", "", "Checking if already installed")
+		log(1, "Checking if %s is already installed...", pkgDispName)
+
+		if !pkgExists(pkgName) {
+			if force {
+				log(3, "%s is not installed, but force is on, so continuing.", pkgDispName)
+			} else {
+				errorLogRaw("%s is not installed, so it can't be re-compiled", pkgDispName)
+			}
+		}
+
+		chapLog("===>", "", "Getting info")
+
+		pkg := readLoad(pkgName)
+		cmds := getInstCmd(pkg)
+
+		chapLog("===>", "", "Checking dependencies")
+		checkDeps(pkg)
+		checkFileDeps(pkg)
+
+		chapLog("==>", "", "Re-installing")
+
+		if len(cmds) > 0 {
+			chapLog("===>", "", "Compiling")
+			runCmds(cmds, pkg, srcPath+pkg.Name, "install")
+		}
+
+		chapLog("===>", "", "Moving files")
+		copyBins(pkg, srcPath)
+		copyManpages(pkg, srcPath)
+
+		chapLog("===>", textCol.Green, "Success")
+		log(0, "Successfully re-compiled %s.", pkgDispName)
+	}
+
+	chapLog("=>", textCol.Green, "Success")
+	log(0, "Successfully re-compiled all selected packages.")
 }

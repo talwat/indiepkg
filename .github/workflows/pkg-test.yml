@@ -53,6 +53,10 @@ jobs:
         run: |
           ./indiepkg upgrade ${{ env.PKG_NAME }} -d -y -f
 
+      - name: "Test re-compiling package"
+        run: |
+          ./indiepkg re-compile ${{ env.PKG_NAME }} -d -y
+
       - name: "Test uninstalling package"
         run: |
           ./indiepkg uninstall ${{ env.PKG_NAME }} -d -y

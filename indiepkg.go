@@ -8,7 +8,7 @@ import (
 func compSrc() {
 	chapLog("==>", "", "Compiling IndiePKG")
 	logNoNewline(1, "Running %s", bolden("make"))
-	runCommandDot(indiePkgSrcDir, "make")
+	runCommandDot(indiePkgSrcDir, false, "make")
 	rawLogf("\n")
 
 	chapLog("==>", "", "Moving IndiePKG binary")
