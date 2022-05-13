@@ -56,8 +56,6 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 
 		newVer := readLoad(pkgName).Version
 
-		rawLog("\n")
-
 		log(1, "Saving old version number...")
 
 		oldVer := pkg.Version
@@ -69,6 +67,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 
 		if oldVer == newVer {
 			if !force {
+				chapLog(chapPrefix+"==>", textCol.Green, "Success")
 				log(0, "%s already up to date.", pkgDisplayName)
 
 				return

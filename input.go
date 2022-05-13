@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-const version = "0.35.2"
+const version = "0.36"
 
 var purge, debug, assumeYes, force, noDeps, ignoreRoot bool = false, false, false, false, false, false
 
@@ -55,6 +55,13 @@ func checkCommand(other string, others []string, index int, args []string) {
 		optionToOthers = true
 
 		installPkgs(others[index+1:])
+
+	case "re-compile":
+		checkForOptions("package names", 1)
+
+		optionToOthers = true
+
+		reCompile(others[index+1:])
 
 	case "uninstall":
 		checkForOptions("package names", 1)

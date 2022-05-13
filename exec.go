@@ -35,8 +35,9 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 	errorLogNewlineBefore(err, "An error occurred while running command")
 }
 
-func runCommandDot(workDir string, cmd string, args ...string) {
-	cmdObj := exec.Command(cmd, args...)
+func runCommandDot(workDir string, forceCmd bool, cmd string, args ...string) {
+	parsedCmd := strings.TrimPrefix(cmd, "!(FORCE)! ")
+	cmdObj := exec.Command(parsedCmd, args...)
 	cmdObj.Dir = workDir
 
 	cmdReader, err := cmdObj.StdoutPipe()
@@ -66,7 +67,12 @@ func runCommandDot(workDir string, cmd string, args ...string) {
 
 	output = strings.TrimSpace(output)
 	err = cmdObj.Wait()
-	errorLogNewlineBefore(err, "An error occurred while running command. Output: %s", output)
+
+	if forceCmd {
+		log(1, "Command is marked as force, so not checking for error.")
+	} else {
+		errorLogNewlineBefore(err, "An error occurred while running command. Output: %s", output)
+	}
 }
 
 func runCommand(workDir string, cmd string, args ...string) (string, error) {

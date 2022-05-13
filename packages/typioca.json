@@ -1,0 +1,33 @@
+{
+    "name": "typioca",
+    "author": "bloznelis",
+    "description": "Cosy typing speed tester.",
+    "url": "https://github.com/bloznelis/typioca.git",
+    "license": "MIT",
+    "language": "Go",
+    "bin": {
+        "in_source": [
+            "execs/typioca"
+        ],
+        "installed": [
+            "typioca"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "make build"
+            ],
+            "update": [
+                "rm -rf execs",
+                "make build"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go",
+            "make"
+        ]
+    }
+}
