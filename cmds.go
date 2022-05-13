@@ -117,12 +117,19 @@ func reClone() {
 }
 
 func fetch() {
+	configExists := pathExists(configPath+"config.toml", "config file")
+
+	if configExists {
+		loadConfig()
+	} else {
+		log(3, "No config file found, skipping configuration related info.")
+	}
+
+	chapLog("=>", "", "OS & Environment")
+
 	log(1, "OS: %s", runtime.GOOS)
 	log(1, "Arch: %s", runtime.GOARCH)
 	log(1, "Go Version: %s", strings.TrimPrefix(runtime.Version(), "go"))
-	log(1, "IndiePKG Version: %s", version)
-	log(1, "Shell: %s", os.Getenv("SHELL"))
-	log(1, "TERM: %s", os.Getenv("TERM"))
 
 	if isRoot() {
 		log(3, "Running as %s", textCol.Red+"root"+RESETCOL)
@@ -135,6 +142,29 @@ func fetch() {
 		log(1, "macOS version: %s", macOSVer)
 	}
 
+	if pathExists("/etc/os-release", "os release") {
+		log(1, "OS-Release:")
+		indent(readFile("/etc/os-release", "An error occurred while reading /etc/os-release"))
+	}
+
+	kern, err := runCommand(".", "uname", "-rsp")
+	if err != nil {
+		log(3, "Could not get kernel info. Error: %s", err.Error())
+	} else {
+		log(1, "Kernel: %s", kern)
+	}
+
+	chapLog("=>", "", "IndiePKG Information")
+	log(1, "IndiePKG Version: %s", version)
+
+	if configExists {
+		log(1, "IndiePKG Branch: %s", config.Updating.Branch)
+	}
+
+	chapLog("=>", "", "CLI Information")
+	log(1, "Shell: %s", os.Getenv("SHELL"))
+	log(1, "TERM: %s", os.Getenv("TERM"))
+
 	bashVer, err := runCommand(".", "bash", "--version")
 	if err == nil {
 		log(1, "Bash version: %s", strings.Split(strings.TrimPrefix(strings.Split(bashVer, "\n")[0], "GNU bash, version "), "(")[0])
@@ -146,12 +176,7 @@ func fetch() {
 	if err == nil {
 		log(1, "Zsh version: %s", strings.Split(strings.TrimPrefix(zshVer, "zsh "), "(")[0])
 	} else {
-		log(3, "Could not get bash version. Error: %s", err.Error())
-	}
-
-	if pathExists("/etc/os-release", "An error occurred while checking if /etc/os-release exists") {
-		log(1, "OS-Release:")
-		indent(readFile("/etc/os-release", "An error occurred while reading /etc/os-release"))
+		log(3, "Could not get zsh version. Error: %s", err.Error())
 	}
 }
 
