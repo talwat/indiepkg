@@ -7,7 +7,7 @@
     "language": "Go",
     "bin": {
         "in_source": [
-            "wiki"
+            "build/wiki"
         ],
         "installed": [
             "wiki"
@@ -16,10 +16,12 @@
     "commands": {
         "all": {
             "install": [
-                "make"
+                "mkdir -p build",
+                "make binary"
             ],
             "update": [
-                "make"
+                "mkdir -p build",
+                "make binary"
             ]
         }
     },
