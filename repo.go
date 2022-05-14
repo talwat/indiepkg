@@ -129,10 +129,10 @@ func listRepos() {
 
 func repoLabel(repo string, includeLink bool) string {
 	prefixes := [][]string{
-		{"http://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only/", textCol.Blue + "(Linux only)" + RESETCOL},
-		{"http://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin/", textCol.Violet + "(Binary package)" + RESETCOL},
-		{"http://raw.githubusercontent.com/talwat/indiepkg/main/", textCol.Cyan + "(Official repo)" + RESETCOL},
-		{"http://raw.githubusercontent.com/talwat/indiepkg/", textCol.Blue + "(Other branch)" + RESETCOL},
+		{"http://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only", textCol.Blue + "(Linux only)" + RESETCOL},
+		{"http://raw.githubusercontent.com/talwat/indiepkg/main/packages/bin", textCol.Violet + "(Binary package)" + RESETCOL},
+		{"http://raw.githubusercontent.com/talwat/indiepkg/main", textCol.Cyan + "(Official repo)" + RESETCOL},
+		{"http://raw.githubusercontent.com/talwat/indiepkg", textCol.Blue + "(Other branch)" + RESETCOL},
 	}
 
 	for k := range prefixes {
