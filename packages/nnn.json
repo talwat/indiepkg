@@ -27,7 +27,8 @@
     "deps": {
         "all": [
             "gcc",
-            "make"
+            "make",
+            "pkg-config"
         ]
     },
     "config_paths": [

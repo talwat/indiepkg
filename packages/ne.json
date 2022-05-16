@@ -30,7 +30,8 @@
     "deps": {
         "all": [
             "gcc",
-            "make"
+            "make",
+            "makeinfo"
         ]
     }
 }
