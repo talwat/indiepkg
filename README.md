@@ -21,9 +21,9 @@ A package manager written in [Go](https://go.dev) for small CLI programs. It is 
 
 ## Notice
 
-IndiePKG is **NOT** ready for use yet. It's still early software.
+IndiePKG is now **almost** ready for use.
 
-However, if you would like to [submit issues](https://github.com/talwat/indiepkg/issues) or [PR's](https://github.com/talwat/indiepkg/pulls), you are **more** than welcome to.
+It would be **extremely** helpful if you could try using IndiePKG and file [bug reports](https://github.com/talwat/indiepkg/issues) or make [PR's](https://github.com/talwat/indiepkg/pulls).
 
 ## Table of contents
 
