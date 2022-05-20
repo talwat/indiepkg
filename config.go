@@ -84,11 +84,11 @@ func loadConfig() {
 
 	errorLog(err, "An error occurred while loading config file")
 
-	if !strings.HasPrefix(config.Paths.Prefix, home) {
+	if !strings.HasPrefix(config.Paths.Prefix, home) { // If not in the home directory, prepend it
 		config.Paths.Prefix = home + config.Paths.Prefix
 	}
 
-	if !strings.HasSuffix(config.Paths.Prefix, "/") {
+	if !strings.HasSuffix(config.Paths.Prefix, "/") { // If doesn't end with a /, add one
 		config.Paths.Prefix += "/"
 	}
 }

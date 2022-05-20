@@ -13,6 +13,8 @@ import (
 )
 
 func makeReq(url string) (http.Response, error) {
+	debugLog("Making GET request to %s", bolden(url))
+
 	req, err := http.NewRequestWithContext(context.Background(), "GET", url, nil)
 	if err != nil {
 		return http.Response{}, fmt.Errorf("error while making http request: %w", err)
@@ -22,6 +24,8 @@ func makeReq(url string) (http.Response, error) {
 	if err != nil {
 		return http.Response{}, fmt.Errorf("error while doing http request: %w", err)
 	}
+
+	defer resp.Body.Close()
 
 	return *resp, nil
 }
@@ -38,6 +42,8 @@ func makeGithubReq(url string) (http.Response, error) {
 	if err != nil {
 		return http.Response{}, fmt.Errorf("error while doing http request: %w", err)
 	}
+
+	defer resp.Body.Close()
 
 	return *resp, nil
 }

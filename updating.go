@@ -8,7 +8,7 @@ func rawGetInfo(pkgName string, pkg Package) {
 	log(1, "Getting info for %s", bolden(pkgName))
 	log(1, "Checking for info URL...")
 
-	if pkg.InfoURL == "" {
+	if pkg.InfoURL == "" { // Check if package didn't specify info URL
 		log(1, "Getting info from repos...")
 
 		writePkg(pkgName, findPkg(pkgName))
@@ -61,11 +61,9 @@ func updateAllPackages() {
 
 	chapLog("=>", "", "Updating packages")
 
-	for _, installedPackage := range installedPackages {
+	for _, installedPackage := range installedPackages { // Iterate through installed packages
 		chapLog("==>", "", "Updating %s", installedPackage)
-
 		rawGetInfo(installedPackage, readLoad(installedPackage))
-
 		chapLog("===>", textCol.Green, "Success")
 		log(0, "Successfully updated package info for %s.", bolden(installedPackage))
 	}

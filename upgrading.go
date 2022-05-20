@@ -84,7 +84,7 @@ func upgradePkgFunc(pkgName string, chapPrefix string) {
 
 	chapLog(chapPrefix+"==>", "", "Getting upgrade commands")
 
-	if cmds := getUpdCmd(pkg); len(cmds) > 0 {
+	if cmds := getUpdCmd(pkg); len(cmds) > 0 { // Check if there are upgrade commands to run
 		chapLog(chapPrefix+"==>", "", "Compiling")
 		runCmds(cmds, pkg, srcPath+pkg.Name, "upgrade")
 	}

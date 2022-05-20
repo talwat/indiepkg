@@ -11,9 +11,12 @@ func parseURL(url string, silent bool) string {
 	}
 
 	repoURL := url
+
+	// Trim
 	repoURL = strings.TrimSpace(repoURL)
 	repoURL = strings.TrimSuffix(repoURL, "/")
 
+	// Change protocol to http://
 	if split := strings.Split(repoURL, "//"); strings.Contains(repoURL, "://") {
 		repoURL = "http://" + strings.Join(split[1:], "://")
 	} else {
@@ -43,15 +46,14 @@ func stripSources(sourcesFile string, noParse bool) ([]string, string) {
 	final := []string{}
 	finalStr := ""
 
+	// Iterate through each line
 	for _, line := range strings.Split(strings.TrimSpace(sourcesFile), "\n") {
 		if strings.HasPrefix(line, "#") || strings.TrimSpace(line) == "" {
 			continue
 		}
 
-		var parsedLine string
-		if noParse {
-			parsedLine = line
-		} else {
+		parsedLine := line
+		if !noParse { // Parse URL if noParse is set to false
 			parsedLine = parseURL(line, true)
 		}
 
@@ -68,7 +70,7 @@ func saveChanges(sourcesFile string) {
 }
 
 func addRepo(repoLink string) {
-	if !isURL(repoLink) {
+	if !isValidURL(repoLink) {
 		if force {
 			log(3, "Invalid url, but continuing because force is set to true.")
 		} else {
@@ -135,9 +137,10 @@ func repoLabel(repo string, includeLink bool) string {
 		{"http://raw.githubusercontent.com/talwat/indiepkg", textCol.Blue + "(Other branch)" + RESETCOL},
 	}
 
-	for k := range prefixes {
-		if strings.HasPrefix(parseURL(repo, true), prefixes[k][0]) {
-			return prefixes[k][1]
+	// Iterate through 2D array
+	for prefix := range prefixes {
+		if strings.HasPrefix(parseURL(repo, true), prefixes[prefix][0]) { // Check prefix matches
+			return prefixes[prefix][1]
 		}
 	}
 

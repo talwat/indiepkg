@@ -16,7 +16,7 @@ func isRoot() bool {
 	return currentUser.Username == "root"
 }
 
-func isURL(urlInput string) bool {
+func isValidURL(urlInput string) bool {
 	log(1, "Checking if %s is a valid URL...", bolden(urlInput))
 	_, err := url.ParseRequestURI(urlInput)
 
@@ -27,7 +27,7 @@ func checkFor404(statusCode int, pkgName string) bool {
 	log(1, "Checking status code for 404 error...")
 
 	switch {
-	case statusCode >= 200 && statusCode <= 299 && statusCode != 204:
+	case statusCode >= 200 && statusCode <= 299 && statusCode != 204: // Check for HTTP status code to be in valid range
 		return false
 	case statusCode == 404 || statusCode == 204:
 		return true
