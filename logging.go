@@ -22,9 +22,9 @@ var logType = map[int]string{
 func chapLog(prefix string, colorInput string, msg string, params ...interface{}) {
 	var color string
 
-	if colorInput != "" {
+	if colorInput != "" { // Check if color is specified
 		color = colorInput
-	} else {
+	} else { // Pick color based on prefix length
 		switch len(prefix) {
 		case 2:
 			color = textCol.Violet

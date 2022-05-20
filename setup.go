@@ -1,5 +1,7 @@
 package main
 
+import "os"
+
 func setup() {
 	log(1, "IndiePKG initial setup.")
 	chapLog("=>", "", "Initializing directories & source")
@@ -41,14 +43,18 @@ func envAdd() {
 				appendVarRc("PKG_CONFIG_PATH", ".local/lib/pkgconfig")+
 				"# End of IndiePKG additions",
 		)
+		log(0, "Appended to %s.", bolden(name))
 	}
 
 	fullAppendRc("bashrc")
 	fullAppendRc("zshrc")
+	fullAppendRc("kshrc")
 	fullAppendRc("profile")
 	fullAppendRc("zprofile")
 
 	if checkIfCommandExists("fish") {
 		log(3, "Fish found, but fish is not supported officially. You will have to add the environment variables manually.")
 	}
+
+	log(0, "Done! Restart your shell by running %s", bolden("exec "+os.Getenv("SHELL")))
 }

@@ -12,7 +12,7 @@ func pkgExists(pkgName string) bool {
 	infoInstalled := pathExists(infoPath+pkgName+".json", "package info for %s", pkgDispName)
 	srcInstalled := pathExists(srcPath+pkgName, "package source for %s", pkgDispName)
 
-	switch {
+	switch { // Check combination of package info existing and package source existing
 	case infoInstalled && srcInstalled:
 		return true
 	case !infoInstalled && !srcInstalled:
@@ -54,15 +54,8 @@ func initDirs(reset bool) {
 	newDir(config.Paths.Prefix+"bin", "An error occurred while creating binary directory")
 	newDir(config.Paths.Prefix+"share/man", "An error occurred while creating manpage directory")
 
-	if !pathExists(configPath+"config.toml", "config file") || reset {
-		log(1, "Creating config file...")
-		newFile(configPath+"config.toml", defaultConf, "An error occurred while creating config file")
-	}
-
-	if !pathExists(configPath+"sources.txt", "sources file") || reset {
-		log(1, "Creating sources file...")
-		newFile(configPath+"sources.txt", defaultSources, "An error occurred while creating sources file")
-	}
+	safeNewDir(configPath+"config.toml", "config file", reset, defaultConf)
+	safeNewDir(configPath+"sources.txt", "sources file", reset, defaultSources)
 
 	if !pathExists(indiePkgSrcDir, "IndiePKG source directory") || reset {
 		if reset {

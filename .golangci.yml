@@ -12,7 +12,6 @@ linters:
     - gomnd
     - gochecknoglobals
     - revive
-    - bodyclose
 
     - forcetypeassert
     - cyclop
@@ -21,8 +20,6 @@ linters:
     - funlen
     - goconst
     - dupl
-    - nestif
-    - tagliatelle
 
     - golint
     - interfacer

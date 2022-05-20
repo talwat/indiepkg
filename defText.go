@@ -1,6 +1,5 @@
-package main
-
 // This file is mainly for long strings of text, like the default config file & help message.
+package main
 
 const helpMsg = `Usage: indiepkg [options...] <command> [args...]
 

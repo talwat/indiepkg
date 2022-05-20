@@ -83,6 +83,7 @@ func pullPkgRepo(pkgName string) (bool, bool) {
 
 	debugLog("Git output from pull:\n%s", output)
 
+	// Check git output
 	if strings.Contains(output, "Already up to date.") {
 		return true, false
 	} else if strings.Contains(output, "not a git repository") {

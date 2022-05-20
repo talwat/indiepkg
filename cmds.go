@@ -23,7 +23,7 @@ func listPkgs() {
 }
 
 func infoPkg(pkgName string) {
-	pkg := loadPkg(getPkgInfo(pkgName, isURL(pkgName)), pkgName)
+	pkg := loadPkg(getPkgInfo(pkgName, isValidURL(pkgName)), pkgName)
 
 	safePrintVal := func(name string, val string) {
 		if val != "" {

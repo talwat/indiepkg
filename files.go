@@ -3,9 +3,9 @@ package main
 import "strings"
 
 func copyBins(pkg Package, srcPath string) {
-	if pkg.Bin == nil {
+	if pkg.Bin == nil { // Safeguard to prevent nil pointer dereference
 		return
-	} else if len(pkg.Bin.InSource) == 0 {
+	} else if len(pkg.Bin.InSource) == 0 { // If package doesn't have binaries, return
 		return
 	}
 
@@ -15,7 +15,7 @@ func copyBins(pkg Package, srcPath string) {
 	log(1, "Copying files for %s...", pkgDispName)
 
 	for i := range pkg.Bin.InSource {
-		srcDir := srcPath + pkg.Name + "/" + pkg.Bin.InSource[i]
+		srcDir := srcPath + pkg.Name + "/" + pkg.Bin.InSource[i] // Combine package's source path and binary name
 		destDir := binPath + pkg.Bin.Installed[i]
 
 		log(1, "Copying %s to %s...", bolden(srcDir), bolden(destDir))
@@ -27,7 +27,7 @@ func copyBins(pkg Package, srcPath string) {
 }
 
 func copyManpages(pkg Package, srcPath string) {
-	if len(pkg.Manpages) == 0 {
+	if len(pkg.Manpages) == 0 { // If package doesn't have manpages, return
 		return
 	}
 

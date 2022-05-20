@@ -48,7 +48,7 @@ func autoUpdate() {
 	if config.Updating.AutoUpdate {
 		log(1, "Checking for an update...")
 
-		resp, err := makeReq("http://clients3.google.com/generate_204")
+		resp, err := makeReq("http://clients3.google.com/generate_204") // Make request to check if offline
 
 		if err != nil && strings.HasSuffix(err.Error(), "no such host") {
 			debugLog("Error of ping: %s", bolden(err.Error()))
