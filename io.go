@@ -9,18 +9,30 @@ import (
 	"os"
 )
 
-func newFile(file string, text string, errMsg string, params ...interface{}) {
-	err := ioutil.WriteFile(file, []byte(text), 0o770)
+func newFile(path string, text string, errMsg string, params ...interface{}) {
+	debugLog("Creating file %s...", bolden(path))
+	err := ioutil.WriteFile(path, []byte(text), 0o770)
 	errorLog(err, fmt.Sprintf(errMsg, params...))
 }
 
-func newDir(name string, errMsg string, params ...interface{}) {
-	debugLog("Creating directory %s", bolden(name))
-	err := os.MkdirAll(name, 0o770)
+func newDir(path string, errMsg string, params ...interface{}) {
+	debugLog("Creating directory %s...", bolden(path))
+	err := os.MkdirAll(path, 0o770)
 	errorLog(err, fmt.Sprintf(errMsg, params...))
+}
+
+func safeNewDir(path string, name string, ignore bool, text string) {
+	if !pathExists(path, name) || ignore {
+		log(1, "Creating %s file...", bolden(name))
+		newFile(path, defaultConf, "An error occurred while creating %s file", bolden(name))
+	} else {
+		debugLog("Skipping creation of %s.", bolden(path))
+	}
 }
 
 func copyFile(src string, dst string) {
+	debugLog("Copying %s to %s...", bolden(src), bolden(dst))
+	debugLog("Statting %s...", bolden(src))
 	sourceFileStat, err := os.Stat(src)
 	errorLog(err, "Unable to stat file %s", src)
 
@@ -28,6 +40,7 @@ func copyFile(src string, dst string) {
 		errorLogRaw("File %s is not a regular file, can't copy", src)
 	}
 
+	debugLog("Opening files %s...", bolden(src))
 	source, err := os.Open(src)
 	errorLog(err, "An error occurred while opening file %s", src)
 
@@ -38,12 +51,14 @@ func copyFile(src string, dst string) {
 
 	defer destination.Close()
 
-	_, err = io.Copy(destination, source)
+	debugLog("Copying...")
 
+	_, err = io.Copy(destination, source)
 	errorLog(err, "An error occurred while copying file %s to %s", dst, src)
 }
 
 func readFile(file string, errMsg string, params ...interface{}) string {
+	debugLog("Reading %s...", bolden(file))
 	data, err := ioutil.ReadFile(file)
 	errorLog(err, fmt.Sprintf(errMsg, params...))
 
@@ -51,7 +66,7 @@ func readFile(file string, errMsg string, params ...interface{}) string {
 }
 
 func delPath(silent bool, path string, errMsg string, params ...interface{}) {
-	debugLog("Deleting %s", bolden(path))
+	debugLog("Deleting %s...", bolden(path))
 
 	if err := os.RemoveAll(path); !silent {
 		errorLog(err, fmt.Sprintf(errMsg, params...))
@@ -65,7 +80,7 @@ func mvPath(path string, destPath string) {
 }
 
 func pathExists(path string, fileName string, params ...interface{}) bool {
-	debugLog("Checking if %s exists", bolden(path))
+	debugLog("Checking if %s exists...", bolden(path))
 	_, err := os.Stat(path)
 
 	if err == nil {
@@ -76,12 +91,13 @@ func pathExists(path string, fileName string, params ...interface{}) bool {
 		return false
 	}
 
-	errorLog(err, "An error occurred while checking if %s exists", fileName)
+	errorLog(err, "An error occurred while checking if %s file exists", fileName)
 
 	return false
 }
 
 func dirContents(dir string, errMsg string) []fs.FileInfo {
+	debugLog("Getting contents of %s...", bolden(dir))
 	files, err := ioutil.ReadDir(dir)
 	errorLog(err, errMsg)
 
@@ -89,6 +105,7 @@ func dirContents(dir string, errMsg string) []fs.FileInfo {
 }
 
 func changePerms(file string, perms fs.FileMode) {
+	debugLog("Changing permissions of %s to %s...", bolden(file), bolden(perms))
 	err := os.Chmod(file, perms)
 	errorLog(err, "An error occurred while changing permissions for the file %s", bolden(file))
 }

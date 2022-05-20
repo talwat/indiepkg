@@ -11,7 +11,7 @@ func installPkgs(pkgNames []string) {
 	fullInit()
 
 	for _, pkgName := range pkgNames {
-		isURL := isURL(pkgName)
+		isURL := isValidURL(pkgName)
 		isFile := strings.HasSuffix(pkgName, ".json")
 		pkgDispName := bolden(pkgName)
 
@@ -46,7 +46,7 @@ func installPkgs(pkgNames []string) {
 		chapLog("===>", "", "Getting package info")
 		log(1, "Reading package info for %s...", bolden(pkgName))
 
-		var pkgFile string
+		var pkgFile string // Variable for the raw package info
 
 		switch {
 		case isURL: // Run this if a URL is selected to be installed
@@ -82,7 +82,7 @@ func installPkgs(pkgNames []string) {
 		checkDeps(pkg)
 		checkFileDeps(pkg)
 
-		if pkg.Download == nil {
+		if pkg.Download == nil { // Check if package didn't specify download URL
 			chapLog("==>", "", "Cloning source code")
 			log(1, "Making sure %s is not already cloned...", loadedPkgDispName)
 			delPath(false, tmpSrcPath+pkg.Name, "An error occurred while deleting temporary source files for %s", loadedPkgDispName)
@@ -149,19 +149,19 @@ func uninstallPkgs(pkgNames []string) {
 			}
 		}
 
-		if pkg.Bin != nil && len(pkg.Bin.Installed) > 0 {
+		if pkg.Bin != nil && len(pkg.Bin.Installed) > 0 { // Check if package has specified binaries
 			log(1, "Deleting binary files for %s...", pkgDispName)
 
-			for _, path := range pkg.Bin.Installed {
+			for _, path := range pkg.Bin.Installed { // Iterate through specified binaries and delete them
 				log(1, "Deleting %s...", bolden(binPath+path))
 				delPath(false, binPath+path, "An error occurred while deleting binary files for %s", pkgDispName)
 			}
 		}
 
-		if len(pkg.Manpages) > 0 {
+		if len(pkg.Manpages) > 0 { // Check if package has specified manpages
 			log(1, "Deleting manpages for %s...", pkgDispName)
 
-			for _, manPage := range pkg.Manpages {
+			for _, manPage := range pkg.Manpages { // Iterate through specified manpages and delete them
 				// Splitting to get file name
 				split := strings.Split(manPage, "/")
 

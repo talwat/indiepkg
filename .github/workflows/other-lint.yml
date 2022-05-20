@@ -15,9 +15,6 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Setup go
-        uses: actions/setup-go@v3
-
       - name: Setup python
         uses: actions/setup-python@v3
 

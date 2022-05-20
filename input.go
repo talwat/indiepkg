@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-const version = "0.36"
+const version = "0.37"
 
 var purge, debug, assumeYes, force, noDeps, ignoreRoot bool = false, false, false, false, false, false
 
@@ -204,6 +204,6 @@ func parseInput() {
 	}
 
 	if len(others) < 1 {
-		log(1, "Indiepkg Version %s, run %sindiepkg help%s for usage.", bolden(version), textFx.Bold, RESETCOL)
+		log(1, "Indiepkg Version %s, run %s for usage.", bolden(version), bolden("indiepkg help"))
 	}
 }

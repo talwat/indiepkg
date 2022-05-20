@@ -25,4 +25,6 @@ In order to submit your package, it **must** follow the following guidelines:
 
 If you would like to contribute code to IndiePKG, please make sure that your code has been **tested**.
 
-It should also be formatted with the standard go formatter. *(`gofmt`)*
+Additionally, it should pass all [golangci-lint](https://golangci-lint.run/) tests.
+
+When making your PR, request to merge to the **main** *(development)* branch.

@@ -9,6 +9,8 @@ import (
 func runCommandRealTime(workDir string, cmd string, args ...string) {
 	cmdObj := exec.Command(cmd, args...)
 	cmdObj.Dir = workDir
+
+	// Get output pipes
 	cmdReader, err := cmdObj.StdoutPipe()
 	cmdObj.Stderr = cmdObj.Stdout
 
