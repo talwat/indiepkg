@@ -190,4 +190,4 @@ Which will add it to `PATH`.
 
 This will **only** work if you are using `zsh`, `bash` or `ksh`.
 
-This is because it only appends to `.zshrc`, `.bashrc`, `.profile`, and `.zprofile`.
+This is because it only appends to `.zshrc`, `.bashrc`, `.kshrc`, `.profile`, and `.zprofile`.
