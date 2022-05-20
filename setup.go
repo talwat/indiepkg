@@ -48,6 +48,7 @@ func envAdd() {
 
 	fullAppendRc("bashrc")
 	fullAppendRc("zshrc")
+	fullAppendRc("kshrc")
 	fullAppendRc("profile")
 	fullAppendRc("zprofile")
 

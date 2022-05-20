@@ -46,6 +46,8 @@ It would be **extremely** helpful if you could try using IndiePKG and file [bug 
 - [Libraries used](#libraries-used)
 - [FAQ](#faq)
   - [So it's like the AUR?](#so-its-like-the-aur)
+  - [Help! When I try to run IndiePKG, it returns 'command not found'](#help-when-i-try-to-run-indiepkg-it-returns-command-not-found)
+    - [Note](#note)
 
 ## What is IndiePKG?
 
@@ -135,11 +137,11 @@ IndiePKG is **completely** broken on Windows. IndiePKG is overall not meant to r
 
 ### List of operating systems
 
-| Darwin                                                                                  | Linux                                                                                 | Other                                                                                   |
-| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| ![Darwin arm64](https://img.shields.io/badge/darwin%20arm64-full%20support-brightgreen) | ![Linux amd64](https://img.shields.io/badge/linux%20amd64-full%20support-brightgreen) | ![BSDs](https://img.shields.io/badge/BSDs-partial%20support-yellow)            |
+| Darwin                                                                                  | Linux                                                                                 | Other                                                                                        |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| ![Darwin arm64](https://img.shields.io/badge/darwin%20arm64-full%20support-brightgreen) | ![Linux amd64](https://img.shields.io/badge/linux%20amd64-full%20support-brightgreen) | ![BSDs](https://img.shields.io/badge/BSDs-partial%20support-yellow)                          |
 | ![Darwin amd64](https://img.shields.io/badge/darwin%20amd64-great%20support-green)      | ![Linux arm64](https://img.shields.io/badge/linux%20arm64-great%20support-green)      | ![Other unix-like](https://img.shields.io/badge/other%20unix--like-partial%20support-yellow) |
-|                                                                                         | ![Linux other](https://img.shields.io/badge/linux%20other-good%20support-yellowgreen) | ![Windows](https://img.shields.io/badge/windows-borked-red) |
+|                                                                                         | ![Linux other](https://img.shields.io/badge/linux%20other-good%20support-yellowgreen) | ![Windows](https://img.shields.io/badge/windows-borked-red)                                  |
 
 - **Full Support** - All packages & binary packages in the official repo are guaranteed to work. *This excludes linux-only*
 - **Great Support** - All source packages and most binary packages are supposed to work.
@@ -171,3 +173,21 @@ A huge thank you to the following libraries:
 Kind of. For one packages are checked, and there is also an official package manager unlike the AUR which is commonly paired with an AUR helper.
 
 It also obviously works on other operating systems besides just Arch Linux.
+
+### Help! When I try to run IndiePKG, it returns 'command not found'
+
+This is most likely due to you not having `~/.local/bin` in your `PATH`.
+
+To fix it, run:
+
+```bash
+~/.local/bin/indiepkg env-add
+```
+
+Which will add it to `PATH`.
+
+#### Note
+
+This will **only** work if you are using `zsh`, `bash` or `ksh`.
+
+This is because it only appends to `.zshrc`, `.bashrc`, `.profile`, and `.zprofile`.
