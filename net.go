@@ -1,3 +1,4 @@
+//nolint:bodyclose
 package main
 
 import (
@@ -12,6 +13,8 @@ import (
 	"github.com/schollz/progressbar/v3"
 )
 
+// Make sure to close the response after calling.
+// Not closing automatically because the response body needs to be read.
 func makeReq(url string) (http.Response, error) {
 	debugLog("Making GET request to %s", bolden(url))
 
@@ -24,8 +27,6 @@ func makeReq(url string) (http.Response, error) {
 	if err != nil {
 		return http.Response{}, fmt.Errorf("error while doing http request: %w", err)
 	}
-
-	defer resp.Body.Close()
 
 	return *resp, nil
 }
@@ -42,8 +43,6 @@ func makeGithubReq(url string) (http.Response, error) {
 	if err != nil {
 		return http.Response{}, fmt.Errorf("error while doing http request: %w", err)
 	}
-
-	defer resp.Body.Close()
 
 	return *resp, nil
 }
