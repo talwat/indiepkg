@@ -7,12 +7,14 @@ import (
 )
 
 var (
-	mainPath       string = home + ".indiepkg/"
-	srcPath        string = mainPath + "data/package_src/"
-	tmpSrcPath     string = mainPath + "tmp/package_src/"
-	infoPath       string = mainPath + "data/installed_packages/"
-	configPath     string = mainPath + "config/"
-	indiePkgSrcDir string = mainPath + "src/"
+	mainPath        string = home + ".indiepkg/"
+	srcPath         string = mainPath + "data/package_src/"
+	tmpSrcPath      string = mainPath + "tmp/package_src/"
+	infoPath        string = mainPath + "data/installed_packages/"
+	configPath      string = mainPath + "config/"
+	tmpPath         string = mainPath + "tmp/"
+	indiePkgSrcPath string = mainPath + "src/"
+	indiePkgBin     string = home + ".local/bin/indiepkg"
 )
 
 type Paths struct {

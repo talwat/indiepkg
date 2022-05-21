@@ -5,7 +5,7 @@ import (
 )
 
 func pullSrcRepo(silent bool) bool {
-	output, err := runCommand(indiePkgSrcDir, "git", "pull", "--no-tags")
+	output, err := runCommand(indiePkgSrcPath, "git", "pull", "--no-tags")
 	errorLog(err, "An error occurred while pulling source code for IndiePKG. Git output:\n%s", output)
 
 	if strings.Contains(output, "Already up to date.") {
@@ -40,7 +40,7 @@ func cloneSrcRepo() {
 		"--depth",
 		"1",
 		"https://github.com/talwat/indiepkg.git",
-		"src",
+		indiePkgSrcPath,
 	)
 }
 
