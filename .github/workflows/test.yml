@@ -23,13 +23,18 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
+      - name: Compile IndiePKG
+        run: make
+
       - name: Run install script
         run: |
           chmod +x scripts/install.sh
           ./scripts/install.sh
 
-      - name: Compile IndiePKG
-        run: make
+      - name: Run gostrap script
+        run: |
+          chmod +x scripts/gostrap.sh
+          ./scripts/gostrap.sh
 
       - name: Run with empty args
         run: ./indiepkg
@@ -75,7 +80,7 @@ jobs:
         run: |
           ./indiepkg update -d
           ./indiepkg upgrade pfetch yaf neofetch deno zig-bin -d
-      
+
       - name: Re-compile packages
         run: |
           ./indiepkg re-compile pfetch yaf neofetch deno zig-bin -y -d

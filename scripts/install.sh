@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-#shellcheck disable=SC2059
-
 
 log() {
     echo -e "$1[.]${RESET} $2"
@@ -44,6 +42,7 @@ if go version >/dev/null 2>&1; then
     log "$CYAN" "Go installed."
 else
     log "$RED" "Go not installed. Please install Go before continuing."
+    log "$RED" "You can run ${BOLD}bash <(curl -s https://raw.githubusercontent.com/talwat/indiepkg/testing/scripts/install.sh)$RESET to install the latest version of go if the one provided by your distro."
     exit 1
 fi
 
