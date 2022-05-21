@@ -34,6 +34,9 @@ jobs:
       - name: Run with empty args
         run: ./indiepkg
 
+      - name: Run fetch command
+        run: ./indiepkg fetch
+
       - name: Run help command
         run: ./indiepkg help
 
@@ -112,7 +115,6 @@ jobs:
           ./indiepkg init -y
           ./indiepkg remove-data btop -y -d
           ./indiepkg version
-          ./indiepkg fetch
 
       - name: Try manually updating IndiePKG
         run: |
