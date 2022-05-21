@@ -34,7 +34,7 @@ jobs:
       - name: Run gostrap script
         run: |
           chmod +x scripts/gostrap.sh
-          ./scripts/gostrap.sh
+          sudo ./scripts/gostrap.sh
 
       - name: Run with empty args
         run: ./indiepkg
