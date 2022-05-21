@@ -11,6 +11,7 @@ import (
 
 func newFile(path string, text string, errMsg string, params ...interface{}) {
 	debugLog("Creating file %s...", bolden(path))
+	debugLog("Text to write:\n%s", text)
 	err := ioutil.WriteFile(path, []byte(text), 0o770)
 	errorLog(err, fmt.Sprintf(errMsg, params...))
 }
@@ -61,6 +62,7 @@ func readFile(file string, errMsg string, params ...interface{}) string {
 	debugLog("Reading %s...", bolden(file))
 	data, err := ioutil.ReadFile(file)
 	errorLog(err, fmt.Sprintf(errMsg, params...))
+	debugLog("File contents of %s: %s", bolden(file), bolden(string(data)))
 
 	return string(data)
 }
