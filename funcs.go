@@ -57,10 +57,10 @@ func initDirs(reset bool) {
 	safeNewFile(configPath+"config.toml", "config file", reset, defaultConf)
 	safeNewFile(configPath+"sources.txt", "sources file", reset, defaultSources)
 
-	if !pathExists(indiePkgSrcDir, "IndiePKG source directory") || reset {
+	if !pathExists(indiePkgSrcPath, "IndiePKG source directory") || reset {
 		if reset {
 			log(1, "Resetting IndiePKG source directory...")
-			delPath(true, indiePkgSrcDir, "An error occurred while deleting the IndiePKG source directory")
+			delPath(true, indiePkgSrcPath, "An error occurred while deleting the IndiePKG source directory")
 		}
 
 		cloneSrcRepo()
@@ -213,7 +213,7 @@ func checkRoot() {
 
 func delTmp() {
 	log(1, "Deleting temporary directory...")
-	delPath(true, mainPath+"tmp", "An error occurred while deleting the temporary directory")
+	delPath(true, tmpPath, "An error occurred while deleting the temporary directory")
 }
 
 func fullInit() {
