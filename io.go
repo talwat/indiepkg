@@ -22,7 +22,7 @@ func newDir(path string, errMsg string, params ...interface{}) {
 	errorLog(err, fmt.Sprintf(errMsg, params...))
 }
 
-func safeNewDir(path string, name string, ignore bool, text string) {
+func safeNewFile(path string, name string, ignore bool, text string) {
 	if !pathExists(path, name) || ignore {
 		log(1, "Creating %s file...", bolden(name))
 		newFile(path, text, "An error occurred while creating %s file", bolden(name))
