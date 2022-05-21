@@ -73,9 +73,5 @@ chap_log "$BLUE==>" "Installing"
 log "$CYAN" "Installing..."
 make install
 
-
-chap_log "$BLUE==>" "Running indiepkg setup"
-"$HOME/.local/bin/indiepkg" setup
-
 chap_log "$GREEN=>" "Success"
 success_log "$GREEN" "Installation complete!"

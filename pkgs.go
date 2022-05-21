@@ -11,12 +11,12 @@ func installPkgs(pkgNames []string) {
 	fullInit()
 
 	for _, pkgName := range pkgNames {
+		chapLog("=>", "", "Installing %s", pkgName)
+		chapLog("==>", "", "Preparing for installation of %s", pkgName)
+
 		isURL := isValidURL(pkgName)
 		isFile := strings.HasSuffix(pkgName, ".json")
 		pkgDispName := bolden(pkgName)
-
-		chapLog("=>", "", "Installing %s", pkgName)
-		chapLog("==>", "", "Preparing for installation of %s", pkgName)
 
 		chapLog("===>", "", "Checking if already installed")
 		log(1, "Checking if %s is already installed...", pkgDispName)
