@@ -157,6 +157,14 @@ func fetch() {
 	chapLog("=>", "", "IndiePKG Information")
 	log(1, "IndiePKG Version: %s", version)
 
+	indiePkgPath, err := os.Executable()
+
+	if err != nil {
+		log(3, "Could not get IndiePKG path. Error: %s", err.Error())
+	} else {
+		log(1, "IndiePKG Path: %s", indiePkgPath)
+	}
+
 	if configExists {
 		log(1, "IndiePKG Branch: %s", config.Updating.Branch)
 	}
