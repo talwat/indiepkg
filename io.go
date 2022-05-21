@@ -24,7 +24,7 @@ func newDir(path string, errMsg string, params ...interface{}) {
 func safeNewDir(path string, name string, ignore bool, text string) {
 	if !pathExists(path, name) || ignore {
 		log(1, "Creating %s file...", bolden(name))
-		newFile(path, defaultConf, "An error occurred while creating %s file", bolden(name))
+		newFile(path, text, "An error occurred while creating %s file", bolden(name))
 	} else {
 		debugLog("Skipping creation of %s.", bolden(path))
 	}
