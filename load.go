@@ -23,13 +23,13 @@ func loadPkg(packageFile string, pkgName string) Package {
 
 	keySlice := make([]string, 0)
 
-	for key := range environmentVariables {
+	for key := range environmentVariables { // Iterate through environment variables & add them to keySlice
 		keySlice = append(keySlice, key)
 	}
 
 	debugLog("Replacing environment variables...")
 
-	for _, key := range keySlice {
+	for _, key := range keySlice { // Iterate through keySlice & replace them in the package file with their proper values
 		environmentVariables["PREFIX"] = config.Paths.Prefix
 		debugLog("Replacing %s with %s...", key, environmentVariables[key])
 		packageFile = strings.ReplaceAll(packageFile, ":("+key+"):", environmentVariables[key])

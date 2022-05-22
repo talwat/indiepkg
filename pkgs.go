@@ -28,7 +28,7 @@ func installPkgs(pkgNames []string) {
 			toCheckName = getPkgNameFromURL(pkgName)
 		case isFile:
 			split := strings.Split(pkgName, "/")
-			toCheckName = strings.TrimSuffix(split[len(split)-1], ".json")
+			toCheckName = strings.TrimSuffix(split[len(split)-1], ".json") // Get final part of path, without .json file extension
 		default:
 			toCheckName = pkgName
 		}
