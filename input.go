@@ -5,9 +5,16 @@ import (
 	"strings"
 )
 
-const version = "0.37.3"
+const version = "0.38.1"
 
-var purge, debug, assumeYes, force, noDeps, ignoreRoot bool = false, false, false, false, false, false
+var (
+	purge      bool = false
+	debug      bool = false
+	assumeYes  bool = false
+	force      bool = false
+	noDeps     bool = false
+	ignoreRoot bool = false
+)
 
 var optionToOthers, optionToOther bool = false, false
 

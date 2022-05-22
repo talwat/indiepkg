@@ -54,13 +54,13 @@ func initDirs(reset bool) {
 	newDir(config.Paths.Prefix+"bin", "An error occurred while creating binary directory")
 	newDir(config.Paths.Prefix+"share/man", "An error occurred while creating manpage directory")
 
-	safeNewDir(configPath+"config.toml", "config file", reset, defaultConf)
-	safeNewDir(configPath+"sources.txt", "sources file", reset, defaultSources)
+	safeNewFile(configPath+"config.toml", "config file", reset, defaultConf)
+	safeNewFile(configPath+"sources.txt", "sources file", reset, defaultSources)
 
-	if !pathExists(indiePkgSrcDir, "IndiePKG source directory") || reset {
+	if !pathExists(indiePkgSrcPath, "IndiePKG source directory") || reset {
 		if reset {
 			log(1, "Resetting IndiePKG source directory...")
-			delPath(true, indiePkgSrcDir, "An error occurred while deleting the IndiePKG source directory")
+			delPath(true, indiePkgSrcPath, "An error occurred while deleting the IndiePKG source directory")
 		}
 
 		cloneSrcRepo()
@@ -211,9 +211,15 @@ func checkRoot() {
 	}
 }
 
+func delTmp() {
+	log(1, "Deleting temporary directory...")
+	delPath(true, tmpPath, "An error occurred while deleting the temporary directory")
+}
+
 func fullInit() {
 	chapLog("=>", "", "Initializing")
 	checkRoot()
+	delTmp()
 	initDirs(false)
 	loadConfig()
 	autoUpdate()

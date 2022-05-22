@@ -8,16 +8,15 @@ import (
 func compSrc() {
 	chapLog("==>", "", "Compiling IndiePKG")
 	logNoNewline(1, "Running %s", bolden("make"))
-	runCommandDot(indiePkgSrcDir, false, "make")
+	runCommandDot(indiePkgSrcPath, false, "make")
 	rawLogf("\n")
 
 	chapLog("==>", "", "Moving IndiePKG binary")
 
-	srcPath := indiePkgSrcDir + "indiepkg"
-	destPath := home + ".local/bin/indiepkg"
+	srcPath := indiePkgSrcPath + "indiepkg"
 
-	log(1, "Moving %s to %s...", bolden(srcPath), bolden(destPath))
-	mvPath(srcPath, destPath)
+	log(1, "Moving %s to %s...", bolden(srcPath), bolden(indiePkgBin))
+	mvPath(srcPath, indiePkgBin)
 }
 
 func updateIndiePKG() {
@@ -63,9 +62,9 @@ func autoUpdate() {
 			return
 		}
 
-		_, err = runCommand(indiePkgSrcDir, "make")
+		_, err = runCommand(indiePkgSrcPath, "make")
 		errorLog(err, "An error occurred while compiling IndiePKG because of an auto-update")
-		mvPath(indiePkgSrcDir+"indiepkg", home+".local/bin/indiepkg")
+		mvPath(indiePkgSrcPath+"indiepkg", indiePkgBin)
 		log(0, "Auto-updated IndiePKG!")
 	}
 }

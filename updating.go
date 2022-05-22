@@ -47,7 +47,7 @@ func updateAllPackages() {
 
 	chapLog("==>", "", "Getting installed packages")
 
-	installedPackages := make([]string, 0)
+	installedPkgs := make([]string, 0)
 
 	log(1, "Getting contents of %s", bolden(infoPath))
 
@@ -56,16 +56,16 @@ func updateAllPackages() {
 	log(1, "Iterating through contents of %s", bolden(infoPath))
 
 	for _, file := range files {
-		installedPackages = append(installedPackages, strings.ReplaceAll(file.Name(), ".json", ""))
+		installedPkgs = append(installedPkgs, strings.TrimSuffix(file.Name(), ".json")) // Trim .json from end of file name & append to installedPkgs
 	}
 
 	chapLog("=>", "", "Updating packages")
 
-	for _, installedPackage := range installedPackages { // Iterate through installed packages
-		chapLog("==>", "", "Updating %s", installedPackage)
-		rawGetInfo(installedPackage, readLoad(installedPackage))
+	for _, pkgName := range installedPkgs { // Iterate through installed packages
+		chapLog("==>", "", "Updating %s", pkgName)
+		rawGetInfo(pkgName, readLoad(pkgName))
 		chapLog("===>", textCol.Green, "Success")
-		log(0, "Successfully updated package info for %s.", bolden(installedPackage))
+		log(0, "Successfully updated package info for %s.", bolden(pkgName))
 	}
 
 	chapLog("=>", textCol.Green, "Success")

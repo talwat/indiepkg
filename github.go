@@ -18,7 +18,7 @@ type GHFile struct {
 
 func sendGithubRequest(url string) (string, http.Header) {
 	tokenLen := len(config.Github.Token)
-	if tokenLen >= 4 && config.Github.Username != "" {
+	if tokenLen >= 4 && config.Github.Username != "" { // Check if the token & username are set properly
 		debugLog(
 			"Sending request to %s with username %s and token (last 4 digits) %s",
 			bolden(url), bolden(config.Github.Username),

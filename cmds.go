@@ -110,7 +110,7 @@ func listAll() {
 func reClone() {
 	loadConfig()
 	log(1, "Resetting IndiePKG source directory...")
-	delPath(true, indiePkgSrcDir, "An error occurred while deleting the IndiePKG source directory")
+	delPath(true, indiePkgSrcPath, "An error occurred while deleting the IndiePKG source directory")
 
 	cloneSrcRepo()
 	log(0, "Successfully re-cloned IndiePKG source.")
@@ -156,6 +156,14 @@ func fetch() {
 
 	chapLog("=>", "", "IndiePKG Information")
 	log(1, "IndiePKG Version: %s", version)
+
+	indiePkgPath, err := os.Executable()
+
+	if err != nil {
+		log(3, "Could not get IndiePKG path. Error: %s", err.Error())
+	} else {
+		log(1, "IndiePKG Path: %s", indiePkgPath)
+	}
 
 	if configExists {
 		log(1, "IndiePKG Branch: %s", config.Updating.Branch)

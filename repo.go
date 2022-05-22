@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	"strings"
 )
 
@@ -48,7 +47,7 @@ func stripSources(sourcesFile string, noParse bool) ([]string, string) {
 
 	// Iterate through each line
 	for _, line := range strings.Split(strings.TrimSpace(sourcesFile), "\n") {
-		if strings.HasPrefix(line, "#") || strings.TrimSpace(line) == "" {
+		if strings.HasPrefix(line, "#") || strings.TrimSpace(line) == "" { // Skip comments and empty lines
 			continue
 		}
 
@@ -74,8 +73,7 @@ func addRepo(repoLink string) {
 		if force {
 			log(3, "Invalid url, but continuing because force is set to true.")
 		} else {
-			log(4, "Invalid url: %s.", bolden(repoLink))
-			os.Exit(1)
+			errorLogRaw("Invalid url: %s", bolden(repoLink))
 		}
 	}
 
@@ -87,7 +85,6 @@ func addRepo(repoLink string) {
 			log(3, "Repo %s already exists in sources file, but continuing because force is set to true.", bolden(repoLink))
 		} else {
 			errorLogRaw("Repo %s already exists in sources file", bolden(repoLink))
-			os.Exit(1)
 		}
 	}
 
