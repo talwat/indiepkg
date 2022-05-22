@@ -48,6 +48,7 @@ It would be **extremely** helpful if you could try using IndiePKG and file [bug 
   - [So it's like the AUR?](#so-its-like-the-aur)
   - [Help! When I try to run IndiePKG, it returns 'command not found'](#help-when-i-try-to-run-indiepkg-it-returns-command-not-found)
     - [Note](#note)
+  - [Why?](#why)
 
 ## What is IndiePKG?
 
@@ -191,3 +192,9 @@ Which will add it to `PATH`.
 This will **only** work if you are using `zsh`, `bash` or `ksh`.
 
 This is because it only appends to `.zshrc`, `.bashrc`, `.kshrc`, `.profile`, and `.zprofile`.
+
+### Why?
+
+IndiePKG is meant for small developers to be able to add their packages easily, for people to discover small open source programs.
+
+IndiePKG also compiles things **from source** so that you can use the latest code, without having to manually look at the instructions and copy the commands.
