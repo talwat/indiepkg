@@ -2,6 +2,7 @@ package main
 
 import "strings"
 
+// Copies binaries to their proper location for a specific package
 func copyBins(pkg Package, srcPath string) {
 	if pkg.Bin == nil { // Safeguard to prevent nil pointer dereference
 		return
@@ -26,6 +27,7 @@ func copyBins(pkg Package, srcPath string) {
 	}
 }
 
+// Copies manpages to their proper location for a specific package
 func copyManpages(pkg Package, srcPath string) {
 	if len(pkg.Manpages) == 0 { // If package doesn't have manpages, return
 		return

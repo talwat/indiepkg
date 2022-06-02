@@ -2,6 +2,7 @@ package main
 
 import "os"
 
+// Setup directories & source
 func setup() {
 	log(1, "IndiePKG initial setup.")
 	chapLog("=>", "", "Initializing directories & source")

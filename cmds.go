@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// List installed packages
 func listPkgs() {
 	installedPkgs := make([]string, 0)
 	files := dirContents(infoPath, "An error occurred while getting list of installed packages")
@@ -22,6 +23,7 @@ func listPkgs() {
 	rawLog(strings.Join(installedPkgs, "\n") + "\n")
 }
 
+// Gets info for a package
 func infoPkg(pkgName string) {
 	pkg := loadPkg(getPkgInfo(pkgName, isValidURL(pkgName)), pkgName)
 
@@ -56,6 +58,7 @@ func infoPkg(pkgName string) {
 	getNotes(pkg)
 }
 
+// Removes data for packages
 func rmData(pkgNames []string) {
 	log(3, "Warning: This will remove the data for the selected packages stored in %s", mainPath)
 	log(3, "This will %snot%s run the uninstall commands.", textFx.Bold, RESETCOL)
@@ -79,6 +82,7 @@ func rmData(pkgNames []string) {
 	log(0, "Successfully deleted data.")
 }
 
+// Searches for a package
 func search(query string) {
 	initDirs(false)
 	loadConfig()
@@ -93,6 +97,7 @@ func search(query string) {
 	}
 }
 
+// Lists all packages in the repos
 func listAll() {
 	initDirs(false)
 	loadConfig()
@@ -107,15 +112,7 @@ func listAll() {
 	}
 }
 
-func reClone() {
-	loadConfig()
-	log(1, "Resetting IndiePKG source directory...")
-	delPath(true, indiePkgSrcPath, "An error occurred while deleting the IndiePKG source directory")
-
-	cloneSrcRepo()
-	log(0, "Successfully re-cloned IndiePKG source.")
-}
-
+// Fetches and displays system & go info
 func fetch() {
 	configExists := pathExists(configPath+"config.toml", "config file")
 
@@ -188,6 +185,7 @@ func fetch() {
 	}
 }
 
+// Runs help2man for indiepkg
 func help2man() {
 	log(1, "Compiling IndiePKG...")
 

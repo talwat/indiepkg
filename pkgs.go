@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Installs packages
 func installPkgs(pkgNames []string) {
 	displayPkgs(pkgNames, "install")
 
@@ -114,6 +115,7 @@ func installPkgs(pkgNames []string) {
 	log(0, "Installed all selected packages successfully.")
 }
 
+// Uninstalls packages
 func uninstallPkgs(pkgNames []string) {
 	displayPkgs(pkgNames, "uninstall")
 

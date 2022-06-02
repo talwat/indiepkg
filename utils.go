@@ -8,6 +8,7 @@ import (
 
 var home string = os.Getenv("HOME") + "/"
 
+// Check if user is root
 func isRoot() bool {
 	currentUser, err := user.Current()
 
@@ -16,6 +17,7 @@ func isRoot() bool {
 	return currentUser.Username == "root"
 }
 
+// Check is URL is valid
 func isValidURL(urlInput string) bool {
 	log(1, "Checking if %s is a valid URL...", bolden(urlInput))
 	_, err := url.ParseRequestURI(urlInput)
@@ -23,6 +25,7 @@ func isValidURL(urlInput string) bool {
 	return err == nil
 }
 
+// Check for status code 404, 204, and trigger an error if not in the 200 range
 func checkFor404(statusCode int, pkgName string) bool {
 	log(1, "Checking status code for 404 error...")
 

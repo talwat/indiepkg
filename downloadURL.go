@@ -5,6 +5,7 @@ import (
 	"runtime"
 )
 
+// Gets the URL to download for a package
 func getDownloadURL(pkg Package) string {
 	debugLog("GOOS: %s. GOARCH: %s", runtime.GOOS, runtime.GOARCH)
 

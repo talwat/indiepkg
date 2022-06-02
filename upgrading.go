@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+// Function to upgrade a package
 func upgradePkgFunc(pkgName string, chapPrefix string) {
 	chapLog(chapPrefix+"=>", "", "Upgrading %s", pkgName)
 

@@ -9,6 +9,7 @@ import (
 	"os"
 )
 
+// Creates a new file
 func newFile(path string, text string, errMsg string, params ...interface{}) {
 	debugLog("Creating file %s...", bolden(path))
 	debugLog("Text to write:\n%s", text)
@@ -16,12 +17,14 @@ func newFile(path string, text string, errMsg string, params ...interface{}) {
 	errorLog(err, fmt.Sprintf(errMsg, params...))
 }
 
+// Creates a new directory
 func newDir(path string, errMsg string, params ...interface{}) {
 	debugLog("Creating directory %s...", bolden(path))
 	err := os.MkdirAll(path, 0o770)
 	errorLog(err, fmt.Sprintf(errMsg, params...))
 }
 
+// Creates a new file if it doesn't already exist
 func safeNewFile(path string, name string, ignore bool, text string) {
 	if !pathExists(path, name) || ignore {
 		log(1, "Creating %s file...", bolden(name))
@@ -31,6 +34,7 @@ func safeNewFile(path string, name string, ignore bool, text string) {
 	}
 }
 
+// Copies a file
 func copyFile(src string, dst string) {
 	debugLog("Copying %s to %s...", bolden(src), bolden(dst))
 	debugLog("Statting %s...", bolden(src))
@@ -58,6 +62,7 @@ func copyFile(src string, dst string) {
 	errorLog(err, "An error occurred while copying file %s to %s", dst, src)
 }
 
+// Reads a file
 func readFile(file string, errMsg string, params ...interface{}) string {
 	debugLog("Reading %s...", bolden(file))
 	data, err := ioutil.ReadFile(file)
@@ -67,6 +72,7 @@ func readFile(file string, errMsg string, params ...interface{}) string {
 	return string(data)
 }
 
+// Deletes a directory or file
 func delPath(silent bool, path string, errMsg string, params ...interface{}) {
 	debugLog("Deleting %s...", bolden(path))
 
@@ -75,12 +81,14 @@ func delPath(silent bool, path string, errMsg string, params ...interface{}) {
 	}
 }
 
+// Moves a directory or path
 func mvPath(path string, destPath string) {
 	debugLog("Moving %s to %s", bolden(path), bolden(destPath))
 	err := os.Rename(path, destPath)
 	errorLog(err, "An error occurred while moving %s to %s", bolden(path), bolden(destPath))
 }
 
+// Check if a path exists
 func pathExists(path string, fileName string, params ...interface{}) bool {
 	debugLog("Checking if %s exists...", bolden(path))
 	_, err := os.Stat(path)
@@ -98,6 +106,7 @@ func pathExists(path string, fileName string, params ...interface{}) bool {
 	return false
 }
 
+// Returns the contents of a directory
 func dirContents(dir string, errMsg string) []fs.FileInfo {
 	debugLog("Getting contents of %s...", bolden(dir))
 	files, err := ioutil.ReadDir(dir)
@@ -106,12 +115,14 @@ func dirContents(dir string, errMsg string) []fs.FileInfo {
 	return files
 }
 
+// Changes permissions for a file
 func changePerms(file string, perms fs.FileMode) {
 	debugLog("Changing permissions of %s to %s...", bolden(file), bolden(perms))
 	err := os.Chmod(file, perms)
 	errorLog(err, "An error occurred while changing permissions for the file %s", bolden(file))
 }
 
+// Appends a string to a file
 func appendToFile(file string, text string, params ...interface{}) {
 	toAppend := fmt.Sprintf(text, params...)
 

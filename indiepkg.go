@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Compiles source of indiepkg
 func compSrc() {
 	chapLog("==>", "", "Compiling IndiePKG")
 	logNoNewline(1, "Running %s", bolden("make"))
@@ -19,6 +20,7 @@ func compSrc() {
 	mvPath(srcPath, indiePkgBin)
 }
 
+// Updates indiepkg
 func updateIndiePKG() {
 	chapLog("=>", "", "Initializing")
 	initDirs(false)
@@ -43,6 +45,7 @@ func updateIndiePKG() {
 	log(0, "Updated IndiePKG!")
 }
 
+// Checks for an update silently
 func autoUpdate() {
 	if config.Updating.AutoUpdate {
 		log(1, "Checking for an update...")
@@ -67,4 +70,14 @@ func autoUpdate() {
 		mvPath(indiePkgSrcPath+"indiepkg", indiePkgBin)
 		log(0, "Auto-updated IndiePKG!")
 	}
+}
+
+// Re-clones IndiePKG source
+func reClone() {
+	loadConfig()
+	log(1, "Resetting IndiePKG source directory...")
+	delPath(true, indiePkgSrcPath, "An error occurred while deleting the IndiePKG source directory")
+
+	cloneSrcRepo()
+	log(0, "Successfully re-cloned IndiePKG source.")
 }

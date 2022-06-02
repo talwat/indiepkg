@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Runs a command and prints the output to the terminal in real time
 func runCommandRealTime(workDir string, cmd string, args ...string) {
 	cmdObj := exec.Command(cmd, args...)
 	cmdObj.Dir = workDir
@@ -37,6 +38,7 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 	errorLogNewlineBefore(err, "An error occurred while running command")
 }
 
+// Runs a command and displays dots to indicate progress
 func runCommandDot(workDir string, forceCmd bool, cmd string, args ...string) {
 	parsedCmd := strings.TrimPrefix(cmd, "!(FORCE)! ")
 	cmdObj := exec.Command(parsedCmd, args...)
@@ -77,6 +79,7 @@ func runCommandDot(workDir string, forceCmd bool, cmd string, args ...string) {
 	}
 }
 
+// Runs a command
 func runCommand(workDir string, cmd string, args ...string) (string, error) {
 	cmdObj := exec.Command(cmd, args...)
 	cmdObj.Dir = workDir
@@ -89,6 +92,7 @@ func runCommand(workDir string, cmd string, args ...string) (string, error) {
 	return strings.TrimSuffix(string(data), "\n"), nil
 }
 
+// Check if a command exists
 func checkIfCommandExists(cmd string) bool {
 	_, err := exec.LookPath(cmd)
 

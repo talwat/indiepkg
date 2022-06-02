@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Check if a package is installed
 func pkgExists(pkgName string) bool {
 	pkgDispName := bolden(pkgName)
 
@@ -24,6 +25,7 @@ func pkgExists(pkgName string) bool {
 	}
 }
 
+// Runs an array of commands
 func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 	debugLog("Work dir: %s", path)
 
@@ -40,6 +42,7 @@ func runCmds(cmds []string, pkg Package, path string, cmdsLabel string) {
 	}
 }
 
+// Creates required directories and files
 func initDirs(reset bool) {
 	if reset {
 		confirm("y", "Are you sure you want to reset the directories? This will reset your custom configuration & sources file. (y/n)")
@@ -67,6 +70,7 @@ func initDirs(reset bool) {
 	}
 }
 
+// Gets dependencies
 func getDeps(deps *Deps) []string {
 	if deps != nil {
 		fullDepsList := deps.All
@@ -96,6 +100,7 @@ func getPkgNameFromURL(url string) string {
 	return strings.TrimSuffix(strings.Split(url, "/")[len(strings.Split(url, "/"))-1], ".json")
 }
 
+// Checks if all dependencies of a package are installed
 func checkDeps(pkg Package) {
 	if pkgDispName := bolden(pkg.Name); !noDeps {
 		log(1, "Getting dependencies for %s...", pkgDispName)
@@ -126,6 +131,7 @@ func checkDeps(pkg Package) {
 	}
 }
 
+// Checks if all file dependencies of a package are installed
 func checkFileDeps(pkg Package) {
 	if pkgDispName := bolden(pkg.Name); !noDeps {
 		log(1, "Getting file dependencies for %s...", pkgDispName)
@@ -156,6 +162,7 @@ func checkFileDeps(pkg Package) {
 	}
 }
 
+// Parse sources file
 func parseSources() []string {
 	log(1, "Reading sources file...")
 
@@ -182,6 +189,7 @@ func parseSources() []string {
 	return finalList
 }
 
+// Prints notes for a package
 func getNotes(pkg Package) {
 	if len(pkg.Notes) > 0 {
 		log(1, bolden("Important note!"))
@@ -189,6 +197,7 @@ func getNotes(pkg Package) {
 	}
 }
 
+// Displays a confirmation message when installing, uninstalling, etc... a package
 func displayPkgs(pkgNames []string, action string) {
 	log(1, "Are you sure you would like to %s the following packages:", bolden(action))
 
@@ -199,6 +208,7 @@ func displayPkgs(pkgNames []string, action string) {
 	confirm("y", "(y/n)")
 }
 
+// Checks if the user is root and suspends program if the user is root
 func checkRoot() {
 	if isRoot() {
 		if force || ignoreRoot {
@@ -211,11 +221,13 @@ func checkRoot() {
 	}
 }
 
+// Deletes temporary directory
 func delTmp() {
 	log(1, "Deleting temporary directory...")
 	delPath(true, tmpPath, "An error occurred while deleting the temporary directory")
 }
 
+// Fully initializes all things for IndiePKG to function
 func fullInit() {
 	chapLog("=>", "", "Initializing")
 	checkRoot()

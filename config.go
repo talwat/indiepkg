@@ -75,6 +75,7 @@ var config Config = Config{
 	},
 }
 
+// Loads & reads configuration file
 func loadConfig() {
 	log(1, "Reading config file...")
 

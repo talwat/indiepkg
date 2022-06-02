@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Loads a package
 func loadPkg(packageFile string, pkgName string) Package {
 	log(1, "Loading package info for %s...", bolden(pkgName))
 
@@ -41,6 +42,7 @@ func loadPkg(packageFile string, pkgName string) Package {
 	return pkg
 }
 
+// Reads a package file from the standard location and loads it
 func readLoad(pkgName string) Package {
 	pkgDispName := bolden(pkgName)
 
