@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-// Parse URL to be consistent
+// Parse URL to be consistent.
 func parseURL(url string, silent bool) string {
 	if !silent {
 		log(1, "Parsing URL %s...", bolden(url))
@@ -28,7 +28,7 @@ func parseURL(url string, silent bool) string {
 	return repoURL
 }
 
-// Read sources file & return it's contents
+// Read sources file & return it's contents.
 func readSources() ([]string, string) {
 	log(1, "Reading sources file...")
 
@@ -41,7 +41,7 @@ func readSources() ([]string, string) {
 	return strings.Split(trimmed, "\n"), trimmed
 }
 
-// Remove empty lines or lines that begin with #
+// Remove empty lines or lines that begin with #.
 func stripSources(sourcesFile string, noParse bool) ([]string, string) {
 	log(1, "Stripping sources file of comments...")
 
@@ -66,13 +66,13 @@ func stripSources(sourcesFile string, noParse bool) ([]string, string) {
 	return final, finalStr
 }
 
-// Write to sources file
+// Write to sources file.
 func saveChanges(sourcesFile string) {
 	log(1, "Saving changes...")
 	newFile(configPath+"sources.txt", sourcesFile, "An error occurred while saving changes to sources file")
 }
 
-// Add repo to sources file
+// Add repo to sources file.
 func addRepo(repoLink string) {
 	if !isValidURL(repoLink) {
 		if force {
@@ -98,7 +98,7 @@ func addRepo(repoLink string) {
 	saveChanges(sourcesFile)
 }
 
-// Remove repo from sources file
+// Remove repo from sources file.
 func rmRepo(repoLink string) {
 	repos, _ := readSources()
 
@@ -121,7 +121,7 @@ func rmRepo(repoLink string) {
 	saveChanges(sourcesFile)
 }
 
-// List repos in the sources file
+// List repos in the sources file.
 func listRepos() {
 	rawRepos, _ := readSources()
 	repos, _ := stripSources(strings.Join(rawRepos, "\n"), true)
@@ -133,7 +133,7 @@ func listRepos() {
 	}
 }
 
-// Return a label to the provided repo
+// Return a label to the provided repo.
 func repoLabel(repo string, includeLink bool) string {
 	prefixes := [][]string{ // Using a 2D array to retain order of elements
 		{"http://raw.githubusercontent.com/talwat/indiepkg/main/packages/linux-only", textCol.Blue + "(Linux only)" + RESETCOL},

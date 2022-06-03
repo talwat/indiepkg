@@ -86,6 +86,12 @@ username = ""
 # Github access token, this should not expire and have no permissions granted for security purposes.
 # Information about getting a token is available here. https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 token = ""
+
+# Configures other progress indicators
+[progress]
+
+# Default: spinner. Valid values: spinner, dots
+compile_progress_indicator = "spinner" 
 `
 
 const defaultSources = `# Please only add sources you trust.

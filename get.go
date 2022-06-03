@@ -6,13 +6,13 @@ import (
 	"strings"
 )
 
-// Writes a packages info to the proper location
+// Writes a packages info to the proper location.
 func writePkg(pkgName string, pkgFile string) {
 	log(1, "Writing package info for %s...", bolden(pkgName))
 	newFile(infoPath+pkgName+".json", pkgFile, "An error occurred while writing package information for %s", pkgName)
 }
 
-// Finds a packages info in the repos
+// Finds a packages info in the repos.
 func findPkg(pkgName string) string {
 	log(1, "Finding package %s...", bolden(pkgName))
 
@@ -110,7 +110,7 @@ func findPkg(pkgName string) string {
 	return ""
 }
 
-// Gets a packages info from the internet
+// Gets a packages info from the internet.
 func getPkgFromNet(pkgName string) (Package, string) {
 	packageFile := findPkg(pkgName)
 
@@ -119,7 +119,7 @@ func getPkgFromNet(pkgName string) (Package, string) {
 	return pkg, packageFile
 }
 
-// Gets a packages info from a URL
+// Gets a packages info from a URL.
 func getPkgFromURL(pkgName string, url string) string {
 	packageFile, statusCode, err := viewFile(url)
 	errorLog(err, "An error occurred while getting package information for %s", bolden(pkgName))
@@ -131,7 +131,7 @@ func getPkgFromURL(pkgName string, url string) string {
 	return packageFile
 }
 
-// Downloads data for a package directly
+// Downloads data for a package directly.
 func doDirectDownload(pkg Package, srcPath string) {
 	pkgDispName := bolden(pkg.Name)
 
@@ -153,7 +153,7 @@ func doDirectDownload(pkg Package, srcPath string) {
 	downloadFileWithProg(nameOfFile, url, "An error occurred while downloading file for %s", pkgDispName)
 }
 
-// Gets info for a package
+// Gets info for a package.
 func getPkgInfo(pkgName string, isURL bool) string {
 	var pkgFile string
 

@@ -2,7 +2,7 @@ package main
 
 import "os"
 
-// Setup directories & source
+// Setup directories & source.
 func setup() {
 	log(1, "IndiePKG initial setup.")
 	chapLog("=>", "", "Initializing directories & source")
@@ -15,6 +15,7 @@ func setup() {
 	log(1, "Initialized and updated IndiePKG.")
 }
 
+// Set environment variables in shell rc files.
 func envAdd() {
 	confirm("y", "Are you sure you would like to add %s to several environment variables? This will fix a lot of issues with packages not being found (y/n)", bolden(home+".local"))
 

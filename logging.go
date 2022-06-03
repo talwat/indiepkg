@@ -19,10 +19,11 @@ var logType = map[int]string{
 	6: RESETCOL + textCol.Cyan + "[?]" + RESETCOL,
 }
 
-// Chapter log, used to organize logs into sections
+// Chapter log, used to organize logs into sections.
 func chapLog(prefix string, colorInput string, msg string, params ...interface{}) {
 	var color string
-	var colors = map[int]string{
+
+	colors := map[int]string{
 		2: textCol.Violet,
 		3: textCol.Blue,
 		4: textCol.Cyan,
@@ -38,39 +39,39 @@ func chapLog(prefix string, colorInput string, msg string, params ...interface{}
 	rawLogf("\n"+RESETCOL+color+bolden(prefix+RESETCOL+textFx.Bold+" %s\n"), fmt.Sprintf(msg, params...))
 }
 
-// Adds a tab to the beginning of each line and prints it
+// Adds a tab to the beginning of each line and prints it.
 func indent(text string) {
 	for _, line := range strings.Split(text, "\n") {
 		rawLog("      " + line + "\n")
 	}
 }
 
-// Logs a message and formats it
+// Logs a message and formats it.
 func rawLogf(msg string, params ...interface{}) {
 	fmt.Printf(msg, params...) // nolint:forbidigo
 }
 
-// Logs a message
+// Logs a message.
 func rawLog(msg string) {
 	fmt.Print(msg) // nolint:forbidigo
 }
 
-// Logs a message with a specified prefix
+// Logs a message with a specified prefix.
 func log(logTypeInput int, msg string, params ...interface{}) {
 	rawLogf(logType[logTypeInput]+(" %s\n"), fmt.Sprintf(msg, params...))
 }
 
-// Logs a message without a newline
+// Logs a message without a newline.
 func logNoNewline(logTypeInput int, msg string, params ...interface{}) {
 	rawLogf(logType[logTypeInput]+(" %s"), fmt.Sprintf(msg, params...))
 }
 
-// Logs a message with an extra newline before
+// Logs a message with an extra newline before.
 func logNewlineBefore(logTypeInput int, msg string, params ...interface{}) {
 	rawLogf("\n"+logType[logTypeInput]+(" %s\n"), fmt.Sprintf(msg, params...))
 }
 
-// Checks if err is not nil and if so suspend the program
+// Checks if err is not nil and if so suspend the program.
 func errorLog(err error, msg string, params ...interface{}) {
 	if err != nil {
 		msg := fmt.Sprintf(("%s. Error: %s"), fmt.Sprintf(msg, params...), err.Error())
@@ -96,7 +97,7 @@ func errorLog(err error, msg string, params ...interface{}) {
 	}
 }
 
-// Suspends the program with an error message
+// Suspends the program with an error message.
 func errorLogRaw(msg string, params ...interface{}) {
 	errMsg := fmt.Sprintf(("%s."), fmt.Sprintf(msg, params...))
 
@@ -112,7 +113,7 @@ func errorLogRaw(msg string, params ...interface{}) {
 	os.Exit(1)
 }
 
-// Same as errorLog but adds an extra newline before
+// Same as errorLog but adds an extra newline before.
 func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 	if err != nil {
 		msg := fmt.Sprintf(("%s. Error: %s"), fmt.Sprintf(msg, params...), err.Error())
@@ -137,7 +138,7 @@ func errorLogNewlineBefore(err error, msg string, params ...interface{}) {
 	}
 }
 
-// Gets user input
+// Gets user input.
 func input(defVal string, msg string, params ...interface{}) string {
 	logNoNewline(6, ("%s")+": ", fmt.Sprintf(msg, params...))
 
@@ -153,14 +154,14 @@ func input(defVal string, msg string, params ...interface{}) string {
 	return strings.TrimSpace(input)
 }
 
-// Confirms in a y/n prompt
+// Confirms in a y/n prompt.
 func confirm(defVal, msg string, params ...interface{}) {
 	if !strings.Contains(input(defVal, msg, params...), "y") {
 		os.Exit(1)
 	}
 }
 
-// Logs if debug is set to true
+// Logs if debug is set to true.
 func debugLog(msg string, params ...interface{}) {
 	if debug {
 		log(5, msg, params...)

@@ -17,6 +17,7 @@
         "Deps",
         "devmasx",
         "dont",
+        "exhaustruct",
         "forbidigo",
         "gmake",
         "GOARCH",

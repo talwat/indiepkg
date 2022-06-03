@@ -40,6 +40,10 @@ type Progressbar struct {
 	BarEnd        string
 }
 
+type Progress struct {
+	CompileProgressIndicator string `toml:"compile_progress_indicator"`
+}
+
 type Config struct {
 	Paths Paths
 
@@ -48,6 +52,8 @@ type Config struct {
 	Progressbar Progressbar
 
 	Github Github
+
+	Progress Progress
 }
 
 var config Config = Config{
@@ -73,9 +79,13 @@ var config Config = Config{
 		"username",
 		"token",
 	},
+
+	Progress{
+		"spinner",
+	},
 }
 
-// Loads & reads configuration file
+// Loads & reads configuration file.
 func loadConfig() {
 	log(1, "Reading config file...")
 

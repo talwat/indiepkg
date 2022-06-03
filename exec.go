@@ -4,9 +4,11 @@ import (
 	"bufio"
 	"os/exec"
 	"strings"
+
+	"github.com/talwat/indiepkg/spinner"
 )
 
-// Runs a command and prints the output to the terminal in real time
+// Runs a command and prints the output to the terminal in real time.
 func runCommandRealTime(workDir string, cmd string, args ...string) {
 	cmdObj := exec.Command(cmd, args...)
 	cmdObj.Dir = workDir
@@ -38,8 +40,26 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 	errorLogNewlineBefore(err, "An error occurred while running command")
 }
 
-// Runs a command and displays dots to indicate progress
-func runCommandDot(workDir string, forceCmd bool, cmd string, args ...string) {
+// Runs a command and displays dots to indicate progress.
+func runCommandDot(commandName string, workDir string, forceCmd bool, cmd string, args ...string) {
+	spinner := spinner.Spinner{ // nolint:exhaustruct
+		Prefix: logType[1] + " Running command " + bolden(commandName) + " ",
+		SpinnerArt: []string{
+			textCol.Violet + "/" + RESETCOL,
+			textCol.Violet + "|" + RESETCOL,
+			textCol.Violet + "\\" + RESETCOL,
+			textCol.Violet + "-" + RESETCOL,
+		},
+	}
+
+	debugLog("Progress indicator: %s", config.Progress.CompileProgressIndicator)
+
+	if config.Progress.CompileProgressIndicator == "dots" {
+		logNoNewline(1, "Running command %s", bolden(commandName))
+	} else {
+		spinner.DisplaySpinner()
+	}
+
 	parsedCmd := strings.TrimPrefix(cmd, "!(FORCE)! ")
 	cmdObj := exec.Command(parsedCmd, args...)
 	cmdObj.Dir = workDir
@@ -65,7 +85,11 @@ func runCommandDot(workDir string, forceCmd bool, cmd string, args ...string) {
 		if debug {
 			rawLogf(logType[5]+(" %s\n"), scanner.Text())
 		} else {
-			rawLog(textCol.Violet + "." + RESETCOL)
+			if config.Progress.CompileProgressIndicator == "dots" {
+				rawLog(textCol.Violet + "." + RESETCOL)
+			} else {
+				spinner.DisplaySpinner()
+			}
 		}
 	}
 
@@ -79,7 +103,7 @@ func runCommandDot(workDir string, forceCmd bool, cmd string, args ...string) {
 	}
 }
 
-// Runs a command
+// Runs a command.
 func runCommand(workDir string, cmd string, args ...string) (string, error) {
 	cmdObj := exec.Command(cmd, args...)
 	cmdObj.Dir = workDir
@@ -92,7 +116,7 @@ func runCommand(workDir string, cmd string, args ...string) (string, error) {
 	return strings.TrimSuffix(string(data), "\n"), nil
 }
 
-// Check if a command exists
+// Check if a command exists.
 func checkIfCommandExists(cmd string) bool {
 	_, err := exec.LookPath(cmd)
 

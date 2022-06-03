@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-// Pulls source for indiepkg
+// Pulls source for indiepkg.
 func pullSrcRepo(silent bool) bool {
 	output, err := runCommand(indiePkgSrcPath, "git", "pull", "--no-tags")
 	errorLog(err, "An error occurred while pulling source code for IndiePKG. Git output:\n%s", output)
@@ -28,7 +28,7 @@ func pullSrcRepo(silent bool) bool {
 	return false
 }
 
-// Clones indiepkg source
+// Clones indiepkg source.
 func cloneSrcRepo() {
 	log(1, "Cloning IndiePKG source with branch %s...", config.Updating.Branch)
 	runCommandRealTime(
@@ -46,7 +46,7 @@ func cloneSrcRepo() {
 	)
 }
 
-// Clones source code for a package
+// Clones source code for a package.
 func clonePkgRepo(pkg Package, cloneDir string) {
 	log(1, "Cloning source code for %s...", bolden(pkg.Name))
 
@@ -81,7 +81,7 @@ func clonePkgRepo(pkg Package, cloneDir string) {
 	}
 }
 
-// Pulls source code for a package
+// Pulls source code for a package.
 func pullPkgRepo(pkgName string) (bool, bool) {
 	output, err := runCommand(srcPath+pkgName, "git", "pull", "--no-tags")
 

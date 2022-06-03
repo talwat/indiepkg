@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-const version = "0.38.1"
+const version = "0.39-beta"
 
 var (
 	purge      bool = false

@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-// Gets and writes a packages info to the proper location
+// Gets and writes a packages info to the proper location.
 func rawGetInfo(pkgName string, pkg Package) {
 	log(1, "Getting info for %s", bolden(pkgName))
 	log(1, "Checking for info URL...")
