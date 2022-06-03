@@ -24,11 +24,12 @@ type Spinner struct {
 // Displays the spinners current state
 // It is not possible to print something in the middle of a spinner spinning or else there will be multiple spinners
 // For example, do not do this:
-//  displaySpinner(&spinner)
-//  fmt.Println("Do not do this")
-// 	displaySpinner(&spinner)
+//   displaySpinner(&spinner)
+//   fmt.Println("Do not do this")
+//   displaySpinner(&spinner)
 func (spinner *Spinner) DisplaySpinner() {
-	if len(spinner.SpinnerArt) == 0 { // If there are no spinner art, set it to a default
+	// If there are no spinner art, set it to a default
+	if len(spinner.SpinnerArt) == 0 {
 		spinner.SpinnerArt = []string{"/", "|", "\\", "-"}
 	}
 
@@ -36,7 +37,8 @@ func (spinner *Spinner) DisplaySpinner() {
 
 	spinner.ArtIndex += 1
 
-	if spinner.ArtIndex >= len(spinner.SpinnerArt) { // If the index is greater than the length of the spinner art, reset it
+	// If the index is greater than the length of the spinner art, reset it
+	if spinner.ArtIndex >= len(spinner.SpinnerArt) {
 		spinner.ArtIndex = 0
 	}
 }
