@@ -8,7 +8,7 @@ require github.com/schollz/progressbar/v3 v3.8.6
 
 require github.com/ztrue/tracerr v0.3.0
 
-require github.com/talwat/spingo v1.0.0
+require github.com/talwat/spingo v1.1.0
 
 // Indirect dependencies
 

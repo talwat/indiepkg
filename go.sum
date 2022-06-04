@@ -24,6 +24,8 @@ github.com/stretchr/testify v1.7.1 h1:5TQK59W5E3v0r2duFAb7P95B6hEeOyEnHRa8MjYSMT
 github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/talwat/spingo v1.0.0 h1:4oj7BxZvNZBfkD7pq5Nta67OrA2/LQvIVcvII6EE9bI=
 github.com/talwat/spingo v1.0.0/go.mod h1:41agNzE3n3lGzbr5YLAICsyq9HrI5SWuFgu+S5dzzqs=
+github.com/talwat/spingo v1.1.0 h1:GslsWy5MtfpwXLARtPJRHq0qwKO3bstJFRlu8MPyRX4=
+github.com/talwat/spingo v1.1.0/go.mod h1:41agNzE3n3lGzbr5YLAICsyq9HrI5SWuFgu+S5dzzqs=
 github.com/ztrue/tracerr v0.3.0 h1:lDi6EgEYhPYPnKcjsYzmWw4EkFEoA/gfe+I9Y5f+h6Y=
 github.com/ztrue/tracerr v0.3.0/go.mod h1:qEalzze4VN9O8tnhBXScfCrmoJo10o8TN5ciKjm6Mww=
 golang.org/x/crypto v0.0.0-20220131195533-30dcbda58838/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
