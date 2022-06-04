@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/talwat/indiepkg/spinner"
+	"github.com/talwat/spingo"
 )
 
 // Runs a command and prints the output to the terminal in real time.
@@ -42,7 +42,7 @@ func runCommandRealTime(workDir string, cmd string, args ...string) {
 
 // Runs a command and displays dots to indicate progress.
 func runCommandDot(commandName string, workDir string, forceCmd bool, cmd string, args ...string) {
-	spinner := spinner.Spinner{ // nolint:exhaustruct
+	spinner := spingo.Spinner{ // nolint:exhaustruct
 		Prefix: logType[1] + " Running command " + bolden(commandName) + " ",
 		SpinnerArt: []string{
 			textCol.Violet + "/" + RESETCOL,
