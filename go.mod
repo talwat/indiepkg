@@ -4,7 +4,7 @@ go 1.17
 
 require github.com/pelletier/go-toml/v2 v2.0.2
 
-require github.com/schollz/progressbar/v3 v3.8.6
+require github.com/schollz/progressbar/v3 v3.8.7
 
 require github.com/ztrue/tracerr v0.3.0
 
