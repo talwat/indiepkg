@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup python
         uses: actions/setup-python@v4
@@ -56,7 +56,7 @@ jobs:
 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup node 16
         uses: actions/setup-node@v3
