@@ -32,7 +32,7 @@ jobs:
           go-version: 1.18
 
       - name: "Checkout source code"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.1.0
 
       - name: "Set Environment Variables"
         run: |
@@ -75,7 +75,7 @@ jobs:
           go-version: 1.18
 
       - name: "Checkout source code"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.1.0
 
       - name: Get version number
         run: | 
