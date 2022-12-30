@@ -67,7 +67,7 @@ indiepkg repo add https://github.com/<YOUR USERNAME HERE>/indiepkg/main/packages
 Or if your package is only available on Linux, run this command:
 
 ```bash
-indiepkg repo add indiepkg repo add https://github.com/<YOUR USERNAME HERE>/indiepkg/main/packages/linux-only/
+indiepkg repo add https://github.com/<YOUR USERNAME HERE>/indiepkg/main/packages/linux-only/
 ```
 
 Finally, install your package by running:
