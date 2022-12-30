@@ -110,7 +110,7 @@ make install
 Currently, there is no uninstallation script, but you can super easily uninstall IndiePKG by running these commands.
 
 ```bash
-rm -rf ~/.indiepkg
+rm -rf ~/.local/share/indiepkg
 rm ~/.local/bin/indiepkg
 ```
 
