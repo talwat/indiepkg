@@ -1,0 +1,31 @@
+{
+    "name": "rem",
+    "author": "Ishan Goel",
+    "description": "Rem is a CLI trash.",
+    "url": "https://github.com/quackduck/rem",
+    "license": "MIT",
+    "language": "Go",
+    "bin": {
+        "in_source": [
+            "rem"
+        ],
+        "installed": [
+            "rem"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "go build -v ."
+            ],
+            "update": [
+                "go build -v ."
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "go"
+        ]
+    }
+}

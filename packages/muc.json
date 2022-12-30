@@ -1,0 +1,32 @@
+{
+    "name": "muc",
+    "author": "Nathan Dawit",
+    "description": "Visualize your most used commands.",
+    "url": "https://github.com/nate-sys/muc",
+    "license": "GPL-3.0",
+    "language": "Rust",
+    "bin": {
+        "in_source": [
+            "target/release/muc"
+        ],
+        "installed": [
+            "muc"
+        ]
+    },
+    "commands": {
+        "all": {
+            "install": [
+                "cargo build -v --release"
+            ],
+            "update": [
+                "cargo build -v --release"
+            ]
+        }
+    },
+    "deps": {
+        "all": [
+            "rustc",
+            "cargo"
+        ]
+    }
+}
