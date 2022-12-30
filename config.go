@@ -1,13 +1,14 @@
 package main
 
 import (
+	"os"
 	"strings"
 
 	"github.com/pelletier/go-toml/v2"
 )
 
 var (
-	mainPath        string = home + ".indiepkg/"
+	mainPath        string = chooseDataDir()
 	srcPath         string = mainPath + "data/package_src/"
 	tmpSrcPath      string = mainPath + "tmp/package_src/"
 	infoPath        string = mainPath + "data/installed_packages/"
@@ -104,4 +105,19 @@ func loadConfig() {
 	if !strings.HasSuffix(config.Paths.Prefix, "/") { // If doesn't end with a /, add one
 		config.Paths.Prefix += "/"
 	}
+}
+
+// chooseDataDir returns the best directory to store data based on $INDIEPKG_DATADIR and $XDG_DATA_HOME,
+// using ~/.local/share/indiepkg as the default if neither is set.
+func chooseDataDir() string {
+	home, _ := os.UserHomeDir()
+	remEnv := os.Getenv("INDIEPKG_DATADIR")
+	if remEnv != "" {
+		return remEnv
+	}
+	dataHome := os.Getenv("XDG_DATA_HOME")
+	if dataHome != "" {
+		return dataHome + "/indiepkg/"
+	}
+	return home + "/.local/share/indiepkg/"
 }

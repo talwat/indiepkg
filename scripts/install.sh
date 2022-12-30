@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+if [ -z "$INDIEPKG_DATADIR" ]
+then
+    if [ -n "$XDG_DATA_HOME" ]
+    then
+        INDIEPKG_DATADIR="$XDG_DATA_HOME/indiepkg"
+    else
+        INDIEPKG_DATADIR="$HOME/.local/share/indiepkg"
+    fi
+fi
+
 log() {
     echo -e "$1[.]${RESET} $2"
 }
@@ -58,13 +68,13 @@ chap_log "$MAGENTA=>" "Installing IndiePKG"
 chap_log "$BLUE==>" "Cloning source code"
 
 log "$CYAN" "Cloning source code..."
-mkdir "$HOME/.indiepkg/"
-git clone -b testing https://github.com/talwat/indiepkg.git "$HOME/.indiepkg/src"
+mkdir "$INDIEPKG_DATADIR"
+git clone -b testing https://github.com/talwat/indiepkg.git "$INDIEPKG_DATADIR/src"
 
 chap_log "$BLUE==>" "Compiling source code"
 
 log "$CYAN" "Compiling source code..."
-cd "$HOME/.indiepkg/src" || exit 1
+cd "$INDIEPKG_DATADIR/src" || exit 1
 make
 
 chap_log "$BLUE==>" "Installing"
